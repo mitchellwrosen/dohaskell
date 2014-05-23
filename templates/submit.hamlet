@@ -1,0 +1,5 @@
+<a href=@{HomeR}>Home
+
+<form method=post action=@{SubmitR} enctype=#{formEnctype}>
+   ^{formWidget}
+   <input type="submit" value="Submit">

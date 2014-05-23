@@ -1,0 +1,15 @@
+<a href=@{SubmitR}>Submit a resource
+
+$maybe Entity _ user <- mauth
+   <p>Welcome, #{userIdent user}.
+$nothing
+   <p>Who are you? #
+   <a href=@{AuthR LoginR}>Log in.
+
+$if null tags
+   <p>No tags found. Please <a href=@{SubmitR}>submit a resource</a>.
+$else
+   <ul>
+      $forall Entity _ tag <- tags
+         <li>
+            <a href=@{TagR (tagTag tag)}>#{tagTag tag}

@@ -1,0 +1,28 @@
+User
+    ident    Text
+    password Text Maybe
+    UniqueUser ident
+    deriving Typeable
+
+Resource
+    title  Text
+    url    Text
+    type   ResourceType
+    user   UserId
+    posted UTCTime
+    UniqueUrl url
+
+Comment
+    resource ResourceId
+    user     UserId
+    posted   UTCTime
+    text     Textarea
+
+Tag
+    tag Text
+
+ResourceTag
+    resourceId ResourceId
+    tagId      TagId
+
+ -- By default this file is used in Model.hs (which is imported by Foundation.hs)
