@@ -6,24 +6,25 @@ module Application
     ) where
 
 import Import
-import Settings
-import Yesod.Auth
-import Yesod.Default.Config
-import Yesod.Default.Main
-import Yesod.Default.Handlers
-import Network.Wai.Middleware.RequestLogger
-    ( mkRequestLogger, outputFormat, OutputFormat (..), IPAddrSource (..), destination
-    )
-import qualified Network.Wai.Middleware.RequestLogger as RequestLogger
+
+import           Control.Concurrent                   (forkIO, newMVar, threadDelay)
+import           Control.Monad.Logger                 (runLoggingT)
+import           Data.Default                         (def)
+import qualified Data.Map                             as M
 import qualified Database.Persist
-import Database.Persist.Sql (runMigration)
-import Network.HTTP.Client.Conduit (newManager)
-import Control.Monad.Logger (runLoggingT)
-import Control.Concurrent (forkIO, threadDelay)
-import System.Log.FastLogger (newStdoutLoggerSet, defaultBufSize, flushLogStr)
-import Network.Wai.Logger (clockDateCacher)
-import Data.Default (def)
-import Yesod.Core.Types (loggerSet, Logger (Logger))
+import           Network.HTTP.Client.Conduit          (newManager)
+import           Network.Wai.Logger                   (clockDateCacher)
+import qualified Network.Wai.Middleware.RequestLogger as RequestLogger
+import           Network.Wai.Middleware.RequestLogger ( mkRequestLogger, outputFormat, OutputFormat (..)
+                                                      , IPAddrSource (..), destination
+                                                      )
+import           Settings
+import           System.Log.FastLogger                (newStdoutLoggerSet, defaultBufSize, flushLogStr)
+import           Yesod.Auth
+import           Yesod.Core.Types                     (loggerSet, Logger (Logger))
+import           Yesod.Default.Config
+import           Yesod.Default.Handlers
+import           Yesod.Default.Main
 
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
@@ -31,6 +32,7 @@ import Handler.Home
 import Handler.Resource
 import Handler.Submit
 import Handler.Tag
+import Handler.User
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the
@@ -84,8 +86,10 @@ makeFoundation conf = do
             updateLoop
     _ <- forkIO updateLoop
 
+    usersMap <- newMVar M.empty
+
     let logger = Yesod.Core.Types.Logger loggerSet' getter
-        foundation = App conf s p manager dbconf logger
+        foundation = App conf s p manager dbconf logger usersMap
 
     -- Perform database migration using our application's logging settings.
     runLoggingT

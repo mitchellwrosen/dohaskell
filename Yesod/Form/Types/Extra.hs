@@ -1,28 +1,26 @@
 module Yesod.Form.Types.Extra where
 
 import Prelude
+
+import Data.Attoparsec.Text  (Parser, parseOnly)
+import Data.Monoid           ((<>))
+import Data.Text             (Text, pack)
 import Text.Shakespeare.I18N (RenderMessage)
 import Yesod.Core            (HandlerSite)
 import Yesod.Core.Widget     (whamlet)
 import Yesod.Form.Types      (Enctype(..), Field(..), FormMessage(..))
 import Yesod.Form.Functions  (parseHelper)
-import Data.List.Split       (splitOn)
-import Data.Text             (Text, intercalate, pack, unpack)
 
-delimitedTextField :: (Monad m, RenderMessage (HandlerSite m) FormMessage) => Text -> Field m [Text]
-delimitedTextField delim = Field
+parsedTextField :: (Monad m, RenderMessage (HandlerSite m) FormMessage) => Parser a -> (a -> Text) -> Field m a
+parsedTextField parser shower = Field
     { fieldParse = parseHelper $ \s ->
-        case map pack . splitOn (unpack delim) . unpack $ s of
-            [] -> Left $ MsgInvalidEntry "at least one field required"
-            xs -> Right xs
+        case parseOnly parser s of
+            Left err -> Left $ MsgInvalidEntry $ "Parse error: " <> (pack err)
+            Right xs -> Right xs
     , fieldView = \theId name attrs val isReq ->
             [whamlet|
-            $newline never
-            <input id="#{theId}" name="#{name}" *{attrs} type="text" :isReq:required value="#{either id cat val}">
+                $newline never
+                <input id="#{theId}" name="#{name}" *{attrs} type="text" :isReq:required value="#{either id shower val}">
             |]
     , fieldEnctype = UrlEncoded
     }
-  where cat = intercalate delim
-
-commaSeparatedTextField :: (Monad m, RenderMessage (HandlerSite m) FormMessage) => Field m [Text]
-commaSeparatedTextField = delimitedTextField ","

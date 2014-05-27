@@ -8,3 +8,4 @@
 /r/#ResourceId ResourceR GET POST
 /tag/#Text     TagR      GET
 /submit        SubmitR   GET POST
+/user/#UserId  UserR     GET POST

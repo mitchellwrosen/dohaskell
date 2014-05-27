@@ -1,0 +1,26 @@
+<a href=@{HomeR}>Home
+
+<div>
+   <div>Link: <a href=#{resourceUrl res}>#{resourceTitle res}</a>
+   <div>Type: #{resourceType res}
+   <div>Posted by: <a href=@{UserR $ resourceUser res}>#{maybe "(none)" id $ userDisplayName user}</a>
+   <div>Posted at: #{show $ resourcePosted res}
+
+   <div >Tags:
+      <ul>
+         $forall Entity _ tag <- tags
+            <li>
+               <a href=@{TagR (tagTag tag)}>#{tagTag tag}
+
+<div>Comments:
+   $if null comments
+      <p>(no comments)
+   $else
+      <ul>
+         $forall comment <- comments
+            ^{commentWidget comment}
+
+<div>
+   <form method=post action=@{ResourceR resId} enctype=#{enctype}>
+      ^{widget}
+      <input type="submit" value="Submit">

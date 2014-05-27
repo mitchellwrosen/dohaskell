@@ -1,0 +1,16 @@
+<a href=@{HomeR}>Home
+
+$if isOwnProfile
+   <div>Name: #{userName user}
+
+<div>
+   $maybe displayName <- userDisplayName user
+      Display name: #{displayName}
+   $nothing
+      Display name: (none)
+
+$if isOwnProfile
+   <form method=post action=@{UserR uid} enctype=#{enctype}>
+      ^{widget}
+      <input type="submit" value="Submit">
+

@@ -1,37 +1,38 @@
 module Foundation where
 
-import Prelude
-import Yesod
-import Yesod.Static
-import Yesod.Auth
-import Yesod.Auth.BrowserId
-import Yesod.Auth.GoogleEmail
-import Yesod.Default.Config
-import Yesod.Default.Util (addStaticContentExternal)
-import Network.HTTP.Client.Conduit (Manager, HasHttpManager (getHttpManager))
-import qualified Settings
-import Settings.Development (development)
+import           Control.Concurrent          (MVar)
 import qualified Database.Persist
-import Database.Persist.Sql (SqlPersistT)
-import Data.Text (Text)
-import Settings.StaticFiles
-import Settings (widgetFile, Extra (..))
-import Model
-import Text.Jasmine (minifym)
-import Text.Hamlet (hamletFile)
-import Yesod.Core.Types (Logger)
+import           Database.Persist.Sql        (SqlPersistT)
+import           Data.Map                    (Map)
+import           Data.Text                   (Text)
+import           Model
+import           Network.HTTP.Client.Conduit (Manager, HasHttpManager (getHttpManager))
+import           Prelude
+import           Settings                    (Extra(..), widgetFile)
+import qualified Settings
+import           Settings.Development        (development)
+import           Settings.StaticFiles
+import           Text.Jasmine                (minifym)
+import           Text.Hamlet                 (hamletFile)
+import           Yesod
+import           Yesod.Core.Types            (Logger)
+import           Yesod.Static
+import           Yesod.Auth
+import           Yesod.Auth.BrowserId
+import           Yesod.Auth.GoogleEmail
+import           Yesod.Default.Config
+import           Yesod.Default.Util          (addStaticContentExternal)
 
--- | The site argument for your application. This can be a good place to
--- keep settings and values requiring initialization before your application
--- starts running, such as database connections. Every handler will have
--- access to the data present here.
 data App = App
+    -- TODO: prepend 'app'
     { settings      :: AppConfig DefaultEnv Extra
     , getStatic     :: Static                                                  -- ^ Settings for static file serving.
     , connPool      :: Database.Persist.PersistConfigPool Settings.PersistConf -- ^ Database connection pool.
     , httpManager   :: Manager
     , persistConfig :: Settings.PersistConf
     , appLogger     :: Logger
+
+    , appUsersMap   :: MVar (Map UserId User)
     }
 
 instance HasHttpManager App where
@@ -131,18 +132,19 @@ instance YesodPersistRunner App where
 
 instance YesodAuth App where
     type AuthId App = UserId
-    loginDest _ = HomeR  -- Where to send a user after successful login
+    loginDest  _ = HomeR -- Where to send a user after successful login
     logoutDest _ = HomeR -- Where to send a user after logout
 
-    getAuthId creds = runDB $ do
-        x <- getBy $ UniqueUser $ credsIdent creds
-        case x of
-            Just (Entity uid _) -> return $ Just uid
+    -- TODO: redirect to profile page
+    getAuthId creds = runDB $
+        getBy (UniqueUser $ credsIdent creds) >>= \case
+            Just (Entity uid _) -> return (Just uid)
             Nothing -> do
-                fmap Just $ insert User
-                    { userIdent = credsIdent creds
-                    , userPassword = Nothing
+                uid <- insert User
+                    { userName        = credsIdent creds
+                    , userDisplayName = Nothing
                     }
+                return (Just uid)
 
     -- You can add other plugins like BrowserID, email or OAuth here
     authPlugins _ = [authBrowserId def, authGoogleEmail]

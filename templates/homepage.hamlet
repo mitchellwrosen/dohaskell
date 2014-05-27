@@ -1,14 +1,20 @@
-<a href=@{SubmitR}>Submit a resource
-
-$maybe Entity _ user <- mauth
-   <p>Welcome, #{userIdent user}.
+$maybe Entity uid user <- mauth
+   <div>
+      <a href=@{UserR uid}>Profile
+   <div>
+      <p>Welcome, #{userName user}.
 $nothing
-   <p>Who are you? #
-   <a href=@{AuthR LoginR}>Log in.
+   <div>
+      <a href=@{AuthR LoginR}>Log in.
 
-$if null tags
-   <p>No tags found. Please <a href=@{SubmitR}>submit a resource</a>.
-$else
+<div>
+   <a href=@{SubmitR}>Submit a resource (requires login)
+
+<div>
+   <a href="https://github.com/mitchellwrosen/dohaskell">Contribute
+
+<div>
+   Browse resources by tag:
    <ul>
       $forall Entity _ tag <- tags
          <li>

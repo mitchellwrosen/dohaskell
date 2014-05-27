@@ -1,13 +1,13 @@
 User
-    ident    Text
-    password Text Maybe
-    UniqueUser ident
+    name        Text
+    displayName Text Maybe
+    UniqueUser name
     deriving Typeable
 
 Resource
     title  Text
     url    Text
-    type   ResourceType
+    type   Text
     user   UserId
     posted UTCTime
     UniqueUrl url
@@ -20,9 +20,9 @@ Comment
 
 Tag
     tag Text
+    UniqueTag tag
 
 ResourceTag
     resourceId ResourceId
     tagId      TagId
-
- -- By default this file is used in Model.hs (which is imported by Foundation.hs)
+    UniqueResourceTag resourceId tagId
