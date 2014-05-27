@@ -1,21 +1,8 @@
-$maybe Entity uid user <- mauth
-   <div>
-      <a href=@{UserR uid}>Profile
-   <div>
-      <p>Welcome, #{userName user}.
-$nothing
-   <div>
-      <a href=@{AuthR LoginR}>Log in.
-
-<div>
-   <a href=@{SubmitR}>Submit a resource (requires login)
-
-<div>
-   <a href="https://github.com/mitchellwrosen/dohaskell">Contribute
+^{navbarWidget}
 
 <div>
    Browse resources by tag:
    <ul>
-      $forall Entity _ tag <- tags
+      $forall Entity _ (Tag text) <- tags
          <li>
-            <a href=@{TagR (tagTag tag)}>#{tagTag tag}
+            <a href=@{TagR text}>#{text}

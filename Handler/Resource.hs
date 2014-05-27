@@ -4,17 +4,14 @@ module Handler.Resource where
 
 import Import
 
-import Yesod.Auth     (requireAuthId)
-
 import Model.Comment  (makeComment)
-import Model.Resource
+import Model.Resource (getResourceComments)
 import Model.User     (unsafeGetUserById)
+import View.Navbar    (navbarWidget)
+import View.Resource  (resourceWidget)
 
 getResourceR :: ResourceId -> Handler Html
 getResourceR resId = do
-    res      <- runDB $ get404 resId
-    user     <- unsafeGetUserById (resourceUser res)
-    tags     <- runDB $ getResourceTags resId
     comments <- map entityVal <$> runDB (getResourceComments resId)
 
     (widget, enctype) <- generateFormPost commentForm
@@ -24,10 +21,10 @@ getResourceR resId = do
 
 commentWidget :: Comment -> Widget
 commentWidget Comment{..} = do
-    user <- handlerToWidget $ unsafeGetUserById commentUser
+    user <- handlerToWidget $ unsafeGetUserById commentUserId
     [whamlet|
         <li>
-            <a href=@{UserR commentUser}>#{maybe "(none)" id $ userDisplayName user}</a>: #{commentText}
+            <a href=@{UserR commentUserId}>#{maybe "(none)" id $ userDisplayName user}</a> (#{show $ commentPosted}): #{commentText}
     |]
 
 postResourceR :: ResourceId -> Handler Html
@@ -43,4 +40,4 @@ postResourceR resId = do
             redirect $ ResourceR resId
 
 commentForm :: Form Textarea
-commentForm = renderDivs $ areq textareaField "Make comment:" Nothing
+commentForm = renderDivs $ areq textareaField "Submit comment:" Nothing

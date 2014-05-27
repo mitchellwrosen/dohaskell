@@ -1,0 +1,15 @@
+<ul>
+   <li>
+      <a href=@{HomeR}>Home
+   $maybe uid <- muid
+      <li>
+         <a href=@{UserR uid}>My Profile
+      <li>
+         <a href=@{AuthR LogoutR}>Log Out
+   $nothing
+      <li>
+         <a href=@{AuthR LoginR}>Log In
+   <li>
+      <a href=@{SubmitR}>Submit Resource
+   <li>
+      <a href=@{AboutR}>About

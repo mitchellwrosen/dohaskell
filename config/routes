@@ -4,8 +4,11 @@
 /favicon.ico   FaviconR  GET
 /robots.txt    RobotsR   GET
 
-/              HomeR     GET
-/r/#ResourceId ResourceR GET POST
-/tag/#Text     TagR      GET
-/submit        SubmitR   GET POST
-/user/#UserId  UserR     GET POST
+/                   HomeR     GET
+/about              AboutR    GET
+/user/#UserId       UserR     GET POST
+/submit             SubmitR   GET POST
+/tag/#Text          TagR      GET
+/r/#ResourceId      ResourceR GET POST
+/r/#ResourceId/edit EditR     GET POST
+/user/#UserId/edits EditHubR GET

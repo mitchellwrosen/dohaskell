@@ -1,6 +1,7 @@
 module Foundation where
 
-import           Control.Concurrent          (MVar)
+import           Control.Applicative         ((<$>))
+import           Control.Concurrent          (MVar, modifyMVar_)
 import qualified Database.Persist
 import           Database.Persist.Sql        (SqlPersistT)
 import           Data.Map                    (Map)
@@ -59,11 +60,11 @@ instance Yesod App where
 
     -- Store session data on the client in encrypted cookies,
     -- default session idle timeout is 120 minutes
-    makeSessionBackend _ = fmap Just $ defaultClientSessionBackend
-        120    -- timeout in minutes
-        "config/client_session_key.aes"
+    makeSessionBackend _ = Just <$> defaultClientSessionBackend timeoutMins keyFile
+      where timeoutMins = 120
+            keyFile     = "config/client_session_key.aes"
 
-    defaultLayout widget = do
+    defaultLayout innerWidget = do
         mmsg <- getMessage
 
         -- We break up the default layout into two components:
@@ -111,13 +112,9 @@ instance Yesod App where
 
     makeLogger = return . appLogger
 
-    isAuthorized = isAuthorized_
-
--- Some pages require authorization.
-isAuthorized_ :: Route App -> Bool -> Handler AuthResult
-isAuthorized_ SubmitR       _    = requiresAuthorization
-isAuthorized_ (ResourceR _) True = requiresAuthorization
-isAuthorized_ _             _    = return Authorized
+    -- Gave up trying to use this function because Foundation can't import
+    -- anything that imports Import (which is everything).
+    isAuthorized _ _ = return Authorized
 
 requiresAuthorization :: Handler AuthResult
 requiresAuthorization = maybeAuth >>= maybe (return AuthenticationRequired) (const $ return Authorized)
@@ -137,12 +134,13 @@ instance YesodAuth App where
 
     -- TODO: redirect to profile page
     getAuthId creds = runDB $
-        getBy (UniqueUser $ credsIdent creds) >>= \case
+        getBy (UniqueUserName $ credsIdent creds) >>= \case
             Just (Entity uid _) -> return (Just uid)
             Nothing -> do
                 uid <- insert User
-                    { userName        = credsIdent creds
-                    , userDisplayName = Nothing
+                    { userName            = credsIdent creds
+                    , userDisplayName     = Nothing
+                    , userIsAdministrator = False
                     }
                 return (Just uid)
 
@@ -158,7 +156,10 @@ instance RenderMessage App FormMessage where
 
 -- | Get the 'Extra' value, used to hold data from the settings.yml file.
 getExtra :: Handler Extra
-getExtra = fmap (appExtra . settings) getYesod
+getExtra = appExtra . settings <$> getYesod
+
+modifyUsersMap :: (Map UserId User -> Map UserId User) -> Handler ()
+modifyUsersMap f = appUsersMap <$> getYesod >>= \usersMap -> liftIO (modifyMVar_ usersMap (return . f))
 
 -- Note: previous versions of the scaffolding included a deliver function to
 -- send emails. Unfortunately, there are too many different options for us to

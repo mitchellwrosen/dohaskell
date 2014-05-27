@@ -1,4 +1,4 @@
-<a href=@{HomeR}>Home
+^{navbarWidget}
 
 <form method=post action=@{SubmitR} enctype=#{enctype}>
    ^{widget}

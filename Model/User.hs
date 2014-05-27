@@ -2,12 +2,12 @@ module Model.User
     ( getUserById
     , unsafeGetUserById
     , updateUserDisplayName
+    , userHasAuthorityOver
     ) where
 
 import Import
 
 import           Control.Concurrent (modifyMVar_, readMVar)
-import           Data.Map           (Map)
 import qualified Data.Map           as M
 import           Data.Maybe         (fromJust)
 
@@ -40,5 +40,14 @@ updateUserDisplayName uid displayName = do
         set user [UserDisplayName =. val (Just displayName)]
         where_ (user^.UserId ==. val uid)
 
-modifyUsersMap :: (Map UserId User -> Map UserId User) -> Handler ()
-modifyUsersMap f = appUsersMap <$> getYesod >>= \usersMap -> liftIO (modifyMVar_ usersMap (return . f))
+-- 'bully' has authority over 'nerd' if 'bully' is an administrator,
+-- or of 'bully' and 'nerd' are the same user.
+--
+-- Assumes that 'bully' is an actual user id, not from a URL.
+userHasAuthorityOver :: UserId -> UserId -> Handler Bool
+userHasAuthorityOver bully nerd = do
+    isAdmin <- userIsAdministrator <$> unsafeGetUserById bully
+    return $
+        if isAdmin
+            then True
+            else (bully == nerd)

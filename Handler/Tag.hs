@@ -2,9 +2,11 @@ module Handler.Tag where
 
 import Import
 
+import View.Navbar (navbarWidget)
+
 getTagR :: Text -> Handler Html
-getTagR t = do
-    Entity tagId _ <- runDB $ getBy404 (UniqueTag t)
+getTagR text = do
+    Entity tagId _ <- runDB $ getBy404 (UniqueTagText text)
     resources      <- runDB $ getResourcesWithTagId tagId
     defaultLayout $ do
         setTitle "Tag"

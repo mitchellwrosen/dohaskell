@@ -1,7 +1,7 @@
-<a href=@{HomeR}>Home
+^{navbarWidget}
 
 $if isOwnProfile
-   <div>Name: #{userName user}
+   <div>Name (hidden): #{userName user}
 
 <div>
    $maybe displayName <- userDisplayName user
@@ -14,3 +14,4 @@ $if isOwnProfile
       ^{widget}
       <input type="submit" value="Submit">
 
+   <a href=@{EditHubR uid}>Requested Edits

@@ -1,4 +1,4 @@
-<a href=@{HomeR}>Home
+^{navbarWidget}
 
 <ul>
    $forall Entity resId res <- resources

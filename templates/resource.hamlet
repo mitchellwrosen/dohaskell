@@ -1,16 +1,8 @@
-<a href=@{HomeR}>Home
+^{navbarWidget}
 
-<div>
-   <div>Link: <a href=#{resourceUrl res}>#{resourceTitle res}</a>
-   <div>Type: #{resourceType res}
-   <div>Posted by: <a href=@{UserR $ resourceUser res}>#{maybe "(none)" id $ userDisplayName user}</a>
-   <div>Posted at: #{show $ resourcePosted res}
+^{resourceWidget resId}
 
-   <div >Tags:
-      <ul>
-         $forall Entity _ tag <- tags
-            <li>
-               <a href=@{TagR (tagTag tag)}>#{tagTag tag}
+<a href=@{EditR resId}>Edit Resource
 
 <div>Comments:
    $if null comments

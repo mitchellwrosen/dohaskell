@@ -2,13 +2,11 @@ module Handler.Home where
 
 import Import
 
-import Yesod.Auth
+import View.Navbar (navbarWidget)
 
 getHomeR :: Handler Html
 getHomeR = do
-    mauth <- maybeAuth
-    tags <- runDB $ selectList [] [Asc TagTag]
-
+    tags <- runDB $ selectList [] [Asc TagText]
     defaultLayout $ do
         setTitle "Dohaskell.com: Tagged Haskell learning resources"
         $(widgetFile "homepage")

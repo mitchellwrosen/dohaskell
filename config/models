@@ -1,28 +1,47 @@
+--------------------------------------------------------------------------------
+-- User
+
 User
-    name        Text
-    displayName Text Maybe
-    UniqueUser name
+    name            Text
+    displayName     Text Maybe
+    isAdministrator Bool
+    UniqueUserName name
     deriving Typeable
+
+--------------------------------------------------------------------------------
+-- Resource
 
 Resource
     title  Text
     url    Text
-    type   Text
-    user   UserId
+    type   ResourceType
+    userId UserId
     posted UTCTime
-    UniqueUrl url
+    UniqueResourceUrl url
 
 Comment
-    resource ResourceId
-    user     UserId
-    posted   UTCTime
-    text     Textarea
+    resourceId ResourceId
+    userId     UserId
+    posted     UTCTime
+    text       Textarea
 
 Tag
-    tag Text
-    UniqueTag tag
+    text Text
+    UniqueTagText text
 
 ResourceTag
     resourceId ResourceId
     tagId      TagId
     UniqueResourceTag resourceId tagId
+
+PendingResourceEdit
+    resourceId ResourceId
+    title      Text
+    type       ResourceType
+
+PendingResourceEditTag
+    pendingResourceEditId PendingResourceEditId
+    -- Not a TagId, because we don't want to insert every requested tag change.
+    -- Only when the edit is approved, a Tag with the given text is inserted.
+    tag Text
+    UniquePendingResourceEditTag pendingResourceEditId tag

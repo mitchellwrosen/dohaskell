@@ -1,4 +1,6 @@
-module Yesod.Form.Types.Extra where
+module Yesod.Form.Types.Extra 
+    ( parsedTextField
+    ) where
 
 import Prelude
 

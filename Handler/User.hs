@@ -2,11 +2,12 @@ module Handler.User where
 
 import Import
 
-import           Data.Char (isAlphaNum)
-import qualified Data.Text as T
-import           Yesod.Auth
+import           Data.Char     (isAlphaNum)
+import qualified Data.Text     as T
 
-import Model.User
+import           Handler.Utils (denyPermissionIfDifferentUser)
+import           Model.User
+import           View.Navbar   (navbarWidget)
 
 getUserR :: UserId -> Handler Html
 getUserR uid = do
@@ -22,10 +23,7 @@ getUserR uid = do
 
 postUserR :: UserId -> Handler Html
 postUserR uid = do
-    uid' <- requireAuthId
-    when (uid /= uid') $ do
-        setMessage "Operation not permitted."
-        redirect HomeR
+    denyPermissionIfDifferentUser uid
     ((result, _), _) <- runFormPost displayNameForm
     case result of
         FormSuccess displayName -> do
