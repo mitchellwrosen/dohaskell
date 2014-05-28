@@ -12,7 +12,7 @@ import           View.Navbar   (navbarWidget)
 getUserR :: UserId -> Handler Html
 getUserR uid = do
     user <- runDB $ get404 uid
-    (widget, enctype) <- generateFormPost displayNameForm
+    (widget, enctype) <- generateFormPost (displayNameForm $ userDisplayName user)
 
     -- Is the user looking at their own profile?
     isOwnProfile <- maybe False (== uid) <$> maybeAuthId
@@ -24,7 +24,7 @@ getUserR uid = do
 postUserR :: UserId -> Handler Html
 postUserR uid = do
     denyPermissionIfDifferentUser uid
-    ((result, _), _) <- runFormPost displayNameForm
+    ((result, _), _) <- runFormPost (displayNameForm Nothing)
     case result of
         FormSuccess displayName -> do
             updateUserDisplayName uid displayName
@@ -35,11 +35,11 @@ postUserR uid = do
             redirect (UserR uid)
         FormMissing -> redirect (UserR uid)
 
-displayNameForm :: Form Text
-displayNameForm = renderDivs $ areq
+displayNameForm :: Maybe Text -> Form Text
+displayNameForm curDisplayName = renderDivs $ areq
     (checkBool validName ("Only alphanumeric characters allowed."::Text) textField)
     "Set display name:"
-    Nothing
+    curDisplayName
   where
     validName :: Text -> Bool
     validName = allCharsSatisfy isAlphaNum

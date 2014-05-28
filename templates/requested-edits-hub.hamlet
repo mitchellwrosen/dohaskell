@@ -1,0 +1,8 @@
+^{navbarWidget}
+
+Requested edits:
+
+<ul>
+   $forall (Entity resId res, n) <- results
+      <li>
+         <a href=@{ReqEditsR uid resId}>#{resourceTitle res}</a> (#{n})

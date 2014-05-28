@@ -6,7 +6,7 @@ import Data.Text                 (intercalate)
 
 import Model.PendingResourceEdit (insertPendingResourceEdit)
 import Model.Resource            (getResourceTags, updateResource)
-import Model.User                (unsafeGetUserById, userHasAuthorityOver)
+import Model.User                (userHasAuthorityOver)
 import View.Resource             (resourceTagsForm, resourceTypeField, resourceWidget')
 
 getEditR :: ResourceId -> Handler Html

@@ -1,15 +1,15 @@
-<ul>
-   <li>
-      <a href=@{HomeR}>Home
+<ul .nav>
+   <li .nav>
+      <a .nav href=@{HomeR}>Home
    $maybe uid <- muid
-      <li>
-         <a href=@{UserR uid}>My Profile
-      <li>
-         <a href=@{AuthR LogoutR}>Log Out
+      <li .nav>
+         <a .nav href=@{UserR uid}>My Profile
+      <li .nav>
+         <a .nav href=@{AuthR LogoutR}>Log Out
    $nothing
-      <li>
-         <a href=@{AuthR LoginR}>Log In
-   <li>
-      <a href=@{SubmitR}>Submit Resource
-   <li>
-      <a href=@{AboutR}>About
+      <li .nav>
+         <a .nav href=@{AuthR LoginR}>Log In
+   <li .nav>
+      <a .nav href=@{SubmitR}>Submit Resource
+   <li .nav>
+      <a .nav href=@{AboutR}>About

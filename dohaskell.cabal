@@ -17,13 +17,16 @@ library
                      Import
                      Foundation
                      Handler.About
+                     Handler.Edit
                      Handler.Home
                      Handler.Resource
+                     Handler.ReqEditAccept
+                     Handler.ReqEditDecline
+                     Handler.ReqEdits
+                     Handler.ReqEditsHub
                      Handler.Submit
                      Handler.Tag
                      Handler.User
-                     Handler.Edit
-                     Handler.EditHub
                      Handler.Utils
                      Model
                      Model.Comment
@@ -35,6 +38,7 @@ library
                      Settings.StaticFiles
                      Settings.Development
                      View.Navbar
+                     View.PendingResourceEdit
                      View.Resource
                      Yesod.Form.Types.Extra
 
@@ -48,6 +52,7 @@ library
                 DeriveDataTypeable
                 EmptyDataDecls
                 FlexibleContexts
+                FlexibleInstances
                 GADTs
                 GeneralizedNewtypeDeriving
                 LambdaCase

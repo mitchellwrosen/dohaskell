@@ -4,11 +4,14 @@
 /favicon.ico   FaviconR  GET
 /robots.txt    RobotsR   GET
 
-/                   HomeR     GET
-/about              AboutR    GET
-/user/#UserId       UserR     GET POST
-/submit             SubmitR   GET POST
-/tag/#Text          TagR      GET
-/r/#ResourceId      ResourceR GET POST
-/r/#ResourceId/edit EditR     GET POST
-/user/#UserId/edits EditHubR GET
+/                                 HomeR           GET
+/about                            AboutR          GET
+/u/#UserId                        UserR           GET POST
+/u/#UserId/edits                  ReqEditsHubR    GET
+/u/#UserId/edits/#ResourceId      ReqEditsR       GET
+/e/#PendingResourceEditId/accept  ReqEditAcceptR      POST
+/e/#PendingResourceEditId/decline ReqEditDeclineR     POST
+/submit                           SubmitR         GET POST
+/tag/#Text                        TagR            GET
+/r/#ResourceId                    ResourceR       GET POST
+/r/#ResourceId/edit               EditR           GET POST

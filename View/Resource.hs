@@ -30,16 +30,7 @@ resourceEntityForm uid = Resource
     <*> lift (liftIO getCurrentTime)
 
 resourceTypeField :: Field Handler ResourceType
-resourceTypeField = selectFieldList $ 
-    -- TODO: Use Data.Data so this doesn't have to be manually kept in sync
-    map (descResourceType &&& id)
-        [ BlogPost
-        , ForumPost
-        , LectureNotes
-        , ResearchPaper
-        , QAWebsite
-        , VideoLecture
-        ]
+resourceTypeField = selectFieldList $ map (descResourceType &&& id) [minBound..maxBound]
 
 -- A form to input a comma-separated list of tags.
 resourceTagsForm :: Maybe [Text] -> AForm Handler [Tag]

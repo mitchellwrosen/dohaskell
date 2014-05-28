@@ -30,11 +30,14 @@ import           Yesod.Default.Main
 import Handler.About
 import Handler.Edit
 import Handler.Home
+import Handler.ReqEditAccept
+import Handler.ReqEditDecline
+import Handler.ReqEdits
+import Handler.ReqEditsHub
 import Handler.Resource
 import Handler.Submit
 import Handler.Tag
 import Handler.User
-import Handler.EditHub
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the

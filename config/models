@@ -40,8 +40,8 @@ PendingResourceEdit
     type       ResourceType
 
 PendingResourceEditTag
-    pendingResourceEditId PendingResourceEditId
+    editId PendingResourceEditId
     -- Not a TagId, because we don't want to insert every requested tag change.
     -- Only when the edit is approved, a Tag with the given text is inserted.
     tag Text
-    UniquePendingResourceEditTag pendingResourceEditId tag
+    UniquePendingResourceEditTag editId tag

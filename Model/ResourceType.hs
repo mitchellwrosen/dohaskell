@@ -10,10 +10,12 @@ data ResourceType
     = BlogPost
     | ForumPost
     | LectureNotes
-    | ResearchPaper
     | QAWebsite
+    | ResearchPaper
+    | SourceCode
+    | Textbook
     | VideoLecture
-    deriving (Eq, Read, Show)
+    deriving (Bounded, Enum, Eq, Read, Show)
 derivePersistField "ResourceType"
 
 -- Reuse instance ToMarkup Text
@@ -26,6 +28,8 @@ descResourceType :: ResourceType -> Text
 descResourceType BlogPost      = "Blog post"
 descResourceType ForumPost     = "Forum post (e.g. Reddit comment)"
 descResourceType LectureNotes  = "Lecture slides/notes"
-descResourceType ResearchPaper = "Research paper"
 descResourceType QAWebsite     = "Q&A website (e.g. Stack Overflow)"
+descResourceType ResearchPaper = "Research paper"
+descResourceType SourceCode    = "Source code (entire project)"
+descResourceType Textbook      = "Textbook"
 descResourceType VideoLecture  = "Video lecture/presentation"

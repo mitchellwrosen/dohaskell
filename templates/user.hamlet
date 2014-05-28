@@ -14,4 +14,4 @@ $if isOwnProfile
       ^{widget}
       <input type="submit" value="Submit">
 
-   <a href=@{EditHubR uid}>Requested Edits
+   <a href=@{ReqEditsHubR uid}>Requested Edits Hub

@@ -14,5 +14,8 @@ import Model.ResourceType     (ResourceType)
 -- at:
 -- http://www.yesodweb.com/book/persistent/
 
-share [mkPersist sqlOnlySettings, mkMigrate "migrateAll"]
+share [ mkPersist sqlOnlySettings
+      , mkMigrate "migrateAll"
+      , mkDeleteCascade sqlOnlySettings
+      ]
     $(persistFileWith lowerCaseSettings "config/models")
