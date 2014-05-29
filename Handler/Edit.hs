@@ -2,9 +2,9 @@ module Handler.Edit where
 
 import Import
 
-import Data.Text                 (intercalate)
+import qualified Data.Set  as S
+import           Data.Text (intercalate)
 
-import Model.PendingResourceEdit (insertPendingResourceEdit)
 import Model.Resource            (getResourceTags, updateResource)
 import Model.User                (userHasAuthorityOver)
 import View.Resource             (resourceTagsForm, resourceTypeField, resourceWidget')
@@ -13,9 +13,10 @@ getEditR :: ResourceId -> Handler Html
 getEditR resId = do
     res  <- runDB $ get404 resId
     tags <- runDB $ getResourceTags resId
-    (widget, enctype) <- generateFormPost (editForm (Just $ resourceTitle res)
-                                                    (Just $ resourceType res)
-                                                    (Just $ map tagText tags))
+    (widget, enctype) <- generateFormPost $
+        editForm (Just $ resourceTitle res)
+                 (Just $ resourceType res)
+                 (Just . S.fromList $ map tagText tags)
     defaultLayout $ do
         setTitle "Edit Resource"
         $(widgetFile "edit")
@@ -33,7 +34,7 @@ postEditR resId = do
                     ok <- userHasAuthorityOver editorUid (resourceUserId res)
                     if ok
                         then do
-                            runDB $ updateResource resId newTitle newType newTags 
+                            runDB $ updateResource resId newTitle newType (map Tag . S.toAscList $ newTags)
                             setMessage "Resource updated."
                             redirect $ ResourceR resId
                         -- An authenticated, unprivileged user is the same as an
@@ -43,9 +44,25 @@ postEditR resId = do
           where
             doPendingEdit :: Handler Html
             doPendingEdit = do
-                runDB $ insertPendingResourceEdit resId newTitle newType newTags
+                void . runDB . insertUnique $ EditTitle resId newTitle
+                void . runDB . insertUnique $ EditType resId newType
+                oldTags <- S.fromList . map tagText <$> runDB (getResourceTags resId)
+                insertEditTags newTags oldTags EditAddTag    -- find any NEW not in OLD: pending ADD.
+                insertEditTags oldTags newTags EditRemoveTag -- find any OLD new in NEW: pending REMOVE.
                 setMessage "Your edit has been submitted for approval. Thanks!"
                 redirect $ ResourceR resId
+              where
+                -- If we find any needles NOT in the haystack, insert the needle into the database
+                -- with the supplied constructor.
+                insertEditTags :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend) 
+                               => Set Text 
+                               -> Set Text 
+                               -> (ResourceId -> Text -> val)
+                               -> Handler ()
+                insertEditTags needles haystack entityConstructor =
+                    mapM_ (\needle ->
+                        unless (S.member needle haystack) $
+                            (void . runDB . insertUnique $ entityConstructor resId needle)) needles
         FormFailure errs -> do
             setMessage . toHtml $ "Form error: " <> intercalate ", " errs
             redirect $ EditR resId
@@ -53,8 +70,8 @@ postEditR resId = do
 
 editForm :: Maybe Text          -- default title
          -> Maybe ResourceType  -- default type
-         -> Maybe [Text]        -- default tags
-         -> Form (Text, ResourceType, [Tag])
+         -> Maybe (Set Text)    -- default tags
+         -> Form (Text, ResourceType, Set Text)
 editForm title typ tags = renderDivs $ (,,)
     <$> areq textField         "Title" title
     <*> areq resourceTypeField "Type"  typ

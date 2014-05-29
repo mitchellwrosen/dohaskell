@@ -18,11 +18,16 @@ library
                      Foundation
                      Handler.About
                      Handler.Edit
+                     Handler.EditAddTagAccept
+                     Handler.EditAddTagDecline
+                     Handler.EditRemoveTagAccept
+                     Handler.EditRemoveTagDecline
+                     Handler.EditTitleAccept
+                     Handler.EditTitleDecline
+                     Handler.EditTypeAccept
+                     Handler.EditTypeDecline
                      Handler.Home
                      Handler.Resource
-                     Handler.ReqEditAccept
-                     Handler.ReqEditDecline
-                     Handler.ReqEdits
                      Handler.ReqEditsHub
                      Handler.Submit
                      Handler.Tag
@@ -30,16 +35,16 @@ library
                      Handler.Utils
                      Model
                      Model.Comment
-                     Model.PendingResourceEdit
                      Model.Resource
+                     Model.ResourceEdit
                      Model.ResourceType
                      Model.User
                      Settings
                      Settings.StaticFiles
                      Settings.Development
                      View.Navbar
-                     View.PendingResourceEdit
                      View.Resource
+                     View.ResourceEdit
                      Yesod.Form.Types.Extra
 
     if flag(dev) || flag(library-only)

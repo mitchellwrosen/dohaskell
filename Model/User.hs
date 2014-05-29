@@ -1,5 +1,6 @@
 module Model.User 
-    ( getUserById
+    ( getPostedResources
+    , getUserById
     , unsafeGetUserById
     , updateUserDisplayName
     , userHasAuthorityOver
@@ -10,6 +11,14 @@ import Import
 import           Control.Concurrent (modifyMVar_, readMVar)
 import qualified Data.Map           as M
 import           Data.Maybe         (fromJust)
+
+getPostedResources :: UserId -> YesodDB App [Entity Resource]
+getPostedResources uid =
+    select $
+        from $ \(u `InnerJoin` r) -> do
+        on (u^.UserId ==. r^.ResourceUserId)
+        where_ (u^.UserId ==. val uid)
+        return r
 
 -- Get a User given a UserId; look in memory first. Grab from the database and
 -- put into memory if necessary.

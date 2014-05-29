@@ -20,28 +20,39 @@ Resource
     UniqueResourceUrl url
 
 Comment
-    resourceId ResourceId
-    userId     UserId
-    posted     UTCTime
-    text       Textarea
+    resId  ResourceId
+    userId UserId
+    posted UTCTime
+    text   Textarea
 
 Tag
     text Text
     UniqueTagText text
 
 ResourceTag
-    resourceId ResourceId
-    tagId      TagId
-    UniqueResourceTag resourceId tagId
+    resId ResourceId
+    tagId TagId
+    UniqueResourceTag resId tagId
 
-PendingResourceEdit
-    resourceId ResourceId
-    title      Text
-    type       ResourceType
+--------------------------------------------------------------------------------
+-- Pending resource edits
 
-PendingResourceEditTag
-    editId PendingResourceEditId
-    -- Not a TagId, because we don't want to insert every requested tag change.
-    -- Only when the edit is approved, a Tag with the given text is inserted.
-    tag Text
-    UniquePendingResourceEditTag editId tag
+EditTitle
+    resId ResourceId
+    title Text
+    UniqueEditTitle resId title
+
+EditType
+    resId ResourceId
+    type  ResourceType
+    UniqueEditType resId type
+
+EditAddTag
+    resId ResourceId
+    text  Text
+    UniqueEditAddTag resId text
+
+EditRemoveTag
+    resId ResourceId
+    text  Text
+    UniqueEditRemoveTag resId text

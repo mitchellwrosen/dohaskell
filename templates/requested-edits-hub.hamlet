@@ -3,6 +3,14 @@
 Requested edits:
 
 <ul>
-   $forall (Entity resId res, n) <- results
-      <li>
-         <a href=@{ReqEditsR uid resId}>#{resourceTitle res}</a> (#{n})
+   $forall (res, edit) <- editTitles
+      ^{editTitleWidget res edit}
+
+   $forall (res, edit) <- editTypes
+      ^{editTypeWidget res edit}
+
+   $forall (res, edit) <- editAddTags
+      ^{editAddTagWidget res edit}
+
+   $forall (res, edit) <- editRemoveTags
+      ^{editRemoveTagWidget res edit}

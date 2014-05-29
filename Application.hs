@@ -29,15 +29,20 @@ import           Yesod.Default.Main
 -- Don't forget to add new modules to your cabal file!
 import Handler.About
 import Handler.Edit
+import Handler.EditTitleAccept
+import Handler.EditTitleDecline
 import Handler.Home
-import Handler.ReqEditAccept
-import Handler.ReqEditDecline
-import Handler.ReqEdits
 import Handler.ReqEditsHub
 import Handler.Resource
 import Handler.Submit
 import Handler.Tag
 import Handler.User
+import Handler.EditTypeAccept
+import Handler.EditTypeDecline
+import Handler.EditAddTagAccept
+import Handler.EditAddTagDecline
+import Handler.EditRemoveTagAccept
+import Handler.EditRemoveTagDecline
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the

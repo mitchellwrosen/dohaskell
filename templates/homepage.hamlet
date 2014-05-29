@@ -3,6 +3,6 @@
 <div>
    Browse resources by tag:
    <ul>
-      $forall Entity _ (Tag text) <- tags
+      $forall tag <- tags
          <li>
-            <a href=@{TagR text}>#{text}
+            <a href=@{TagR tag}>#{tag}

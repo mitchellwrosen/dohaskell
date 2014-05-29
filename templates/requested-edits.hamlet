@@ -1,8 +1,0 @@
-^{navbarWidget}
-
-^{resourceWidget resId}
-
-<ul>
-   $forall edit <- edits
-      <li>
-         ^{pendingResourceEditWidget resId edit}

@@ -1,6 +1,5 @@
 module Model.Resource 
-    ( getResourcesWithPendingEditsForUser
-    , getResourceComments
+    ( getResourceComments
     , getResourceTags
     , getResourceTagsWithIds
     , updateResource
@@ -8,23 +7,11 @@ module Model.Resource
 
 import Import
 
--- Get the Resources with pending edits, posted by the specified User.
-getResourcesWithPendingEditsForUser :: UserId -> YesodDB App [(Entity Resource, Int)]
-getResourcesWithPendingEditsForUser uid = map (\(r,v) -> (r,unValue v)) <$> go
-  where 
-    go = select $
-            from $ \(u `InnerJoin` r `InnerJoin` e) -> do
-            on (u^.UserId ==. r^.ResourceUserId)
-            on (r^.ResourceId ==. e^.PendingResourceEditResourceId)
-            where_ (u^.UserId ==. val uid)
-            groupBy (r^.ResourceId)
-            return (r, countRows)
-
 getResourceComments :: ResourceId -> YesodDB App [Entity Comment]
 getResourceComments resId =
     select $ 
         from $ \comment -> do
-        where_ (comment^.CommentResourceId ==. val resId)
+        where_ (comment^.CommentResId ==. val resId)
         orderBy [asc (comment^.CommentPosted)]
         return comment
 
@@ -38,7 +25,7 @@ getResourceTagsWithIds resId =
     select $ 
         from $ \(tag, resourceTag) -> do
         where_ (tag^.TagId ==. resourceTag^.ResourceTagTagId
-            &&. resourceTag^.ResourceTagResourceId ==. val resId)
+            &&. resourceTag^.ResourceTagResId ==. val resId)
         return tag
 
 -- Adjust Resource's title and type. Add all Tags to the database, collecting
@@ -53,5 +40,5 @@ updateResource resId title typ tags = do
         where_ (resource^.ResourceId ==. val resId)
     tagIds <- mapM insertBy' tags
     delete $ from $ \resourceTag -> do
-        where_ (resourceTag^.ResourceTagResourceId ==. val resId)
+        where_ (resourceTag^.ResourceTagResId ==. val resId)
     mapM_ (insertUnique . ResourceTag resId) tagIds

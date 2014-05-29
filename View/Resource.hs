@@ -8,16 +8,17 @@ module View.Resource
 
 import Import
 
-import Data.Attoparsec.Text   (Parser, char, many1, notChar, sepBy1, skipSpace)
-import Data.Text              (intercalate, pack)
-import Data.Time              (getCurrentTime)
+import           Data.Attoparsec.Text   (Parser, char, many1, notChar, sepBy1, skipSpace)
+import qualified Data.Set               as S
+import           Data.Text              (intercalate, pack)
+import           Data.Time              (getCurrentTime)
 
-import Model.Resource         (getResourceTags)
-import Model.User             (unsafeGetUserById)
-import Yesod.Form.Types.Extra (parsedTextField)
+import           Model.Resource         (getResourceTags)
+import           Model.User             (unsafeGetUserById)
+import           Yesod.Form.Types.Extra (parsedTextField)
 
--- A single form to input a Resource and its associated Tags.
-resourceForm :: UserId -> Form (Resource, [Tag])
+-- A single form to input a Resource and its associated tags.
+resourceForm :: UserId -> Form (Resource, Set Text)
 resourceForm uid = renderDivs $ (,) <$> resourceEntityForm uid <*> resourceTagsForm Nothing
 
 -- A form to input a Resource.
@@ -33,11 +34,11 @@ resourceTypeField :: Field Handler ResourceType
 resourceTypeField = selectFieldList $ map (descResourceType &&& id) [minBound..maxBound]
 
 -- A form to input a comma-separated list of tags.
-resourceTagsForm :: Maybe [Text] -> AForm Handler [Tag]
-resourceTagsForm = (fmap.fmap) Tag . areq (parsedTextField parseTags showTags) "Tags (comma separated)"
+resourceTagsForm :: Maybe (Set Text) -> AForm Handler (Set Text)
+resourceTagsForm = areq (parsedTextField parseTags showTags) "Tags (comma separated)"
   where
-    parseTags :: Parser [Text]
-    parseTags = parseTag `sepBy1` char ','
+    parseTags :: Parser (Set Text)
+    parseTags = S.fromList <$> parseTag `sepBy1` char ','
 
     parseTag :: Parser Text
     parseTag = pack <$> token (many1 $ notChar ',')
@@ -45,8 +46,8 @@ resourceTagsForm = (fmap.fmap) Tag . areq (parsedTextField parseTags showTags) "
     token :: Parser a -> Parser a
     token p = skipSpace *> p <* skipSpace
 
-    showTags :: [Text] -> Text
-    showTags = intercalate ", "
+    showTags :: Set Text -> Text
+    showTags = intercalate ", " . S.toAscList
 
 -- Display meta-information about the resource (not including comments).
 resourceWidget :: ResourceId -> Widget

@@ -2,7 +2,7 @@ module Import
     ( module Import
     ) where
 
-import           Prelude                      as Import hiding (head, init, last, readFile, tail, writeFile)
+import           Prelude                      as Import hiding (head, init, last, readFile, tail, writeFile, mapM_)
 import           Yesod                        as Import hiding (Route(..), Value, (==.), (!=.), (*=.), (+=.)
                                                                , (-=.), (/=.), (<.), (<=.), (>.), (>=.)
                                                                , (=.), (||.), count, delete, selectSource, update
@@ -11,7 +11,10 @@ import           Yesod.Auth                   as Import
 
 import           Control.Applicative          as Import ((<$>), (<*>), (*>), (<*), liftA2, liftA3, pure)
 import           Control.Arrow                as Import ((&&&))
-import           Control.Monad                as Import (void, when)
+import           Control.Monad                as Import (unless, void, when)
+import           Data.Foldable                as Import (mapM_)
+import           Data.Map                     as Import (Map)
+import           Data.Set                     as Import (Set)
 import           Data.Text                    as Import (Text)
 
 import           Database.Esqueleto           as Import

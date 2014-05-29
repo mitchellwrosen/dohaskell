@@ -32,9 +32,9 @@ postSubmitR = do
             setMessage "Invalid resource submission! Please try again."
             redirect SubmitR
   where
-    insertResourceTagAndTag :: ResourceId -> Tag -> SqlPersistT Handler (Maybe ResourceTagId)
+    insertResourceTagAndTag :: ResourceId -> Text -> SqlPersistT Handler (Maybe ResourceTagId)
     insertResourceTagAndTag resId tag = do
-        insertBy tag >>= \case
+        insertBy (Tag tag) >>= \case
             Left (Entity tagId _) -> insertUnique $ ResourceTag resId tagId
             Right tagId           -> insertUnique $ ResourceTag resId tagId
 

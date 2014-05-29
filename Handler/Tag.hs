@@ -15,6 +15,6 @@ getTagR text = do
 getResourcesWithTagId :: TagId -> SqlPersistT Handler [Entity Resource]
 getResourcesWithTagId tagId = 
     select $ from $ \(resource, resourceTag) -> do
-        where_ (resource^.ResourceId ==. resourceTag^.ResourceTagResourceId
+        where_ (resource^.ResourceId ==. resourceTag^.ResourceTagResId
             &&. resourceTag^.ResourceTagTagId ==. val tagId)
         return resource
