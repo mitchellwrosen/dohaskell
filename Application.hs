@@ -43,6 +43,9 @@ import Handler.EditAddTagAccept
 import Handler.EditAddTagDecline
 import Handler.EditRemoveTagAccept
 import Handler.EditRemoveTagDecline
+import Handler.Browse
+
+import View.Navbar (navbarWidget)
 
 -- This line actually creates our YesodDispatch instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see the
@@ -99,7 +102,7 @@ makeFoundation conf = do
     usersMap <- newMVar M.empty
 
     let logger = Yesod.Core.Types.Logger loggerSet' getter
-        foundation = App conf s p manager dbconf logger usersMap
+        foundation = App conf s p manager dbconf logger navbarWidget usersMap
 
     -- Perform database migration using our application's logging settings.
     runLoggingT

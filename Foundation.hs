@@ -33,6 +33,7 @@ data App = App
     , persistConfig :: Settings.PersistConf
     , appLogger     :: Logger
 
+    , appNavbar     :: WidgetT App IO ()
     , appUsersMap   :: MVar (Map UserId User)
     }
 
@@ -66,6 +67,7 @@ instance Yesod App where
 
     defaultLayout innerWidget = do
         mmsg <- getMessage
+        navbarWidget <- appNavbar <$> getYesod
 
         -- We break up the default layout into two components:
         -- default-layout is the contents of the body tag, and

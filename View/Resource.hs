@@ -2,8 +2,8 @@ module View.Resource
     ( resourceForm
     , resourceTagsForm
     , resourceTypeField
-    , resourceWidget
-    , resourceWidget'
+    , resourceInfoWidget
+    , resourceInfoWidget'
     ) where
 
 import Import
@@ -12,6 +12,7 @@ import           Data.Attoparsec.Text   (Parser, char, many1, notChar, sepBy1, s
 import qualified Data.Set               as S
 import           Data.Text              (intercalate, pack)
 import           Data.Time              (getCurrentTime)
+import           Yesod.Form.Bootstrap3  -- (renderBootstrap3)
 
 import           Model.Resource         (getResourceTags)
 import           Model.User             (unsafeGetUserById)
@@ -19,7 +20,10 @@ import           Yesod.Form.Types.Extra (parsedTextField)
 
 -- A single form to input a Resource and its associated tags.
 resourceForm :: UserId -> Form (Resource, Set Text)
-resourceForm uid = renderDivs $ (,) <$> resourceEntityForm uid <*> resourceTagsForm Nothing
+resourceForm uid = renderBootstrap3 BootstrapInlineForm $ (,) 
+    <$> resourceEntityForm uid 
+    <*> resourceTagsForm Nothing
+    <*  bootstrapSubmit ("Submit" :: BootstrapSubmit Text)
 
 -- A form to input a Resource.
 resourceEntityForm :: UserId -> AForm Handler Resource
@@ -50,19 +54,19 @@ resourceTagsForm = areq (parsedTextField parseTags showTags) "Tags (comma separa
     showTags = intercalate ", " . S.toAscList
 
 -- Display meta-information about the resource (not including comments).
-resourceWidget :: ResourceId -> Widget
-resourceWidget resId = do
+resourceInfoWidget :: ResourceId -> Widget
+resourceInfoWidget resId = do
     (res,tags) <- handlerToWidget $ do
         res  <- runDB $ get404 resId
         tags <- runDB $ getResourceTags resId
         return (res,tags)
-    resourceWidget' res tags
+    resourceInfoWidget' res tags
 
--- Like resourceWidget', but the caller provides the Resource and [Tag]. Useful
--- for when the caller needs this information, but also wants to display this
--- widget.
-resourceWidget' :: Resource -> [Tag] -> Widget
-resourceWidget' Resource{..} tags = do
+-- Like resourceInfoWidget', but the caller provides the Resource and [Tag]. 
+-- Useful for when the caller needs this information, but also wants to display 
+-- this widget.
+resourceInfoWidget' :: Resource -> [Tag] -> Widget
+resourceInfoWidget' Resource{..} tags = do
     user <- handlerToWidget $ unsafeGetUserById resourceUserId
     [whamlet|
         <div>

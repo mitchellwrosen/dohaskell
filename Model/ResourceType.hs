@@ -6,13 +6,18 @@ import Database.Persist.TH (derivePersistField)
 import Data.Text           (Text)
 import Text.Blaze          (ToMarkup, preEscapedToMarkup, toMarkup)
 
-data ResourceType 
+data ResourceType
     = BlogPost
+    | CommunitySite
+    | ExtendedExample
     | ForumPost
     | LectureNotes
+    | MetaResource
     | QAWebsite
     | ResearchPaper
+    | ResearchPaperLite
     | SourceCode
+    | SurveyArticle
     | Textbook
     | VideoLecture
     deriving (Bounded, Enum, Eq, Read, Show)
@@ -25,11 +30,16 @@ instance ToMarkup ResourceType where
 
 -- Describe a resource type in a short sentence.
 descResourceType :: ResourceType -> Text
-descResourceType BlogPost      = "Blog post"
-descResourceType ForumPost     = "Forum post (e.g. Reddit comment)"
-descResourceType LectureNotes  = "Lecture slides/notes"
-descResourceType QAWebsite     = "Q&A website (e.g. Stack Overflow)"
-descResourceType ResearchPaper = "Research paper"
-descResourceType SourceCode    = "Source code (entire project)"
-descResourceType Textbook      = "Textbook"
-descResourceType VideoLecture  = "Video lecture/presentation"
+descResourceType BlogPost          = "Blog post"
+descResourceType CommunitySite     = "Community website"
+descResourceType ExtendedExample   = "Extended example/tutorial"
+descResourceType ForumPost         = "Forum post (e.g. Reddit comment)"
+descResourceType LectureNotes      = "Lecture slides/notes"
+descResourceType MetaResource      = "Meta-resource"
+descResourceType QAWebsite         = "Q&A website"
+descResourceType ResearchPaper     = "Research paper"
+descResourceType ResearchPaperLite = "Research paper lite"
+descResourceType SourceCode        = "Source code (entire project)"
+descResourceType SurveyArticle     = "Survey article"
+descResourceType Textbook          = "Textbook"
+descResourceType VideoLecture      = "Video lecture/presentation"

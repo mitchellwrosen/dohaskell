@@ -7,8 +7,7 @@ import Import
 import Model.Comment  (makeComment)
 import Model.Resource (getResourceComments)
 import Model.User     (unsafeGetUserById)
-import View.Navbar    (navbarWidget)
-import View.Resource  (resourceWidget)
+import View.Resource  (resourceInfoWidget)
 
 getResourceR :: ResourceId -> Handler Html
 getResourceR resId = do

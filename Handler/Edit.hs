@@ -7,7 +7,7 @@ import           Data.Text (intercalate)
 
 import Model.Resource            (getResourceTags, updateResource)
 import Model.User                (userHasAuthorityOver)
-import View.Resource             (resourceTagsForm, resourceTypeField, resourceWidget')
+import View.Resource             (resourceTagsForm, resourceTypeField, resourceInfoWidget')
 
 getEditR :: ResourceId -> Handler Html
 getEditR resId = do

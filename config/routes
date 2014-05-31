@@ -20,3 +20,4 @@
 /tag/#Text                         TagR                  GET
 /r/#ResourceId                     ResourceR             GET POST
 /r/#ResourceId/edit                EditR                 GET POST
+/browse BrowseR GET

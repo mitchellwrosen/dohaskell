@@ -1,0 +1,5 @@
+<ul #resource-list>
+   $forall Entity resId res <- resources
+      <li>
+         <a .res-info href=@{ResourceR resId}>
+         <a .res-link href=#{resourceUrl res}>#{resourceTitle res}

@@ -1,8 +1,4 @@
-^{navbarWidget}
-
-<div>
-   Browse resources by tag:
-   <ul>
-      $forall tag <- tags
-         <li>
-            <a href=@{TagR tag}>#{tag}
+<ul #tag-list>
+   $forall tag <- tags
+      <li>
+         <a href=@{TagR tag}>#{tag}

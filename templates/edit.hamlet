@@ -1,4 +1,4 @@
-^{resourceWidget' res tags}
+^{resourceInfoWidget' res tags}
 
 <form method=post action=@{EditR resId} enctype=#{enctype}>
    ^{widget}

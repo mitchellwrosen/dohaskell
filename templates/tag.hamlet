@@ -1,7 +1,0 @@
-^{navbarWidget}
-
-<ul>
-   $forall Entity resId res <- resources
-      <li>
-         <a href=#{resourceUrl res}>#{resourceTitle res}
-         <a href=@{ResourceR resId}>(more info/comments)

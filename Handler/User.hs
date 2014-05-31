@@ -7,7 +7,6 @@ import qualified Data.Text     as T
 
 import           Handler.Utils (denyPermissionIfDifferentUser)
 import           Model.User
-import           View.Navbar   (navbarWidget)
 
 getUserR :: UserId -> Handler Html
 getUserR uid = do
@@ -18,7 +17,7 @@ getUserR uid = do
     isOwnProfile <- maybe False (== uid) <$> maybeAuthId
 
     defaultLayout $ do
-        setTitle "User"
+        setTitle "dohaskell | profile"
         $(widgetFile "user")
 
 postUserR :: UserId -> Handler Html
@@ -38,7 +37,7 @@ postUserR uid = do
 displayNameForm :: Maybe Text -> Form Text
 displayNameForm curDisplayName = renderDivs $ areq
     (checkBool validName ("Only alphanumeric characters allowed."::Text) textField)
-    "Set display name:"
+    ""
     curDisplayName
   where
     validName :: Text -> Bool

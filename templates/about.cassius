@@ -1,0 +1,8 @@
+p
+   width: 20em
+   font-size: 30px
+   font-family: Helvetica
+   margin-top: 40px
+   margin-left: auto
+   margin-right: auto
+   line-height: 35px

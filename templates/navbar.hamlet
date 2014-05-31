@@ -1,15 +1,21 @@
-<ul .nav>
-   <li .nav>
-      <a .nav href=@{HomeR}>Home
+<img #logo src=@{StaticR img_lambda_png}>
+
+<ul #nav>
+   <li>
+      <a href=@{HomeR}>home
+   <li>
+      <a href=@{BrowseR}>browse
+   <li>
+      <a href=@{SubmitR}>submit
+
    $maybe uid <- muid
-      <li .nav>
-         <a .nav href=@{UserR uid}>My Profile
-      <li .nav>
-         <a .nav href=@{AuthR LogoutR}>Log Out
+      <li>
+         <a href=@{UserR uid}>profile
+      <li>
+         <a href=@{AuthR LogoutR}>log out
    $nothing
-      <li .nav>
-         <a .nav href=@{AuthR LoginR}>Log In
-   <li .nav>
-      <a .nav href=@{SubmitR}>Submit Resource
-   <li .nav>
-      <a .nav href=@{AboutR}>About
+      <li>
+         <a href=@{AuthR LoginR}>log in
+
+   <li>
+      <a href=@{AboutR}>about

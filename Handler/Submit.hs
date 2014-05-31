@@ -2,15 +2,14 @@ module Handler.Submit where
 
 import Import
 
-import View.Navbar            (navbarWidget)
-import View.Resource          (resourceForm)
+import View.Resource (resourceForm)
 
 getSubmitR :: Handler Html
 getSubmitR = do
     uid <- requireAuthId
     (widget, enctype) <- generateFormPost (resourceForm uid)
     defaultLayout $ do
-        setTitle "Submit a resource"
+        setTitle "dohaskell | submit"
         $(widgetFile "submit")
 
 postSubmitR :: Handler Html

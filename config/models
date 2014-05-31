@@ -8,6 +8,11 @@ User
     UniqueUserName name
     deriving Typeable
 
+Favorite
+    userId UserId
+    resId  ResourceId
+    UniqueFavorite userId resId
+
 --------------------------------------------------------------------------------
 -- Resource
 
@@ -19,12 +24,6 @@ Resource
     posted UTCTime
     UniqueResourceUrl url
 
-Comment
-    resId  ResourceId
-    userId UserId
-    posted UTCTime
-    text   Textarea
-
 Tag
     text Text
     UniqueTagText text
@@ -33,6 +32,19 @@ ResourceTag
     resId ResourceId
     tagId TagId
     UniqueResourceTag resId tagId
+
+Difficulty
+    resId  ResourceId
+    userId UserId
+    val    Int
+    UniqueDifficulty resId userId
+
+Comment
+    resId  ResourceId
+    userId UserId
+    posted UTCTime
+    text   Textarea
+
 
 --------------------------------------------------------------------------------
 -- Pending resource edits

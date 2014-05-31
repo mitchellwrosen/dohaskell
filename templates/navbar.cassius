@@ -1,0 +1,32 @@
+#logo
+   position: absolute
+   left: 10px
+   top: 10px
+   width: 50px
+   height: auto
+
+#nav
+   background-color: #f2f2f2
+   border-bottom: 3px solid #ccc
+   list-style-type: none
+   font-size: 24px
+   font-family: Helvetica
+   margin: 0
+   padding: 0
+   text-align: center
+   width: auto
+
+#nav li
+   display: inline
+
+#nav li a
+   color: #569
+   display: inline-block
+   font-weight: bold
+   margin: 5px 10px
+   padding: 10px
+   text-decoration: none
+
+#nav li a:hover
+   background-color: #d2d2d2
+   color: #000

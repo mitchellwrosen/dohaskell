@@ -1,17 +1,17 @@
-^{navbarWidget}
+<ul #profile>
+   $if isOwnProfile
+      <li>Login ID (hidden from the public): <strong>#{userName user}</strong>
 
-$if isOwnProfile
-   <div>Name (hidden): #{userName user}
-
-<div>
    $maybe displayName <- userDisplayName user
-      Display name: #{displayName}
+      <li #display-name>Display name: <strong>#{displayName}</strong>
    $nothing
-      Display name: (none)
+      <li #display-name>Display name: <strong>(none)</strong>
 
-$if isOwnProfile
-   <form method=post action=@{UserR uid} enctype=#{enctype}>
-      ^{widget}
-      <input type="submit" value="Submit">
+   $if isOwnProfile
+      <li #display-name-form>
+         <form method=post action=@{UserR uid} enctype=#{enctype}>
+            ^{widget}
+            <input type="submit" value="Submit">
 
-   <a href=@{ReqEditsHubR uid}>Requested Edits Hub
+      <li #req-edits-hub>
+         <a href=@{ReqEditsHubR uid}>Requested Edits Hub

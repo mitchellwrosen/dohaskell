@@ -1,6 +1,4 @@
-^{navbarWidget}
-
-^{resourceWidget resId}
+^{resourceInfoWidget resId}
 
 <a href=@{EditR resId}>Edit Resource
 

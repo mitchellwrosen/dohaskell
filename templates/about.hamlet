@@ -1,14 +1,13 @@
-^{navbarWidget}
+<p>
+   Officially,
+   <strong>dohaskell
+   is a tagged Haskell learning resources index.  Unofficially, it's a glorified bookmarks folder.
+   Submit links to your favorite blog posts, research papers, and video presentations - then tag
+   them for others to discover.
 
 <p>
-   Officially, 
-   <strong>Dohaskell.com
-   is a tagged Haskell learning resources index.
-   Unofficially, it's a glorified bookmarks folder.
-
-<p>
-   <strong>Dohaskell.com
-   is written entirely in Haskell using the
+   <strong>dohaskell
+   is open-source, written entirely in Haskell using the
    <a href="http://www.yesodweb.com">Yesod
-   Web framework. If you dig it, please
+   web framework. If you dig it, please
    <a href="https://github.com/mitchellwrosen/dohaskell">contribute</a>!

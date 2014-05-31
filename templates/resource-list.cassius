@@ -1,0 +1,33 @@
+#resource-list
+   list-style-type: none
+   font-size: 30px
+   font-family: Helvetica
+   margin: 10px
+
+#resource-list li a.res-info
+   background: url(@{StaticR img_clipboard_png})
+   background-position: center
+   background-repeat: no-repeat
+   background-size: 25px 25px
+   float: left
+   display: inline
+   font-weight: bold
+   margin-right: 5px
+   width: 50px
+   height: 50px
+   line-height: 50px
+   text-decoration: none
+
+#resource-list li a.res-link
+   color: #069
+   display: block
+   font-weight: bold
+   height: 50px
+   line-height: 50px
+   text-decoration: none
+   overflow: hidden
+
+#resource-list li a:hover
+   color: #000
+   background-color: #eee
+

@@ -7,6 +7,10 @@ module Model.Resource
 
 import Import
 
+import qualified Database.Persist as P
+
+import Model.ResourceTag (getResourceTagsByResId)
+
 getResourceComments :: ResourceId -> YesodDB App [Entity Comment]
 getResourceComments resId =
     select $ 
@@ -30,15 +34,33 @@ getResourceTagsWithIds resId =
 
 -- Adjust Resource's title and type. Add all Tags to the database, collecting
 -- their ids. Remove all ResourceTag relations for the Resource, and add back
--- new relations between the Resource and each Tag id collected.
+-- new relations between the Resource and each Tag id collected. Possibly delete
+-- old Tags if there are no other resources that share the tag.
 updateResource :: ResourceId -> Text -> ResourceType -> [Tag] -> YesodDB App ()
 updateResource resId title typ tags = do
+    -- Adjust Resource's title and type.
     update $ \resource -> do
         set resource [ ResourceTitle =. val title
                      , ResourceType  =. val typ
                      ]
         where_ (resource^.ResourceId ==. val resId)
-    tagIds <- mapM insertBy' tags
-    delete $ from $ \resourceTag -> do
-        where_ (resourceTag^.ResourceTagResId ==. val resId)
-    mapM_ (insertUnique . ResourceTag resId) tagIds
+
+    -- Add all new Tags, collect their IDs, and insert ResourceTags.
+    newTagIds <- mapM insertBy' tags
+    mapM_ (insertUnique . ResourceTag resId) newTagIds
+
+    -- Get all old ResourceTags, to count the number of other Resources
+    -- that share the Tag (we know there's at least one, this one), and
+    -- possibly delete the Tag.
+    getResourceTagsByResId resId >>= mapM_ (deleteUnusedTagsAndResourceTags newTagIds)
+  where
+    deleteUnusedTagsAndResourceTags :: [TagId] -> Entity ResourceTag -> YesodDB App ()
+    deleteUnusedTagsAndResourceTags newTagIds (Entity rtid (ResourceTag _ tid)) =
+        -- Only possibly delete tags that weren't just added as this resources's tags,
+        -- because our deletion criteria is that this is the only resource with the tag.
+        when (tid `notElem` newTagIds) $ do
+            -- Possibly delete the Tag, then unconditionally delete the ResourceTag (it's old).
+            n <- P.count [ResourceTagTagId P.==. tid]
+            when (n == 1) $ -- We know there's at least one.
+                P.delete tid
+            P.delete rtid   -- And know there's one less.

@@ -33,10 +33,12 @@ library
                      Handler.Tag
                      Handler.User
                      Handler.Utils
+                     Handler.Browse
                      Model
                      Model.Comment
                      Model.Resource
                      Model.ResourceEdit
+                     Model.ResourceTag
                      Model.ResourceType
                      Model.User
                      Settings

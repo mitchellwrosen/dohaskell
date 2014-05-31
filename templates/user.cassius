@@ -1,0 +1,22 @@
+#profile
+   margin: 10px
+
+#profile li
+   list-style-type: none
+   padding: 10px
+   font-size: 30px
+   height: 30px
+   line-height: 30px
+
+#display-name
+   display: inline-block
+
+#display-name-form
+   display: inline-block
+
+form .required
+   display: inline-block
+
+
+#req-edits-hub
+   clear: both

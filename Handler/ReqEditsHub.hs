@@ -4,7 +4,6 @@ import Import
 
 import Handler.Utils      (denyPermissionIfDifferentUser)
 import Model.ResourceEdit
-import View.Navbar        (navbarWidget)
 import View.ResourceEdit
 
 getReqEditsHubR :: UserId -> Handler Html
