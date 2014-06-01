@@ -1,5 +1,0 @@
-^{resourceInfoWidget' res tags}
-
-<form method=post action=@{EditR resId} enctype=#{enctype}>
-   ^{widget}
-   <input type="submit" value="Submit">

@@ -3,7 +3,7 @@
 
 User
     name            Text
-    displayName     Text Maybe
+    displayName     Text
     isAdministrator Bool
     UniqueUserName name
     deriving Typeable
@@ -38,13 +38,6 @@ Difficulty
     userId UserId
     val    Int
     UniqueDifficulty resId userId
-
-Comment
-    resId  ResourceId
-    userId UserId
-    posted UTCTime
-    text   Textarea
-
 
 --------------------------------------------------------------------------------
 -- Pending resource edits

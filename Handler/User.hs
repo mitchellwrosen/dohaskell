@@ -2,19 +2,23 @@ module Handler.User where
 
 import Import
 
-import           Data.Char     (isAlphaNum)
-import qualified Data.Text     as T
+import           Data.Char          (isAlphaNum)
+import qualified Data.Text          as T
 
-import           Handler.Utils (denyPermissionIfDifferentUser)
+import           Handler.Utils      (denyPermissionIfDifferentUser)
+import           Model.ResourceEdit (getNumRequestedEdits)
 import           Model.User
 
 getUserR :: UserId -> Handler Html
 getUserR uid = do
     user <- runDB $ get404 uid
-    (widget, enctype) <- generateFormPost (displayNameForm $ userDisplayName user)
+    (widget, enctype) <- generateFormPost (displayNameForm . Just $ userDisplayName user)
 
     -- Is the user looking at their own profile?
     isOwnProfile <- maybe False (== uid) <$> maybeAuthId
+    numRequestedEdits <- if isOwnProfile 
+                             then runDB $ getNumRequestedEdits uid
+                             else return 0 -- bogus val, not used in html
 
     defaultLayout $ do
         setTitle "dohaskell | profile"
@@ -35,11 +39,10 @@ postUserR uid = do
         FormMissing -> redirect (UserR uid)
 
 displayNameForm :: Maybe Text -> Form Text
-displayNameForm curDisplayName = renderDivs $ areq
-    (checkBool validName ("Only alphanumeric characters allowed."::Text) textField)
-    ""
-    curDisplayName
+displayNameForm = renderDivs . areq (validateNameField textField) ""
   where
+    validateNameField :: Field Handler Text -> Field Handler Text
+    validateNameField = checkBool validName ("Only alphanumeric characters allowed."::Text)
     validName :: Text -> Bool
     validName = allCharsSatisfy isAlphaNum
 

@@ -1,35 +1,23 @@
-module Handler.Edit where
+module Handler.EditResource where
 
 import Import
 
-import qualified Data.Set  as S
-import           Data.Text (intercalate)
+import qualified Data.Set          as S
+import           Data.Text         (intercalate)
 
-import Model.Resource            (getResourceTags, updateResource)
-import Model.User                (userHasAuthorityOver)
-import View.Resource             (resourceTagsForm, resourceTypeField, resourceInfoWidget')
+import           Model.Resource    (getResourceTags, updateResource)
+import           Model.User        (userHasAuthorityOver)
+import           View.EditResource (editResourceForm)
 
-getEditR :: ResourceId -> Handler Html
-getEditR resId = do
-    res  <- runDB $ get404 resId
-    tags <- runDB $ getResourceTags resId
-    (widget, enctype) <- generateFormPost $
-        editForm (Just $ resourceTitle res)
-                 (Just $ resourceType res)
-                 (Just . S.fromList $ map tagText tags)
-    defaultLayout $ do
-        setTitle "Edit Resource"
-        $(widgetFile "edit")
-
-postEditR :: ResourceId -> Handler Html
-postEditR resId = do
+postEditResourceR :: ResourceId -> Handler Html
+postEditResourceR resId = do
     res <- runDB $ get404 resId
-    ((result, _), _) <- runFormPost (editForm Nothing Nothing Nothing)
+    ((result, _), _) <- runFormPost (editResourceForm Nothing Nothing Nothing)
     case result of
         FormSuccess (newTitle, newType, newTags) -> do
             maybeAuthId >>= \case
                 -- It's okay to edit resources anonymously.
-                Nothing -> doPendingEdit
+                Nothing -> doPendingEdit res
                 Just editorUid -> do
                     ok <- userHasAuthorityOver editorUid (resourceUserId res)
                     if ok
@@ -40,23 +28,32 @@ postEditR resId = do
                         -- An authenticated, unprivileged user is the same as an
                         -- unauthenticated user - their edits result in pending
                         -- edits.
-                        else doPendingEdit
+                        else doPendingEdit res
           where
-            doPendingEdit :: Handler Html
-            doPendingEdit = do
-                void . runDB . insertUnique $ EditTitle resId newTitle
-                void . runDB . insertUnique $ EditType resId newType
+            doPendingEdit :: Resource -> Handler Html
+            doPendingEdit Resource{..} = do
+                pendingEditField resourceTitle newTitle EditTitle
+                pendingEditField resourceType newType EditType
                 oldTags <- S.fromList . map tagText <$> runDB (getResourceTags resId)
                 insertEditTags newTags oldTags EditAddTag    -- find any NEW not in OLD: pending ADD.
                 insertEditTags oldTags newTags EditRemoveTag -- find any OLD new in NEW: pending REMOVE.
                 setMessage "Your edit has been submitted for approval. Thanks!"
                 redirect $ ResourceR resId
               where
+                pendingEditField :: (Eq a, PersistEntity val, PersistEntityBackend val ~ SqlBackend)
+                    => a                        -- Old field value
+                    -> a                        -- New field value
+                    -> (ResourceId -> a -> val) -- PersistEntity constructor
+                    -> Handler ()
+                pendingEditField oldValue newValue entityConstructor =
+                    when (oldValue /= newValue) $
+                        void . runDB . insertUnique $ entityConstructor resId newValue
+
                 -- If we find any needles NOT in the haystack, insert the needle into the database
                 -- with the supplied constructor.
-                insertEditTags :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend) 
-                               => Set Text 
-                               -> Set Text 
+                insertEditTags :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend)
+                               => Set Text
+                               -> Set Text
                                -> (ResourceId -> Text -> val)
                                -> Handler ()
                 insertEditTags needles haystack entityConstructor =
@@ -65,14 +62,5 @@ postEditR resId = do
                             (void . runDB . insertUnique $ entityConstructor resId needle)) needles
         FormFailure errs -> do
             setMessage . toHtml $ "Form error: " <> intercalate ", " errs
-            redirect $ EditR resId
-        FormMissing -> redirect $ EditR resId
-
-editForm :: Maybe Text          -- default title
-         -> Maybe ResourceType  -- default type
-         -> Maybe (Set Text)    -- default tags
-         -> Form (Text, ResourceType, Set Text)
-editForm title typ tags = renderDivs $ (,,)
-    <$> areq textField         "Title" title
-    <*> areq resourceTypeField "Type"  typ
-    <*> resourceTagsForm tags
+            redirect $ ResourceR resId
+        FormMissing -> redirect $ ResourceR resId

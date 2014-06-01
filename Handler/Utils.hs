@@ -2,6 +2,7 @@ module Handler.Utils
     ( denyPermissionIfDifferentUser
     , denyPermissionIfDoesntHaveAuthorityOver
     , denyPermissionIfDoesntOwnResource
+    , denyPermissionIfNotAdmin
     , editAccept
     , editDecline
     ) where
@@ -10,7 +11,7 @@ import Import
 
 import qualified Database.Persist as P
 
-import Model.User (getUserById, userHasAuthorityOver)
+import Model.User (getUserById, isAdministrator, userHasAuthorityOver)
 
 denyPermissionIfDifferentUser :: UserId -> Handler ()
 denyPermissionIfDifferentUser requestedUser = maybeAuthId >>= \case
@@ -37,6 +38,11 @@ denyPermissionIfDoesntOwnResource resId = maybeAuthId >>= \case
         res <- runDB $ get404 resId
         ok <- userHasAuthorityOver uid (resourceUserId res)
         when (not ok) deny
+
+denyPermissionIfNotAdmin :: Handler ()
+denyPermissionIfNotAdmin = maybeAuthId >>= \case
+    Nothing -> deny
+    Just uid -> isAdministrator uid >>= \b -> if b then return () else deny
 
 deny :: Handler ()
 deny = permissionDenied "You don't have permission to view this page."

@@ -141,7 +141,7 @@ instance YesodAuth App where
             Nothing -> do
                 uid <- insert User
                     { userName            = credsIdent creds
-                    , userDisplayName     = Nothing
+                    , userDisplayName     = "anonymous"
                     , userIsAdministrator = False
                     }
                 return (Just uid)

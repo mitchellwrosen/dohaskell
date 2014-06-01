@@ -1,6 +1,5 @@
 module Model.Resource 
-    ( getResourceComments
-    , getResourceTags
+    ( getResourceTags
     , getResourceTagsWithIds
     , updateResource
     ) where
@@ -10,14 +9,6 @@ import Import
 import qualified Database.Persist as P
 
 import Model.ResourceTag (getResourceTagsByResId)
-
-getResourceComments :: ResourceId -> YesodDB App [Entity Comment]
-getResourceComments resId =
-    select $ 
-        from $ \comment -> do
-        where_ (comment^.CommentResId ==. val resId)
-        orderBy [asc (comment^.CommentPosted)]
-        return comment
 
 getResourceTags :: ResourceId -> YesodDB App [Tag]
 getResourceTags = fmap (map entityVal) . getResourceTagsWithIds

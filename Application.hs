@@ -28,7 +28,6 @@ import           Yesod.Default.Main
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
 import Handler.About
-import Handler.Edit
 import Handler.EditTitleAccept
 import Handler.EditTitleDecline
 import Handler.Home
@@ -37,13 +36,15 @@ import Handler.Resource
 import Handler.Submit
 import Handler.Tag
 import Handler.User
-import Handler.EditTypeAccept
-import Handler.EditTypeDecline
 import Handler.EditAddTagAccept
 import Handler.EditAddTagDecline
 import Handler.EditRemoveTagAccept
 import Handler.EditRemoveTagDecline
+import Handler.EditResource
+import Handler.EditTypeAccept
+import Handler.EditTypeDecline
 import Handler.Browse
+import Handler.AllEdits
 
 import View.Navbar (navbarWidget)
 

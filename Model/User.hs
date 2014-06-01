@@ -1,6 +1,7 @@
 module Model.User 
     ( getPostedResources
     , getUserById
+    , isAdministrator
     , unsafeGetUserById
     , updateUserDisplayName
     , userHasAuthorityOver
@@ -34,6 +35,9 @@ getUserById uid = do
                     return (Just user)
         user@(Just _) -> return user
 
+isAdministrator :: UserId -> Handler Bool
+isAdministrator = fmap (maybe False userIsAdministrator) . getUserById
+
 -- Partial function. Should only be used when the UserId is (for example)
 -- a foreign key, and thus if this function bottoms, there's some database
 -- inconsistency.
@@ -46,7 +50,7 @@ updateUserDisplayName uid displayName = do
     modifyUsersMap (M.delete uid)
 
     runDB $ update $ \user -> do
-        set user [UserDisplayName =. val (Just displayName)]
+        set user [UserDisplayName =. val displayName]
         where_ (user^.UserId ==. val uid)
 
 -- 'bully' has authority over 'nerd' if 'bully' is an administrator,

@@ -1,0 +1,18 @@
+#res-info
+   font-family: Helvetica
+   margin: 10px
+
+#res-link
+   font-size: 24px
+
+#res-user
+   font-size: 18px
+
+#res-info div
+   margin-bottom: 10px
+
+#res-tags
+   list-style: none
+
+#res-tags li
+   display: block

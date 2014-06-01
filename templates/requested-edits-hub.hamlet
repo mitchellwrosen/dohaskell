@@ -1,14 +1,20 @@
-Requested edits:
+<div #requested-edits>
+   $if areNoRequestedEdits
+      <div #no-edits>No requested edits!
+   $else
+      <ul>
+         $forall (res, edit) <- editTitles
+            <li>
+               ^{editTitleWidget res edit}
 
-<ul>
-   $forall (res, edit) <- editTitles
-      ^{editTitleWidget res edit}
+         $forall (res, edit) <- editTypes
+            <li>
+               ^{editTypeWidget res edit}
 
-   $forall (res, edit) <- editTypes
-      ^{editTypeWidget res edit}
+         $forall (res, edit) <- editAddTags
+            <li>
+               ^{editAddTagWidget res edit}
 
-   $forall (res, edit) <- editAddTags
-      ^{editAddTagWidget res edit}
-
-   $forall (res, edit) <- editRemoveTags
-      ^{editRemoveTagWidget res edit}
+         $forall (res, edit) <- editRemoveTags
+            <li>
+               ^{editRemoveTagWidget res edit}

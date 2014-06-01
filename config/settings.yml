@@ -15,5 +15,6 @@ Staging:
   <<: *defaults
 
 Production:
-  #approot: "http://www.example.com"
+  approot: "http://www.dohaskell.com"
+  port: 80
   <<: *defaults

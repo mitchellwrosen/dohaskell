@@ -1,0 +1,9 @@
+#requested-edits
+   margin: 10px
+
+#requested-edits li
+   list-style: none
+
+#no-edits
+   font-size: 30px
+   font-weight: bold

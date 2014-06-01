@@ -17,11 +17,11 @@ library
                      Import
                      Foundation
                      Handler.About
-                     Handler.Edit
                      Handler.EditAddTagAccept
                      Handler.EditAddTagDecline
                      Handler.EditRemoveTagAccept
                      Handler.EditRemoveTagDecline
+                     Handler.EditResource
                      Handler.EditTitleAccept
                      Handler.EditTitleDecline
                      Handler.EditTypeAccept
@@ -34,8 +34,8 @@ library
                      Handler.User
                      Handler.Utils
                      Handler.Browse
+                     Handler.AllEdits
                      Model
-                     Model.Comment
                      Model.Resource
                      Model.ResourceEdit
                      Model.ResourceTag
@@ -44,6 +44,7 @@ library
                      Settings
                      Settings.StaticFiles
                      Settings.Development
+                     View.EditResource
                      View.Navbar
                      View.Resource
                      View.ResourceEdit

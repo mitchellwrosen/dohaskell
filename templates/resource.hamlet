@@ -1,16 +1,5 @@
 ^{resourceInfoWidget resId}
 
-<a href=@{EditR resId}>Edit Resource
-
-<div>Comments:
-   $if null comments
-      <p>(no comments)
-   $else
-      <ul>
-         $forall comment <- comments
-            ^{commentWidget comment}
-
-<div>
-   <form method=post action=@{ResourceR resId} enctype=#{enctype}>
-      ^{widget}
-      <input type="submit" value="Submit">
+<form method=post action=@{EditResourceR resId} enctype=#{enctype}>
+   ^{widget}
+   <input type="submit" value="Submit">

@@ -1,6 +1,6 @@
 #tag-list
-   list-style-type: none
-   font-size: 40px
+   list-style: none
+   font-size: 36px
    font-family: Helvetica
    margin: 10px
 

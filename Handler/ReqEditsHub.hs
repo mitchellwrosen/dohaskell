@@ -13,6 +13,10 @@ getReqEditsHubR uid = do
     editTypes      <- runDB $ getEditTypes      uid
     editAddTags    <- runDB $ getEditAddTags    uid
     editRemoveTags <- runDB $ getEditRemoveTags uid
+    let areNoRequestedEdits = null editTitles
+                           && null editTypes
+                           && null editAddTags
+                           && null editRemoveTags
     defaultLayout $ do
-        setTitle "Requested Edits"
+        setTitle "dohaskell | requested edits"
         $(widgetFile "requested-edits-hub")

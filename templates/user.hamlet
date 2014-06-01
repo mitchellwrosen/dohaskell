@@ -1,11 +1,8 @@
 <ul #profile>
    $if isOwnProfile
-      <li>Login ID (hidden from the public): <strong>#{userName user}</strong>
+      <li>Login ID (hidden): <strong>#{userName user}</strong>
 
-   $maybe displayName <- userDisplayName user
-      <li #display-name>Display name: <strong>#{displayName}</strong>
-   $nothing
-      <li #display-name>Display name: <strong>(none)</strong>
+   <li #display-name>Display name: <strong>#{userDisplayName user}</strong>
 
    $if isOwnProfile
       <li #display-name-form>
@@ -14,4 +11,4 @@
             <input type="submit" value="Submit">
 
       <li #req-edits-hub>
-         <a href=@{ReqEditsHubR uid}>Requested Edits Hub
+         <a href=@{ReqEditsHubR uid}>Requested Edits Hub (#{numRequestedEdits})

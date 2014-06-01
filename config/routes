@@ -18,6 +18,7 @@
 /e/remtag/#EditRemoveTagId/decline EditRemoveTagDeclineR     POST
 /submit                            SubmitR               GET POST
 /tag/#Text                         TagR                  GET
-/r/#ResourceId                     ResourceR             GET POST
-/r/#ResourceId/edit                EditR                 GET POST
+/r/#ResourceId                     ResourceR             GET
+/r/#ResourceId/edit                EditResourceR             POST
 /browse BrowseR GET
+/admin/edits AllEditsR GET

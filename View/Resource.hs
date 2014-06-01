@@ -68,13 +68,4 @@ resourceInfoWidget resId = do
 resourceInfoWidget' :: Resource -> [Tag] -> Widget
 resourceInfoWidget' Resource{..} tags = do
     user <- handlerToWidget $ unsafeGetUserById resourceUserId
-    [whamlet|
-        <div>
-           <div><a href=#{resourceUrl}>#{resourceTitle}</a> (#{resourceType})
-           <div>Posted by <a href=@{UserR $ resourceUserId}>#{maybe "(none)" id $ userDisplayName user}</a> at #{show $ resourcePosted}
-           <div >Tags:
-              <ul>
-                 $forall Tag text <- tags
-                    <li>
-                       <a href=@{TagR text}>#{text}
-    |]
+    $(widgetFile "resource-info")
