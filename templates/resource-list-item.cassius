@@ -1,0 +1,54 @@
+.res-li-col
+   height: 30px
+   line-height: 30px
+
+.res-li-col:hover
+   background-color: #eee
+
+.res-fav
+   background: url(@{StaticR img_star_outline_png})
+   background-position: center
+   background-repeat: no-repeat
+   background-size: 24px 24px
+   clear: both
+   float: left
+   width: 30px
+   height: 30px
+
+.res-fav.fav
+   background: url(@{StaticR img_star_png})
+   background-position: center
+   background-repeat: no-repeat
+   background-size: 24px 24px
+
+.res-fav:hover
+   background-color: #eee
+
+.res-fav.fav:hover
+   background-color: #eee
+
+.res-link
+   color: #069
+   display: block
+   float: none
+   font-size: 20px
+   font-weight: bold
+   text-decoration: none
+   padding: 0px 5px
+   overflow: hidden
+
+.res-link:hover
+   color: #000
+   text-decoration: none
+
+.res-info
+   background: url(@{StaticR img_clipboard_png})
+   background-position: center
+   background-repeat: no-repeat
+   background-size: 20px 20px
+   display: block
+   width: 30px
+   height: 30px
+   text-decoration: none
+   float: right
+

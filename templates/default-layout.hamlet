@@ -1,6 +1,7 @@
 ^{navbarWidget}
 
-$maybe msg <- mmsg
-    <div #message>#{msg}
+<div #content>
+   $maybe msg <- mmsg
+       <div #message>#{msg}
 
-^{innerWidget}
+   ^{innerWidget}

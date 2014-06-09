@@ -20,7 +20,6 @@ import           Yesod.Core.Types            (Logger)
 import           Yesod.Static
 import           Yesod.Auth
 import           Yesod.Auth.BrowserId
-import           Yesod.Auth.GoogleEmail
 import           Yesod.Default.Config
 import           Yesod.Default.Util          (addStaticContentExternal)
 
@@ -134,7 +133,6 @@ instance YesodAuth App where
     loginDest  _ = HomeR -- Where to send a user after successful login
     logoutDest _ = HomeR -- Where to send a user after logout
 
-    -- TODO: redirect to profile page
     getAuthId creds = runDB $
         getBy (UniqueUserName $ credsIdent creds) >>= \case
             Just (Entity uid _) -> return (Just uid)
@@ -147,7 +145,7 @@ instance YesodAuth App where
                 return (Just uid)
 
     -- You can add other plugins like BrowserID, email or OAuth here
-    authPlugins _ = [authBrowserId def, authGoogleEmail]
+    authPlugins _ = [authBrowserId def]
 
     authHttpManager = httpManager
 

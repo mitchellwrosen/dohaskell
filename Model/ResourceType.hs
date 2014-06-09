@@ -9,18 +9,21 @@ import Text.Blaze          (ToMarkup, preEscapedToMarkup, toMarkup)
 data ResourceType
     = BlogPost
     | CommunitySite
+    | Dissertation
+    | ExperienceReport
     | ExtendedExample
     | ForumPost
+    | FunctionalPearl
     | LectureNotes
+    | MastersThesis
     | MetaResource
     | QAWebsite
     | ResearchPaper
     | ResearchPaperLite
-    | SourceCode
     | SurveyArticle
     | Textbook
     | VideoLecture
-    deriving (Bounded, Enum, Eq, Read, Show)
+    deriving (Bounded, Enum, Eq, Ord, Read, Show)
 derivePersistField "ResourceType"
 
 -- Reuse instance ToMarkup Text
@@ -32,14 +35,17 @@ instance ToMarkup ResourceType where
 descResourceType :: ResourceType -> Text
 descResourceType BlogPost          = "Blog post"
 descResourceType CommunitySite     = "Community website"
+descResourceType Dissertation      = "Dissertation"
+descResourceType ExperienceReport  = "Experience report"
 descResourceType ExtendedExample   = "Extended example/tutorial"
 descResourceType ForumPost         = "Forum post (e.g. Reddit comment)"
+descResourceType FunctionalPearl   = "Functional pearl"
 descResourceType LectureNotes      = "Lecture slides/notes"
+descResourceType MastersThesis     = "Master's thesis"
 descResourceType MetaResource      = "Meta-resource"
 descResourceType QAWebsite         = "Q&A website"
 descResourceType ResearchPaper     = "Research paper"
 descResourceType ResearchPaperLite = "Research paper lite"
-descResourceType SourceCode        = "Source code (entire project)"
 descResourceType SurveyArticle     = "Survey article"
 descResourceType Textbook          = "Textbook"
 descResourceType VideoLecture      = "Video lecture/presentation"

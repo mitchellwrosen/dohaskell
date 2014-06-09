@@ -6,34 +6,32 @@ import qualified Data.Set          as S
 import           Data.Text         (intercalate)
 
 import           Model.Resource    (getResourceTags, updateResource)
-import           Model.User        (userHasAuthorityOver)
+import           Model.User        (thisUserHasAuthorityOver)
 import           View.EditResource (editResourceForm)
 
 postEditResourceR :: ResourceId -> Handler Html
 postEditResourceR resId = do
     res <- runDB $ get404 resId
-    ((result, _), _) <- runFormPost (editResourceForm Nothing Nothing Nothing)
+    ((result, _), _) <- runFormPost (editResourceForm Nothing Nothing Nothing Nothing)
     case result of
-        FormSuccess (newTitle, newType, newTags) -> do
-            maybeAuthId >>= \case
-                -- It's okay to edit resources anonymously.
-                Nothing -> doPendingEdit res
-                Just editorUid -> do
-                    ok <- userHasAuthorityOver editorUid (resourceUserId res)
-                    if ok
-                        then do
-                            runDB $ updateResource resId newTitle newType (map Tag . S.toAscList $ newTags)
-                            setMessage "Resource updated."
-                            redirect $ ResourceR resId
-                        -- An authenticated, unprivileged user is the same as an
-                        -- unauthenticated user - their edits result in pending
-                        -- edits.
-                        else doPendingEdit res
+        FormSuccess (newTitle, newAuthor, newType, newTags) -> do
+            ok <- thisUserHasAuthorityOver (resourceUserId res)
+            if ok
+                then do
+                    runDB $ updateResource resId newTitle newAuthor newType (map Tag . S.toAscList $ newTags)
+                    setMessage "Resource updated."
+                    redirect $ ResourceR resId
+                -- An authenticated, unprivileged user is the same as an
+                -- unauthenticated user - their edits result in pending
+                -- edits.
+                else doPendingEdit res
           where
             doPendingEdit :: Resource -> Handler Html
             doPendingEdit Resource{..} = do
                 pendingEditField resourceTitle newTitle EditTitle
+                pendingEditField resourceAuthor newAuthor EditAuthor
                 pendingEditField resourceType newType EditType
+
                 oldTags <- S.fromList . map tagText <$> runDB (getResourceTags resId)
                 insertEditTags newTags oldTags EditAddTag    -- find any NEW not in OLD: pending ADD.
                 insertEditTags oldTags newTags EditRemoveTag -- find any OLD new in NEW: pending REMOVE.

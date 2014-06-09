@@ -2,6 +2,7 @@ module Model.User
     ( getPostedResources
     , getUserById
     , isAdministrator
+    , thisUserHasAuthorityOver
     , unsafeGetUserById
     , updateUserDisplayName
     , userHasAuthorityOver
@@ -64,3 +65,10 @@ userHasAuthorityOver bully nerd = do
         if isAdmin
             then True
             else (bully == nerd)
+
+-- Like userHasAuthorityOver, but uses the current user ('this' user) as the
+-- first argument.
+thisUserHasAuthorityOver :: UserId -> Handler Bool
+thisUserHasAuthorityOver nerd = maybeAuthId >>= \case
+    Nothing    -> return False
+    Just bully -> userHasAuthorityOver bully nerd

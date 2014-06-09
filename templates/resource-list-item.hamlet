@@ -1,0 +1,6 @@
+<div .res-li>
+   $if is_logged_in
+      <div .res-li-col .res-fav :is_fav:.fav ##{toPathPiece resId} title="Favorite">
+   $# The info (floated right) has to be rendered first, so the link can be sized properly.
+   <a .res-li-col .res-info href=@{ResourceR resId}>
+   <a .res-li-col .res-link href=#{resourceUrl res}>#{resourceTitle res}

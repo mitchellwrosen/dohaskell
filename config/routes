@@ -6,10 +6,14 @@
 
 /                                  HomeR                 GET
 /about                             AboutR                GET
+/browse                            BrowseR               GET
+/admin/edits                       AllEditsR             GET
 /u/#UserId                         UserR                 GET POST
 /u/#UserId/edits                   ReqEditsHubR          GET
 /e/title/#EditTitleId/accept       EditTitleAcceptR          POST
 /e/title/#EditTitleId/decline      EditTitleDeclineR         POST
+/e/author/#EditAuthorId/accept     EditAuthorAcceptR         POST
+/e/author/#EditAuthorId/decline    EditAuthorDeclineR        POST
 /e/type/#EditTypeId/accept         EditTypeAcceptR           POST
 /e/type/#EditTypeId/decline        EditTypeDeclineR          POST
 /e/addtag/#EditAddTagId/accept     EditAddTagAcceptR         POST
@@ -18,7 +22,8 @@
 /e/remtag/#EditRemoveTagId/decline EditRemoveTagDeclineR     POST
 /submit                            SubmitR               GET POST
 /tag/#Text                         TagR                  GET
-/r/#ResourceId                     ResourceR             GET
+/r/!#ResourceId                    ResourceR             GET
 /r/#ResourceId/edit                EditResourceR             POST
-/browse BrowseR GET
-/admin/edits AllEditsR GET
+/r/#ResourceId/delete              DeleteResourceR           POST
+/r/favorite                        FavoriteResourceR         POST
+/r/unfavorite                      UnfavoriteResourceR       POST

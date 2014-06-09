@@ -1,0 +1,17 @@
+$(function() {
+   $('.res-fav').click(function() {
+      $(this).toggleClass('fav');
+      if ($(this).hasClass('fav')) {
+         $.post("@{FavoriteResourceR}", { resId: $(this).attr('id') })
+            .fail(function(xhr, textStatus, errorThrown) {
+               alert("Failure: " + xhr.responseText);
+            });
+      }
+      else {
+         $.post("@{UnfavoriteResourceR}", { resId: $(this).attr('id') })
+            .fail(function(xhr, textStatus, errorThrown) {
+               alert("Failure: " + xhr.responseText);
+            });
+      }
+   });
+});

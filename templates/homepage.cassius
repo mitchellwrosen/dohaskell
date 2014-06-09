@@ -1,17 +1,17 @@
-#tag-list
+.tag-list
    list-style: none
-   font-size: 36px
-   font-family: Helvetica
-   margin: 10px
+   font-size: 22px
+   margin: 0
 
-#tag-list li a
+.tag-list a
    color: #069
    display: block
    font-weight: bold
-   height: 50px
-   line-height: 50px
+   height: 30px
+   line-height: 30px
+   padding-left: 5px
    text-decoration: none
 
-#tag-list li a:hover
+.tag-list a:hover
    color: #000
    background-color: #eee

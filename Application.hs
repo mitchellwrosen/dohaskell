@@ -45,6 +45,10 @@ import Handler.EditTypeAccept
 import Handler.EditTypeDecline
 import Handler.Browse
 import Handler.AllEdits
+import Handler.DeleteResource
+import Handler.EditAuthorAccept
+import Handler.EditAuthorDecline
+import Handler.FavoriteResource
 
 import View.Navbar (navbarWidget)
 

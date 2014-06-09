@@ -1,9 +1,11 @@
+#resource-body
+   margin: 10px
+
 .form-group
    margin-bottom: 10px
 
 form
    width: 50em
-   margin: 10px
 
 input
    width: 50em

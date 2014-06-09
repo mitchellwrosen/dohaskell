@@ -1,15 +1,17 @@
 module Handler.Utils 
     ( denyPermissionIfDifferentUser
     , denyPermissionIfDoesntHaveAuthorityOver
-    , denyPermissionIfDoesntOwnResource
     , denyPermissionIfNotAdmin
     , editAccept
     , editDecline
+    , lookupIntPostParam
     ) where
 
 import Import
 
-import qualified Database.Persist as P
+import           Data.Attoparsec.Text (decimal, parseOnly)
+import qualified Data.Text            as T
+import qualified Database.Persist     as P
 
 import Model.User (getUserById, isAdministrator, userHasAuthorityOver)
 
@@ -31,13 +33,13 @@ denyPermissionIfDoesntHaveAuthorityOver nerd = maybeAuthId >>= \case
                 ok <- userHasAuthorityOver bully nerd
                 when (not ok) deny
 
-denyPermissionIfDoesntOwnResource :: ResourceId -> Handler ()
-denyPermissionIfDoesntOwnResource resId = maybeAuthId >>= \case
-    Nothing -> deny
-    Just uid -> do
-        res <- runDB $ get404 resId
-        ok <- userHasAuthorityOver uid (resourceUserId res)
-        when (not ok) deny
+{-denyPermissionIfDoesntOwnResource :: ResourceId -> Handler ()-}
+{-denyPermissionIfDoesntOwnResource resId = maybeAuthId >>= \case-}
+    {-Nothing -> deny-}
+    {-Just uid -> do-}
+        {-res <- runDB $ get404 resId-}
+        {-ok <- userHasAuthorityOver uid (resourceUserId res)-}
+        {-when (not ok) deny-}
 
 denyPermissionIfNotAdmin :: Handler ()
 denyPermissionIfNotAdmin = maybeAuthId >>= \case
@@ -66,7 +68,7 @@ editAccept getResourceFunc sqlCode eid = do
     runDB $ do
         sqlCode edit
         P.delete eid
-    redirect $ ReqEditsHubR uid
+    redirectUltDest HomeR
 
 -- Utility method shared by all 'decline resource edit' functions. Performs boiler
 -- plate code such as 404 on invalid edit id, resource id, and deny permission
@@ -83,4 +85,12 @@ editDecline getResourceFunc eid = do
     denyPermissionIfDoesntHaveAuthorityOver uid
 
     runDB $ P.delete eid
-    redirect $ ReqEditsHubR uid
+    redirectUltDest HomeR
+
+-- TODO: put in Yesod.Core.Handler.Extra?
+lookupIntPostParam :: (MonadHandler m, Integral a) => Text -> m a
+lookupIntPostParam key = lookupPostParam key >>= \case
+    Nothing    -> invalidArgs $ ["Missing POST param: " <> key]
+    Just value -> case parseOnly decimal value of
+        Left err -> invalidArgs $ ["Bad POST param: " <> key <> " (" <> T.pack err <> ")"]
+        Right n  -> return n

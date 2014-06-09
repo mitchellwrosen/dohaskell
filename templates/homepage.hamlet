@@ -1,4 +1,4 @@
-<ul #tag-list>
+<ul .tag-list>
    $forall tag <- tags
       <li>
          <a href=@{TagR tag}>#{tag}

@@ -1,6 +1,9 @@
-module Model.Resource 
-    ( getResourceTags
+module Model.Resource
+    ( deleteResource
+    , getResourceTags
     , getResourceTagsWithIds
+    , getResourcesWithTag
+    , isFavoriteResource
     , updateResource
     ) where
 
@@ -10,6 +13,23 @@ import qualified Database.Persist as P
 
 import Model.ResourceTag (getResourceTagsByResId)
 
+deleteResource :: ResourceId -> YesodDB App ()
+deleteResource resId = do
+    tagIds <- map (resourceTagTagId . entityVal)  <$> getResourceTagsByResId resId
+    mapM_ deleteUnusedTag tagIds
+    P.delete resId
+  where
+    deleteUnusedTag :: TagId -> YesodDB App ()
+    deleteUnusedTag tid = do
+        [n] <- fmap (map unValue) $
+            select $
+                from $ \rt -> do
+                where_ (rt^.ResourceTagTagId ==. val tid)
+                return countRows
+        -- resource hasn't been deleted yet, so compare to 1
+        when (n == (1::Int)) $
+            P.delete tid
+
 getResourceTags :: ResourceId -> YesodDB App [Tag]
 getResourceTags = fmap (map entityVal) . getResourceTagsWithIds
 
@@ -17,22 +37,42 @@ getResourceTags = fmap (map entityVal) . getResourceTagsWithIds
 -- tags' ids.
 getResourceTagsWithIds :: ResourceId -> YesodDB App [Entity Tag]
 getResourceTagsWithIds resId =
-    select $ 
-        from $ \(tag, resourceTag) -> do
-        where_ (tag^.TagId ==. resourceTag^.ResourceTagTagId
-            &&. resourceTag^.ResourceTagResId ==. val resId)
-        return tag
+    select $
+        from $ \(t, rt) -> do
+        where_ (t^.TagId ==. rt^.ResourceTagTagId &&.
+                rt^.ResourceTagResId ==. val resId)
+        orderBy [asc (t^.TagText)]
+        return t
 
--- Adjust Resource's title and type. Add all Tags to the database, collecting
+getResourcesWithTag :: Text -> YesodDB App [Entity Resource]
+getResourcesWithTag tag = getBy404 (UniqueTagText tag) >>= getResourcesWithTagId . entityKey
+  where
+    getResourcesWithTagId :: TagId -> YesodDB App [Entity Resource]
+    getResourcesWithTagId tagId = 
+        select $
+            from $ \(r, rt) -> do
+            where_ (r^.ResourceId ==. rt^.ResourceTagResId &&. 
+                    rt^.ResourceTagTagId ==. val tagId)
+            return r
+
+isFavoriteResource :: ResourceId -> Handler Bool
+isFavoriteResource resId = maybeAuthId >>= \case
+    Nothing  -> return False
+    Just uid -> maybeToBool <$> runDB (getBy $ UniqueFavorite uid resId)
+  where
+    maybeToBool = maybe False (const True)
+
+-- Adjust Resource's title, author, and type. Add all Tags to the database, collecting
 -- their ids. Remove all ResourceTag relations for the Resource, and add back
 -- new relations between the Resource and each Tag id collected. Possibly delete
 -- old Tags if there are no other resources that share the tag.
-updateResource :: ResourceId -> Text -> ResourceType -> [Tag] -> YesodDB App ()
-updateResource resId title typ tags = do
+updateResource :: ResourceId -> Text -> Maybe Text -> ResourceType -> [Tag] -> YesodDB App ()
+updateResource resId title author typ tags = do
     -- Adjust Resource's title and type.
     update $ \resource -> do
-        set resource [ ResourceTitle =. val title
-                     , ResourceType  =. val typ
+        set resource [ ResourceTitle  =. val title
+                     , ResourceType   =. val typ
+                     , ResourceAuthor =. val author
                      ]
         where_ (resource^.ResourceId ==. val resId)
 

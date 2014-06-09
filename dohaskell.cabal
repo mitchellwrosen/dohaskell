@@ -40,6 +40,10 @@ library
                      Handler.Utils
                      Handler.Browse
                      Handler.AllEdits
+                     Handler.DeleteResource
+                     Handler.EditAuthorAccept
+                     Handler.EditAuthorDecline
+                     Handler.FavoriteResource
                      Model
                      Model.Resource
                      Model.ResourceEdit

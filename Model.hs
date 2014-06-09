@@ -4,7 +4,7 @@ import Data.Text              (Text)
 import Data.Time              (UTCTime)
 import Data.Typeable          (Typeable)
 import Database.Persist.Quasi
-import Prelude                (Bool, Int)
+import Prelude                (Bool, Eq, Int, Ord)
 import Yesod
 
 import Model.ResourceType     (ResourceType)

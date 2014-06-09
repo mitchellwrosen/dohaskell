@@ -18,11 +18,13 @@ Favorite
 
 Resource
     title  Text
+    author Text Maybe
     url    Text
     type   ResourceType
     userId UserId
     posted UTCTime
     UniqueResourceUrl url
+    deriving Eq Ord
 
 Tag
     text Text
@@ -33,6 +35,7 @@ ResourceTag
     tagId TagId
     UniqueResourceTag resId tagId
 
+-- Currently unused
 Difficulty
     resId  ResourceId
     userId UserId
@@ -41,6 +44,12 @@ Difficulty
 
 --------------------------------------------------------------------------------
 -- Pending resource edits
+
+-- Caveat: can't have a uniqueness constraint on a NULLABLE field. This means
+-- there may be two pending edits for the same author name change. Oh well.
+EditAuthor
+    resId ResourceId
+    author Text Maybe
 
 EditTitle
     resId ResourceId
