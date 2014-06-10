@@ -13,3 +13,5 @@ cabal.sandbox.config
 .DS_Store
 *.swp
 .ghci
+codex.tags
+hscope.out

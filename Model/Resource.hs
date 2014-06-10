@@ -4,6 +4,7 @@ module Model.Resource
     , getResourceTagsWithIds
     , getResourcesWithTag
     , isFavoriteResource
+    , isGrokkedResource
     , updateResource
     ) where
 
@@ -48,17 +49,24 @@ getResourcesWithTag :: Text -> YesodDB App [Entity Resource]
 getResourcesWithTag tag = getBy404 (UniqueTagText tag) >>= getResourcesWithTagId . entityKey
   where
     getResourcesWithTagId :: TagId -> YesodDB App [Entity Resource]
-    getResourcesWithTagId tagId = 
+    getResourcesWithTagId tagId =
         select $
             from $ \(r, rt) -> do
-            where_ (r^.ResourceId ==. rt^.ResourceTagResId &&. 
+            where_ (r^.ResourceId ==. rt^.ResourceTagResId &&.
                     rt^.ResourceTagTagId ==. val tagId)
             return r
 
-isFavoriteResource :: ResourceId -> Handler Bool
-isFavoriteResource resId = maybeAuthId >>= \case
+isFavoriteResource, isGrokkedResource :: ResourceId -> Handler Bool
+isFavoriteResource = isAttributeResource UniqueFavorite
+isGrokkedResource  = isAttributeResource UniqueGrokked
+
+isAttributeResource :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend)
+                    => (UserId -> ResourceId -> Unique val)
+                    -> ResourceId
+                    -> Handler Bool
+isAttributeResource constructor resId = maybeAuthId >>= \case
     Nothing  -> return False
-    Just uid -> maybeToBool <$> runDB (getBy $ UniqueFavorite uid resId)
+    Just uid -> maybeToBool <$> runDB (getBy $ constructor uid resId)
   where
     maybeToBool = maybe False (const True)
 

@@ -1,9 +1,9 @@
 #logo
-   position: absolute
-   top: 0
+   height: auto
    width: 50px
    margin: 5px
-   height: auto
+   position: fixed
+   top: 0
    z-index: 2
 
 #nav

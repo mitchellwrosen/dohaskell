@@ -3,18 +3,34 @@ module Handler.FavoriteResource where
 import Import
 
 postFavoriteResourceR :: Handler Html
-postFavoriteResourceR = do
-    (resId, uid) <- helper
-    void . runDB . insertUnique $ Favorite uid resId
-    return "ok"
+postFavoriteResourceR = attribute Favorite
 
 postUnfavoriteResourceR :: Handler Html
-postUnfavoriteResourceR = do
+postUnfavoriteResourceR = unattribute UniqueFavorite
+
+postGrokkedResourceR :: Handler Html
+postGrokkedResourceR = attribute Grokked
+
+postUngrokkedResourceR :: Handler Html
+postUngrokkedResourceR = unattribute UniqueGrokked
+
+-- TODO: better name for all of these
+attribute :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend)
+          => (UserId -> ResourceId -> val)
+          -> Handler Html
+attribute constructor = do
     (resId, uid) <- helper
-    runDB $ deleteBy (UniqueFavorite uid resId)
+    void . runDB . insertUnique $ constructor uid resId
     return "ok"
 
--- TODO: better name
+unattribute :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend)
+            => (UserId -> ResourceId -> Unique val)
+            -> Handler Html
+unattribute constructor = do
+    (resId, uid) <- helper
+    runDB $ deleteBy (constructor uid resId)
+    return "ok"
+
 helper :: Handler (ResourceId, UserId)
 helper = do
     resId <- Key . PersistInt64 <$> runInputPost (ireq intField "resId")

@@ -9,7 +9,7 @@
    background: url(@{StaticR img_star_outline_png})
    background-position: center
    background-repeat: no-repeat
-   background-size: 24px 24px
+   background-size: 20px 20px
    clear: both
    float: left
    width: 30px
@@ -19,12 +19,33 @@
    background: url(@{StaticR img_star_png})
    background-position: center
    background-repeat: no-repeat
-   background-size: 24px 24px
+   background-size: 20px 20px
 
 .res-fav:hover
    background-color: #eee
 
 .res-fav.fav:hover
+   background-color: #eee
+
+.res-grok
+   background: url(@{StaticR img_circle_outline_png})
+   background-position: center
+   background-repeat: no-repeat
+   background-size: 20px 20px
+   float: left
+   width: 30px
+   height: 30px
+
+.res-grok.grok
+   background: url(@{StaticR img_circle_png})
+   background-position: center
+   background-repeat: no-repeat
+   background-size: 20px 20px
+
+.res-grok:hover
+   background-color: #eee
+
+.res-grok.grok:hover
    background-color: #eee
 
 .res-link
@@ -37,12 +58,15 @@
    padding: 0px 5px
    overflow: hidden
 
+.res-author
+   color: gray
+
 .res-link:hover
-   color: #000
+   color: black
    text-decoration: none
 
 .res-info
-   background: url(@{StaticR img_clipboard_png})
+   background: url(@{StaticR img_edit_png})
    background-position: center
    background-repeat: no-repeat
    background-size: 20px 20px
@@ -51,4 +75,3 @@
    height: 30px
    text-decoration: none
    float: right
-

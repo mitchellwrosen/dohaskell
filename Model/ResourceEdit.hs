@@ -1,4 +1,4 @@
-module Model.ResourceEdit 
+module Model.ResourceEdit
     ( getAllEditAuthors
     , getAllEditTitles
     , getAllEditTypes

@@ -1,6 +1,6 @@
 p
-   width: 20em
-   font-size: 30px
-   font-family: Helvetica
-   margin: 0px auto 40px auto
-   line-height: 35px
+   font-size: 22px
+   line-height: 25px
+   margin: 0px auto 20px auto
+   text-align: justify
+   width: 30em

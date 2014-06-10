@@ -16,7 +16,7 @@ getUserR uid = do
 
     -- Is the user looking at their own profile?
     isOwnProfile <- maybe False (== uid) <$> maybeAuthId
-    numRequestedEdits <- if isOwnProfile 
+    numRequestedEdits <- if isOwnProfile
                              then runDB $ getNumRequestedEdits uid
                              else return 0 -- bogus val, not used in html
 

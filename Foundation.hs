@@ -130,8 +130,8 @@ instance YesodPersistRunner App where
 
 instance YesodAuth App where
     type AuthId App = UserId
-    loginDest  _ = HomeR -- Where to send a user after successful login
-    logoutDest _ = HomeR -- Where to send a user after logout
+    loginDest  _ = HomeR
+    logoutDest _ = HomeR
 
     getAuthId creds = runDB $
         getBy (UniqueUserName $ credsIdent creds) >>= \case
@@ -144,9 +144,25 @@ instance YesodAuth App where
                     }
                 return (Just uid)
 
-    -- You can add other plugins like BrowserID, email or OAuth here
-    authPlugins _ = [authBrowserId def]
-
+    authPlugins _ = [dohaskellAuthBrowserId]
+      where
+        dohaskellAuthBrowserId = (authBrowserId def) { apLogin = apLogin' }
+        apLogin' toMaster = do
+          apLogin (authBrowserId def) toMaster
+          [whamlet|
+            <p>
+              <a href="http://en.wikipedia.org/wiki/Mozilla_Persona">Mozilla Persona
+              is a secure authentication system with a focus on privacy.
+              You may use any e-mail address to log in.
+          |]
+          toWidget [cassius|
+            p
+              font-size: 22px
+              line-height: 25px
+              margin: 0px auto 20px auto
+              text-align: justify
+              width: 30em
+          |]
     authHttpManager = httpManager
 
 -- This instance is required to use forms. You can modify renderMessage to

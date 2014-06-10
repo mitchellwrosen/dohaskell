@@ -16,14 +16,14 @@ import           Data.Text              (intercalate, pack)
 import           Data.Time              (getCurrentTime)
 import           Yesod.Form.Bootstrap3  -- (renderBootstrap3)
 
-import           Model.Resource         (getResourceTags, isFavoriteResource)
+import           Model.Resource         (getResourceTags, isFavoriteResource, isGrokkedResource)
 import           Model.User             (unsafeGetUserById)
 import           Yesod.Form.Types.Extra (parsedTextField)
 
 -- A single form to input a Resource and its associated tags.
 resourceForm :: UserId -> Form (Resource, Set Text)
-resourceForm uid = renderBootstrap3 BootstrapInlineForm $ (,) 
-    <$> resourceEntityForm uid 
+resourceForm uid = renderBootstrap3 BootstrapInlineForm $ (,)
+    <$> resourceEntityForm uid
     <*> resourceTagsForm Nothing
     <*  bootstrapSubmit ("Submit" :: BootstrapSubmit Text)
 
@@ -31,7 +31,7 @@ resourceForm uid = renderBootstrap3 BootstrapInlineForm $ (,)
 resourceEntityForm :: UserId -> AForm Handler Resource
 resourceEntityForm uid = Resource
     <$> areq textField "Title" Nothing
-    <*> aopt textField "Primary Author" Nothing
+    <*> aopt textField "Primary Author (optional)" Nothing
     <*> areq urlField "Url" (Just "http://")
     <*> areq resourceTypeField "Type" Nothing
     <*> pure uid
@@ -67,13 +67,25 @@ resourceListWidget :: Foldable f => f (Entity Resource) -> Text -> Widget
 resourceListWidget resources title = do
     setTitle $ toHtml title
     addScriptRemote "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
-    [whamlet|
-        $forall res <- resources
-           ^{resourceListItemWidget res}
-    |]
+    $(widgetFile "resource-list")
 
 resourceListItemWidget :: Entity Resource -> Widget
 resourceListItemWidget (Entity resId res) = do
     is_logged_in <- maybe False (const True) <$> handlerToWidget maybeAuthId
     is_fav       <- handlerToWidget $ isFavoriteResource resId
-    $(widgetFile "resource-list-item")
+    is_grokked   <- handlerToWidget $ isGrokkedResource resId
+    [whamlet|
+      <div .res-li>
+        $if is_logged_in
+          <div .res-li-col .res-fav :is_fav:.fav ##{toPathPiece resId} title="Favorite">
+          <div .res-li-col .res-grok :is_grokked:.grok ##{toPathPiece resId} title="Grokked">
+        $# The info (floated right) has to be rendered first, so the link can be sized properly.
+        <a .res-li-col .res-info href=@{ResourceR resId}>
+
+        $# TODO: DRY
+        $maybe author <- resourceAuthor res
+          <a .res-li-col .res-link href=#{resourceUrl res}>#{resourceTitle res} #
+            <span .res-author>&mdash; #{author}
+        $nothing
+          <a .res-li-col .res-link href=#{resourceUrl res}>#{resourceTitle res}
+    |]

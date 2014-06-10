@@ -27,3 +27,5 @@
 /r/#ResourceId/delete              DeleteResourceR           POST
 /r/favorite                        FavoriteResourceR         POST
 /r/unfavorite                      UnfavoriteResourceR       POST
+/r/grokked                         GrokkedResourceR          POST
+/r/ungrokked                       UngrokkedResourceR        POST

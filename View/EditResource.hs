@@ -13,6 +13,6 @@ editResourceForm :: Maybe Text          -- default title
                  -> Form (Text, Maybe Text, ResourceType, Set Text)
 editResourceForm title author typ tags = renderDivs $ (,,,)
     <$> areq textField         "Title"  title
-    <*> aopt textField         "Primary Author" author
+    <*> aopt textField         "Primary Author (optional)" author
     <*> areq resourceTypeField "Type"   typ
     <*> resourceTagsForm tags

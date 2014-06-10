@@ -1,4 +1,5 @@
-<img #logo src=@{StaticR img_lambda_png}>
+<a href=@{HomeR}>
+   <img #logo src=@{StaticR img_lambda_png}>
 
 <ul #nav>
    <li>

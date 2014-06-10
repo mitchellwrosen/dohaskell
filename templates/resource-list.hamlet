@@ -1,0 +1,2 @@
+$forall res <- resources
+   ^{resourceListItemWidget res}

@@ -13,6 +13,11 @@ Favorite
     resId  ResourceId
     UniqueFavorite userId resId
 
+Grokked
+    userId UserId
+    resId  ResourceId
+    UniqueGrokked userId resId
+
 --------------------------------------------------------------------------------
 -- Resource
 
