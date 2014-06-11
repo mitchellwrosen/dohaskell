@@ -2,6 +2,8 @@ module Handler.Browse where
 
 import Import
 
+import Database.Persist.Sql
+
 import View.Resource (resourceListWidget)
 
 getBrowseR :: Handler Html

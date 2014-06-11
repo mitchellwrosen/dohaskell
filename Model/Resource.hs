@@ -10,9 +10,11 @@ module Model.Resource
 
 import Import
 
-import qualified Database.Persist as P
+import           Database.Esqueleto
+import qualified Database.Persist   as P
 
-import Model.ResourceTag (getResourceTagsByResId)
+import Database.Persist.Class.Extra (insertBy')
+import Model.ResourceTag            (getResourceTagsByResId)
 
 deleteResource :: ResourceId -> YesodDB App ()
 deleteResource resId = do

@@ -2,6 +2,8 @@ module Handler.Submit where
 
 import Import
 
+import Database.Persist.Sql
+
 import View.Resource (resourceForm)
 
 getSubmitR :: Handler Html

@@ -12,6 +12,7 @@ import           Control.Monad.Logger                 (runLoggingT)
 import           Data.Default                         (def)
 import qualified Data.Map                             as M
 import qualified Database.Persist
+import           Database.Persist.Sql                 (runMigration)
 import           Network.HTTP.Client.Conduit          (newManager)
 import           Network.Wai.Logger                   (clockDateCacher)
 import qualified Network.Wai.Middleware.RequestLogger as RequestLogger
@@ -28,27 +29,17 @@ import           Yesod.Default.Main
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
 import Handler.About
-import Handler.EditTitleAccept
-import Handler.EditTitleDecline
+import Handler.Browse
+import Handler.DeleteResource
+import Handler.EditResource
+import Handler.EditResourceRequest
+import Handler.FavoriteResource
 import Handler.Home
 import Handler.ReqEditsHub
 import Handler.Resource
 import Handler.Submit
 import Handler.Tag
 import Handler.User
-import Handler.EditAddTagAccept
-import Handler.EditAddTagDecline
-import Handler.EditRemoveTagAccept
-import Handler.EditRemoveTagDecline
-import Handler.EditResource
-import Handler.EditTypeAccept
-import Handler.EditTypeDecline
-import Handler.Browse
-import Handler.AllEdits
-import Handler.DeleteResource
-import Handler.EditAuthorAccept
-import Handler.EditAuthorDecline
-import Handler.FavoriteResource
 
 import View.Navbar (navbarWidget)
 

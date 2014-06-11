@@ -17,9 +17,6 @@ import           Data.Map                     as Import (Map)
 import           Data.Set                     as Import (Set)
 import           Data.Text                    as Import (Text)
 
-import           Database.Esqueleto           as Import
-import           Database.Persist.Class.Extra as Import
-
 import           Foundation                   as Import
 import           Model                        as Import
 import           Model.ResourceType           as Import

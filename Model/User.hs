@@ -1,4 +1,4 @@
-module Model.User 
+module Model.User
     ( getPostedResources
     , getUserById
     , isAdministrator
@@ -9,6 +9,8 @@ module Model.User
     ) where
 
 import Import
+
+import Database.Esqueleto
 
 import           Control.Concurrent (modifyMVar_, readMVar)
 import qualified Data.Map           as M
@@ -27,7 +29,7 @@ getPostedResources uid =
 getUserById :: UserId -> Handler (Maybe User)
 getUserById uid = do
     usersMap <- appUsersMap <$> getYesod
-    M.lookup uid <$> liftIO (readMVar usersMap) >>= \case 
+    M.lookup uid <$> liftIO (readMVar usersMap) >>= \case
         Nothing ->
             runDB (get uid) >>= \case
                 Nothing   -> return Nothing

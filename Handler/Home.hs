@@ -2,6 +2,8 @@ module Handler.Home where
 
 import Import
 
+import Database.Persist.Sql
+
 getHomeR :: Handler Html
 getHomeR = do
     -- rawSql here to get the COLLATE NOCASE. It would probably be smarter to

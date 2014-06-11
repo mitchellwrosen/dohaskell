@@ -4,6 +4,8 @@ module Model.ResourceTag
 
 import Import
 
+import Database.Esqueleto
+
 getResourceTagsByResId :: ResourceId -> YesodDB App [Entity ResourceTag]
 getResourceTagsByResId resId =
     select $

@@ -5,22 +5,40 @@ import Import
 import qualified Data.Map as M
 import qualified Data.Set as S
 
-import Handler.Utils      (denyPermissionIfDifferentUser)
+import Handler.Utils      (denyPermissionIfDifferentUser, denyPermissionIfNotAdmin)
 import Model.ResourceEdit
 import View.Resource      (resourceInfoWidget)
 
 getReqEditsHubR :: UserId -> Handler Html
 getReqEditsHubR uid = do
     denyPermissionIfDifferentUser uid
+    runDB ((,,,,)
+        <$> getEditTitles     uid
+        <*> getEditAuthors    uid
+        <*> getEditTypes      uid
+        <*> getEditAddTags    uid
+        <*> getEditRemoveTags uid)
+            >>= getRequestedEdits
 
-    (editTitles, editAuthors, editTypes, editAddTags, editRemoveTags) <-
-        runDB $ (,,,,)
-            <$> getEditTitles     uid
-            <*> getEditAuthors    uid
-            <*> getEditTypes      uid
-            <*> getEditAddTags    uid
-            <*> getEditRemoveTags uid
+getAllEditsR :: Handler Html
+getAllEditsR = do
+    denyPermissionIfNotAdmin
+    runDB ((,,,,)
+        <$> getAllEditTitles
+        <*> getAllEditAuthors
+        <*> getAllEditTypes
+        <*> getAllEditAddTags
+        <*> getAllEditRemoveTags)
+            >>= getRequestedEdits
 
+getRequestedEdits :: ( Map (Entity Resource) [Entity EditTitle]
+                     , Map (Entity Resource) [Entity EditAuthor]
+                     , Map (Entity Resource) [Entity EditType]
+                     , Map (Entity Resource) [Entity EditAddTag]
+                     , Map (Entity Resource) [Entity EditRemoveTag]
+                     )
+                  -> Handler Html
+getRequestedEdits (editTitles, editAuthors, editTypes, editAddTags, editRemoveTags) = do
     let areNoRequestedEdits :: Bool
         areNoRequestedEdits =
             M.null editTitles  &&

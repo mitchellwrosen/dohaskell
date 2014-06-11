@@ -4,6 +4,7 @@ import Import
 
 import qualified Data.Set          as S
 import           Data.Text         (intercalate)
+import           Database.Persist.Sql
 
 import           Model.Resource    (getResourceTags, updateResource)
 import           Model.User        (thisUserHasAuthorityOver)

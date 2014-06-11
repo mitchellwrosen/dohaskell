@@ -15,6 +15,8 @@ module Model.ResourceEdit
 import Import
 
 import qualified Data.Map as M
+import           Database.Esqueleto
+import           Data.Monoid (Sum(..), getSum)
 
 -- TODO: Do we really have to do this 3-table join for each kind of edit...
 getEdit :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend)
@@ -75,11 +77,14 @@ getAllEditRemoveTags = getAllEdits EditRemoveTagResId
 -- TODO: Should probably select count(*) ?
 getNumRequestedEdits :: UserId -> YesodDB App Int
 getNumRequestedEdits uid = do
-    a <- adjust <$> getEditTitles uid
-    b <- adjust <$> getEditTypes uid
-    c <- adjust <$> getEditAddTags uid
-    d <- adjust <$> getEditRemoveTags uid
-    return $ a + b + c + d
+    getSum . mconcat <$>
+        sequence
+            [ adjust <$> getEditTitles uid
+            , adjust <$> getEditTypes uid
+            , adjust <$> getEditAuthors uid
+            , adjust <$> getEditAddTags uid
+            , adjust <$> getEditRemoveTags uid
+            ]
   where
-    adjust :: Map k [a] -> Int
-    adjust = length . concat . M.elems
+    adjust :: Map k [a] -> Sum Int
+    adjust = Sum . length . concat . M.elems

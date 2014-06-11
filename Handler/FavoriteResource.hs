@@ -2,6 +2,8 @@ module Handler.FavoriteResource where
 
 import Import
 
+import Database.Persist.Sql
+
 postFavoriteResourceR :: Handler Html
 postFavoriteResourceR = attribute Favorite
 
