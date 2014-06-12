@@ -16,9 +16,10 @@ getResourceR resId = do
     res  <- runDB $ get404 resId
     tags <- runDB $ getResourceTags resId
     (widget, enctype) <- generateFormPost $
-        editResourceForm (Just $ resourceTitle res)
-                         (Just $ resourceAuthor res)
-                         (Just $ resourceType res)
+        editResourceForm (Just $ resourceTitle     res)
+                         (Just $ resourceAuthor    res)
+                         (Just $ resourcePublished res)
+                         (Just $ resourceType      res)
                          (Just . S.fromList $ map tagText tags)
     canDelete <- thisUserHasAuthorityOver (resourceUserId res)
     defaultLayout $ do

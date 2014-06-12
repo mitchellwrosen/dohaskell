@@ -89,17 +89,18 @@ isAttributeResource constructor resId = maybeAuthId >>= \case
   where
     maybeToBool = maybe False (const True)
 
--- Adjust Resource's title, author, and type. Add all Tags to the database, collecting
--- their ids. Remove all ResourceTag relations for the Resource, and add back
+-- Adjust Resource's title, author, published, and type. Add all Tags to the database,
+-- collecting their ids. Remove all ResourceTag relations for the Resource, and add back
 -- new relations between the Resource and each Tag id collected. Possibly delete
 -- old Tags if there are no other resources that share the tag.
-updateResource :: ResourceId -> Text -> Maybe Text -> ResourceType -> [Tag] -> YesodDB App ()
-updateResource resId title author typ tags = do
+updateResource :: ResourceId -> Text -> Maybe Text -> Maybe Int -> ResourceType -> [Tag] -> YesodDB App ()
+updateResource resId title author published typ tags = do
     -- Adjust Resource's title and type.
     update $ \resource -> do
-        set resource [ ResourceTitle  =. val title
-                     , ResourceType   =. val typ
-                     , ResourceAuthor =. val author
+        set resource [ ResourceTitle     =. val title
+                     , ResourceAuthor    =. val author
+                     , ResourcePublished =. val published
+                     , ResourceType      =. val typ
                      ]
         where_ (resource^.ResourceId ==. val resId)
 

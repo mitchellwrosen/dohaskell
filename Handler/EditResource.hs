@@ -13,13 +13,19 @@ import           View.EditResource (editResourceForm)
 postEditResourceR :: ResourceId -> Handler Html
 postEditResourceR resId = do
     res <- runDB $ get404 resId
-    ((result, _), _) <- runFormPost (editResourceForm Nothing Nothing Nothing Nothing)
+    ((result, _), _) <- runFormPost (editResourceForm Nothing Nothing Nothing Nothing Nothing)
     case result of
-        FormSuccess (newTitle, newAuthor, newType, newTags) -> do
+        FormSuccess (newTitle, newAuthor, newPublished, newType, newTags) -> do
             ok <- thisUserHasAuthorityOver (resourceUserId res)
             if ok
                 then do
-                    runDB $ updateResource resId newTitle newAuthor newType (map Tag . S.toAscList $ newTags)
+                    runDB $ updateResource
+                                resId
+                                newTitle
+                                newAuthor
+                                newPublished
+                                newType
+                                (map Tag . S.toAscList $ newTags)
                     setMessage "Resource updated."
                     redirect $ ResourceR resId
                 -- An authenticated, unprivileged user is the same as an
@@ -29,13 +35,14 @@ postEditResourceR resId = do
           where
             doPendingEdit :: Resource -> Handler Html
             doPendingEdit Resource{..} = do
-                pendingEditField resourceTitle newTitle EditTitle
-                pendingEditField resourceAuthor newAuthor EditAuthor
-                pendingEditField resourceType newType EditType
+                pendingEditField resourceTitle     newTitle     EditTitle
+                pendingEditField resourceAuthor    newAuthor    EditAuthor
+                pendingEditField resourcePublished newPublished EditPublished
+                pendingEditField resourceType      newType      EditType
 
                 oldTags <- S.fromList . map tagText <$> runDB (getResourceTags resId)
                 insertEditTags newTags oldTags EditAddTag    -- find any NEW not in OLD: pending ADD.
-                insertEditTags oldTags newTags EditRemoveTag -- find any OLD new in NEW: pending REMOVE.
+                insertEditTags oldTags newTags EditRemoveTag -- find any OLD not in NEW: pending REMOVE.
                 setMessage "Your edit has been submitted for approval. Thanks!"
                 redirect $ ResourceR resId
               where

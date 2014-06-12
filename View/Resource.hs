@@ -31,8 +31,9 @@ resourceForm uid = renderBootstrap3 BootstrapInlineForm $ (,)
 resourceEntityForm :: UserId -> AForm Handler Resource
 resourceEntityForm uid = Resource
     <$> areq textField "Title" Nothing
-    <*> aopt textField "Primary Author (optional)" Nothing
     <*> areq urlField "Url" (Just "http://")
+    <*> aopt textField "Primary Author (optional)" Nothing
+    <*> aopt intField "Year (optional)" Nothing
     <*> areq resourceTypeField "Type" Nothing
     <*> pure uid
     <*> lift (liftIO getCurrentTime)
@@ -83,9 +84,9 @@ resourceListItemWidget (Entity resId res) = do
         <a .res-li-col .res-info href=@{ResourceR resId}>
 
         $# TODO: DRY
-        $maybe author <- resourceAuthor res
-          <a .res-li-col .res-link href=#{resourceUrl res}>#{resourceTitle res} #
-            <span .res-author>&mdash; #{author}
-        $nothing
-          <a .res-li-col .res-link href=#{resourceUrl res}>#{resourceTitle res}
+        <a .res-li-col .res-link href=#{resourceUrl res}>#{resourceTitle res} #
+          $maybe author <- resourceAuthor res
+            <span .res-li-col .res-author >&mdash; #{author} #
+          $maybe published <- resourcePublished res
+            <span .res-li-col .res-published>(#{show published})
     |]

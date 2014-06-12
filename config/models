@@ -18,12 +18,13 @@ Grokked
     UniqueGrokked userId resId
 
 Resource
-    title  Text
-    author Text Maybe
-    url    Text
-    type   ResourceType
-    userId UserId
-    posted UTCTime
+    title     Text
+    url       Text
+    author    Text Maybe
+    published Int Maybe
+    type      ResourceType
+    userId    UserId
+    posted    UTCTime
     UniqueResourceUrl url
     deriving Eq Ord
 
@@ -47,8 +48,13 @@ Difficulty
 -- Caveat: can't have a uniqueness constraint on a NULLABLE field. This means
 -- there may be two pending edits for the same author name change. Oh well.
 EditAuthor
-    resId ResourceId
+    resId  ResourceId
     author Text Maybe
+
+-- Same caveat as above.
+EditPublished
+    resId     ResourceId
+    published Int Maybe
 
 EditTitle
     resId ResourceId

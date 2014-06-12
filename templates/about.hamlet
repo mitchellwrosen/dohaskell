@@ -21,7 +21,7 @@ $maybe uid <- muid
       .
 
 <p>
-   If you'd like to submit a resource but don't want to be responsible for responding to any edit 
+   If you'd like to submit a resource but don't want to be responsible for responding to any edit
    requests, that's fine &mdash; I can approve or deny edits on your behalf. Eventually I may implement a
    "relinquish ownership" feature, although I don't anticipate any huge problems with the current system.
    Resource edit requests will generally be tweaking tag names to better match existing tags, or fixing typos
@@ -32,3 +32,31 @@ $maybe uid <- muid
    <a href="http://www.yesodweb.com">Yesod
    web framework. If you dig it, please
    <a href="https://github.com/mitchellwrosen/dohaskell">contribute</a>!
+
+<hr>
+
+<p>
+  dohaskell is most useful with minimal noise. So, try to conform to existing tags, including capitalization
+  and plurality. Tags are case-sensitive by design: consider <em>functor</em> vs. <em>Functor</em>, or
+  <em>GHC</em> (a blog post about internals) vs. <em>ghc</em> (an index of useful command-line flags).
+
+<p>
+  Meta-resources, such as
+  <a href="https://github.com/grsmv/haskell-bookmarks">this#
+  , are better submitted one
+  link at a time. Obviously, depending on the size, this may be an inordinate amount of work. Feel free to
+  submit the meta-resource itself, using a tag like <em>miscellaneous</em>, but avoid tagging it with each
+  tag of its constituents - it will quickly become noise.
+
+<p>
+  Online courses are similarly difficult to tag. Perhaps they should all be tagged with <em>online course</em>
+  and nothing more, as again, tagging with each constituent component is noisy.
+
+<p>
+  This is not to say that single, pointed resources should be conservative in their tags. Actually, the more
+  tags, the better, as long as each tag is appropriate. Consider the <em>monad</em> tag: although a huge number
+  of resources may <em>use</em> monads, only some percentage of them are <em>about</em> monads in some way. Again,
+  use your best judgement.
+
+<p>
+  Thanks for making it this far, and happy Haskelling!

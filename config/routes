@@ -4,28 +4,30 @@
 /favicon.ico   FaviconR  GET
 /robots.txt    RobotsR   GET
 
-/                                  HomeR                 GET
-/about                             AboutR                GET
-/browse                            BrowseR               GET
-/admin/edits                       AllEditsR             GET
-/u/#UserId                         UserR                 GET POST
-/u/#UserId/edits                   ReqEditsHubR          GET
-/e/title/#EditTitleId/accept       EditTitleAcceptR          POST
-/e/title/#EditTitleId/decline      EditTitleDeclineR         POST
-/e/author/#EditAuthorId/accept     EditAuthorAcceptR         POST
-/e/author/#EditAuthorId/decline    EditAuthorDeclineR        POST
-/e/type/#EditTypeId/accept         EditTypeAcceptR           POST
-/e/type/#EditTypeId/decline        EditTypeDeclineR          POST
-/e/addtag/#EditAddTagId/accept     EditAddTagAcceptR         POST
-/e/addtag/#EditAddTagId/decline    EditAddTagDeclineR        POST
-/e/remtag/#EditRemoveTagId/accept  EditRemoveTagAcceptR      POST
-/e/remtag/#EditRemoveTagId/decline EditRemoveTagDeclineR     POST
-/submit                            SubmitR               GET POST
-/tag/#Text                         TagR                  GET
-/r/!#ResourceId                    ResourceR             GET
-/r/#ResourceId/edit                EditResourceR             POST
-/r/#ResourceId/delete              DeleteResourceR           POST
-/r/favorite                        FavoriteResourceR         POST
-/r/unfavorite                      UnfavoriteResourceR       POST
-/r/grokked                         GrokkedResourceR          POST
-/r/ungrokked                       UngrokkedResourceR        POST
+/                                     HomeR                 GET
+/about                                AboutR                GET
+/browse                               BrowseR               GET
+/admin/edits                          AllEditsR             GET
+/u/#UserId                            UserR                 GET POST
+/u/#UserId/edits                      ReqEditsHubR          GET
+/e/title/#EditTitleId/accept          EditTitleAcceptR          POST
+/e/title/#EditTitleId/decline         EditTitleDeclineR         POST
+/e/author/#EditAuthorId/accept        EditAuthorAcceptR         POST
+/e/author/#EditAuthorId/decline       EditAuthorDeclineR        POST
+/e/published/#EditPublishedId/accept  EditPublishedAcceptR      POST
+/e/published/#EditPublishedId/decline EditPublishedDeclineR     POST
+/e/type/#EditTypeId/accept            EditTypeAcceptR           POST
+/e/type/#EditTypeId/decline           EditTypeDeclineR          POST
+/e/addtag/#EditAddTagId/accept        EditAddTagAcceptR         POST
+/e/addtag/#EditAddTagId/decline       EditAddTagDeclineR        POST
+/e/remtag/#EditRemoveTagId/accept     EditRemoveTagAcceptR      POST
+/e/remtag/#EditRemoveTagId/decline    EditRemoveTagDeclineR     POST
+/submit                               SubmitR               GET POST
+/tag/#Text                            TagR                  GET
+/r/!#ResourceId                       ResourceR             GET
+/r/#ResourceId/edit                   EditResourceR             POST
+/r/#ResourceId/delete                 DeleteResourceR           POST
+/r/favorite                           FavoriteResourceR         POST
+/r/unfavorite                         UnfavoriteResourceR       POST
+/r/grokked                            GrokkedResourceR          POST
+/r/ungrokked                          UngrokkedResourceR        POST

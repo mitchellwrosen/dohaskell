@@ -12,46 +12,41 @@ postEditTitleAcceptR :: EditTitleId -> Handler Html
 postEditTitleAcceptR eid = editRes editTitleResId sqlCode eid
   where
     sqlCode (EditTitle resId title) = do
-        update $ \r -> do
-            set r [ ResourceTitle =. val title ]
-            where_ (r^.ResourceId ==. val resId)
-        P.delete eid
-
+        updateResField resId ResourceTitle title
+        deleteKey eid
 
 postEditTitleDeclineR :: EditTitleId -> Handler Html
-postEditTitleDeclineR eid = editRes editTitleResId (\_ -> P.delete eid) eid
+postEditTitleDeclineR eid = editRes editTitleResId (\_ -> deleteKey eid) eid
 
 postEditAuthorAcceptR :: EditAuthorId -> Handler Html
 postEditAuthorAcceptR eid = editRes editAuthorResId sqlCode eid
   where
     sqlCode (EditAuthor resId author) = do
-        update $ \r -> do
-            set r [ ResourceAuthor =. val author ]
-            where_ (r^.ResourceId ==. val resId)
-        deleteEditAuthors author
+        updateResField resId ResourceAuthor author
+        deleteNullable EditAuthorAuthor author
 
 postEditAuthorDeclineR :: EditAuthorId -> Handler Html
-postEditAuthorDeclineR = editRes editAuthorResId (deleteEditAuthors . editAuthorAuthor)
+postEditAuthorDeclineR = editRes editAuthorResId (deleteNullable EditAuthorAuthor . editAuthorAuthor)
 
--- Since a res+author edit is not unique, just delete all edits
--- with the same author.
-deleteEditAuthors :: Maybe Text -> YesodDB App ()
-deleteEditAuthors author =
-    delete $
-        from $ \e -> do
-        where_ (e^.EditAuthorAuthor ==. val author)
+postEditPublishedAcceptR :: EditPublishedId -> Handler Html
+postEditPublishedAcceptR eid = editRes editPublishedResId sqlCode eid
+  where
+    sqlCode (EditPublished resId published) = do
+        updateResField resId ResourcePublished published
+        deleteNullable EditPublishedPublished published
+
+postEditPublishedDeclineR :: EditPublishedId -> Handler Html
+postEditPublishedDeclineR = editRes editPublishedResId (deleteNullable EditPublishedPublished . editPublishedPublished)
 
 postEditTypeAcceptR :: EditTypeId -> Handler Html
 postEditTypeAcceptR eid = editRes editTypeResId sqlCode eid
   where
     sqlCode (EditType resId typ) = do
-        update $ \r -> do
-            set r [ ResourceType =. val typ ]
-            where_ (r^.ResourceId ==. val resId)
-        P.delete eid
+        updateResField resId ResourceType typ
+        deleteKey eid
 
 postEditTypeDeclineR :: EditTypeId -> Handler Html
-postEditTypeDeclineR eid = editRes editTypeResId (\_ -> P.delete eid) eid
+postEditTypeDeclineR eid = editRes editTypeResId (\_ -> deleteKey eid) eid
 
 postEditAddTagAcceptR :: EditAddTagId -> Handler Html
 postEditAddTagAcceptR eid = editRes editAddTagResId sqlCode eid
@@ -59,10 +54,10 @@ postEditAddTagAcceptR eid = editRes editAddTagResId sqlCode eid
     sqlCode (EditAddTag resId text) = do
         tagId <- insertBy' (Tag text)
         void . insertUnique $ ResourceTag resId tagId
-        P.delete eid
+        deleteKey eid
 
 postEditAddTagDeclineR :: EditAddTagId -> Handler Html
-postEditAddTagDeclineR eid = editRes editAddTagResId (\_ -> P.delete eid) eid
+postEditAddTagDeclineR eid = editRes editAddTagResId (\_ -> deleteKey eid) eid
 
 postEditRemoveTagAcceptR :: EditRemoveTagId -> Handler Html
 postEditRemoveTagAcceptR eid = editRes editRemoveTagResId sqlCode eid
@@ -76,11 +71,11 @@ postEditRemoveTagAcceptR eid = editRes editRemoveTagResId sqlCode eid
                 deleteBy $ UniqueResourceTag resId tagId
                 n <- P.count [ResourceTagTagId P.==. tagId]
                 when (n == 0) $
-                    P.delete tagId
-        P.delete eid
+                    deleteKey tagId
+        deleteKey eid
 
 postEditRemoveTagDeclineR :: EditRemoveTagId -> Handler Html
-postEditRemoveTagDeclineR eid = editRes editRemoveTagResId (\_ -> P.delete eid) eid
+postEditRemoveTagDeclineR eid = editRes editRemoveTagResId (\_ -> deleteKey eid) eid
 
 -- Utility method shared by resource edit functions. Performs boiler
 -- plate code such as 404 on invalid edit id, resource id, and deny permission
@@ -102,3 +97,14 @@ editRes getResourceFunc sqlCode eid = do
 
     runDB $ sqlCode edit
     redirectUltDest HomeR
+
+updateResField resId field value = do
+    update $ \r -> do
+        set r [ field =. val value ]
+        where_ (r^.ResourceId ==. val resId)
+
+-- Since a field is not unique (it's nullable), delete all fields with the given value.
+deleteNullable field value =
+    delete $
+        from $ \e -> do
+        where_ (e^.field ==. val value)
