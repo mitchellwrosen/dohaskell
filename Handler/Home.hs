@@ -2,13 +2,25 @@ module Handler.Home where
 
 import Import
 
-import Database.Persist.Sql
+import           Data.Maybe     (fromJust)
+import qualified Data.Map       as M
+
+import           Model.Tag      (getAllTags, getTagCounts)
+import           Model.Resource (getGrokkedCounts)
+import           View.Tag       (tagListItemWidget, tagListItemWidget')
 
 getHomeR :: Handler Html
 getHomeR = do
-    -- rawSql here to get the COLLATE NOCASE. It would probably be smarter to
-    -- just do the sorting after the quary.
-    tags <- map unSingle <$> runDB (rawSql "SELECT text FROM tag ORDER BY text COLLATE NOCASE ASC;" [])
+    muid <- maybeAuthId
+
+    -- tags          :: [Entity Tag]
+    -- tagCounts     :: Map TagId Int
+    -- grokkedCounts :: Maybe (Map TagId Int)
+    (tags, tagCounts, mgrokkedCounts) <- runDB $ (,,)
+        <$> getAllTags
+        <*> getTagCounts
+        <*> maybe (return Nothing) (fmap Just . getGrokkedCounts) muid
+
     defaultLayout $ do
         setTitle "dohaskell: tagged Haskell learning resources"
         $(widgetFile "homepage")

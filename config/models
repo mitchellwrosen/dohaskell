@@ -1,25 +1,21 @@
---------------------------------------------------------------------------------
--- User
-
 User
-    name            Text
-    displayName     Text
+    name Text        -- User "name" (credentials used to log in, i.e. an email addr).
+    displayName Text -- Defaults to "anonymous". Not unique.
     isAdministrator Bool
     UniqueUserName name
     deriving Typeable
 
+-- Favorite relation, many-to-many between User and Resource.
 Favorite
     userId UserId
     resId  ResourceId
     UniqueFavorite userId resId
 
+-- Grokked relation, many-to-many between User and Resource.
 Grokked
     userId UserId
     resId  ResourceId
     UniqueGrokked userId resId
-
---------------------------------------------------------------------------------
--- Resource
 
 Resource
     title  Text
@@ -35,6 +31,7 @@ Tag
     text Text
     UniqueTagText text
 
+-- Tag relation, one-to-many between Resource and Tag.
 ResourceTag
     resId ResourceId
     tagId TagId
@@ -46,9 +43,6 @@ Difficulty
     userId UserId
     val    Int
     UniqueDifficulty resId userId
-
---------------------------------------------------------------------------------
--- Pending resource edits
 
 -- Caveat: can't have a uniqueness constraint on a NULLABLE field. This means
 -- there may be two pending edits for the same author name change. Oh well.

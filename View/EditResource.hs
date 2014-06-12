@@ -1,5 +1,5 @@
-module View.EditResource 
-    ( editResourceForm 
+module View.EditResource
+    ( editResourceForm
     ) where
 
 import Import

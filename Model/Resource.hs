@@ -1,5 +1,6 @@
 module Model.Resource
     ( deleteResource
+    , getGrokkedCounts
     , getResourceTags
     , getResourceTagsWithIds
     , getResourcesWithTag
@@ -10,6 +11,7 @@ module Model.Resource
 
 import Import
 
+import qualified Data.Map             as M
 import           Database.Esqueleto
 import qualified Database.Persist   as P
 
@@ -20,7 +22,7 @@ deleteResource :: ResourceId -> YesodDB App ()
 deleteResource resId = do
     tagIds <- map (resourceTagTagId . entityVal)  <$> getResourceTagsByResId resId
     mapM_ deleteUnusedTag tagIds
-    P.delete resId
+    deleteKey resId
   where
     deleteUnusedTag :: TagId -> YesodDB App ()
     deleteUnusedTag tid = do
@@ -31,7 +33,22 @@ deleteResource resId = do
                 return countRows
         -- resource hasn't been deleted yet, so compare to 1
         when (n == (1::Int)) $
-            P.delete tid
+            deleteKey tid
+
+-- Get a the number of resources this user has grokked, grouped by tag.
+getGrokkedCounts :: UserId -> YesodDB App (Map TagId Int)
+getGrokkedCounts uid = valsToMap <$>
+    (select $
+        from $ \(g `InnerJoin` rt) -> do
+        on (g^.GrokkedUserId ==. val uid &&.
+            g^.GrokkedResId ==. rt^.ResourceTagResId)
+        groupBy (rt^.ResourceTagTagId)
+        return (rt^.ResourceTagTagId, countRows))
+  where
+    valsToMap :: [(Value TagId, Value Int)] -> Map TagId Int
+    valsToMap = foldr step mempty
+      where
+        step (Value tagId, Value n) = M.insert tagId n
 
 getResourceTags :: ResourceId -> YesodDB App [Tag]
 getResourceTags = fmap (map entityVal) . getResourceTagsWithIds
@@ -103,5 +120,5 @@ updateResource resId title author typ tags = do
             -- Possibly delete the Tag, then unconditionally delete the ResourceTag (it's old).
             n <- P.count [ResourceTagTagId P.==. tid]
             when (n == 1) $ -- We know there's at least one.
-                P.delete tid
-            P.delete rtid   -- And know there's one less.
+                deleteKey tid
+            deleteKey rtid   -- And know there's one less.

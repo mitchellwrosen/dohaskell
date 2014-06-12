@@ -11,7 +11,7 @@ import           Yesod.Auth                   as Import
 
 import           Control.Applicative          as Import ((<$>), (<*>), (*>), (<*), liftA2, liftA3, pure)
 import           Control.Arrow                as Import ((&&&))
-import           Control.Monad                as Import (unless, void, when)
+import           Control.Monad                as Import (join, unless, void, when)
 import           Data.Foldable                as Import (forM_, mapM_)
 import           Data.Map                     as Import (Map)
 import           Data.Set                     as Import (Set)

@@ -74,35 +74,34 @@ makeApplication conf = do
 -- performs some initialization.
 makeFoundation :: AppConfig DefaultEnv Extra -> IO App
 makeFoundation conf = do
-    manager <- newManager
-    s <- staticSite
-    dbconf <- withYamlEnvironment "config/sqlite.yml" (appEnv conf)
-              Database.Persist.loadConfig >>=
-              Database.Persist.applyEnv
-    p <- Database.Persist.createPoolConfig (dbconf :: Settings.PersistConf)
+    manager           <- newManager
+    s                 <- staticSite
+    dbconf            <- withYamlEnvironment "config/sqlite.yml" (appEnv conf) Database.Persist.loadConfig >>=
+                            Database.Persist.applyEnv
+    pool              <- Database.Persist.createPoolConfig (dbconf :: Settings.PersistConf)
 
-    loggerSet' <- newStdoutLoggerSet defaultBufSize
+    loggerSet'        <- newStdoutLoggerSet defaultBufSize
     (getter, updater) <- clockDateCacher
 
     -- If the Yesod logger (as opposed to the request logger middleware) is
     -- used less than once a second on average, you may prefer to omit this
     -- thread and use "(updater >> getter)" in place of "getter" below.  That
     -- would update the cache every time it is used, instead of every second.
-    let updateLoop = do
-            threadDelay 1000000
-            updater
-            flushLogStr loggerSet'
-            updateLoop
-    _ <- forkIO updateLoop
+    -- let updateLoop = do
+    --         threadDelay 1000000
+    --         updater
+    --         flushLogStr loggerSet'
+    --         updateLoop
+    -- _ <- forkIO updateLoop
 
     usersMap <- newMVar M.empty
 
-    let logger = Yesod.Core.Types.Logger loggerSet' getter
-        foundation = App conf s p manager dbconf logger navbarWidget usersMap
+    let logger     = Yesod.Core.Types.Logger loggerSet' (updater >> getter)
+        foundation = App conf s pool manager dbconf logger navbarWidget usersMap
 
     -- Perform database migration using our application's logging settings.
     runLoggingT
-        (Database.Persist.runPool dbconf (runMigration migrateAll) p)
+        (Database.Persist.runPool dbconf (runMigration migrateAll) pool)
         (messageLoggerSource foundation logger)
 
     return foundation

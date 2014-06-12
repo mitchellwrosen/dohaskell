@@ -1,17 +1,24 @@
-.tag-list
-   list-style: none
-   font-size: 22px
-   margin: 0
+.tag-col
+  height: 30px
+  line-height: 30px
 
-.tag-list a
-   color: #069
-   display: block
-   font-weight: bold
-   height: 30px
-   line-height: 30px
-   padding-left: 5px
-   text-decoration: none
+.tag-count
+  float: left
+  clear: left
+  margin-right: 5px
+  text-align: center
+  width: 30px
 
-.tag-list a:hover
-   color: #000
-   background-color: #eee
+.tag-link
+  color: #069
+  display: block
+  font-size: 22px
+  font-weight: bold
+  overflow: hidden
+  padding-left: 5px
+  text-decoration: none
+
+.tag-link:hover
+  color: #000
+  background-color: #eee
+  text-decoration: none
