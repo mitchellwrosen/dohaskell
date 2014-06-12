@@ -22,7 +22,7 @@ deleteResource :: ResourceId -> YesodDB App ()
 deleteResource resId = do
     tagIds <- map (resourceTagTagId . entityVal)  <$> getResourceTagsByResId resId
     mapM_ deleteUnusedTag tagIds
-    deleteKey resId
+    deleteCascade resId
   where
     deleteUnusedTag :: TagId -> YesodDB App ()
     deleteUnusedTag tid = do
