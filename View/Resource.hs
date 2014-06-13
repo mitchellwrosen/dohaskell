@@ -31,7 +31,7 @@ resourceForm uid = renderBootstrap3 BootstrapInlineForm $ (,)
 resourceEntityForm :: UserId -> AForm Handler Resource
 resourceEntityForm uid = Resource
     <$> areq textField "Title" Nothing
-    <*> areq urlField "Url" (Just "http://")
+    <*> areq urlField ("Url" {fsAttrs = [("placeholder", "http://")]}) Nothing
     <*> aopt textField "Primary Author (optional)" Nothing
     <*> aopt intField "Year (optional)" Nothing
     <*> areq resourceTypeField "Type" Nothing
