@@ -11,12 +11,13 @@ import Import
 
 import           Data.Attoparsec.Text   (Parser, char, many1, notChar, sepBy1, skipSpace)
 import           Data.Foldable          (Foldable)
+import           Data.Maybe             (isJust)
 import qualified Data.Set               as S
 import           Data.Text              (intercalate, pack)
 import           Data.Time              (getCurrentTime)
 import           Yesod.Form.Bootstrap3  -- (renderBootstrap3)
 
-import           Model.Resource         (getResourceTags, isFavoriteResource, isGrokkedResource)
+import           Model.Resource         (getFavoriteResources, getGrokkedResources, getResourceTags)
 import           Model.User             (unsafeGetUserById)
 import           Yesod.Form.Types.Extra (parsedTextField)
 
@@ -66,27 +67,42 @@ resourceInfoWidget (Entity resId res) = do
 
 resourceListWidget :: Foldable f => f (Entity Resource) -> Text -> Widget
 resourceListWidget resources title = do
+    favsAndGrokked <- handlerToWidget getFavoritesAndGrokkedResources
     setTitle $ toHtml title
     addScriptRemote "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
     $(widgetFile "resource-list")
 
-resourceListItemWidget :: Entity Resource -> Widget
-resourceListItemWidget (Entity resId res) = do
-    is_logged_in <- maybe False (const True) <$> handlerToWidget maybeAuthId
-    is_fav       <- handlerToWidget $ isFavoriteResource resId
-    is_grokked   <- handlerToWidget $ isGrokkedResource resId
+resourceListItemWidget :: Entity Resource -> Maybe (Set ResourceId, Set ResourceId) -> Widget
+resourceListItemWidget (Entity resId Resource{..}) favsAndGrokked = do
+    let is_logged_in = isJust favsAndGrokked
+        is_fav       = maybe False (S.member resId . fst) favsAndGrokked
+        is_grokked   = maybe False (S.member resId . snd) favsAndGrokked
+
     [whamlet|
       <div .res-li>
-        $if is_logged_in
-          <div .res-li-col .res-fav :is_fav:.fav ##{toPathPiece resId} title="Favorite">
-          <div .res-li-col .res-grok :is_grokked:.grok ##{toPathPiece resId} title="Grokked">
-        $# The info (floated right) has to be rendered first, so the link can be sized properly.
-        <a .res-li-col .res-info href=@{ResourceR resId}>
 
-        $# TODO: DRY
-        <a .res-li-col .res-link href=#{resourceUrl res}>#{resourceTitle res} #
-          $maybe author <- resourceAuthor res
-            <span .res-li-col .res-author >&mdash; #{author} #
-          $maybe published <- resourcePublished res
-            <span .res-li-col .res-published>(#{show published})
+        $if is_logged_in
+          <div .res-fav :is_fav:.fav ##{toPathPiece resId} title="Favorite">
+          <div .res-grok :is_grokked:.grok ##{toPathPiece resId} title="Grokked">
+
+        <a .res-info href=@{ResourceR resId}>
+
+        <a .res-link href=#{resourceUrl}>
+          <div .res-title>#{resourceTitle}
+
+          <div .res-published-type-author>
+            $maybe published <- resourcePublished
+              <span .res-published>#{show published}
+            <span .res-type>#{shortDescResourceType resourceType}
+              $maybe author <- resourceAuthor
+                <span .res-author-by> by
+                <span .res-author> #{author}
+
+
     |]
+
+-- TODO: Find a better module for this. Model/Resource...?
+getFavoritesAndGrokkedResources :: Handler (Maybe (Set ResourceId, Set ResourceId))
+getFavoritesAndGrokkedResources = maybeAuthId >>= \case
+    Nothing  -> return Nothing
+    Just uid -> runDB $ Just <$> ((,) <$> getFavoriteResources uid <*> getGrokkedResources uid)

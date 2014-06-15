@@ -36,10 +36,5 @@ unattribute constructor = do
 helper :: Handler (ResourceId, UserId)
 helper = do
     resId <- Key . PersistInt64 <$> runInputPost (ireq intField "resId")
-    res   <- runDB $ get404 resId
-    maybeAuthId >>= \case
-        Nothing -> permissionDenied "Please log in."
-        Just uid -> do
-            when (uid /= resourceUserId res) $
-                permissionDenied "You don't have permission to view this page."
-            return (resId, uid)
+    uid   <- requireAuthId
+    return (resId, uid)

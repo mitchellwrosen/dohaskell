@@ -47,7 +47,6 @@ library
                      View.EditResource
                      View.Navbar
                      View.Resource
-                     View.Tag
                      Yesod.Form.Types.Extra
 
     if flag(dev) || flag(library-only)

@@ -1,13 +1,18 @@
-.tag-col
-  height: 30px
-  line-height: 30px
-
 .tag-count
-  float: left
   clear: left
-  margin-right: 5px
+  float: left
+  font-weight: bold
   text-align: center
   width: 30px
+
+.tag-expand
+  float: left
+  font-weight: bold
+  text-align: center
+  width: 30px
+
+.tag-expand:hover
+  background-color: #eee
 
 .tag-link
   color: #069
@@ -22,3 +27,10 @@
   color: #000
   background-color: #eee
   text-decoration: none
+
+.tag-col
+  height: 30px
+  line-height: 30px
+
+.res-container
+  margin-left: 20px

@@ -10,6 +10,7 @@ data ResourceType
     = BlogPost
     | CommunitySite
     | Dissertation
+    | Documentation
     | ExperienceReport
     | ExtendedExample
     | ForumPost
@@ -36,6 +37,7 @@ descResourceType :: ResourceType -> Text
 descResourceType BlogPost          = "Blog post"
 descResourceType CommunitySite     = "Community website"
 descResourceType Dissertation      = "Dissertation"
+descResourceType Documentation     = "Library documentation"
 descResourceType ExperienceReport  = "Experience report"
 descResourceType ExtendedExample   = "Extended example/tutorial"
 descResourceType ForumPost         = "Forum post (e.g. Reddit comment)"
@@ -49,3 +51,22 @@ descResourceType ResearchPaperLite = "Research paper lite"
 descResourceType SurveyArticle     = "Survey article"
 descResourceType Textbook          = "Textbook"
 descResourceType VideoLecture      = "Video lecture/presentation"
+
+shortDescResourceType :: ResourceType -> Text
+shortDescResourceType BlogPost          = "blog post"
+shortDescResourceType CommunitySite     = "community website"
+shortDescResourceType Dissertation      = "dissertation"
+shortDescResourceType Documentation     = "documentation"
+shortDescResourceType ExperienceReport  = "experience report"
+shortDescResourceType ExtendedExample   = "tutorial"
+shortDescResourceType ForumPost         = "forum post"
+shortDescResourceType FunctionalPearl   = "functional pearl"
+shortDescResourceType LectureNotes      = "lecture notes"
+shortDescResourceType MastersThesis     = "thesis"
+shortDescResourceType MetaResource      = "meta-resource"
+shortDescResourceType QAWebsite         = "answer"
+shortDescResourceType ResearchPaper     = "paper"
+shortDescResourceType ResearchPaperLite = "paper lite"
+shortDescResourceType SurveyArticle     = "survey"
+shortDescResourceType Textbook          = "textbook"
+shortDescResourceType VideoLecture      = "video"

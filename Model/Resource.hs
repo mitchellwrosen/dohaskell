@@ -1,17 +1,18 @@
 module Model.Resource
     ( deleteResource
+    , getFavoriteResources
     , getGrokkedCounts
+    , getGrokkedResources
     , getResourceTags
     , getResourceTagsWithIds
     , getResourcesWithTag
-    , isFavoriteResource
-    , isGrokkedResource
     , updateResource
     ) where
 
 import Import
 
 import qualified Data.Map             as M
+import qualified Data.Set             as S
 import           Database.Esqueleto
 import qualified Database.Persist   as P
 
@@ -34,6 +35,21 @@ deleteResource resId = do
         -- resource hasn't been deleted yet, so compare to 1
         when (n == (1::Int)) $
             deleteKey tid
+
+-- TODO: combine this with getGrokkedResources
+getFavoriteResources :: UserId -> YesodDB App (Set ResourceId)
+getFavoriteResources uid = foldr (\v s -> s <> S.singleton (unValue v)) mempty <$>
+  (select $
+    from $ \f -> do
+    where_ (f^.FavoriteUserId ==. val uid)
+    return (f^.FavoriteResId))
+
+getGrokkedResources :: UserId -> YesodDB App (Set ResourceId)
+getGrokkedResources uid = foldr (\v s -> s <> S.singleton (unValue v)) mempty <$>
+  (select $
+    from $ \g -> do
+    where_ (g^.GrokkedUserId ==. val uid)
+    return (g^.GrokkedResId))
 
 -- Get a the number of resources this user has grokked, grouped by tag.
 getGrokkedCounts :: UserId -> YesodDB App (Map TagId Int)
@@ -74,20 +90,6 @@ getResourcesWithTag tag = getBy404 (UniqueTagText tag) >>= getResourcesWithTagId
             where_ (r^.ResourceId ==. rt^.ResourceTagResId &&.
                     rt^.ResourceTagTagId ==. val tagId)
             return r
-
-isFavoriteResource, isGrokkedResource :: ResourceId -> Handler Bool
-isFavoriteResource = isAttributeResource UniqueFavorite
-isGrokkedResource  = isAttributeResource UniqueGrokked
-
-isAttributeResource :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend)
-                    => (UserId -> ResourceId -> Unique val)
-                    -> ResourceId
-                    -> Handler Bool
-isAttributeResource constructor resId = maybeAuthId >>= \case
-    Nothing  -> return False
-    Just uid -> maybeToBool <$> runDB (getBy $ constructor uid resId)
-  where
-    maybeToBool = maybe False (const True)
 
 -- Adjust Resource's title, author, published, and type. Add all Tags to the database,
 -- collecting their ids. Remove all ResourceTag relations for the Resource, and add back

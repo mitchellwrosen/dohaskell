@@ -1,0 +1,28 @@
+function expand(elem) {
+  resourceContainer = $(elem).siblings('.res-container')
+
+  resourceContainer.show();
+  if (!$(elem).hasClass('fetched')) {
+    // FIXME: Is there any way to get a typesafe URL here?
+    uri = 'tag/' + encodeURIComponent($(elem).attr('id')) + '?embed';
+    onFetch = function() { $(elem).addClass('fetched'); }
+    resourceContainer.load(uri, onFetch);
+  }
+}
+
+function collapse(elem) {
+  $(elem).siblings('.res-container').hide();
+}
+
+function clickExpand() {
+  $(this).toggleClass('exp');
+  if ($(this).hasClass('exp')) {
+    expand(this);
+  } else {
+    collapse(this);
+  }
+}
+
+$(document).ready(function() {
+  $('.tag-expand').click(clickExpand);
+});

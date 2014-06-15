@@ -7,7 +7,6 @@ import qualified Data.Map       as M
 
 import           Model.Tag      (getAllTags, getTagCounts)
 import           Model.Resource (getGrokkedCounts)
-import           View.Tag       (tagListItemWidget, tagListItemWidget')
 
 getHomeR :: Handler Html
 getHomeR = do
@@ -23,4 +22,5 @@ getHomeR = do
 
     defaultLayout $ do
         setTitle "dohaskell: tagged Haskell learning resources"
+        addScriptRemote "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
         $(widgetFile "homepage")

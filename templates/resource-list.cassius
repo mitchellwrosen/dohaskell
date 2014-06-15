@@ -1,81 +1,78 @@
-.res-li-col
-  height: 30px
-  line-height: 30px
-
-.res-li-col:hover
-  background-color: #eee
-
 .res-fav
   background: url(@{StaticR img_star_outline_png})
   background-position: center
   background-repeat: no-repeat
-  background-size: 20px 20px
-  clear: both
+  background-size: 22px 22px
   float: left
   width: 30px
-  height: 30px
+  height: 100%
 
 .res-fav.fav
   background: url(@{StaticR img_star_png})
   background-position: center
   background-repeat: no-repeat
-  background-size: 20px 20px
-
-.res-fav:hover
-  background-color: #eee
-
-.res-fav.fav:hover
-  background-color: #eee
+  background-size: 22px 22px
 
 .res-grok
   background: url(@{StaticR img_circle_outline_png})
   background-position: center
   background-repeat: no-repeat
-  background-size: 20px 20px
+  background-size: 22px 22px
   float: left
   width: 30px
-  height: 30px
+  height: 100%
 
 .res-grok.grok
   background: url(@{StaticR img_circle_png})
   background-position: center
   background-repeat: no-repeat
-  background-size: 20px 20px
+  background-size: 22px 22px
 
-.res-grok:hover
-  background-color: #eee
-
-.res-grok.grok:hover
-  background-color: #eee
-
-.res-link
+.res-title
   color: #069
-  display: block
-  float: none
+  display: inline-block
   font-size: 20px
   font-weight: bold
-  text-decoration: none
-  padding: 0px 5px
-  overflow: hidden
+  margin-top: 5px
+
+.res-published-type-author
+  margin-top: -3px
 
 .res-author
-  color: gray
+  font-weight: bold
 
-.res-published
-  color: #A0A0A0
+.res-published, .res-type, .res-author-by, .res-author
+  color: gray
   font-size: 14px
 
-.res-link:hover
-  color: black
+.res-link
+  display: block
+  height: 100%
+  overflow: hidden
+  padding: 0px 5px
   text-decoration: none
+
+.res-link:hover .res-title
+  color: black
 
 .res-info
   background: url(@{StaticR img_edit_png})
   background-position: center
   background-repeat: no-repeat
   background-size: 20px 20px
-  display: block
-  width: 30px
-  height: 30px
-  text-decoration: none
   float: right
+  width: 30px
+  height: 100%
+  text-decoration: none
+
+.res-li
+  height: 45px
+
+.res-li a
+  text-decoration: none
+
+.res-li > *
+  vertical-align: middle
+
+.res-li > *:hover
+  background-color: #eee

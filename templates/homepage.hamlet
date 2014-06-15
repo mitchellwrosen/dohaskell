@@ -1,9 +1,15 @@
 $# fromJust is safe here because the tags and counts were retrieved in the
 $# same transaction. TODO: replace with ^?!
 
-$maybe grokkedCounts <- mgrokkedCounts
-  $forall tag@(Entity tagId _) <- tags
-    ^{tagListItemWidget' tag (maybe 0 id $ M.lookup tagId grokkedCounts) (fromJust $ M.lookup tagId tagCounts)}
-$nothing
-  $forall tag@(Entity tagId _) <- tags
-    ^{tagListItemWidget tag (fromJust $ M.lookup tagId tagCounts)}
+<div #tag-list>
+  $forall Entity tagId (Tag tag) <- tags
+    <div>
+      $maybe grokkedCounts <- mgrokkedCounts
+        <div title="Grokked resources / total resources" .tag-col .tag-count>
+          #{show $ maybe 0 id $ M.lookup tagId grokkedCounts}/#{show $ fromJust $ M.lookup tagId tagCounts}
+      $nothing
+        <div title="Total resources" .tag-col .tag-count>
+          #{show $ fromJust $ M.lookup tagId tagCounts}
+      <div .tag-col .tag-expand ##{tag}>+
+      <a .tag-col .tag-link href=@{TagR tag}>#{tag}
+      <div .res-container>
