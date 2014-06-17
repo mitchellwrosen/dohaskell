@@ -7,7 +7,7 @@ module Application
 
 import Import
 
-import           Control.Concurrent                   (forkIO, newMVar, threadDelay)
+import           Control.Concurrent                   (newMVar)
 import           Control.Monad.Logger                 (runLoggingT)
 import           Data.Default                         (def)
 import qualified Data.Map                             as M
@@ -20,7 +20,7 @@ import           Network.Wai.Middleware.RequestLogger ( mkRequestLogger, outputF
                                                       , IPAddrSource (..), destination
                                                       )
 import           Settings
-import           System.Log.FastLogger                (newStdoutLoggerSet, defaultBufSize, flushLogStr)
+import           System.Log.FastLogger                (newStdoutLoggerSet, defaultBufSize)
 import           Yesod.Core.Types                     (loggerSet, Logger (Logger))
 import           Yesod.Default.Config
 import           Yesod.Default.Handlers

@@ -10,6 +10,10 @@ $# same transaction. TODO: replace with ^?!
       $nothing
         <div title="Total resources" .tag-col .tag-count>
           #{show $ fromJust $ M.lookup tagId tagCounts}
-      <div .tag-col .tag-expand ##{tag}>+
-      <a .tag-col .tag-link href=@{TagR tag}>#{tag}
+
+      <a .tag-col .tag-arrow href=@{TagR tag}>
+        <img align=center src=@{StaticR img_right_arrow_png}>
+
+      <div .tag-col .tag-expand ##{tag}>#{tag}
+
       <div .res-container>

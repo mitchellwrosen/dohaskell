@@ -6,31 +6,29 @@
   width: 30px
 
 .tag-expand
-  float: left
-  font-weight: bold
-  text-align: center
-  width: 30px
-
-.tag-expand:hover
-  background-color: #eee
-
-.tag-link
   color: #069
-  display: block
+  float: none
   font-size: 22px
   font-weight: bold
   overflow: hidden
   padding-left: 5px
-  text-decoration: none
 
-.tag-link:hover
+.tag-arrow
+  float: right
+  height: 100%
+  text-align: center
+  width: 30px
+
+.tag-arrow:hover
+  background-color: #eee
+
+.tag-expand:hover
   color: #000
   background-color: #eee
-  text-decoration: none
 
 .tag-col
   height: 30px
   line-height: 30px
 
 .res-container
-  margin-left: 20px
+  margin-left: 35px

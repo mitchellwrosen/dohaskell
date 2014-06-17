@@ -21,6 +21,7 @@ data ResourceType
     | QAWebsite
     | ResearchPaper
     | ResearchPaperLite
+    | SourceCode
     | SurveyArticle
     | Textbook
     | VideoLecture
@@ -37,7 +38,7 @@ descResourceType :: ResourceType -> Text
 descResourceType BlogPost          = "Blog post"
 descResourceType CommunitySite     = "Community website"
 descResourceType Dissertation      = "Dissertation"
-descResourceType Documentation     = "Library documentation"
+descResourceType Documentation     = "Documentation"
 descResourceType ExperienceReport  = "Experience report"
 descResourceType ExtendedExample   = "Extended example/tutorial"
 descResourceType ForumPost         = "Forum post (e.g. Reddit comment)"
@@ -48,6 +49,7 @@ descResourceType MetaResource      = "Meta-resource"
 descResourceType QAWebsite         = "Q&A website"
 descResourceType ResearchPaper     = "Research paper"
 descResourceType ResearchPaperLite = "Research paper lite"
+descResourceType SourceCode        = "Source code"
 descResourceType SurveyArticle     = "Survey article"
 descResourceType Textbook          = "Textbook"
 descResourceType VideoLecture      = "Video lecture/presentation"
@@ -68,5 +70,6 @@ shortDescResourceType QAWebsite         = "answer"
 shortDescResourceType ResearchPaper     = "paper"
 shortDescResourceType ResearchPaperLite = "paper lite"
 shortDescResourceType SurveyArticle     = "survey"
+shortDescResourceType SourceCode        = "source code"
 shortDescResourceType Textbook          = "textbook"
 shortDescResourceType VideoLecture      = "video"

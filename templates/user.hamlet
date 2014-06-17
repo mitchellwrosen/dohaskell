@@ -1,14 +1,15 @@
-<ul #profile>
-   $if isOwnProfile
-      <li>Login ID (hidden): <strong>#{userName user}</strong>
+<div #profile>
+  $if isOwnProfile
+    <div>Login ID (hidden): <strong>#{userName user}</strong>
 
-   <li #display-name>Display name: <strong>#{userDisplayName user}</strong>
+  <div .display-name>Display name: #
+    <strong>#{userDisplayName user}
 
-   $if isOwnProfile
-      <li #display-name-form>
-         <form method=post action=@{UserR uid} enctype=#{enctype}>
-            ^{widget}
-            <input type="submit" value="Submit">
+  $if isOwnProfile
+    <div .display-name-form>
+      <form method=post action=@{UserR uid} enctype=#{enctype}>
+        ^{widget}
+        <input type="submit" value="Submit">
 
-      <li #req-edits-hub>
-         <a href=@{ReqEditsHubR uid}>Requested Edits Hub (#{numRequestedEdits})
+    <div .req-edits>
+      <a href=@{ReqEditsHubR uid}>Requested Edits (#{numRequestedEdits})

@@ -38,12 +38,11 @@ ResourceTag
     tagId TagId
     UniqueResourceTag resId tagId
 
--- Currently unused
-Difficulty
-    resId  ResourceId
-    userId UserId
-    val    Int
-    UniqueDifficulty resId userId
+-- A question/answer pair, for a Resource.
+-- QuestionAnswer
+--     quesText Markdown
+--     answText Markdown
+--     resId    ResourceId
 
 -- Caveat: can't have a uniqueness constraint on a NULLABLE field. This means
 -- there may be two pending edits for the same author name change. Oh well.
