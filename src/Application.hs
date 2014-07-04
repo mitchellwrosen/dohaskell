@@ -120,8 +120,7 @@ runRawStmt = flip rawExecute []
 doMigration :: SqlPersistT (ResourceT (LoggingT IO)) ()
 doMigration = do
     createDatabaseVersionIfNotExists
-    runOldMigrationFiles -- >>= createAndRunNewMigrationFiles
-    return ()
+    runOldMigrationFiles >>= createAndRunNewMigrationFiles
   where
     createDatabaseVersionIfNotExists :: SqlPersistT (ResourceT (LoggingT IO)) ()
     createDatabaseVersionIfNotExists = void $
