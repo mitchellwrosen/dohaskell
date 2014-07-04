@@ -2,6 +2,7 @@ CREATE TABLE "author"("id" INTEGER PRIMARY KEY,"name" VARCHAR NOT NULL,CONSTRAIN
 INSERT INTO "author"("name") SELECT DISTINCT "author" FROM "resource" WHERE "author" IS NOT NULL;
 CREATE TABLE "res_author"("id" INTEGER PRIMARY KEY,"res_id" INTEGER NOT NULL REFERENCES "resource","auth_id" INTEGER NOT NULL REFERENCES "author","ord" INTEGER NOT NULL,CONSTRAINT "unique_res_author" UNIQUE ("res_id","auth_id"));
 INSERT INTO "res_author"("res_id","auth_id","ord") SELECT r.id,a.id,0 FROM "resource" AS r INNER JOIN "author" AS a ON r.author = a.name;
+DROP TABLE "edit_author";
 CREATE TABLE "edit_authors"("id" INTEGER PRIMARY KEY,"res_id" INTEGER NOT NULL REFERENCES "resource","authors" VARCHAR NOT NULL,CONSTRAINT "unique_edit_authors" UNIQUE ("res_id","authors"));
 CREATE TEMP TABLE "resource_backup"("id" INTEGER PRIMARY KEY,"title" VARCHAR NOT NULL,"url" VARCHAR NOT NULL,"published" INTEGER NULL,"type" VARCHAR NOT NULL,"user_id" INTEGER NOT NULL REFERENCES "user","posted" TIMESTAMP NOT NULL,CONSTRAINT "unique_resource_url" UNIQUE ("url"));
 INSERT INTO "resource_backup"("id","title","url","published","type","user_id","posted") SELECT "id","title","url","published","type","user_id","posted" FROM "resource";
