@@ -30,7 +30,7 @@ postUserR uid = do
     ((result, _), _) <- runFormPost (displayNameForm Nothing)
     case result of
         FormSuccess displayName -> do
-            updateUserDisplayName uid displayName
+            runDB $ updateUserDisplayName uid displayName
             setMessage "Display name updated."
             redirect $ UserR uid
         FormFailure err -> do

@@ -2,9 +2,8 @@ module Handler.Submit where
 
 import Import
 
-import Database.Persist.Sql
-
-import View.Resource (resourceForm)
+import Database.Persist.Class.Extra (insertBy')
+import View.Resource                (resourceForm)
 
 getSubmitR :: Handler Html
 getSubmitR = do
@@ -18,26 +17,29 @@ postSubmitR :: Handler Html
 postSubmitR = do
     ((result, _), _) <- runFormPost . resourceForm =<< requireAuthId
     case result of
-        FormSuccess (res,tags) -> do
+        FormSuccess (title, url, authors, year, typ, tags, user_id, posted_at) -> do
+            let res = Resource title url year typ user_id posted_at
             runDB (insertBy res) >>= \case
-                Left (Entity resId _) -> do
-                    setDuplicateUrlMessage (resourceUrl res) resId
+                Left (Entity res_id _) -> do
+                    setDuplicateUrlMessage (resourceUrl res) res_id
                     redirect SubmitR
-                Right resId -> do
-                    -- It's okay to ignore returned ids, attempting to insert
-                    -- duplicate ResourceTags is okay.
-                    runDB $ mapM_ (insertResourceTagAndTag resId) tags
+                Right res_id -> do
+                    runDB $ do
+                        mapM_ (insertResourceTagAndTag res_id) tags
+                        mapM_ (insertResAuthorAndAuthor res_id) (zip [0..] authors)
                     setMessage "Thanks for your submission!"
                     redirect HomeR
         _ -> do
             setMessage "Invalid resource submission! Please try again."
             redirect SubmitR
   where
-    insertResourceTagAndTag :: ResourceId -> Text -> SqlPersistT Handler (Maybe ResourceTagId)
-    insertResourceTagAndTag resId tag = do
-        insertBy (Tag tag) >>= \case
-            Left (Entity tagId _) -> insertUnique $ ResourceTag resId tagId
-            Right tagId           -> insertUnique $ ResourceTag resId tagId
+    insertResourceTagAndTag :: ResourceId -> Text -> YesodDB App ()
+    insertResourceTagAndTag res_id tag = void $ insertBy' (Tag tag) >>= insertUnique . ResourceTag res_id
+
+    insertResAuthorAndAuthor :: ResourceId -> (Int, Text) -> YesodDB App ()
+    insertResAuthorAndAuthor res_id (n, name) = do
+        auth_id <- insertBy' (Author name)
+        void . insertUnique $ ResAuthor res_id auth_id n
 
     setDuplicateUrlMessage :: Text -> ResourceId -> Handler ()
     setDuplicateUrlMessage resUrl resId = do

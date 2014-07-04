@@ -1,10 +1,10 @@
 <div #resource-body>
-   ^{resourceInfoWidget (Entity resId res)}
+   ^{resourceInfoWidget (Entity res_id res)}
 
    $if canDelete
-      <form method=post action=@{DeleteResourceR resId}>
+      <form method=post action=@{DeleteResourceR res_id}>
          <input type="submit" value="Delete Resource">
 
-   <form method=post action=@{EditResourceR resId} enctype=#{enctype}>
+   <form method=post action=@{EditResourceR res_id} enctype=#{enctype}>
       ^{widget}
       <input type="submit" value="Edit Resource">

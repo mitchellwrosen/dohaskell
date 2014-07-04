@@ -20,7 +20,6 @@ Grokked
 Resource
     title     Text
     url       Text
-    author    Text Maybe
     published Int Maybe
     type      ResourceType
     userId    UserId
@@ -29,14 +28,27 @@ Resource
     deriving Eq Ord
 
 Tag
-    text Text
-    UniqueTagText text
+    tag Text
+    UniqueTag tag
+    deriving Eq Ord
 
--- Tag relation, one-to-many between Resource and Tag.
+-- A Resource can have one or more Tags.
 ResourceTag
     resId ResourceId
     tagId TagId
     UniqueResourceTag resId tagId
+
+Author
+    name Text
+    UniqueAuthor name
+    deriving Eq Ord
+
+-- A Resource can have zero or more Authors, order matters.
+ResAuthor
+    resId  ResourceId
+    authId AuthorId
+    ord    Int        -- starts at 0
+    UniqueResAuthor resId authId
 
 -- A question/answer pair, for a Resource.
 -- QuestionAnswer
@@ -45,12 +57,7 @@ ResourceTag
 --     resId    ResourceId
 
 -- Caveat: can't have a uniqueness constraint on a NULLABLE field. This means
--- there may be two pending edits for the same author name change. Oh well.
-EditAuthor
-    resId  ResourceId
-    author Text Maybe
-
--- Same caveat as above.
+-- there may be two pending edits for the same published year change. Oh well.
 EditPublished
     resId     ResourceId
     published Int Maybe
@@ -74,3 +81,25 @@ EditRemoveTag
     resId ResourceId
     text  Text
     UniqueEditRemoveTag resId text
+
+-- An EditAuthors is essentially a new list of authors, to be shown to the resource
+-- owner as one big blob (he/she will have to figure out what's changed).
+--
+-- Editing authors is treated a little differently than editing tags for two reasons:
+--
+-- 1. Editing authors will be much less frequent, and there will be fewer authors
+--    than tags, so it's not as necessary to see individual add/remove author
+--    requests.
+--
+-- 2. Author order matters, so inundating the resource maintainer with a bunch of
+--    ordering-related edits will cause more confusion than just displaying the list
+--    of authors raw and letting them figure it out.
+--
+--    Consider changing "foo, bar, baz" to "bar, baz". If we had separate EditAddAuthor,
+--    EditRemoveAuthor, and EditChangeAuthorOrdinal requests, this would mandate the
+--    acceptance/denial of three separate edits: remove foo, change bar ordinal from
+--    2 to 1, and change baz ordinal from 3 to 2.
+EditAuthors
+    resId  ResourceId
+    authors [Text]
+    UniqueEditAuthors resId authors

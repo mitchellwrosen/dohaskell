@@ -10,9 +10,10 @@ import           Yesod                        as Import hiding (Route(..), Value
 import           Yesod.Auth                   as Import
 
 import           Control.Applicative          as Import ((<$>), (<*>), (*>), (<*), liftA2, liftA3, pure)
-import           Control.Arrow                as Import ((&&&))
-import           Control.Monad                as Import (join, unless, void, when)
+import           Control.Arrow                as Import ((&&&), (***))
+import           Control.Monad                as Import (liftM, join, unless, void, when)
 import           Data.Foldable                as Import (forM_, mapM_)
+import           Data.List                    as Import (foldl')
 import           Data.Map                     as Import (Map)
 import           Data.Set                     as Import (Set)
 import           Data.Text                    as Import (Text)

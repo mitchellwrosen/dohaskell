@@ -6,42 +6,43 @@
          $forall res <- resources
             <li>
                ^{resourceInfoWidget res}
-               <ul>
-                  $forall Entity editId edit <- maybe [] id (M.lookup res editTitles)
-                     <li>
-                        Title: #{editTitleTitle edit}
-                        <form method=post>
-                           <input type=submit formaction=@{EditTitleAcceptR editId} value=Accept>
-                           <input type=submit formaction=@{EditTitleDeclineR editId} value=Decline>
 
                <ul>
-                  $forall Entity editId edit <- maybe [] id (M.lookup res editAuthors)
+                  $forall Entity edit_id (EditTitle _ title) <- maybe [] id (M.lookup res editTitles)
                      <li>
-                        Primary author: #{maybe "" id $ editAuthorAuthor edit}
+                        Title: #{title}
                         <form method=post>
-                           <input type=submit formaction=@{EditAuthorAcceptR editId} value=Accept>
-                           <input type=submit formaction=@{EditAuthorDeclineR editId} value=Decline>
+                           <input type=submit formaction=@{EditTitleAcceptR edit_id} value=Accept>
+                           <input type=submit formaction=@{EditTitleDeclineR edit_id} value=Decline>
 
                <ul>
-                  $forall Entity editId edit <- maybe [] id (M.lookup res editTypes)
+                  $forall Entity edit_id (EditAuthors _ authors) <- maybe [] id (M.lookup res editAuthors)
+                     <li>
+                        Authors: #{T.intercalate ", " authors}
+                        <form method=post>
+                           <input type=submit formaction=@{EditAuthorsAcceptR edit_id} value=Accept>
+                           <input type=submit formaction=@{EditAuthorsDeclineR edit_id} value=Decline>
+
+               <ul>
+                  $forall Entity edit_id edit <- maybe [] id (M.lookup res editTypes)
                      <li>
                         Type: #{editTypeType edit}
                         <form method=post>
-                           <input type=submit formaction=@{EditTypeAcceptR editId} value=Accept>
-                           <input type=submit formaction=@{EditTypeDeclineR editId} value=Decline>
+                           <input type=submit formaction=@{EditTypeAcceptR edit_id} value=Accept>
+                           <input type=submit formaction=@{EditTypeDeclineR edit_id} value=Decline>
 
                <ul>
-                  $forall Entity editId edit <- maybe [] id (M.lookup res editAddTags)
+                  $forall Entity edit_id edit <- maybe [] id (M.lookup res editAddTags)
                      <li>
                         Add tag: #{editAddTagText edit}
                         <form method=post>
-                           <input type=submit formaction=@{EditAddTagAcceptR editId} value=Accept>
-                           <input type=submit formaction=@{EditAddTagDeclineR editId} value=Decline>
+                           <input type=submit formaction=@{EditAddTagAcceptR edit_id} value=Accept>
+                           <input type=submit formaction=@{EditAddTagDeclineR edit_id} value=Decline>
 
                <ul>
-                  $forall Entity editId edit <- maybe [] id (M.lookup res editRemoveTags)
+                  $forall Entity edit_id edit <- maybe [] id (M.lookup res editRemoveTags)
                      <li>
                         Remove tag: #{editRemoveTagText edit}
                         <form method=post>
-                           <input type=submit formaction=@{EditRemoveTagAcceptR editId} value=Accept>
-                           <input type=submit formaction=@{EditRemoveTagDeclineR editId} value=Decline>
+                           <input type=submit formaction=@{EditRemoveTagAcceptR edit_id} value=Accept>
+                           <input type=submit formaction=@{EditRemoveTagDeclineR edit_id} value=Decline>

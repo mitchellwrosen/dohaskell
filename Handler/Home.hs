@@ -2,11 +2,11 @@ module Handler.Home where
 
 import Import
 
-import           Data.Maybe     (fromJust)
-import qualified Data.Map       as M
+import           Data.Maybe (fromJust)
+import qualified Data.Map   as M
 
-import           Model.Tag      (getAllTags, getTagCounts)
-import           Model.Resource (getGrokkedCounts)
+import           Model.Tag  (getAllTags, getTagCounts)
+import           Model.User (getGrokkedCounts)
 
 getHomeR :: Handler Html
 getHomeR = do

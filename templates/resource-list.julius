@@ -2,12 +2,12 @@ $(document).ready(function() {
   $('.res-fav').click(function() {
     $(this).toggleClass('fav');
     if ($(this).hasClass('fav')) {
-      $.post("@{FavoriteResourceR}", { resId: $(this).attr('id') })
+      $.post("@{FavoriteResourceR}", { res_id: $(this).attr('id') })
         .fail(function(xhr, textStatus, errorThrown) {
           alert("Failure: " + xhr.responseText);
         });
     } else {
-      $.post("@{UnfavoriteResourceR}", { resId: $(this).attr('id') })
+      $.post("@{UnfavoriteResourceR}", { res_id: $(this).attr('id') })
         .fail(function(xhr, textStatus, errorThrown) {
           alert("Failure: " + xhr.responseText);
         });
@@ -17,12 +17,12 @@ $(document).ready(function() {
   $('.res-grok').click(function() {
     $(this).toggleClass('grok');
     if ($(this).hasClass('grok')) {
-      $.post("@{GrokkedResourceR}", { resId: $(this).attr('id') })
+      $.post("@{GrokkedResourceR}", { res_id: $(this).attr('id') })
         .fail(function(xhr, textStatus, errorThrown) {
           alert("Failure: " + xhr.responseText);
         });
     } else {
-      $.post("@{UngrokkedResourceR}", { resId: $(this).attr('id') })
+      $.post("@{UngrokkedResourceR}", { res_id: $(this).attr('id') })
         .fail(function(xhr, textStatus, errorThrown) {
           alert("Failure: " + xhr.responseText);
         });

@@ -7,20 +7,26 @@ module Application
 
 import Import
 
-import           Control.Concurrent                   (newMVar)
-import           Control.Monad.Logger                 (runLoggingT)
+import           Settings
+
+-- import           Control.Concurrent                   (forkIO, threadDelay)
+import           Control.Monad.Logger                 (LoggingT, runLoggingT)
+import           Control.Monad.Trans.Resource         (ResourceT, runResourceT)
 import           Data.Default                         (def)
-import qualified Data.Map                             as M
-import qualified Database.Persist
-import           Database.Persist.Sql                 (runMigration)
+import           Data.List                            (sort)
+import qualified Data.Text                            as T
+import qualified Data.Text.IO                         as T
+import           Database.Persist
+import           Database.Persist.Sql
 import           Network.HTTP.Client.Conduit          (newManager)
 import           Network.Wai.Logger                   (clockDateCacher)
 import qualified Network.Wai.Middleware.RequestLogger as RequestLogger
 import           Network.Wai.Middleware.RequestLogger ( mkRequestLogger, outputFormat, OutputFormat (..)
                                                       , IPAddrSource (..), destination
                                                       )
-import           Settings
-import           System.Log.FastLogger                (newStdoutLoggerSet, defaultBufSize)
+import           Prelude                              (last)
+import           System.Directory                     (getDirectoryContents)
+import           System.Log.FastLogger                (newStdoutLoggerSet, defaultBufSize) -- , flushLogStr)
 import           Yesod.Core.Types                     (loggerSet, Logger (Logger))
 import           Yesod.Default.Config
 import           Yesod.Default.Handlers
@@ -30,10 +36,7 @@ import           Yesod.Default.Main
 -- Don't forget to add new modules to your cabal file!
 import Handler.About
 import Handler.Browse
-import Handler.DeleteResource
-import Handler.EditResource
 import Handler.EditResourceRequest
-import Handler.FavoriteResource
 import Handler.Home
 import Handler.ReqEditsHub
 import Handler.Resource
@@ -94,17 +97,132 @@ makeFoundation conf = do
     --         updateLoop
     -- _ <- forkIO updateLoop
 
-    usersMap <- newMVar M.empty
-
     let logger     = Yesod.Core.Types.Logger loggerSet' (updater >> getter)
-        foundation = App conf s pool manager dbconf logger navbarWidget usersMap
+        foundation = App conf s pool manager dbconf logger navbarWidget
 
     -- Perform database migration using our application's logging settings.
+    let migration = runResourceT $ do
+            Database.Persist.runPool dbconf doMigration pool
+
     runLoggingT
-        (Database.Persist.runPool dbconf (runMigration migrateAll) pool)
+        migration
         (messageLoggerSource foundation logger)
 
     return foundation
+
+runRawQuery :: (RawSql a, MonadSqlPersist m, MonadResource m) => Text -> m [a]
+runRawQuery = flip rawSql []
+
+runRawStmt :: MonadSqlPersist m => Text -> m ()
+runRawStmt = flip rawExecute []
+
+
+doMigration :: SqlPersistT (ResourceT (LoggingT IO)) ()
+doMigration = do
+    createDatabaseVersionIfNotExists
+    runOldMigrationFiles -- >>= createAndRunNewMigrationFiles
+    return ()
+  where
+    createDatabaseVersionIfNotExists :: SqlPersistT (ResourceT (LoggingT IO)) ()
+    createDatabaseVersionIfNotExists = void $
+        runRawStmt "CREATE TABLE IF NOT EXISTS \"database_version\" (last_migration INTEGER NOT NULL);"
+
+    -- | Run all necessary migrations, and return the next migration number to create.
+    runOldMigrationFiles :: SqlPersistT (ResourceT (LoggingT IO)) Int
+    runOldMigrationFiles = do
+        getLastMigration >>= liftIO . getMigrationNumbers >>= \case
+            [] -> return 1
+            nums -> do
+                forM_ nums $ \num -> do
+                    let file = toSafeMigrateFile num
+                    $(logInfo) $ "Running migration: " <> T.pack file
+                    liftIO (T.lines <$> T.readFile file) >>= mapM_ runRawStmt
+                let new_last_migration = last nums
+                runRawStmt ("UPDATE database_version SET last_migration = " <> T.pack (show new_last_migration) <> ";")
+                return (new_last_migration + 1)
+
+    -- | Get the last migration Int from the database_version table.
+    getLastMigration :: SqlPersistT (ResourceT (LoggingT IO)) Int
+    getLastMigration = do
+        last_migration <- runRawQuery "SELECT last_migration FROM database_version;"
+        case last_migration of
+            [] -> do
+                runRawStmt "INSERT INTO database_version values (0);"
+                return 0
+            [Single n] -> return n
+
+    -- | Get the migration numbers that need to be run.
+    getMigrationNumbers :: Int -> IO [Int]
+    getMigrationNumbers n =
+        sort .
+          filter (> n) .
+            map fromMigrateFile .
+              filter (`notElem` [".",".."])
+                <$> getDirectoryContents "migrations"
+
+    -- | Create zero or more new migration files. Run them only if they're all safe
+    -- (in which case there would be only one).
+    createAndRunNewMigrationFiles :: Int -> SqlPersistT (ResourceT (LoggingT IO)) ()
+    createAndRunNewMigrationFiles next_migration = do
+        migrations <- addSemicolons <$> parseMigration' migrateAll
+        writeMigrations migrations next_migration
+        -- True means unsafe, so if any True, return False. Only run if all are safe,
+        -- in which case we know we only made one new migration file with number
+        -- next_migration.
+        if not (any fst migrations)
+            then runMigrations next_migration (map snd migrations)
+            else error "Aborting due to unsafe migrations."
+      where
+        addSemicolons :: CautiousMigration -> CautiousMigration
+        addSemicolons = map (\(b,s) -> (b, s `T.snoc` ';'))
+
+        -- Makes the code read nicer above.
+        writeMigrations :: CautiousMigration -> Int -> SqlPersistT (ResourceT (LoggingT IO)) ()
+        writeMigrations = writeSafeMigrations
+
+        writeSafeMigrations :: CautiousMigration -> Int -> SqlPersistT (ResourceT (LoggingT IO)) ()
+        writeSafeMigrations = writeMigrations' (not . fst) toSafeMigrateFile writeUnsafeMigrations
+
+        writeUnsafeMigrations :: CautiousMigration -> Int -> SqlPersistT (ResourceT (LoggingT IO)) ()
+        writeUnsafeMigrations = writeMigrations' fst toUnsafeMigrateFile writeSafeMigrations
+
+        writeMigrations'
+            -- Predicate on single migration statement ("is safe" or "is unsafe")
+            :: ((Bool,Sql) -> Bool)
+            -- Migration filepath maker.
+            -> (Int -> FilePath)
+            -- The other guy (safe, if this is unsafe; unsafe, if this is safe)
+            -> (CautiousMigration -> Int -> SqlPersistT (ResourceT (LoggingT IO)) ())
+            -> CautiousMigration -> Int -> SqlPersistT (ResourceT (LoggingT IO)) ()
+        writeMigrations' _ _ _ [] _ = return ()
+        writeMigrations' p toMigrateFile writeOtherMigrations ms n = do
+            let (ms',rest) = span p ms
+            if null ms'
+                then writeOtherMigrations rest n
+                else do
+                    let file = toMigrateFile n
+                    $(logInfo) $ "Writing migration: " <> T.pack file <> " (" <> T.pack (show $ length ms') <> " statements)"
+                    liftIO $ T.writeFile file (T.unlines (map snd ms'))
+                    writeOtherMigrations rest (n+1)
+
+        runMigrations :: Int -> [Sql] -> SqlPersistT (ResourceT (LoggingT IO)) ()
+        runMigrations n stmts = do
+            $(logInfo) $ "Running migration: " <> T.pack (toSafeMigrateFile n)
+            mapM_ runRawStmt stmts
+
+    -- | 10 -> "migrations/10.sql"
+    toSafeMigrateFile :: Int -> FilePath
+    toSafeMigrateFile = (\s -> "migrations/" <> s <> ".sql") . show
+
+    -- | 10 -> "migrations/unsafe-10.sql" (intentionally fails parsing by fromMigrateFile)
+    toUnsafeMigrateFile :: Int -> FilePath
+    toUnsafeMigrateFile = (\s -> "migrations/unsafe-" <> s <> ".sql") . show
+
+    -- | "10.sql" -> 10
+    fromMigrateFile :: FilePath -> Int
+    fromMigrateFile s = case (reads . takeWhile (/= '.')) s of
+        [(n,"")] -> n
+        _ -> error $ "Unsafe migration: migrations/" ++ s
 
 -- for yesod devel
 getApplicationDev :: IO (Int, Application)

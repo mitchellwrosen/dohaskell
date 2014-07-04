@@ -1,2 +1,2 @@
 $forall res <- resources
-  ^{resourceListItemWidget res favsAndGrokked}
+  ^{resourceListItemWidget res authorsMap favsAndGrokked}

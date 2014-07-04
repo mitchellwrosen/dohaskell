@@ -2,12 +2,13 @@ module Handler.ReqEditsHub where
 
 import Import
 
-import qualified Data.Map as M
-import qualified Data.Set as S
+import           Handler.Utils      (denyPermissionIfDifferentUser, denyPermissionIfNotAdmin)
+import           Model.ResourceEdit
+import           View.Resource      (resourceInfoWidget)
 
-import Handler.Utils      (denyPermissionIfDifferentUser, denyPermissionIfNotAdmin)
-import Model.ResourceEdit
-import View.Resource      (resourceInfoWidget)
+import qualified Data.Map           as M
+import qualified Data.Set           as S
+import qualified Data.Text          as T
 
 getReqEditsHubR :: UserId -> Handler Html
 getReqEditsHubR uid = do
@@ -32,7 +33,7 @@ getAllEditsR = do
             >>= getRequestedEdits
 
 getRequestedEdits :: ( Map (Entity Resource) [Entity EditTitle]
-                     , Map (Entity Resource) [Entity EditAuthor]
+                     , Map (Entity Resource) [Entity EditAuthors]
                      , Map (Entity Resource) [Entity EditType]
                      , Map (Entity Resource) [Entity EditAddTag]
                      , Map (Entity Resource) [Entity EditRemoveTag]

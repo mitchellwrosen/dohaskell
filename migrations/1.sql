@@ -1,0 +1,17 @@
+CREATE TABLE "author"("id" INTEGER PRIMARY KEY,"name" VARCHAR NOT NULL,CONSTRAINT "unique_author" UNIQUE ("name"));
+INSERT INTO "author"("name") SELECT DISTINCT "author" FROM "resource" WHERE "author" IS NOT NULL;
+CREATE TABLE "res_author"("id" INTEGER PRIMARY KEY,"res_id" INTEGER NOT NULL REFERENCES "resource","auth_id" INTEGER NOT NULL REFERENCES "author","ord" INTEGER NOT NULL,CONSTRAINT "unique_res_author" UNIQUE ("res_id","auth_id"));
+INSERT INTO "res_author"("res_id","auth_id","ord") SELECT r.id,a.id,0 FROM "resource" AS r INNER JOIN "author" AS a ON r.author = a.name;
+CREATE TABLE "edit_authors"("id" INTEGER PRIMARY KEY,"res_id" INTEGER NOT NULL REFERENCES "resource","authors" VARCHAR NOT NULL,CONSTRAINT "unique_edit_authors" UNIQUE ("res_id","authors"));
+CREATE TEMP TABLE "resource_backup"("id" INTEGER PRIMARY KEY,"title" VARCHAR NOT NULL,"url" VARCHAR NOT NULL,"published" INTEGER NULL,"type" VARCHAR NOT NULL,"user_id" INTEGER NOT NULL REFERENCES "user","posted" TIMESTAMP NOT NULL,CONSTRAINT "unique_resource_url" UNIQUE ("url"));
+INSERT INTO "resource_backup"("id","title","url","published","type","user_id","posted") SELECT "id","title","url","published","type","user_id","posted" FROM "resource";
+DROP TABLE "resource";
+CREATE TABLE "resource"("id" INTEGER PRIMARY KEY,"title" VARCHAR NOT NULL,"url" VARCHAR NOT NULL,"published" INTEGER NULL,"type" VARCHAR NOT NULL,"user_id" INTEGER NOT NULL REFERENCES "user","posted" TIMESTAMP NOT NULL,CONSTRAINT "unique_resource_url" UNIQUE ("url"));
+INSERT INTO "resource" SELECT "id","title","url","published","type","user_id","posted" FROM "resource_backup";
+DROP TABLE "resource_backup";
+CREATE TEMP TABLE "tag_backup"("id" INTEGER PRIMARY KEY,"tag" VARCHAR NOT NULL,CONSTRAINT "unique_tag" UNIQUE ("tag"));
+INSERT INTO "tag_backup"("id","tag") SELECT "id","text" FROM "tag";
+DROP TABLE "tag";
+CREATE TABLE "tag"("id" INTEGER PRIMARY KEY,"tag" VARCHAR NOT NULL,CONSTRAINT "unique_tag" UNIQUE ("tag"));
+INSERT INTO "tag" SELECT "id","tag" FROM "tag_backup";
+DROP TABLE "tag_backup";

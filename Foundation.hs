@@ -1,10 +1,8 @@
 module Foundation where
 
 import           Control.Applicative         ((<$>))
-import           Control.Concurrent          (MVar, modifyMVar_)
 import qualified Database.Persist
 import           Database.Persist.Sql        (SqlPersistT)
-import           Data.Map                    (Map)
 import           Data.Text                   (Text)
 import           Model
 import           Network.HTTP.Client.Conduit (Manager, HasHttpManager (getHttpManager))
@@ -31,9 +29,7 @@ data App = App
     , httpManager   :: Manager
     , persistConfig :: Settings.PersistConf
     , appLogger     :: Logger
-
     , appNavbar     :: WidgetT App IO ()
-    , appUsersMap   :: MVar (Map UserId User)
     }
 
 instance HasHttpManager App where
@@ -173,9 +169,6 @@ instance RenderMessage App FormMessage where
 -- | Get the 'Extra' value, used to hold data from the settings.yml file.
 getExtra :: Handler Extra
 getExtra = appExtra . settings <$> getYesod
-
-modifyUsersMap :: (Map UserId User -> Map UserId User) -> Handler ()
-modifyUsersMap f = appUsersMap <$> getYesod >>= \usersMap -> liftIO (modifyMVar_ usersMap (return . f))
 
 -- Note: previous versions of the scaffolding included a deliver function to
 -- send emails. Unfortunately, there are too many different options for us to

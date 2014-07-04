@@ -1,27 +1,32 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+
 module Model.Resource
     ( deleteResource
-    , getFavoriteResources
-    , getGrokkedCounts
-    , getGrokkedResources
-    , getResourceTags
-    , getResourceTagsWithIds
+    , favoriteResource
+    , getAuthorNames
+    , getAuthors
+    , getAuthorsIn
     , getResourcesWithTag
+    , getTags
+    , getTagEntities
+    , grokResource
+    , unfavoriteResource
+    , ungrokResource
     , updateResource
+    , updateResourceAuthors
     ) where
 
 import Import
 
-import qualified Data.Map             as M
-import qualified Data.Set             as S
+import           Data.DList         (DList)
+import qualified Data.DList         as DL
+import qualified Data.Map           as M
+import qualified Data.Set           as S
 import           Database.Esqueleto
-import qualified Database.Persist   as P
-
-import Database.Persist.Class.Extra (insertBy')
-import Model.ResourceTag            (getResourceTagsByResId)
 
 deleteResource :: ResourceId -> YesodDB App ()
 deleteResource resId = do
-    tagIds <- map (resourceTagTagId . entityVal)  <$> getResourceTagsByResId resId
+    tagIds <- map (resourceTagTagId . entityVal) <$> getResourceTags resId
     mapM_ deleteUnusedTag tagIds
     deleteCascade resId
   where
@@ -36,52 +41,46 @@ deleteResource resId = do
         when (n == (1::Int)) $
             deleteKey tid
 
--- TODO: combine this with getGrokkedResources
-getFavoriteResources :: UserId -> YesodDB App (Set ResourceId)
-getFavoriteResources uid = foldr (\v s -> s <> S.singleton (unValue v)) mempty <$>
-  (select $
-    from $ \f -> do
-    where_ (f^.FavoriteUserId ==. val uid)
-    return (f^.FavoriteResId))
-
-getGrokkedResources :: UserId -> YesodDB App (Set ResourceId)
-getGrokkedResources uid = foldr (\v s -> s <> S.singleton (unValue v)) mempty <$>
-  (select $
-    from $ \g -> do
-    where_ (g^.GrokkedUserId ==. val uid)
-    return (g^.GrokkedResId))
-
--- Get a the number of resources this user has grokked, grouped by tag.
-getGrokkedCounts :: UserId -> YesodDB App (Map TagId Int)
-getGrokkedCounts uid = valsToMap <$>
-    (select $
-        from $ \(g `InnerJoin` rt) -> do
-        on (g^.GrokkedUserId ==. val uid &&.
-            g^.GrokkedResId ==. rt^.ResourceTagResId)
-        groupBy (rt^.ResourceTagTagId)
-        return (rt^.ResourceTagTagId, countRows))
-  where
-    valsToMap :: [(Value TagId, Value Int)] -> Map TagId Int
-    valsToMap = foldr step mempty
-      where
-        step (Value tagId, Value n) = M.insert tagId n
-
-getResourceTags :: ResourceId -> YesodDB App [Tag]
-getResourceTags = fmap (map entityVal) . getResourceTagsWithIds
-
--- Longer name because it's probably more likely that we don't care about the
--- tags' ids.
-getResourceTagsWithIds :: ResourceId -> YesodDB App [Entity Tag]
-getResourceTagsWithIds resId =
+-- | Get the Authors of a Resource.
+getAuthors :: ResourceId -> YesodDB App [Author]
+getAuthors resId = fmap (map entityVal) $
     select $
-        from $ \(t, rt) -> do
-        where_ (t^.TagId ==. rt^.ResourceTagTagId &&.
-                rt^.ResourceTagResId ==. val resId)
-        orderBy [asc (t^.TagText)]
-        return t
+        from $ \(a `InnerJoin` ra) -> do
+        on (a^.AuthorId ==. ra^.ResAuthorAuthId)
+        where_ (ra^.ResAuthorResId ==. val resId)
+        orderBy [asc (ra^.ResAuthorOrd)]
+        return a
+
+getAuthorNames :: ResourceId -> YesodDB App [Text]
+getAuthorNames = fmap (map authorName) . getAuthors
+
+-- | Get the Authors of a list of Resources, as a Map.
+getAuthorsIn :: [ResourceId] -> YesodDB App (Map ResourceId [Author])
+getAuthorsIn res_ids = fmap makeAuthorMap $
+    select $
+        from $ \(a `InnerJoin` ra) -> do
+        on (a^.AuthorId ==. ra^.ResAuthorAuthId)
+        where_ (ra^.ResAuthorResId `in_` valList res_ids)
+        orderBy [desc (ra^.ResAuthorOrd)]
+        return (ra^.ResAuthorResId, a)
+  where
+    makeAuthorMap :: [(Value ResourceId, Entity Author)] -> Map ResourceId [Author]
+    makeAuthorMap = fmap DL.toList . foldr step mempty
+      where
+        step :: (Value ResourceId, Entity Author)
+             -> Map ResourceId (DList Author)
+             -> Map ResourceId (DList Author)
+        step (Value res_id, Entity _ author) = M.insertWith (<>) res_id (DL.singleton author)
+
+getResourceTags :: ResourceId -> YesodDB App [Entity ResourceTag]
+getResourceTags resId =
+    select $
+        from $ \rt -> do
+        where_ (rt^.ResourceTagResId ==. val resId)
+        return rt
 
 getResourcesWithTag :: Text -> YesodDB App [Entity Resource]
-getResourcesWithTag tag = getBy404 (UniqueTagText tag) >>= getResourcesWithTagId . entityKey
+getResourcesWithTag tag = getBy404 (UniqueTag tag) >>= getResourcesWithTagId . entityKey
   where
     getResourcesWithTagId :: TagId -> YesodDB App [Entity Resource]
     getResourcesWithTagId tagId =
@@ -91,37 +90,95 @@ getResourcesWithTag tag = getBy404 (UniqueTagText tag) >>= getResourcesWithTagId
                     rt^.ResourceTagTagId ==. val tagId)
             return r
 
--- Adjust Resource's title, author, published, and type. Add all Tags to the database,
--- collecting their ids. Remove all ResourceTag relations for the Resource, and add back
--- new relations between the Resource and each Tag id collected. Possibly delete
--- old Tags if there are no other resources that share the tag.
-updateResource :: ResourceId -> Text -> Maybe Text -> Maybe Int -> ResourceType -> [Tag] -> YesodDB App ()
-updateResource resId title author published typ tags = do
-    -- Adjust Resource's title and type.
-    update $ \resource -> do
-        set resource [ ResourceTitle     =. val title
-                     , ResourceAuthor    =. val author
-                     , ResourcePublished =. val published
-                     , ResourceType      =. val typ
-                     ]
-        where_ (resource^.ResourceId ==. val resId)
+getTags :: ResourceId -> YesodDB App (Set Tag)
+getTags = fmap (S.fromList . map entityVal) . getTagEntities
 
-    -- Add all new Tags, collect their IDs, and insert ResourceTags.
-    newTagIds <- mapM insertBy' tags
-    mapM_ (insertUnique . ResourceTag resId) newTagIds
+getTagEntities :: ResourceId -> YesodDB App [Entity Tag]
+getTagEntities resId =
+    select $
+        from $ \(t `InnerJoin` rt) -> do
+        on (t^.TagId ==. rt^.ResourceTagTagId)
+        where_ (rt^.ResourceTagResId ==. val resId)
+        orderBy [asc (t^.TagTag)]
+        return t
 
-    -- Get all old ResourceTags, to count the number of other Resources
-    -- that share the Tag (we know there's at least one, this one), and
-    -- possibly delete the Tag.
-    getResourceTagsByResId resId >>= mapM_ (deleteUnusedTagsAndResourceTags newTagIds)
+favoriteResource, grokResource :: UserId -> ResourceId -> YesodDB App ()
+favoriteResource user_id = void . insertUnique . Favorite user_id
+grokResource     user_id = void . insertUnique . Grokked  user_id
+
+unfavoriteResource :: UserId -> ResourceId -> YesodDB App ()
+unfavoriteResource user_id = deleteBy . UniqueFavorite user_id
+ungrokResource     user_id = deleteBy . UniqueGrokked  user_id
+
+-- | Update a resource.
+updateResource :: ResourceId     -- ^ ID.
+               -> Text           -- ^ Title.
+               -> [Author]       -- ^ Authors.
+               -> Maybe Int      -- ^ Published.
+               -> ResourceType   -- ^ Type.
+               -> [Tag]          -- ^ Tags.
+               -> YesodDB App ()
+updateResource res_id title authors published typ tags = do
+    update $ \r -> do
+        set r [ ResourceTitle     =. val title
+              , ResourcePublished =. val published
+              , ResourceType      =. val typ
+              ]
+        where_ (r^.ResourceId ==. val res_id)
+
+    updateResourceTags res_id tags
+    updateResourceAuthors res_id authors
+
+updateResourceTags :: ResourceId -> [Tag] -> YesodDB App ()
+updateResourceTags res_id tags = do
+    deleteResourceTags
+    insertTags >>= insertResourceTags
+    deleteUnusedTags
   where
-    deleteUnusedTagsAndResourceTags :: [TagId] -> Entity ResourceTag -> YesodDB App ()
-    deleteUnusedTagsAndResourceTags newTagIds (Entity rtid (ResourceTag _ tid)) =
-        -- Only possibly delete tags that weren't just added as this resources's tags,
-        -- because our deletion criteria is that this is the only resource with the tag.
-        when (tid `notElem` newTagIds) $ do
-            -- Possibly delete the Tag, then unconditionally delete the ResourceTag (it's old).
-            n <- P.count [ResourceTagTagId P.==. tid]
-            when (n == 1) $ -- We know there's at least one.
-                deleteKey tid
-            deleteKey rtid   -- And know there's one less.
+    deleteResourceTags :: YesodDB App ()
+    deleteResourceTags =
+        delete $
+            from $ \rt -> do
+            where_ (rt^.ResourceTagResId ==. val res_id)
+
+    insertTags :: YesodDB App [TagId]
+    insertTags = mapM (fmap (either entityKey id) . insertBy) tags
+
+    insertResourceTags :: [TagId] -> YesodDB App ()
+    insertResourceTags = void . insertMany . map (ResourceTag res_id)
+
+    deleteUnusedTags :: YesodDB App ()
+    deleteUnusedTags =
+        delete $
+            from $ \t -> do
+            where_ (t^.TagId `notIn` (
+                subList_selectDistinct $
+                    from $ \rt -> do
+                    return (rt^.ResourceTagTagId)))
+
+updateResourceAuthors :: ResourceId -> [Author] -> YesodDB App ()
+updateResourceAuthors res_id authors = do
+    deleteResAuthors
+    insertAuthors >>= insertResAuthors
+    deleteUnusedAuthors
+  where
+    deleteResAuthors :: YesodDB App ()
+    deleteResAuthors =
+        delete $
+            from $ \ra -> do
+            where_ (ra^.ResAuthorResId ==. val res_id)
+
+    insertAuthors :: YesodDB App [AuthorId]
+    insertAuthors = mapM (fmap (either entityKey id) . insertBy) authors
+
+    insertResAuthors :: [AuthorId] -> YesodDB App ()
+    insertResAuthors = void . insertMany . map (\(n,auth_id) -> ResAuthor res_id auth_id n) . zip [0..]
+
+    deleteUnusedAuthors :: YesodDB App ()
+    deleteUnusedAuthors =
+        delete $
+            from $ \a -> do
+            where_ (a^.AuthorId `notIn` (
+                subList_selectDistinct $
+                    from $ \ra -> do
+                    return (ra^.ResAuthorAuthId)))

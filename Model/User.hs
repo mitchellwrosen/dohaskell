@@ -1,20 +1,70 @@
 module Model.User
-    ( getPostedResources
-    , getUserById
+    ( getFavoriteResources
+    , getFavoriteResourcesIn
+    , getGrokkedCounts
+    , getGrokkedResources
+    , getGrokkedResourcesIn
+    , getPostedResources
     , isAdministrator
     , thisUserHasAuthorityOver
-    , unsafeGetUserById
     , updateUserDisplayName
     , userHasAuthorityOver
     ) where
 
 import Import
 
-import Database.Esqueleto
-
-import           Control.Concurrent (modifyMVar_, readMVar)
+import           Database.Esqueleto
 import qualified Data.Map           as M
-import           Data.Maybe         (fromJust)
+import qualified Data.Set           as S
+
+-- TODO: combine this with getGrokkedResources
+getFavoriteResources :: UserId -> YesodDB App (Set ResourceId)
+getGrokkedResources  :: UserId -> YesodDB App (Set ResourceId)
+
+getFavoriteResources uid = fmap (S.fromList . map unValue) $
+    select $
+        from $ \f -> do
+        where_ (f^.FavoriteUserId ==. val uid)
+        return (f^.FavoriteResId)
+
+getGrokkedResources uid = fmap (S.fromList . map unValue) $
+    select $
+        from $ \g -> do
+        where_ (g^.GrokkedUserId ==. val uid)
+        return (g^.GrokkedResId)
+
+getFavoriteResourcesIn :: [ResourceId] -> UserId -> YesodDB App (Set ResourceId)
+getGrokkedResourcesIn  :: [ResourceId] -> UserId -> YesodDB App (Set ResourceId)
+
+getFavoriteResourcesIn resourceIds userId = fmap (S.fromList . map unValue) $
+    select $
+        from $ \f -> do
+        where_ (f^.FavoriteUserId ==. val userId &&.
+                f^.FavoriteResId `in_` valList resourceIds)
+        return (f^.FavoriteResId)
+
+getGrokkedResourcesIn resourceIds userId = fmap (S.fromList . map unValue) $
+    select $
+        from $ \g -> do
+        where_ (g^.GrokkedUserId ==. val userId &&.
+                g^.GrokkedResId `in_` valList resourceIds)
+        return (g^.GrokkedResId)
+
+-- Get a the number of resources this user has grokked, grouped by tag.
+getGrokkedCounts :: UserId -> YesodDB App (Map TagId Int)
+getGrokkedCounts uid = valsToMap <$>
+    (select $
+        from $ \(g `InnerJoin` rt) -> do
+        on (g^.GrokkedUserId ==. val uid &&.
+            g^.GrokkedResId ==. rt^.ResourceTagResId)
+        groupBy (rt^.ResourceTagTagId)
+        return (rt^.ResourceTagTagId, countRows))
+  where
+    valsToMap :: [(Value TagId, Value Int)] -> Map TagId Int
+    valsToMap = foldr step mempty
+      where
+        step (Value tagId, Value n) = M.insert tagId n
+
 
 getPostedResources :: UserId -> YesodDB App [Entity Resource]
 getPostedResources uid =
@@ -24,45 +74,22 @@ getPostedResources uid =
         where_ (u^.UserId ==. val uid)
         return r
 
--- Get a User given a UserId; look in memory first. Grab from the database and
--- put into memory if necessary.
-getUserById :: UserId -> Handler (Maybe User)
-getUserById uid = do
-    usersMap <- appUsersMap <$> getYesod
-    M.lookup uid <$> liftIO (readMVar usersMap) >>= \case
-        Nothing ->
-            runDB (get uid) >>= \case
-                Nothing   -> return Nothing
-                Just user -> do
-                    liftIO $ modifyMVar_ usersMap $ return . M.insert uid user
-                    return (Just user)
-        user@(Just _) -> return user
+isAdministrator :: UserId -> YesodDB App Bool
+isAdministrator = fmap (maybe False userIsAdministrator) . get
 
-isAdministrator :: UserId -> Handler Bool
-isAdministrator = fmap (maybe False userIsAdministrator) . getUserById
-
--- Partial function. Should only be used when the UserId is (for example)
--- a foreign key, and thus if this function bottoms, there's some database
--- inconsistency.
-unsafeGetUserById :: UserId -> Handler User
-unsafeGetUserById = fmap fromJust . getUserById
-
-updateUserDisplayName :: UserId -> Text -> Handler ()
-updateUserDisplayName uid displayName = do
-    -- Keep in-memory cache up to date by deleting old entry.
-    modifyUsersMap (M.delete uid)
-
-    runDB $ update $ \user -> do
-        set user [UserDisplayName =. val displayName]
-        where_ (user^.UserId ==. val uid)
+updateUserDisplayName :: UserId -> Text -> YesodDB App ()
+updateUserDisplayName uid displayName =
+    update $ \u -> do
+        set u [UserDisplayName =. val displayName]
+        where_ (u^.UserId ==. val uid)
 
 -- 'bully' has authority over 'nerd' if 'bully' is an administrator,
 -- or of 'bully' and 'nerd' are the same user.
 --
 -- Assumes that 'bully' is an actual user id, not from a URL.
-userHasAuthorityOver :: UserId -> UserId -> Handler Bool
+userHasAuthorityOver :: UserId -> UserId -> YesodDB App Bool
 userHasAuthorityOver bully nerd = do
-    isAdmin <- userIsAdministrator <$> unsafeGetUserById bully
+    isAdmin <- userIsAdministrator <$> getJust bully
     return $
         if isAdmin
             then True
@@ -73,4 +100,4 @@ userHasAuthorityOver bully nerd = do
 thisUserHasAuthorityOver :: UserId -> Handler Bool
 thisUserHasAuthorityOver nerd = maybeAuthId >>= \case
     Nothing    -> return False
-    Just bully -> userHasAuthorityOver bully nerd
+    Just bully -> runDB $ userHasAuthorityOver bully nerd

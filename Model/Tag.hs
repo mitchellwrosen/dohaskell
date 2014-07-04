@@ -10,7 +10,7 @@ import Handler.Utils (alphabeticIgnoreCase)
 
 -- Get all tags, sorted alphabetically (ignore case)
 getAllTags :: YesodDB App [Entity Tag]
-getAllTags = sortBy (alphabeticIgnoreCase tagText) <$> selectList [] []
+getAllTags = sortBy (alphabeticIgnoreCase tagTag) <$> selectList [] []
 
 -- Get a map of TagId to the number of Resources with that tag.
 getTagCounts :: YesodDB App (Map TagId Int)

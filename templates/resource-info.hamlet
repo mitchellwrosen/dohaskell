@@ -1,13 +1,15 @@
 <div .res-info>
-   <div .res-link>
-      <a href=#{resourceUrl res}>#{resourceTitle res}
-   $maybe author <- resourceAuthor res
-      <div .res-author>#{author}
-   <div .res-type>#{resourceType res}
-   <div .res-user>Posted by #
-      <a href=@{UserR $ resourceUserId res}>#{userDisplayName user}
-      \ at #{show $ resourcePosted res}
-   <ul .res-tags>
-      $forall Tag text <- tags
-         <li>
-            <a href=@{TagR text}>#{text}
+  <div .res-link>
+    <a href=#{resourceUrl res}>#{resourceTitle res}
+  <ul .res-authors>
+    $forall Author name <- authors
+      <li>
+        #{name}
+  <div .res-type>#{resourceType res}
+  <div .res-user>Posted by #
+    <a href=@{UserR $ resourceUserId res}>#{userDisplayName poster}
+    \ at #{show $ resourcePosted res}
+  <ul .res-tags>
+    $forall Tag text <- tags
+      <li>
+        <a href=@{TagR text}>#{text}
