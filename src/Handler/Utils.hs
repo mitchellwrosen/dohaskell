@@ -39,8 +39,8 @@ denyPermissionIfDoesntHaveAuthorityOver nerd = maybeAuthId >>= \case
 
 denyPermissionIfNotAdmin :: Handler ()
 denyPermissionIfNotAdmin = maybeAuthId >>= \case
-    Nothing -> deny
-    Just uid -> runDB (isAdministrator uid) >>= \b -> when b deny
+    Nothing  -> deny
+    Just uid -> runDB (isAdministrator uid) >>= \b -> unless b deny
 
 deny :: Handler ()
 deny = permissionDenied "You don't have permission to view this page."

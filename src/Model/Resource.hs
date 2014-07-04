@@ -61,7 +61,7 @@ getAuthorsIn res_ids = fmap makeAuthorMap $
         from $ \(a `InnerJoin` ra) -> do
         on (a^.AuthorId ==. ra^.ResAuthorAuthId)
         where_ (ra^.ResAuthorResId `in_` valList res_ids)
-        orderBy [desc (ra^.ResAuthorOrd)]
+        orderBy [asc (ra^.ResAuthorOrd)]
         return (ra^.ResAuthorResId, a)
   where
     makeAuthorMap :: [(Value ResourceId, Entity Author)] -> Map ResourceId [Author]

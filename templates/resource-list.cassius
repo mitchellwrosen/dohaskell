@@ -38,10 +38,10 @@
 .res-published-type-authors
   margin-top: -3px
 
-.res-author
+.res-authors
   font-weight: bold
 
-.res-published, .res-type, .res-author-by, .res-author
+.res-published, .res-type, .res-authors-by, .res-authors
   color: gray
   font-size: 14px
 

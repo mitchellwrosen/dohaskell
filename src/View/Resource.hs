@@ -137,6 +137,6 @@ resourceListItemWidget (Entity resId Resource{..}) authorsMap favsAndGrokked = d
               <span .res-published>#{show published}
             <span .res-type>#{shortDescResourceType resourceType}
             $maybe authors <- map authorName <$> M.lookup resId authorsMap
-                <span .res-author-by> by
+                <span .res-authors-by> by
                 <span .res-authors> #{T.intercalate ", " $ authors}
     |]
