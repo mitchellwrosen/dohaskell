@@ -1,2 +1,19 @@
-$forall res <- resources
-  ^{resourceListItemWidget res authorsMap favsAndGrokked}
+$forall Entity res_id res <- resources
+  <div .res-li>
+
+    $if is_logged_in
+      <div .res-fav :S.member res_id favs:.fav ##{toPathPiece res_id} title="Favorite">
+      <div .res-grok :S.member res_id grokked:.grok ##{toPathPiece res_id} title="Grokked">
+
+    <a .res-info href=@{ResourceR res_id}>
+
+    <a .res-link href=#{resourceUrl res}>
+      <div .res-title>#{resourceTitle res}
+
+      <div .res-published-type-authors>
+        $maybe published <- resourcePublished res
+          <span .res-published>#{show published}
+        <span .res-type>#{shortDescResourceType $ resourceType res}
+        $maybe authors <- map authorName <$> M.lookup res_id authorsMap
+            <span .res-authors-by> by
+            <span .res-authors> #{T.intercalate ", " $ authors}

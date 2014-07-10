@@ -90,15 +90,21 @@ getResourcesWithTag tag = getBy404 (UniqueTag tag) >>= getResourcesWithTagId . e
                     rt^.ResourceTagTagId ==. val tagId)
             return r
 
-getTags :: ResourceId -> YesodDB App (Set Tag)
-getTags = fmap (S.fromList . map entityVal) . getTagEntities
-
-getTagEntities :: ResourceId -> YesodDB App [Entity Tag]
-getTagEntities resId =
+getTags :: ResourceId -> YesodDB App [Text]
+getTags res_id = fmap (map unValue) $
     select $
         from $ \(t `InnerJoin` rt) -> do
         on (t^.TagId ==. rt^.ResourceTagTagId)
-        where_ (rt^.ResourceTagResId ==. val resId)
+        where_ (rt^.ResourceTagResId ==. val res_id)
+        orderBy [asc (t^.TagTag)]
+        return (t^.TagTag)
+
+getTagEntities :: ResourceId -> YesodDB App [Entity Tag]
+getTagEntities res_id =
+    select $
+        from $ \(t `InnerJoin` rt) -> do
+        on (t^.TagId ==. rt^.ResourceTagTagId)
+        where_ (rt^.ResourceTagResId ==. val res_id)
         orderBy [asc (t^.TagTag)]
         return t
 

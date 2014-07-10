@@ -7,7 +7,7 @@ import Import
 import           Handler.Utils        (denyPermissionIfDoesntHaveAuthorityOver)
 import           Model.Resource
 import           Model.User           (thisUserHasAuthorityOver)
-import           View.Resource        (editResourceForm, resourceInfoWidget)
+import           View.Resource
 
 import qualified Data.Set             as S
 import           Data.Text            (intercalate)
@@ -15,17 +15,23 @@ import           Database.Persist.Sql
 
 getResourceR :: ResourceId -> Handler Html
 getResourceR res_id = do
-    (res,tags,authors) <- runDB $ (,,)
-        <$> get404     res_id
-        <*> getTags    res_id
-        <*> getAuthors res_id
-    (widget, enctype) <- generateFormPost $
-        editResourceForm (Just $ resourceTitle res)
-                         (Just $ authorName <$> authors)
-                         (Just $ resourcePublished res)
-                         (Just $ resourceType res)
-                         (Just $ S.map tagTag tags)
-    canDelete <- thisUserHasAuthorityOver (resourceUserId res)
+    (res, tags, authors) <- runDB $ (,,)
+        <$> get404         res_id
+        <*> getTags        res_id
+        <*> getAuthorNames res_id
+
+    can_delete <- thisUserHasAuthorityOver (resourceUserId res)
+
+    let info_widget = resourceInfoWidget (Entity res_id res)
+        edit_widget =
+          editResourceFormWidget
+            res_id
+            (Just $ resourceTitle res)
+            (Just $ authors)
+            (Just $ resourcePublished res)
+            (Just $ resourceType res)
+            (Just $ tags)
+
     defaultLayout $ do
         setTitle . toHtml $ "dohaskell | " <> resourceTitle res
         $(widgetFile "resource")
@@ -38,6 +44,21 @@ postDeleteResourceR resId = do
     runDB $ deleteResource resId
     setMessage "Resource deleted."
     redirect HomeR
+
+getEditResourceR :: ResourceId -> Handler Html
+getEditResourceR res_id = do
+    (res, tags, authors) <- runDB $ (,,)
+        <$> get404         res_id
+        <*> getTags        res_id
+        <*> getAuthorNames res_id
+    defaultLayout $
+        editResourceFormWidget
+          res_id
+          (Just $ resourceTitle res)
+          (Just $ authors)
+          (Just $ resourcePublished res)
+          (Just $ resourceType res)
+          (Just $ tags)
 
 postEditResourceR :: ResourceId -> Handler Html
 postEditResourceR res_id = do
@@ -54,7 +75,7 @@ postEditResourceR res_id = do
                                 (map Author $ new_authors)
                                 new_published
                                 new_type
-                                (map Tag . S.toAscList $ new_tags)
+                                (map Tag $ new_tags)
                     setMessage "Resource updated."
                     redirect $ ResourceR res_id
                 -- An authenticated, unprivileged user is the same as an
@@ -70,7 +91,7 @@ postEditResourceR res_id = do
 
                 (old_authors, old_tags) <- runDB $ (,)
                     <$> getAuthorNames res_id
-                    <*> (S.map tagTag <$> getTags res_id)
+                    <*> getTags res_id
 
                 -- Authors are a little different than tags, because order matters. So,
                 -- we don't duplicate the fine-grained tag edits (individual add/remove),
@@ -79,8 +100,10 @@ postEditResourceR res_id = do
                 when (old_authors /= new_authors) $
                     void $ runDB $ insertUnique (EditAuthors res_id new_authors)
 
-                insertEditTag new_tags old_tags EditAddTag    -- find any NEW not in OLD: pending ADD.
-                insertEditTag old_tags new_tags EditRemoveTag -- find any OLD not in NEW: pending REMOVE.
+                let new_tags_set = S.fromList new_tags
+                    old_tags_set = S.fromList old_tags
+                insertEditTag new_tags_set old_tags_set EditAddTag    -- find any NEW not in OLD: pending ADD.
+                insertEditTag old_tags_set new_tags_set EditRemoveTag -- find any OLD not in NEW: pending REMOVE.
 
                 setMessage "Your edit has been submitted for approval. Thanks!"
                 redirect $ ResourceR res_id

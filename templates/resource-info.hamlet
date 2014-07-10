@@ -1,15 +1,14 @@
-<div .res-info>
-  <div .res-link>
-    <a href=#{resourceUrl res}>#{resourceTitle res}
-  <ul .res-authors>
-    $forall Author name <- authors
-      <li>
-        #{name}
-  <div .res-type>#{resourceType res}
-  <div .res-user>Posted by #
+<a .res-title href=#{resourceUrl res}>#{resourceTitle res}
+
+<div .res-meta-info>
+  <div .res-published-type-authors>
+    $maybe published <- resourcePublished res
+      <span .res-published>#{show published}
+    <span .res-type>#{shortDescResourceType $ resourceType res}
+    $if not (null authors)
+      <span .res-authors-by> by
+      <span .res-authors> #{T.intercalate ", " $ authors}
+  <div .res-tags>
+    <span .res-tag>#{T.intercalate ", " $ tags}
+  <div .res-user>Posted #{posted} by #
     <a href=@{UserR $ resourceUserId res}>#{userDisplayName poster}
-    \ at #{show $ resourcePosted res}
-  <ul .res-tags>
-    $forall Tag text <- tags
-      <li>
-        <a href=@{TagR text}>#{text}

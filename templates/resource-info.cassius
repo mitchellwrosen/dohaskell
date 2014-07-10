@@ -1,20 +1,12 @@
-.res-info
-   margin-bottom: 10px
+.res-title
+  color: #069
+  font-size: 30px
+  font-weight: bold
+  margin-top: 5px
 
-.res-link
-   font-size: 24px
-
-.res-author
-   font-size: 20px
-
-.res-type
-   font-size: 18px
-
-.res-user
-   font-size: 16px
+.res-meta-info
+  font-size: 20px
+  color: gray
 
 .res-tags
-   list-style: none
-
-.res-tags li
-   display: block
+  font-style: italic

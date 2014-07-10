@@ -14,7 +14,7 @@
 /u/#UserId/edits ReqEditsHubR GET
 
 /r/!#ResourceId       ResourceR           GET
-/r/#ResourceId/edit   EditResourceR           POST
+/r/#ResourceId/edit   EditResourceR       GET POST
 /r/#ResourceId/delete DeleteResourceR         POST
 /r/favorite           FavoriteResourceR       POST
 /r/unfavorite         UnfavoriteResourceR     POST
