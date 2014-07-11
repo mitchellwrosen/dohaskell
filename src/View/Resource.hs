@@ -80,7 +80,7 @@ resUrlForm :: Maybe Text -> AForm Handler Text
 resUrlForm = areq urlField ("Url" {fsAttrs = [("placeholder", "http://")]})
 
 resAuthorsForm :: Maybe [Text] -> AForm Handler [Text]
-resAuthorsForm = areq authorsField "Author(s) (optional, comma separated)"
+resAuthorsForm = fmap (fromMaybe []) . aopt authorsField "Author(s) (optional, comma separated)" . fmap Just
   where
     authorsField :: Field Handler [Text]
     authorsField = mapField nub commaSepTextField

@@ -15,6 +15,7 @@ import           Control.Monad                as Import (liftM, join, unless, vo
 import           Data.Foldable                as Import (forM_, mapM_)
 import           Data.List                    as Import (foldl')
 import           Data.Map                     as Import (Map)
+import           Data.Maybe                   as Import (fromMaybe)
 import           Data.Set                     as Import (Set)
 import           Data.Text                    as Import (Text)
 
