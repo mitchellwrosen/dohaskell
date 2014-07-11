@@ -1,11 +1,13 @@
 module Model.ResourceEdit
     ( getAllEditAddTags
     , getAllEditAuthors
+    , getAllEditPublished
+    , getAllEditRemoveTags
     , getAllEditTitles
     , getAllEditTypes
-    , getAllEditRemoveTags
-    , getEditAuthors
     , getEditAddTags
+    , getEditAuthors
+    , getEditPublished
     , getEditRemoveTags
     , getEditTitles
     , getEditTypes
@@ -46,24 +48,28 @@ makeEditMap = foldr (\(k,a) -> M.insertWith (++) k [a]) M.empty
 
 getEditTitles        :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditTitle])
 getEditAuthors       :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditAuthors])
+getEditPublished     :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditPublished])
 getEditTypes         :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditType])
 getEditAddTags       :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditAddTag])
 getEditRemoveTags    :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditRemoveTag])
 
 getEditTitles     = getEdit EditTitleResId
 getEditAuthors    = getEdit EditAuthorsResId
+getEditPublished  = getEdit EditPublishedResId
 getEditTypes      = getEdit EditTypeResId
 getEditAddTags    = getEdit EditAddTagResId
 getEditRemoveTags = getEdit EditRemoveTagResId
 
 getAllEditTitles     :: YesodDB App (Map (Entity Resource) [Entity EditTitle])
 getAllEditAuthors    :: YesodDB App (Map (Entity Resource) [Entity EditAuthors])
+getAllEditPublished  :: YesodDB App (Map (Entity Resource) [Entity EditPublished])
 getAllEditTypes      :: YesodDB App (Map (Entity Resource) [Entity EditType])
 getAllEditAddTags    :: YesodDB App (Map (Entity Resource) [Entity EditAddTag])
 getAllEditRemoveTags :: YesodDB App (Map (Entity Resource) [Entity EditRemoveTag])
 
 getAllEditTitles     = getAllEdits EditTitleResId
 getAllEditAuthors    = getAllEdits EditAuthorsResId
+getAllEditPublished  = getAllEdits EditPublishedResId
 getAllEditTypes      = getAllEdits EditTypeResId
 getAllEditAddTags    = getAllEdits EditAddTagResId
 getAllEditRemoveTags = getAllEdits EditRemoveTagResId
@@ -74,8 +80,9 @@ getNumRequestedEdits uid = do
     getSum . mconcat <$>
         sequence
             [ adjust <$> getEditTitles     uid
-            , adjust <$> getEditTypes      uid
             , adjust <$> getEditAuthors    uid
+            , adjust <$> getEditPublished  uid
+            , adjust <$> getEditTypes      uid
             , adjust <$> getEditAddTags    uid
             , adjust <$> getEditRemoveTags uid
             ]

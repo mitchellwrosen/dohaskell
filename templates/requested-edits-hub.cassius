@@ -1,9 +1,17 @@
-#requested-edits
-   margin: 10px
+.no-edits
+  font-size: 30px
+  font-weight: bold
 
-#requested-edits li
-   list-style: none
+.resource
+  border-left: 2px solid
+  border-bottom-left-radius: 15px
 
-#no-edits
-   font-size: 30px
-   font-weight: bold
+.resource-body
+  margin-left: 10px
+
+.edit
+  border-left: 2px solid
+  border-bottom-left-radius: 15px
+
+.edit-body
+  margin-left: 10px

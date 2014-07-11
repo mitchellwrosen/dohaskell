@@ -13,9 +13,10 @@ import qualified Data.Text          as T
 getReqEditsHubR :: UserId -> Handler Html
 getReqEditsHubR uid = do
     denyPermissionIfDifferentUser uid
-    runDB ((,,,,)
+    runDB ((,,,,,)
         <$> getEditTitles     uid
         <*> getEditAuthors    uid
+        <*> getEditPublished  uid
         <*> getEditTypes      uid
         <*> getEditAddTags    uid
         <*> getEditRemoveTags uid)
@@ -24,9 +25,10 @@ getReqEditsHubR uid = do
 getAllEditsR :: Handler Html
 getAllEditsR = do
     denyPermissionIfNotAdmin
-    runDB ((,,,,)
+    runDB ((,,,,,)
         <$> getAllEditTitles
         <*> getAllEditAuthors
+        <*> getAllEditPublished
         <*> getAllEditTypes
         <*> getAllEditAddTags
         <*> getAllEditRemoveTags)
@@ -34,26 +36,29 @@ getAllEditsR = do
 
 getRequestedEdits :: ( Map (Entity Resource) [Entity EditTitle]
                      , Map (Entity Resource) [Entity EditAuthors]
+                     , Map (Entity Resource) [Entity EditPublished]
                      , Map (Entity Resource) [Entity EditType]
                      , Map (Entity Resource) [Entity EditAddTag]
                      , Map (Entity Resource) [Entity EditRemoveTag]
                      )
                   -> Handler Html
-getRequestedEdits (editTitles, editAuthors, editTypes, editAddTags, editRemoveTags) = do
+getRequestedEdits (editTitles, editAuthors, editPublished, editTypes, editAddTags, editRemoveTags) = do
     let areNoRequestedEdits :: Bool
         areNoRequestedEdits =
-            M.null editTitles  &&
-            M.null editAuthors &&
-            M.null editTypes   &&
-            M.null editAddTags &&
+            M.null editTitles    &&
+            M.null editAuthors   &&
+            M.null editPublished &&
+            M.null editTypes     &&
+            M.null editAddTags   &&
             M.null editRemoveTags
 
         resources :: Set (Entity Resource)
         resources =
-            S.fromList (M.keys editTitles)  <>
-            S.fromList (M.keys editAuthors) <>
-            S.fromList (M.keys editTypes)   <>
-            S.fromList (M.keys editAddTags) <>
+            S.fromList (M.keys editTitles)    <>
+            S.fromList (M.keys editAuthors)   <>
+            S.fromList (M.keys editPublished) <>
+            S.fromList (M.keys editTypes)     <>
+            S.fromList (M.keys editAddTags)   <>
             S.fromList (M.keys editRemoveTags)
 
     setUltDestCurrent
