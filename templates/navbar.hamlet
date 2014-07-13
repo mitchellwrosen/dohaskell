@@ -3,9 +3,7 @@
 
 <ul #nav>
    <li>
-      <a href=@{HomeR}>home
-   <li>
-      <a href=@{BrowseR}>browse
+      <a href=@{BrowseResourcesR}>browse
    <li>
       <a href=@{SubmitR}>submit
 

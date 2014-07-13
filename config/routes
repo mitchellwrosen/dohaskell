@@ -4,11 +4,17 @@
 /favicon.ico FaviconR  GET
 /robots.txt  RobotsR   GET
 
-/          HomeR   GET
-/about     AboutR  GET
-/browse    BrowseR GET
-/submit    SubmitR GET POST
-/tag/#Text TagR    GET
+/       HomeR   GET
+/about  AboutR  GET
+/submit SubmitR GET POST
+
+-- Don't change these routes! We hit them from JS.
+/author/#Text AuthorR GET
+/tag/#Text    TagR    GET
+
+/browse/authors   BrowseAuthorsR   GET
+/browse/resources BrowseResourcesR GET
+/browse/tags      BrowseTagsR      GET
 
 /u/#UserId       UserR        GET POST
 /u/#UserId/edits ReqEditsHubR GET

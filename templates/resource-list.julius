@@ -1,31 +1,22 @@
-$(document).ready(function() {
-  $('.res-fav').click(function() {
-    $(this).toggleClass('fav');
-    if ($(this).hasClass('fav')) {
-      $.post("@{FavoriteResourceR}", { res_id: $(this).attr('id') })
-        .fail(function(xhr, textStatus, errorThrown) {
-          alert("Failure: " + xhr.responseText);
-        });
-    } else {
-      $.post("@{UnfavoriteResourceR}", { res_id: $(this).attr('id') })
-        .fail(function(xhr, textStatus, errorThrown) {
-          alert("Failure: " + xhr.responseText);
-        });
-    }
-  });
+function onPostFailure(xhr, textStatus, errorThrown) {
+  alert("Failure: " + xhr.responseText);
+}
 
-  $('.res-grok').click(function() {
-    $(this).toggleClass('grok');
-    if ($(this).hasClass('grok')) {
-      $.post("@{GrokkedResourceR}", { res_id: $(this).attr('id') })
-        .fail(function(xhr, textStatus, errorThrown) {
-          alert("Failure: " + xhr.responseText);
-        });
-    } else {
-      $.post("@{UngrokkedResourceR}", { res_id: $(this).attr('id') })
-        .fail(function(xhr, textStatus, errorThrown) {
-          alert("Failure: " + xhr.responseText);
-        });
-    }
-  });
+function payload(elem) {
+  return { res_id: $(elem).attr('id') }
+}
+
+function resourceActionOnclick(cssClass, hasClassRoute, hasntClassRoute) {
+  return function() {
+    $(this).toggleClass(cssClass);
+    if ($(this).hasClass(cssClass))
+      $.post(hasClassRoute, payload(this)).fail(onPostFailure)
+    else
+      $.post(hasntClassRoute, payload(this)).fail(onPostFailure)
+  }
+}
+
+$(document).ready(function() {
+  $('.res-fav').click(resourceActionOnclick('fav', "@{FavoriteResourceR}", "@{UnfavoriteResourceR}"));
+  $('.res-grok').click(resourceActionOnclick('grok', "@{GrokkedResourceR}", "@{UngrokkedResourceR}"));
 });

@@ -25,22 +25,23 @@ library
                      Handler.About
                      Handler.Browse
                      Handler.EditResourceRequest
-                     Handler.Home
                      Handler.Resource
                      Handler.ReqEditsHub
                      Handler.Submit
-                     Handler.Tag
+                     Handler.AuthorAndTag
                      Handler.User
                      Handler.Utils
                      Model
+                     Model.AuthorAndTag
                      Model.Resource
                      Model.ResourceEdit
                      Model.ResourceType
-                     Model.Tag
                      Model.User
+                     Model.Utils
                      Settings
                      Settings.StaticFiles
                      Settings.Development
+                     View.Browse
                      View.Navbar
                      View.Resource
                      Yesod.Form.Types.Extra

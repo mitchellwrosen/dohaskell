@@ -1,0 +1,15 @@
+$forall Entity field_id field <- fields
+  <div>
+    $maybe grokked_counts <- mgrokked_counts
+      <div title="Grokked resources / total resources" .col .count>
+        #{show $ M.findWithDefault 0 field_id grokked_counts}/#{show $ (!) total_counts field_id}
+    $nothing
+      <div title="Total resources" .col .count>
+        #{show $ (!) total_counts field_id}
+
+    <a .col .arrow href="@{route (text_func field)}">
+      <img align=center src=@{StaticR img_right_arrow_png}>
+
+    <div .col .expand ##{text_func field}>#{text_func field}
+
+    <div .res-container>

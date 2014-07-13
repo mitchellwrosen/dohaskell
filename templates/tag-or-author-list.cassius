@@ -1,11 +1,11 @@
-.tag-count
+.count
   clear: left
   float: left
   font-weight: bold
   text-align: center
   width: 30px
 
-.tag-expand
+.expand
   color: #069
   float: none
   font-size: 22px
@@ -13,20 +13,20 @@
   overflow: hidden
   padding-left: 5px
 
-.tag-arrow
+.arrow
   float: right
   height: 100%
   text-align: center
   width: 30px
 
-.tag-arrow:hover
+.arrow:hover
   background-color: #eee
 
-.tag-expand:hover
+.expand:hover
   color: #000
   background-color: #eee
 
-.tag-col
+.col
   height: 30px
   line-height: 30px
 

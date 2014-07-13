@@ -35,13 +35,12 @@ import           Yesod.Default.Main
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
 import Handler.About
+import Handler.AuthorAndTag
 import Handler.Browse
 import Handler.EditResourceRequest
-import Handler.Home
 import Handler.ReqEditsHub
 import Handler.Resource
 import Handler.Submit
-import Handler.Tag
 import Handler.User
 
 import View.Navbar (navbarWidget)
@@ -149,6 +148,7 @@ doMigration = do
                 runRawStmt "INSERT INTO database_version values (0);"
                 return 0
             [Single n] -> return n
+            _ -> error "Application.getLastMigration: not reached"
 
     -- | Get the migration numbers that need to be run.
     getMigrationNumbers :: Int -> IO [Int]

@@ -3,19 +3,15 @@ module View.Resource
     , editResourceFormWidget
     , resourceForm
     , resourceInfoWidget
-    , resourceListWidget
     ) where
 
 import Import
 
 import           Handler.Utils          (prettyAgo)
 import           Model.Resource
-import           Model.User             (getFavoriteResourcesIn, getGrokkedResourcesIn)
 import           Yesod.Form.Types.Extra (commaSepTextField, mapField)
 
 import           Data.List              (nub)
-import qualified Data.Map               as M
-import qualified Data.Set               as S
 import qualified Data.Text              as T
 import           Data.Time              (UTCTime, getCurrentTime)
 import           Yesod.Form.Bootstrap3  -- (renderBootstrap3)
@@ -110,21 +106,3 @@ resourceInfoWidget (Entity res_id res) = do
     posted <- prettyAgo (resourcePosted res)
     $(widgetFile "resource-info")
 
-resourceListWidget :: [(Entity Resource)] -> Text -> Widget
-resourceListWidget resources title = do
-    let resource_ids = map entityKey resources
-
-    authorsMap <- handlerToWidget . runDB $ getAuthorsIn resource_ids
-
-    (is_logged_in, favs, grokked) <- handlerToWidget $
-        maybeAuthId >>= \case
-            Nothing  -> return (False, mempty, mempty)
-            Just uid -> runDB $ (,,)
-                <$> pure True
-                <*> getFavoriteResourcesIn resource_ids uid
-                <*> getGrokkedResourcesIn  resource_ids uid
-
-
-    setTitle $ toHtml title
-    addScriptRemote "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
-    $(widgetFile "resource-list")

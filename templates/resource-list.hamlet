@@ -1,6 +1,7 @@
 $forall Entity res_id res <- resources
   <div .res-li>
 
+    $# TODO: Show regardless
     $if is_logged_in
       <div .res-fav :S.member res_id favs:.fav ##{toPathPiece res_id} title="Favorite">
       <div .res-grok :S.member res_id grokked:.grok ##{toPathPiece res_id} title="Grokked">

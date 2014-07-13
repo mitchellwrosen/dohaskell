@@ -3,8 +3,7 @@ function expand(elem) {
 
   resourceContainer.show();
   if (!$(elem).hasClass('fetched')) {
-    // FIXME: Is there any way to get a typesafe URL here?
-    uri = 'tag/' + encodeURIComponent($(elem).attr('id')) + '?embed';
+    uri = #{path_piece} + encodeURIComponent($(elem).attr('id')) + '?embed';
     onFetch = function() { $(elem).addClass('fetched'); }
     resourceContainer.load(uri, onFetch);
   }
@@ -24,5 +23,5 @@ function clickExpand() {
 }
 
 $(document).ready(function() {
-  $('.tag-expand').click(clickExpand);
+  $('.expand').click(clickExpand);
 });
