@@ -3,7 +3,7 @@
 
 <ul #nav>
    <li>
-      <a href=@{BrowseResourcesR}>browse
+      <a href=@{BrowseTagsR}>browse
    <li>
       <a href=@{SubmitR}>submit
 
