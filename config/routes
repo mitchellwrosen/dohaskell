@@ -1,12 +1,14 @@
 /static StaticR Static getStatic
 /auth   AuthR   Auth   getAuth
 
-/favicon.ico FaviconR  GET
-/robots.txt  RobotsR   GET
+/favicon.ico FaviconR GET
+/robots.txt  RobotsR  GET
 
 /       HomeR   GET
 /about  AboutR  GET
 /submit SubmitR GET POST
+
+/feed FeedR GET
 
 -- Don't change these routes! We hit them from JS.
 /author/#Text AuthorR GET

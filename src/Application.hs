@@ -38,6 +38,7 @@ import Handler.About
 import Handler.AuthorAndTag
 import Handler.Browse
 import Handler.EditResourceRequest
+import Handler.Feeds
 import Handler.ReqEditsHub
 import Handler.Resource
 import Handler.Submit

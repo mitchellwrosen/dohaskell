@@ -1,37 +1,47 @@
 <p>
-   Officially,
-   <strong>dohaskell
-   is a tagged Haskell learning resources index.  Unofficially, it's a glorified bookmarks folder.
-   Submit links to your favorite blog posts, research papers, and video lectures - then tag
-   them for others to discover.
+  Officially,
+  <strong>dohaskell
+  is a tagged Haskell learning resources index.  Unofficially, it's a glorified bookmarks folder.
+  Submit links to your favorite blog posts, research papers, and video lectures - then tag
+  them for others to discover!
+
+  <em .small>
+    Pro tip: visit
+    <a href=@{FeedR}>this page
+    \ with a
+  <span .small>
+    url
+  <em .small>
+    GET param to your favorite Haskelly RSS feed to quickly determine which links have already made 
+    it on the site.
 
 <p>
-   dohaskell was built for and is maintained by the Haskell community. Resource metadata is managed
-   by the original submitter, so any modifications you'd like to make to an existing resource
-   (e.g. add or delete a tag) must be approved by that person. This is simply to help prevent people from
-   intentionally adding bogus tags, deleting data, etc. Of course, nothing is stopping you from
-   submitting and maintaining your own bogus links ;).
+  dohaskell was built for and is maintained by the Haskell community. Resource metadata is managed
+  by the original submitter, so any modifications you'd like to make to an existing resource
+  (e.g. add or delete a tag) must be approved by that person. This is simply to help prevent people from
+  intentionally adding bogus tags, deleting data, etc. Of course, nothing is stopping you from
+  submitting and maintaining your own bogus links ;).
 
 $maybe uid <- muid
-   <p>
-      You can see your list of requested edits
-      <a href=@{ReqEditsHubR uid}>here#
-      , accessed through your
-      <a href=@{UserR uid}>profile#
-      .
+  <p>
+    You can see your list of requested edits
+    <a href=@{ReqEditsHubR uid}>here#
+    , accessed through your
+    <a href=@{UserR uid}>profile#
+    .
 
 <p>
-   If you'd like to submit a resource but don't want to be responsible for responding to any edit
-   requests, that's fine &mdash; I can approve or deny edits on your behalf. Eventually I may implement a
-   "relinquish ownership" feature, although I don't anticipate any huge problems with the current system.
-   Resource edit requests will generally be tweaking tag names to better match existing tags, or fixing typos
-   in resource titles.
+  If you'd like to submit a resource but don't want to be responsible for responding to any edit
+  requests, that's fine &mdash; I can approve or deny edits on your behalf. Eventually I may implement a
+  "relinquish ownership" feature, although I don't anticipate any huge problems with the current system.
+  Resource edit requests will generally be tweaking tag names to better match existing tags, or fixing typos
+  in resource titles.
 
 <p>
-   dohaskell is open-source, written entirely in Haskell using the
-   <a href="http://www.yesodweb.com">Yesod
-   web framework. If you dig it, please
-   <a href="https://github.com/mitchellwrosen/dohaskell">contribute</a>!
+  dohaskell is open-source, written entirely in Haskell using the
+  <a href="http://www.yesodweb.com">Yesod
+  web framework. If you dig it, please
+  <a href="https://github.com/mitchellwrosen/dohaskell">contribute</a>!
 
 <hr>
 
@@ -55,8 +65,10 @@ $maybe uid <- muid
 <p>
   This is not to say that single, pointed resources should be conservative in their tags. Actually, the more
   tags, the better, as long as each tag is appropriate. Consider the <em>monad</em> tag: although a huge number
-  of resources may <em>use</em> monads, only some percentage of them are <em>about</em> monads in some way. Again,
-  use your best judgement.
+  of resources may <em>use</em> monads, only some percentage of them are <em>about</em> monads in some way. Use 
+  your best judgement.
 
 <p>
   Thanks for making it this far, and happy Haskelling!
+
+<hr>
