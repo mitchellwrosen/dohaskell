@@ -8,7 +8,8 @@
 /about  AboutR  GET
 /submit SubmitR GET POST
 
-/feed FeedR GET
+/feed  FeedR GET
+/feeds FeedsR GET
 
 -- Don't change these routes! We hit them from JS.
 /author/#Text AuthorR GET

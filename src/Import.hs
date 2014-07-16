@@ -21,10 +21,11 @@ import           Data.Text                    as Import (Text)
 
 import           Foundation                   as Import
 import           Model                        as Import
-import           Model.ResourceType           as Import
 import           Settings                     as Import
 import           Settings.Development         as Import
 import           Settings.StaticFiles         as Import
+
+import Database.Esqueleto
 
 #if __GLASGOW_HASKELL__ >= 704
 import           Data.Monoid                  as Import (Monoid (mappend, mempty, mconcat), (<>))
@@ -35,3 +36,15 @@ infixr 5 <>
 (<>) :: Monoid m => m -> m -> m
 (<>) = mappend
 #endif
+
+class FromValue a where
+    type UnValue a
+    fromValue :: a -> UnValue a
+
+instance FromValue (Value a) where
+    type UnValue (Value a) = a
+    fromValue = unValue
+
+instance (FromValue a, FromValue b) => FromValue (a, b) where
+    type UnValue (a, b) = (UnValue a, UnValue b)
+    fromValue (a, b) = (fromValue a, fromValue b)

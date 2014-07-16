@@ -6,14 +6,10 @@
   them for others to discover!
 
   <em .small>
-    Pro tip: visit
-    <a href=@{FeedR}>this page
-    \ with a
-  <span .small>
-    url
-  <em .small>
-    GET param to your favorite Haskelly RSS feed to quickly determine which links have already made 
-    it on the site.
+    Pro tip: poke around the
+    <a href=@{FeedsR}>feeds
+    \ page and discover a way to quickly determine which links from your favorite Haskelly RSS 
+    feed have already made it on the site.
 
 <p>
   dohaskell was built for and is maintained by the Haskell community. Resource metadata is managed

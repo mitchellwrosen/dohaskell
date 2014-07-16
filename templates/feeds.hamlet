@@ -1,0 +1,16 @@
+<div .header>
+  <p>
+    Below is a list of previously submitted feeds. The resources in these feeds
+    are not automatically added to dohaskell.com; rather, this page simply serves
+    as a convenient way to see which links have already been submitted.
+
+  <form method=get action=@{FeedR} enctype=#{UrlEncoded}>
+    <div>
+      <label>RSS feed URL
+      <input type=url name=url placeholder="http://">
+    <input type=submit value="Add Feed">
+
+$forall (title, url) <- feeds
+  <div .feed>
+    <a .feed-url href=@?{(FeedR, [("url", url)])}>#{url}
+    <div .feed-title>&mdash; #{title}

@@ -1,0 +1,19 @@
+.header
+  border-bottom: 1px solid black
+  font-size: 1.2em
+  line-height: 1.3em
+  margin: 20px auto
+  text-align: justify
+  width: 30em
+
+.feed
+  font-size: 1.2em
+  margin: 0 auto
+  width: 30em
+
+.feed-title
+  color: gray
+  font-size: 0.9em
+
+.feed-url
+  color: #069

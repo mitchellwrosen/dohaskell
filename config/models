@@ -103,3 +103,12 @@ EditAuthors
     resId  ResourceId
     authors [Text]
     UniqueEditAuthors resId authors
+
+Feed
+    type         FeedType
+    title        Text
+    url          Text
+    lastModified ByteString
+    etag         ByteString
+    contents     ByteString
+    UniqueFeed url

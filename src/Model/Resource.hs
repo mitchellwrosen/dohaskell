@@ -16,9 +16,11 @@ module Model.Resource
     , ungrokResource
     , updateResource
     , updateResourceAuthors
+    , module Model.Resource.Internal
     ) where
 
 import Import
+import Model.Resource.Internal
 
 import           Model.Utils        (getAllEntities)
 import           Handler.Utils      (alphabeticIgnoreCase)

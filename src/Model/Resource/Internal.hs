@@ -1,4 +1,4 @@
-module Model.ResourceType where
+module Model.Resource.Internal where
 
 import Prelude
 
