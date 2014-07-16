@@ -38,7 +38,7 @@ import Handler.About
 import Handler.AuthorAndTag
 import Handler.Browse
 import Handler.EditResourceRequest
-import Handler.Feeds
+import Handler.Feed
 import Handler.ReqEditsHub
 import Handler.Resource
 import Handler.Submit
@@ -116,7 +116,6 @@ runRawQuery = flip rawSql []
 runRawStmt :: MonadSqlPersist m => Text -> m ()
 runRawStmt = flip rawExecute []
 
-
 doMigration :: SqlPersistT (ResourceT (LoggingT IO)) ()
 doMigration = do
     createDatabaseVersionIfNotExists
@@ -129,15 +128,16 @@ doMigration = do
     -- | Run all necessary migrations, and return the next migration number to create.
     runOldMigrationFiles :: SqlPersistT (ResourceT (LoggingT IO)) Int
     runOldMigrationFiles = do
-        getLastMigration >>= liftIO . getMigrationNumbers >>= \case
-            [] -> return 1
+        last_migration <- getLastMigration
+        liftIO (getMigrationNumbers last_migration) >>= \case
+            [] -> return (last_migration + 1)
             nums -> do
                 forM_ nums $ \num -> do
                     let file = toSafeMigrateFile num
                     $(logInfo) $ "Running migration: " <> T.pack file
                     liftIO (T.lines <$> T.readFile file) >>= mapM_ runRawStmt
                 let new_last_migration = last nums
-                runRawStmt ("UPDATE database_version SET last_migration = " <> T.pack (show new_last_migration) <> ";")
+                updateDatabaseVersion new_last_migration
                 return (new_last_migration + 1)
 
     -- | Get the last migration Int from the database_version table.
@@ -170,13 +170,13 @@ doMigration = do
         -- in which case we know we only made one new migration file with number
         -- next_migration.
         if not (any fst migrations)
-            then runMigrations next_migration (map snd migrations)
+            then do
+                runMigrations next_migration (map snd migrations)
             else error "Aborting due to unsafe migrations."
       where
         addSemicolons :: CautiousMigration -> CautiousMigration
         addSemicolons = map (\(b,s) -> (b, s `T.snoc` ';'))
 
-        -- Makes the code read nicer above.
         writeMigrations :: CautiousMigration -> Int -> SqlPersistT (ResourceT (LoggingT IO)) ()
         writeMigrations = writeSafeMigrations
 
@@ -208,7 +208,11 @@ doMigration = do
         runMigrations :: Int -> [Sql] -> SqlPersistT (ResourceT (LoggingT IO)) ()
         runMigrations n stmts = do
             $(logInfo) $ "Running migration: " <> T.pack (toSafeMigrateFile n)
+            updateDatabaseVersion n
             mapM_ runRawStmt stmts
+
+    updateDatabaseVersion :: Int -> SqlPersistT (ResourceT (LoggingT IO)) ()
+    updateDatabaseVersion n = runRawStmt ("UPDATE database_version SET last_migration = " <> T.pack (show n) <> ";")
 
     -- | 10 -> "migrations/10.sql"
     toSafeMigrateFile :: Int -> FilePath
