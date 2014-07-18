@@ -29,11 +29,10 @@ library
                      Handler.Resource
                      Handler.ReqEditsHub
                      Handler.Submit
-                     Handler.AuthorAndTag
                      Handler.User
                      Handler.Utils
                      Model
-                     Model.AuthorAndTag
+                     Model.Browse
                      Model.Feed
                      Model.Feed.Internal
                      Model.Resource

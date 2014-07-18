@@ -1,9 +1,10 @@
 module View.Browse
-    ( WhichLink(..)
+    ( BrowseByLink(..)
     , authorListWidget
     , browseBarWidget
     , resourceListWidget
     , tagListWidget
+    , typeListWidget
     ) where
 
 import Import
@@ -12,24 +13,31 @@ import Model.Resource
 import Model.User
 
 import           Data.Aeson.Types       (Value(..))
+import           Data.Function          (on)
+import           Data.List              (sortBy)
 import qualified Data.Map               as M
-import           Data.Map               ((!))
 import qualified Data.Set               as S
 import qualified Data.Text              as T
 
 -- TODO: There's got to be a smarter way to do this.
-data WhichLink = AuthorsLink | ResourcesLink | TagsLink deriving Eq
+data BrowseByLink
+    = BrowseByAuthorLink
+    | BrowseByResourceLink
+    | BrowseByTagLink
+    | BrowseByTypeLink
+    deriving Eq
 
-fontWeight :: WhichLink -> WhichLink -> Text
+fontWeight :: BrowseByLink -> BrowseByLink -> Text
 fontWeight x y | x == y = "bold"
 fontWeight _ _          = "normal"
 
-browseBarWidget :: WhichLink -> Widget
-browseBarWidget bold = do
+browseBarWidget :: BrowseByLink -> Widget
+browseBarWidget embolden = do
   [whamlet|
     <div .browse-bar>browse by: #
       <a .browse-link #br-auth href=@{BrowseAuthorsR}>author
-      <a .browse-link #br-tags href=@{BrowseTagsR}>tag
+      <a .browse-link #br-tag href=@{BrowseTagsR}>tag
+      <a .browse-link #br-type href=@{BrowseTypesR}>type
       |
       <a .browse-link #br-res href=@{BrowseResourcesR}>list all
   |]
@@ -49,13 +57,16 @@ browseBarWidget bold = do
       text-decoration: none
 
     #br-auth
-      font-weight: #{fontWeight bold AuthorsLink}
+      font-weight: #{fontWeight embolden BrowseByAuthorLink}
 
     #br-res
-      font-weight: #{fontWeight bold ResourcesLink}
+      font-weight: #{fontWeight embolden BrowseByResourceLink}
 
-    #br-tags
-      font-weight: #{fontWeight bold TagsLink}
+    #br-tag
+      font-weight: #{fontWeight embolden BrowseByTagLink}
+
+    #br-type
+      font-weight: #{fontWeight embolden BrowseByTypeLink}
   |]
 
 resourceListWidget :: [Entity Resource] -> Widget
@@ -75,16 +86,41 @@ resourceListWidget resources = do
     $(widgetFile "resource-list")
 
 tagListWidget :: [Entity Tag] -> Map TagId Int -> Maybe (Map TagId Int) -> Widget
-tagListWidget = fieldListWidget TagR (String "/tag/") tagTag
+tagListWidget tags total_counts mgrokked_counts =
+    fieldListWidget
+      TagR
+      (String "/tag/")
+      tagTag
+      (map (entityKey &&& entityVal) tags)
+      total_counts
+      mgrokked_counts
 
 authorListWidget :: [Entity Author] -> Map AuthorId Int -> Maybe (Map AuthorId Int) -> Widget
-authorListWidget = fieldListWidget AuthorR (String "/author/") authorName
+authorListWidget authors total_counts mgrokked_counts =
+    fieldListWidget
+      AuthorR
+      (String "/author/")
+      authorName
+      (map (entityKey &&& entityVal) authors)
+      total_counts
+      mgrokked_counts
 
-fieldListWidget :: (Text -> Route App)  -- makes a full route to /tag/#Text or /author/#Text
-                -> Value                -- "/tag/" or "/author/", for AJAX - so don't change the route!
-                -> (val -> Text)        -- gets the Text from the Tag/Author (tag, or name)
-                -> [Entity val]         -- Tags or Authors
-                -> Map (Key val) Int
-                -> Maybe (Map (Key val) Int)
+typeListWidget :: Map ResourceType Int -> Maybe (Map ResourceType Int) -> Widget
+typeListWidget =
+    fieldListWidget
+      TypeR
+      (String "/type/")
+      shortDescResourceTypePlural
+      (zip res_types res_types)
+  where
+    res_types = sortBy (compare `on` shortDescResourceTypePlural) [minBound..maxBound]
+
+fieldListWidget :: Ord key
+                => (Text -> Route App)  -- makes a full route to /tag/#Text, /author/#Text, or /type/#Text
+                -> Value                -- "/tag/", "/author/", "/type/" for AJAX - so don't change the route!
+                -> (val -> Text)        -- gets the text to display in each row (and also construct the route with)
+                -> [(key, val)]         -- key/val assoc list
+                -> Map key Int          -- total counts map
+                -> Maybe (Map key Int)  -- grokked counts map (Nothing if not logged in)
                 -> Widget
-fieldListWidget route path_piece text_func fields total_counts mgrokked_counts = $(widgetFile "tag-or-author-list")
+fieldListWidget route path_piece text_func fields total_counts mgrokked_counts = $(widgetFile "browse-list")

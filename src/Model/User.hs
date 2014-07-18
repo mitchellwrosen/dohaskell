@@ -3,6 +3,7 @@ module Model.User
     , getFavoriteResourcesIn
     , getGrokkedCountsByAuthor
     , getGrokkedCountsByTag
+    , getGrokkedCountsByType
     , getGrokkedResources
     , getGrokkedResourcesIn
     , getPostedResources
@@ -13,6 +14,8 @@ module Model.User
     ) where
 
 import Import
+
+import           Model.Resource
 
 import           Database.Esqueleto
 import qualified Data.Map           as M
@@ -51,35 +54,41 @@ getGrokkedResourcesIn resourceIds userId = fmap (S.fromList . map unValue) $
             g^.GrokkedResId `in_` valList resourceIds)
     return (g^.GrokkedResId)
 
--- | Get a the number of resources this user has grokked, grouped by Author.
+-- | Get the number of Resources this User has grokked, grouped by Author.
 getGrokkedCountsByAuthor :: UserId -> YesodDB App (Map AuthorId Int)
-getGrokkedCountsByAuthor user_id = fmap valsToMap $
-    select $
-    from $ \(g `InnerJoin` ra) -> do
-    on (g^.GrokkedResId ==. ra^.ResAuthorResId)
-    where_ (g^.GrokkedUserId ==. val user_id)
-    groupBy (ra^.ResAuthorAuthId)
-    return (ra^.ResAuthorAuthId, countRows)
+getGrokkedCountsByAuthor user_id = fmap (M.fromList . map fromValue) sel
   where
-    valsToMap :: [(Value AuthorId, Value Int)] -> Map AuthorId Int
-    valsToMap = foldr step mempty
-      where
-        step (Value auth_id, Value n) = M.insert auth_id n
+    sel :: YesodDB App [(Value AuthorId, Value Int)]
+    sel = select $
+          from $ \(g `InnerJoin` ra) -> do
+          on (g^.GrokkedResId ==. ra^.ResAuthorResId)
+          where_ (g^.GrokkedUserId ==. val user_id)
+          groupBy (ra^.ResAuthorAuthId)
+          return (ra^.ResAuthorAuthId, countRows)
 
--- | Get a the number of resources this user has grokked, grouped by Tag.
+-- | Get the number of Resources this User has grokked, grouped by Tag.
 getGrokkedCountsByTag :: UserId -> YesodDB App (Map TagId Int)
-getGrokkedCountsByTag user_id = fmap valsToMap $
-    select $
-    from $ \(g `InnerJoin` rt) -> do
-    on (g^.GrokkedResId ==. rt^.ResourceTagResId)
-    where_ (g^.GrokkedUserId ==. val user_id)
-    groupBy (rt^.ResourceTagTagId)
-    return (rt^.ResourceTagTagId, countRows)
+getGrokkedCountsByTag user_id = fmap (M.fromList . map fromValue) sel
   where
-    valsToMap :: [(Value TagId, Value Int)] -> Map TagId Int
-    valsToMap = foldr step mempty
-      where
-        step (Value tag_id, Value n) = M.insert tag_id n
+    sel :: YesodDB App [(Value TagId, Value Int)]
+    sel = select $
+          from $ \(g `InnerJoin` rt) -> do
+          on (g^.GrokkedResId ==. rt^.ResourceTagResId)
+          where_ (g^.GrokkedUserId ==. val user_id)
+          groupBy (rt^.ResourceTagTagId)
+          return (rt^.ResourceTagTagId, countRows)
+
+-- | Get the number of Resources this User has grokked, grouped by ResourceType.
+getGrokkedCountsByType :: UserId -> YesodDB App (Map ResourceType Int)
+getGrokkedCountsByType user_id = fmap (M.fromList . map fromValue) sel
+  where
+    sel :: YesodDB App [(Value ResourceType, Value Int)]
+    sel = select $
+          from $ \(g `InnerJoin` r) -> do
+          on (g^.GrokkedResId ==. r^.ResourceId)
+          where_ (g^.GrokkedUserId ==. val user_id)
+          groupBy (r^.ResourceType)
+          return (r^.ResourceType, countRows)
 
 getPostedResources :: UserId -> YesodDB App [Entity Resource]
 getPostedResources uid =

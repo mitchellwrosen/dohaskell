@@ -4,7 +4,6 @@ module Handler.Resource where
 
 import Import
 
-import           Handler.Utils        (denyPermissionIfDoesntHaveAuthorityOver)
 import           Model.Resource
 import           Model.User           (thisUserHasAuthorityOver)
 import           View.Resource
@@ -20,8 +19,6 @@ getResourceR res_id = do
         <*> getTags        res_id
         <*> getAuthorNames res_id
 
-    can_delete <- thisUserHasAuthorityOver (resourceUserId res)
-
     let info_widget = resourceInfoWidget (Entity res_id res)
         edit_widget =
           editResourceFormWidget
@@ -35,17 +32,6 @@ getResourceR res_id = do
     defaultLayout $ do
         setTitle . toHtml $ "dohaskell | " <> resourceTitle res
         $(widgetFile "resource")
-
-{-
-postDeleteResourceR :: ResourceId -> Handler Html
-postDeleteResourceR resId = do
-    -- Admins and the user himself may delete a resource.
-    (resourceUserId <$> runDB (get404 resId)) >>= denyPermissionIfDoesntHaveAuthorityOver
-
-    runDB $ deleteResource resId
-    setMessage "Resource deleted."
-    redirect HomeR
--}
 
 getEditResourceR :: ResourceId -> Handler Html
 getEditResourceR res_id = do

@@ -9,6 +9,7 @@ module Model.Resource
     , getAuthorsIn
     , getResourcesWithAuthor
     , getResourcesWithTag
+    , getResourcesWithType
     , getTags
     , getTagEntities
     , grokResource
@@ -22,37 +23,16 @@ module Model.Resource
 import Import
 import Model.Resource.Internal
 
-import           Model.Utils        (getAllEntities)
-import           Handler.Utils      (alphabeticIgnoreCase)
+import           Model.Utils        (alphabeticIgnoreCase, getAllEntities)
 
 import           Data.DList         (DList)
 import qualified Data.DList         as DL
 import qualified Data.Map           as M
-import qualified Data.Set           as S
 import           Database.Esqueleto
 
 -- | Get all resources, sorted alphabetically (ignore case).
 getAllResources :: YesodDB App [Entity Resource]
 getAllResources = getAllEntities (alphabeticIgnoreCase resourceTitle)
-
-{-
--- | Delete a Resource, its now-unused Tags, and anything with a foreign key on its ID.
-deleteResource :: ResourceId -> YesodDB App ()
-deleteResource res_id = do
-    getResourceTags res_id >>= mapM_ deleteUnusedTag . map (resourceTagTagId . entityVal)
-    deleteCascade res_id
-  where
-    deleteUnusedTag :: TagId -> YesodDB App ()
-    deleteUnusedTag tid = do
-        [n] <- fmap (map unValue) $
-            select $
-                from $ \rt -> do
-                where_ (rt^.ResourceTagTagId ==. val tid)
-                return countRows
-        -- resource hasn't been deleted yet, so compare to 1
-        when (n == (1::Int)) $
-            deleteKey tid
--}
 
 -- | Get the Authors of a Resource.
 getAuthors :: ResourceId -> YesodDB App [Author]
@@ -85,13 +65,6 @@ getAuthorsIn res_ids = fmap makeAuthorMap $
              -> Map ResourceId (DList Author)
         step (Value res_id, Entity _ author) = M.insertWith (<>) res_id (DL.singleton author)
 
-getResourceTags :: ResourceId -> YesodDB App [Entity ResourceTag]
-getResourceTags resId =
-    select $
-    from $ \rt -> do
-    where_ (rt^.ResourceTagResId ==. val resId)
-    return rt
-
 getResourcesWithAuthor :: Text -> YesodDB App [Entity Resource]
 getResourcesWithAuthor name = getBy404 (UniqueAuthor name) >>= getResourcesWithAuthorId . entityKey
   where
@@ -113,6 +86,13 @@ getResourcesWithTag tag = getBy404 (UniqueTag tag) >>= getResourcesWithTagId . e
         on (r^.ResourceId ==. rt^.ResourceTagResId)
         where_ (rt^.ResourceTagTagId ==. val tagId)
         return r
+
+getResourcesWithType :: ResourceType -> YesodDB App [Entity Resource]
+getResourcesWithType res_type =
+    select $
+    from $ \r -> do
+    where_ (r^.ResourceType ==. val res_type)
+    return r
 
 getTags :: ResourceId -> YesodDB App [Text]
 getTags res_id = fmap (map unValue) $

@@ -11,13 +11,15 @@
 /feed  FeedR GET
 /feeds FeedsR GET
 
--- Don't change these routes! We hit them from JS.
+-- Careful changing these routes! We hit them from JS.
 /author/#Text AuthorR GET
 /tag/#Text    TagR    GET
+/type/#Text   TypeR   GET
 
 /browse/authors   BrowseAuthorsR   GET
 /browse/resources BrowseResourcesR GET
 /browse/tags      BrowseTagsR      GET
+/browse/type      BrowseTypesR     GET
 
 /u/#UserId       UserR        GET POST
 /u/#UserId/edits ReqEditsHubR GET

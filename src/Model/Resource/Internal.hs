@@ -48,7 +48,7 @@ descResourceType MastersThesis     = "Master's thesis"
 descResourceType MetaResource      = "Meta-resource"
 descResourceType QAWebsite         = "Q&A website"
 descResourceType ResearchPaper     = "Research paper"
-descResourceType ResearchPaperLite = "Research paper lite"
+descResourceType ResearchPaperLite = "Light research paper"
 descResourceType SourceCode        = "Source code"
 descResourceType SurveyArticle     = "Survey article"
 descResourceType Textbook          = "Textbook"
@@ -68,8 +68,51 @@ shortDescResourceType MastersThesis     = "thesis"
 shortDescResourceType MetaResource      = "meta-resource"
 shortDescResourceType QAWebsite         = "answer"
 shortDescResourceType ResearchPaper     = "paper"
-shortDescResourceType ResearchPaperLite = "paper lite"
+shortDescResourceType ResearchPaperLite = "light paper"
 shortDescResourceType SurveyArticle     = "survey"
 shortDescResourceType SourceCode        = "source code"
 shortDescResourceType Textbook          = "textbook"
 shortDescResourceType VideoLecture      = "video"
+
+-- | IMPORTANT: keep in sync with shortReadResourceTypePlural!
+shortDescResourceTypePlural :: ResourceType -> Text
+shortDescResourceTypePlural BlogPost          = "blog posts"
+shortDescResourceTypePlural CommunitySite     = "community websites"
+shortDescResourceTypePlural Dissertation      = "dissertations"
+shortDescResourceTypePlural Documentation     = "documentations"
+shortDescResourceTypePlural ExperienceReport  = "experience reports"
+shortDescResourceTypePlural ExtendedExample   = "tutorials"
+shortDescResourceTypePlural ForumPost         = "forum posts"
+shortDescResourceTypePlural FunctionalPearl   = "functional pearls"
+shortDescResourceTypePlural LectureNotes      = "lecture notes"
+shortDescResourceTypePlural MastersThesis     = "theses"
+shortDescResourceTypePlural MetaResource      = "meta-resources"
+shortDescResourceTypePlural QAWebsite         = "answers"
+shortDescResourceTypePlural ResearchPaper     = "papers"
+shortDescResourceTypePlural ResearchPaperLite = "light papers"
+shortDescResourceTypePlural SurveyArticle     = "surveys"
+shortDescResourceTypePlural SourceCode        = "source c0dez"
+shortDescResourceTypePlural Textbook          = "textbooks"
+shortDescResourceTypePlural VideoLecture      = "videos"
+
+-- | IMPORTANT: keep in sync with shortDescResourceTypePlural!
+shortReadResourceTypePlural :: Text -> Maybe ResourceType
+shortReadResourceTypePlural "blog posts"         = Just BlogPost
+shortReadResourceTypePlural "community websites" = Just CommunitySite
+shortReadResourceTypePlural "dissertations"      = Just Dissertation
+shortReadResourceTypePlural "documentations"     = Just Documentation
+shortReadResourceTypePlural "experience reports" = Just ExperienceReport
+shortReadResourceTypePlural "tutorials"          = Just ExtendedExample
+shortReadResourceTypePlural "forum posts"        = Just ForumPost
+shortReadResourceTypePlural "functional pearls"  = Just FunctionalPearl
+shortReadResourceTypePlural "lecture notes"      = Just LectureNotes
+shortReadResourceTypePlural "theses"             = Just MastersThesis
+shortReadResourceTypePlural "meta-resources"     = Just MetaResource
+shortReadResourceTypePlural "answers"            = Just QAWebsite
+shortReadResourceTypePlural "papers"             = Just ResearchPaper
+shortReadResourceTypePlural "light papers"       = Just ResearchPaperLite
+shortReadResourceTypePlural "surveys"            = Just SurveyArticle
+shortReadResourceTypePlural "source c0dez"       = Just SourceCode
+shortReadResourceTypePlural "textbooks"          = Just Textbook
+shortReadResourceTypePlural "videos"             = Just VideoLecture
+shortReadResourceTypePlural _                    = Nothing

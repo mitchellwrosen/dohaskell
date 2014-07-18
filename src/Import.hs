@@ -52,3 +52,6 @@ instance (FromValue a, FromValue b) => FromValue (a, b) where
 instance (FromValue a, FromValue b, FromValue c) => FromValue (a, b, c) where
     type UnValue (a, b, c) = (UnValue a, UnValue b, UnValue c)
     fromValue (a, b, c) = (fromValue a, fromValue b, fromValue c)
+
+addJqueryRemote :: Widget
+addJqueryRemote = addScriptRemote "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"

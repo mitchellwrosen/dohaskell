@@ -1,6 +1,5 @@
 module Handler.Utils
-    ( alphabeticIgnoreCase
-    , denyPermissionIfDifferentUser
+    ( denyPermissionIfDifferentUser
     , denyPermissionIfDoesntHaveAuthorityOver
     , denyPermissionIfNotAdmin
     , prettyAgo
@@ -12,12 +11,6 @@ import           Model.User (isAdministrator, userHasAuthorityOver)
 
 import qualified Data.Text  as T
 import           Data.Time
-
--- TODO: Find a better module for this function.
--- Requires that
-alphabeticIgnoreCase :: (val -> Text) -> Entity val -> Entity val -> Ordering
-alphabeticIgnoreCase textFunc (Entity _ val1) (Entity _ val2) =
-    T.toLower (textFunc val1) `compare` T.toLower (textFunc val2)
 
 denyPermissionIfDifferentUser :: UserId -> Handler ()
 denyPermissionIfDifferentUser requestedUser = maybeAuthId >>= \case

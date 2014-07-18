@@ -35,7 +35,6 @@ import           Yesod.Default.Main
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
 import Handler.About
-import Handler.AuthorAndTag
 import Handler.Browse
 import Handler.EditResourceRequest
 import Handler.Feed
