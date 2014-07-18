@@ -1,0 +1,1 @@
+CREATE TABLE "feed"("id" INTEGER PRIMARY KEY,"type" VARCHAR NOT NULL,"title" VARCHAR NOT NULL,"url" VARCHAR NOT NULL,"last_modified" BLOB NOT NULL,"etag" BLOB NOT NULL,"contents" BLOB NOT NULL,CONSTRAINT "unique_feed" UNIQUE ("url"));

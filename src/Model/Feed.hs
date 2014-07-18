@@ -12,13 +12,13 @@ import Model.Feed.Internal
 import Data.ByteString (ByteString)
 import Database.Esqueleto
 
--- | Get all feed (title, url) pairs.
-getAllFeeds :: YesodDB App [(Text, Text)]
+-- | Get all feed (title, url, type) 3-tuples.
+getAllFeeds :: YesodDB App [(Text, Text, FeedType)]
 getAllFeeds = fmap (map fromValue) $
     select $
     from $ \f -> do
     orderBy [asc (f^.FeedUrl)]
-    return (f^.FeedTitle, f^.FeedUrl)
+    return (f^.FeedTitle, f^.FeedUrl, f^.FeedType)
 
 getFeed :: Text -> YesodDB App (Maybe (Entity Feed))
 getFeed = getBy . UniqueFeed

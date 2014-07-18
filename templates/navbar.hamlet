@@ -1,20 +1,22 @@
 <a href=@{HomeR}>
-   <img #logo src=@{StaticR img_lambda_png}>
+  <img #logo src=@{StaticR img_lambda_png}>
 
 <ul #nav>
-   <li>
-      <a href=@{BrowseTagsR}>browse
-   <li>
-      <a href=@{SubmitR}>submit
+  <li>
+    <a href=@{BrowseTagsR}>browse
+  <li>
+    <a href=@{SubmitR}>submit
 
-   $maybe uid <- muid
-      <li>
-         <a href=@{UserR uid}>profile
-      <li>
-         <a href=@{AuthR LogoutR}>log out
-   $nothing
-      <li>
-         <a href=@{AuthR LoginR}>log in
+  $maybe uid <- muid
+    <li>
+      <a href=@{UserR uid}>profile
+    <li>
+      <a href=@{AuthR LogoutR}>log out
+  $nothing
+    <li>
+      <a href=@{AuthR LoginR}>log in
 
+   <li>
+      <a href=@{FeedsR}>feeds
    <li>
       <a href=@{AboutR}>about

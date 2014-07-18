@@ -17,7 +17,6 @@ import           Network.HTTP.Client       (HttpException(..))
 import           Network.HTTP.Types        (Status(..))
 import           Network.Wreq              (Options, defaults, header, responseBody, responseHeader)
 import qualified Network.Wreq              as Wreq
-import           Text.Blaze                (ToMarkup)
 import qualified Text.Atom.Feed            as Atom
 import qualified Text.Atom.Feed.Import     as Atom
 import           Text.RSS.Import           (elementToRSS)
@@ -55,8 +54,8 @@ getFeedR = runMaybeT lookupParams >>= \case
     lookupUrlParam = lookupGetParam "url"
 
 fetchRssFeed, fetchAtomFeed :: Text -> Handler Html
-fetchRssFeed  url = fetchFeed elementToRSS     (T.pack . rssTitle . rssChannel) (Feed RSS2) (rssFeedWidget url)  url
-fetchAtomFeed url = fetchFeed Atom.elementFeed (T.pack . show . Atom.feedTitle) (Feed Atom) (atomFeedWidget url) url
+fetchRssFeed  url = fetchFeed elementToRSS     (T.pack . rssTitle . rssChannel)             (Feed RSS2) (rssFeedWidget url)  url
+fetchAtomFeed url = fetchFeed Atom.elementFeed (T.pack . Atom.txtToString . Atom.feedTitle) (Feed Atom) (atomFeedWidget url) url
 
 fetchFeed :: (Element -> Maybe a)
           -> (a -> Text)

@@ -5,18 +5,19 @@
   Submit links to your favorite blog posts, research papers, and video lectures - then tag
   them for others to discover!
 
+<p>
   <em .small>
     Pro tip: poke around the
     <a href=@{FeedsR}>feeds
-    \ page and discover a way to quickly determine which links from your favorite Haskelly RSS 
+    \ page and discover a way to quickly determine which links from your favorite Haskelly RSS/Atom
     feed have already made it on the site.
 
 <p>
   dohaskell was built for and is maintained by the Haskell community. Resource metadata is managed
   by the original submitter, so any modifications you'd like to make to an existing resource
   (e.g. add or delete a tag) must be approved by that person. This is simply to help prevent people from
-  intentionally adding bogus tags, deleting data, etc. Of course, nothing is stopping you from
-  submitting and maintaining your own bogus links ;).
+  intentionally adding bogus tags or deleting data. Of course, nothing is stopping you from submitting
+  and maintaining your own bogus links ;).
 
 $maybe uid <- muid
   <p>

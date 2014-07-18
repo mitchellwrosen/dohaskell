@@ -11,3 +11,6 @@
 
 body
    font-family: Helvetica
+
+a
+  color: #069
