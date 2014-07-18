@@ -16,7 +16,7 @@
     <li>
       <a href=@{AuthR LoginR}>log in
 
-   <li>
-      <a href=@{FeedsR}>feeds
-   <li>
-      <a href=@{AboutR}>about
+  <li>
+     <a href=@{FeedsR}>feeds
+  <li>
+     <a href=@{AboutR}>about
