@@ -36,6 +36,7 @@ getResourceR res_id = do
         setTitle . toHtml $ "dohaskell | " <> resourceTitle res
         $(widgetFile "resource")
 
+{-
 postDeleteResourceR :: ResourceId -> Handler Html
 postDeleteResourceR resId = do
     -- Admins and the user himself may delete a resource.
@@ -44,6 +45,7 @@ postDeleteResourceR resId = do
     runDB $ deleteResource resId
     setMessage "Resource deleted."
     redirect HomeR
+-}
 
 getEditResourceR :: ResourceId -> Handler Html
 getEditResourceR res_id = do

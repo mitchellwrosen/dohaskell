@@ -1,8 +1,8 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Model.Resource
-    ( deleteResource
-    , favoriteResource
+    -- ( deleteResource
+    ( favoriteResource
     , getAllResources
     , getAuthorNames
     , getAuthors
@@ -35,6 +35,7 @@ import           Database.Esqueleto
 getAllResources :: YesodDB App [Entity Resource]
 getAllResources = getAllEntities (alphabeticIgnoreCase resourceTitle)
 
+{-
 -- | Delete a Resource, its now-unused Tags, and anything with a foreign key on its ID.
 deleteResource :: ResourceId -> YesodDB App ()
 deleteResource res_id = do
@@ -51,6 +52,7 @@ deleteResource res_id = do
         -- resource hasn't been deleted yet, so compare to 1
         when (n == (1::Int)) $
             deleteKey tid
+-}
 
 -- | Get the Authors of a Resource.
 getAuthors :: ResourceId -> YesodDB App [Author]

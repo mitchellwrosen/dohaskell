@@ -1,7 +1,7 @@
 ^{info_widget}
 
-$if can_delete
-  <form method=post action=@{DeleteResourceR res_id}>
-    <input type="submit" value="Delete Resource">
+$# $if can_delete
+$#   <form method=post action=@{DeleteResourceR res_id}>
+$#     <input type="submit" value="Delete Resource">
 
 ^{edit_widget}
