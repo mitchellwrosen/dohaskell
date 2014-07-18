@@ -81,6 +81,7 @@ feedHeader title url = do
       .header
         border-bottom: 1px solid black
         font-weight: bold
+        margin-bottom: 5px
     |]
 
 feedCassius :: Widget
@@ -91,4 +92,24 @@ feedCassius =
 
       .not-exists
         font-weight: bold
+
+      .entry
+        font-size: 1.2em
+        line-height: 1.3em
+        padding-left: 5px
+
+      .entry a
+        display: block
+        padding-left: 5px
+        text-decoration: none
+
+      .entry a:hover
+        background-color: #eee
+
+      .entry a.exists:hover
+        color: gray
+
+      .entry a.not-exists:hover
+        color: black
+
     |]

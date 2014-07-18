@@ -11,6 +11,6 @@ $forall (field_key, field_val) <- fields
       <a .col .arrow href="@{route (text_func field_val)}">
         <img align=center src=@{StaticR img_right_arrow_png}>
 
-      <div .col .expand ##{text_func field_val}>#{text_func field_val}
+      <div .col .expand .link-like ##{text_func field_val}>#{text_func field_val}
 
       <div .res-container>

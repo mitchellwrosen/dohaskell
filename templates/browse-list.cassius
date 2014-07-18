@@ -1,15 +1,13 @@
 .count
   clear: left
   float: left
-  font-weight: bold
-  text-align: center
+  margin-right: 5px
+  text-align: right
   width: 30px
 
 .expand
-  color: #069
   float: none
-  font-size: 22px
-  font-weight: bold
+  font-size: 1.2em
   overflow: hidden
   padding-left: 5px
 
@@ -27,8 +25,8 @@
   background-color: #eee
 
 .col
-  height: 30px
-  line-height: 30px
+  height: 25px
+  line-height: 25px
 
 .res-container
-  margin-left: 35px
+  margin-left: 40px

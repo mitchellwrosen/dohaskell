@@ -1,39 +1,47 @@
+.res-fav-grok-container
+  float: left
+  height: 100%
+  margin-right: 2px
+  position: relative
+
 .res-fav
   background: url(@{StaticR img_star_outline_png})
   background-position: center
   background-repeat: no-repeat
-  background-size: 22px 22px
-  float: left
-  width: 30px
-  height: 100%
+  background-size: 14px 14px
+  height: 16px
+  position: relative
+  top: 2px
+  width: 16px
 
 .res-fav.fav
   background: url(@{StaticR img_star_png})
   background-position: center
   background-repeat: no-repeat
-  background-size: 22px 22px
+  background-size: 14px 14px
 
 .res-grok
   background: url(@{StaticR img_circle_outline_png})
   background-position: center
   background-repeat: no-repeat
-  background-size: 22px 22px
-  float: left
-  width: 30px
-  height: 100%
+  background-size: 14px 14px
+  left: 2px
+  height: 16px
+  position: absolute
+  top: 18px
+  width: 16px
 
 .res-grok.grok
   background: url(@{StaticR img_circle_png})
   background-position: center
   background-repeat: no-repeat
-  background-size: 22px 22px
+  background-size: 14px 14px
 
 .res-title
-  color: #069
   display: inline-block
-  font-size: 20px
+  font-size: 1.2em
   font-weight: bold
-  margin-top: 5px
+  margin-top: 2px
 
 .res-published-type-authors
   margin-top: -3px
@@ -43,16 +51,15 @@
 
 .res-published, .res-type, .res-authors-by, .res-authors
   color: gray
-  font-size: 14px
+  font-size: 1em
 
-.res-link
+.res-url
   display: block
   height: 100%
   overflow: hidden
   padding: 0px 5px
-  text-decoration: none
 
-.res-link:hover .res-title
+.res-url:hover .res-title
   color: black
 
 .res-info
@@ -66,7 +73,7 @@
   text-decoration: none
 
 .res-li
-  height: 45px
+  height: 40px
 
 .res-li a
   text-decoration: none
@@ -74,5 +81,5 @@
 .res-li > *
   vertical-align: middle
 
-.res-li > *:hover
+.res-link:hover
   background-color: #eee

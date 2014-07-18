@@ -12,5 +12,5 @@
 body
    font-family: Helvetica
 
-a
+a, .link-like
   color: #069

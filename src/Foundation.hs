@@ -75,6 +75,7 @@ instance Yesod App where
                 [ css_normalize_css
                 , css_bootstrap_css
                 ])
+            addScriptRemote "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
             $(widgetFile "default-layout")
         giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 

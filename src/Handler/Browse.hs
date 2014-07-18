@@ -49,7 +49,6 @@ getBrowseAuthorsR = do
         <*> maybe (return Nothing) (fmap Just . getGrokkedCountsByAuthor) muid
     defaultLayout $ do
         setTitle "dohaskell | browse authors"
-        addJqueryRemote
         browseBarWidget BrowseByAuthorLink
         authorListWidget authors authorCounts mgrokkedCounts
 
@@ -58,7 +57,6 @@ getBrowseResourcesR = do
     resources <- runDB getAllResources
     defaultLayout $ do
         setTitle "dohaskell | browse resources"
-        addJqueryRemote
         browseBarWidget BrowseByResourceLink
         resourceListWidget resources
 
@@ -75,7 +73,6 @@ browseTagsHandler title = do
 
     defaultLayout $ do
         setTitle title
-        addJqueryRemote
         browseBarWidget BrowseByTagLink
         tagListWidget tags tagCounts mgrokkedCounts
 
@@ -88,6 +85,5 @@ getBrowseTypesR = do
 
     defaultLayout $ do
         setTitle "dohaskell | browse types"
-        addJqueryRemote
         browseBarWidget BrowseByTypeLink
         typeListWidget typeCounts mgrokkedCounts
