@@ -28,6 +28,7 @@ import           Model.Utils        (alphabeticIgnoreCase, getAllEntities)
 import           Data.DList         (DList)
 import qualified Data.DList         as DL
 import qualified Data.Map           as M
+import           Data.Time          (getCurrentTime)
 import           Database.Esqueleto
 
 -- | Get all resources, sorted alphabetically (ignore case).
@@ -95,13 +96,7 @@ getResourcesWithType res_type =
     return r
 
 getTags :: ResourceId -> YesodDB App [Text]
-getTags res_id = fmap (map unValue) $
-    select $
-    from $ \(t `InnerJoin` rt) -> do
-    on (t^.TagId ==. rt^.ResourceTagTagId)
-    where_ (rt^.ResourceTagResId ==. val res_id)
-    orderBy [asc (t^.TagTag)]
-    return (t^.TagTag)
+getTags = fmap (map (tagTag . entityVal)) . getTagEntities
 
 getTagEntities :: ResourceId -> YesodDB App [Entity Tag]
 getTagEntities res_id =
@@ -113,10 +108,12 @@ getTagEntities res_id =
     return t
 
 favoriteResource, grokResource :: UserId -> ResourceId -> YesodDB App ()
-favoriteResource user_id = void . insertUnique . Favorite user_id
-grokResource     user_id = void . insertUnique . Grokked  user_id
+favoriteResource = favgrok Favorite
+grokResource     = favgrok Grokked
 
-unfavoriteResource :: UserId -> ResourceId -> YesodDB App ()
+favgrok constructor user_id res_id = liftIO getCurrentTime >>= void . insertUnique . constructor user_id res_id
+
+unfavoriteResource, ungrokResource :: UserId -> ResourceId -> YesodDB App ()
 unfavoriteResource user_id = deleteBy . UniqueFavorite user_id
 ungrokResource     user_id = deleteBy . UniqueGrokked  user_id
 
@@ -133,7 +130,7 @@ updateResource res_id title authors published typ tags = do
     updateResourceTags
     updateResourceAuthors res_id authors
   where
-    updateResourceTitlePublishedType = do
+    updateResourceTitlePublishedType =
         update $ \r -> do
         set r [ ResourceTitle     =. val title
               , ResourcePublished =. val published
@@ -148,7 +145,7 @@ updateResource res_id title authors published typ tags = do
       where
         deleteResourceTags =
             delete $
-            from $ \rt -> do
+            from $ \rt ->
             where_ (rt^.ResourceTagResId ==. val res_id)
 
         insertTags :: YesodDB App [TagId]
@@ -159,9 +156,9 @@ updateResource res_id title authors published typ tags = do
 
         deleteUnusedTags =
             delete $
-            from $ \t -> do
+            from $ \t ->
             where_ (t^.TagId `notIn` (subList_selectDistinct $
-                                      from $ \rt -> do
+                                      from $ \rt ->
                                       return (rt^.ResourceTagTagId)))
 
 updateResourceAuthors :: ResourceId -> [Author] -> YesodDB App ()
@@ -172,7 +169,7 @@ updateResourceAuthors res_id authors = do
   where
     deleteResAuthors =
         delete $
-        from $ \ra -> do
+        from $ \ra ->
         where_ (ra^.ResAuthorResId ==. val res_id)
 
     insertAuthors :: YesodDB App [AuthorId]
@@ -183,7 +180,7 @@ updateResourceAuthors res_id authors = do
 
     deleteUnusedAuthors =
         delete $
-        from $ \a -> do
+        from $ \a ->
         where_ (a^.AuthorId `notIn` (subList_selectDistinct $
-                                     from $ \ra -> do
+                                     from $ \ra ->
                                      return (ra^.ResAuthorAuthId)))

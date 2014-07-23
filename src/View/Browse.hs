@@ -80,8 +80,8 @@ resourceListWidget resources = do
             Nothing  -> return (False, mempty, mempty)
             Just uid -> runDB $ (,,)
                 <$> pure True
-                <*> getFavoriteResourcesIn resource_ids uid
-                <*> getGrokkedResourcesIn  resource_ids uid
+                <*> (S.fromList <$> getFavoriteResourceIdsIn resource_ids uid)
+                <*> (S.fromList <$> getGrokkedResourceIdsIn  resource_ids uid)
 
     $(widgetFile "resource-list")
 

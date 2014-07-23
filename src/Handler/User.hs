@@ -2,49 +2,80 @@ module Handler.User where
 
 import Import
 
-import           Data.Char          (isAlphaNum)
-import qualified Data.Text          as T
-
 import           Handler.Utils      (denyPermissionIfDifferentUser)
 import           Model.ResourceEdit (getNumRequestedEdits)
 import           Model.User
+import           Model.Utils
+import           View.Browse
+import           View.User
+
+import           Data.List          (sortBy)
+import           Data.Time          (NominalDiffTime, diffUTCTime, getCurrentTime)
+import qualified Data.Text          as T
+import           Text.Printf
+
+plural :: Int -> Text -> Text
+plural 1 = id
+plural _ = flip T.snoc 's'
 
 getUserR :: UserId -> Handler Html
-getUserR uid = do
-    user <- runDB $ get404 uid
+getUserR user_id = do
+    user <- runDB $ get404 user_id
     (widget, enctype) <- generateFormPost (displayNameForm . Just $ userDisplayName user)
 
-    -- Is the user looking at their own profile?
-    isOwnProfile <- maybe False (== uid) <$> maybeAuthId
-    numRequestedEdits <- if isOwnProfile
-                             then runDB $ getNumRequestedEdits uid
-                             else return 0 -- bogus val, not used in html
+    is_own_profile <- maybe False (== user_id) <$> maybeAuthId
+    (num_req_edits, num_submitted, num_favorited, num_grokked) <- runDB $ (,,,)
+        <$> (if is_own_profile then getNumRequestedEdits user_id else return 0) -- bogus val, not used in html
+        <*> getNumSubmittedResources user_id
+        <*> getNumFavoriteResources user_id
+        <*> getNumGrokkedResources user_id
+
+    weeks_since_user_creation :: Double <-
+        (/ fromIntegral secsPerWeek) .
+          (fromIntegral :: Integer -> Double) .
+            (round :: NominalDiffTime -> Integer) .
+              flip diffUTCTime (userCreated user) <$>
+                liftIO getCurrentTime
+
+    let num_grokked_double   = fromIntegral num_grokked
+        grokked_per_week     = min num_grokked_double (num_grokked_double / weeks_since_user_creation)
+        grokked_per_week_str = printf "%.1f" grokked_per_week :: String
 
     defaultLayout $ do
         setTitle "dohaskell | profile"
         $(widgetFile "user")
+  where
+    secsPerWeek :: Integer
+    secsPerWeek = 604800   -- 60*60*24*7
 
 postUserR :: UserId -> Handler Html
-postUserR uid = do
-    denyPermissionIfDifferentUser uid
+postUserR user_id = do
+    denyPermissionIfDifferentUser user_id
     ((result, _), _) <- runFormPost (displayNameForm Nothing)
     case result of
         FormSuccess displayName -> do
-            runDB $ updateUserDisplayName uid displayName
+            runDB $ updateUserDisplayName user_id displayName
             setMessage "Display name updated."
-            redirect $ UserR uid
-        FormFailure err -> do
-            setMessage (toHtml $ "Form failure: " <> T.intercalate "," err)
-            redirect (UserR uid)
-        FormMissing -> redirect (UserR uid)
-
-displayNameForm :: Maybe Text -> Form Text
-displayNameForm = renderDivs . areq (validateNameField textField) ""
+            redirect $ UserR user_id
+        FormFailure err -> userFormFailure ("Form failure: " <> T.intercalate "," err)
+        FormMissing     -> userFormFailure ("Form missing")
   where
-    validateNameField :: Field Handler Text -> Field Handler Text
-    validateNameField = checkBool validName ("Only alphanumeric characters allowed."::Text)
-    validName :: Text -> Bool
-    validName = allCharsSatisfy isAlphaNum
+    userFormFailure :: Text -> Handler a
+    userFormFailure msg = do
+        setMessage (toHtml msg)
+        redirect (UserR user_id)
 
-    allCharsSatisfy :: (Char -> Bool) -> Text -> Bool
-    allCharsSatisfy f = T.foldr (\c b -> f c && b) True
+getUserFavoritedR, getUserGrokkedR, getUserSubmittedR :: UserId -> Handler Html
+getUserFavoritedR = userFavGrokSub getFavoriteResources  ("dohaskell | favorited by " <>)
+getUserGrokkedR   = userFavGrokSub getGrokkedResources   ("dohaskell | grokked by " <>)
+getUserSubmittedR = userFavGrokSub getSubmittedResources ("dohaskell | submitted by" <>)
+
+userFavGrokSub :: (UserId -> YesodDB App [Entity Resource]) -> (Text -> Text) -> UserId -> Handler Html
+userFavGrokSub get_resources mk_title user_id = do
+    (display_name, resources) <- runDB $ (,)
+        <$> (userDisplayName <$> get404 user_id)
+        <*> (sortBy (alphabeticIgnoreCase resourceTitle) <$> get_resources user_id)
+
+    defaultLayout $ do
+      setTitle . toHtml $ mk_title display_name
+      resourceListWidget resources

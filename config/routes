@@ -21,8 +21,11 @@
 /browse/tags      BrowseTagsR      GET
 /browse/type      BrowseTypesR     GET
 
-/u/#UserId       UserR        GET POST
-/u/#UserId/edits ReqEditsHubR GET
+/u/#UserId           UserR          GET POST
+/u/#UserId/edits     ReqEditsHubR   GET
+/u/#UserId/submitted UserSubmittedR GET
+/u/#UserId/grokked   UserGrokkedR   GET
+/u/#UserId/favs      UserFavoritedR GET
 
 /r/!#ResourceId       ResourceR           GET
 /r/#ResourceId/edit   EditResourceR       GET POST

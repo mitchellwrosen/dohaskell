@@ -1,0 +1,18 @@
+CREATE TEMP TABLE "user_backup"("id" INTEGER PRIMARY KEY,"name" VARCHAR NOT NULL,"display_name" VARCHAR NOT NULL,"is_administrator" BOOLEAN NOT NULL,"created" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,CONSTRAINT "unique_user_name" UNIQUE ("name"));
+INSERT INTO "user_backup"("id","name","display_name","is_administrator") SELECT "id","name","display_name","is_administrator" FROM "user";
+DROP TABLE "user";
+CREATE TABLE "user"("id" INTEGER PRIMARY KEY,"name" VARCHAR NOT NULL,"display_name" VARCHAR NOT NULL,"is_administrator" BOOLEAN NOT NULL,"created" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,CONSTRAINT "unique_user_name" UNIQUE ("name"));
+INSERT INTO "user" SELECT "id","name","display_name","is_administrator","created" FROM "user_backup";
+DROP TABLE "user_backup";
+CREATE TEMP TABLE "favorite_backup"("id" INTEGER PRIMARY KEY,"user_id" INTEGER NOT NULL REFERENCES "user","res_id" INTEGER NOT NULL REFERENCES "resource","timestamp" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,CONSTRAINT "unique_favorite" UNIQUE ("user_id","res_id"));
+INSERT INTO "favorite_backup"("id","user_id","res_id") SELECT "id","user_id","res_id" FROM "favorite";
+DROP TABLE "favorite";
+CREATE TABLE "favorite"("id" INTEGER PRIMARY KEY,"user_id" INTEGER NOT NULL REFERENCES "user","res_id" INTEGER NOT NULL REFERENCES "resource","timestamp" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,CONSTRAINT "unique_favorite" UNIQUE ("user_id","res_id"));
+INSERT INTO "favorite" SELECT "id","user_id","res_id","timestamp" FROM "favorite_backup";
+DROP TABLE "favorite_backup";
+CREATE TEMP TABLE "grokked_backup"("id" INTEGER PRIMARY KEY,"user_id" INTEGER NOT NULL REFERENCES "user","res_id" INTEGER NOT NULL REFERENCES "resource","timestamp" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,CONSTRAINT "unique_grokked" UNIQUE ("user_id","res_id"));
+INSERT INTO "grokked_backup"("id","user_id","res_id") SELECT "id","user_id","res_id" FROM "grokked";
+DROP TABLE "grokked";
+CREATE TABLE "grokked"("id" INTEGER PRIMARY KEY,"user_id" INTEGER NOT NULL REFERENCES "user","res_id" INTEGER NOT NULL REFERENCES "resource","timestamp" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,CONSTRAINT "unique_grokked" UNIQUE ("user_id","res_id"));
+INSERT INTO "grokked" SELECT "id","user_id","res_id","timestamp" FROM "grokked_backup";
+DROP TABLE "grokked_backup";

@@ -1,12 +1,17 @@
 module Model.User
     ( getFavoriteResources
-    , getFavoriteResourcesIn
+    , getFavoriteResourceIds
+    , getFavoriteResourceIdsIn
     , getGrokkedCountsByAuthor
     , getGrokkedCountsByTag
     , getGrokkedCountsByType
     , getGrokkedResources
-    , getGrokkedResourcesIn
-    , getPostedResources
+    , getGrokkedResourceIds
+    , getGrokkedResourceIdsIn
+    , getNumFavoriteResources
+    , getNumGrokkedResources
+    , getNumSubmittedResources
+    , getSubmittedResources
     , isAdministrator
     , thisUserHasAuthorityOver
     , updateUserDisplayName
@@ -19,35 +24,50 @@ import           Model.Resource
 
 import           Database.Esqueleto
 import qualified Data.Map           as M
-import qualified Data.Set           as S
 
--- TODO: combine this with getGrokkedResources
-getFavoriteResources :: UserId -> YesodDB App (Set ResourceId)
-getGrokkedResources  :: UserId -> YesodDB App (Set ResourceId)
+getFavoriteResources, getGrokkedResources :: UserId -> YesodDB App [Entity Resource]
+getFavoriteResources user_id =
+    select $
+    from $ \r -> do
+    where_ (r^.ResourceId `in_`
+        (subList_select $
+         from $ \f -> do
+         where_ (f^.FavoriteUserId ==. val user_id)
+         return (f^.FavoriteResId)))
+    return r
+getGrokkedResources user_id =
+    select $
+    from $ \r -> do
+    where_ (r^.ResourceId `in_`
+        (subList_select $
+         from $ \g -> do
+         where_ (g^.GrokkedUserId ==. val user_id)
+         return (g^.GrokkedResId)))
+    return r
 
-getFavoriteResources uid = fmap (S.fromList . map unValue) $
+getFavoriteResourceIds, getGrokkedResourceIds :: UserId -> YesodDB App [ResourceId]
+getFavoriteResourceIds uid = fmap (map unValue) $
     select $
     from $ \f -> do
     where_ (f^.FavoriteUserId ==. val uid)
     return (f^.FavoriteResId)
-
-getGrokkedResources uid = fmap (S.fromList . map unValue) $
+getGrokkedResourceIds uid = fmap (map unValue) $
     select $
     from $ \g -> do
     where_ (g^.GrokkedUserId ==. val uid)
     return (g^.GrokkedResId)
 
-getFavoriteResourcesIn :: [ResourceId] -> UserId -> YesodDB App (Set ResourceId)
-getGrokkedResourcesIn  :: [ResourceId] -> UserId -> YesodDB App (Set ResourceId)
+getFavoriteResourceIdsIn :: [ResourceId] -> UserId -> YesodDB App [ResourceId]
+getGrokkedResourceIdsIn  :: [ResourceId] -> UserId -> YesodDB App [ResourceId]
 
-getFavoriteResourcesIn resourceIds userId = fmap (S.fromList . map unValue) $
+getFavoriteResourceIdsIn resourceIds userId = fmap (map unValue) $
     select $
     from $ \f -> do
     where_ (f^.FavoriteUserId ==. val userId &&.
             f^.FavoriteResId `in_` valList resourceIds)
     return (f^.FavoriteResId)
 
-getGrokkedResourcesIn resourceIds userId = fmap (S.fromList . map unValue) $
+getGrokkedResourceIdsIn resourceIds userId = fmap (map unValue) $
     select $
     from $ \g -> do
     where_ (g^.GrokkedUserId ==. val userId &&.
@@ -90,13 +110,35 @@ getGrokkedCountsByType user_id = fmap (M.fromList . map fromValue) sel
           groupBy (r^.ResourceType)
           return (r^.ResourceType, countRows)
 
-getPostedResources :: UserId -> YesodDB App [Entity Resource]
-getPostedResources uid =
+getSubmittedResources :: UserId -> YesodDB App [Entity Resource]
+getSubmittedResources uid =
     select $
     from $ \(u `InnerJoin` r) -> do
     on (u^.UserId ==. r^.ResourceUserId)
     where_ (u^.UserId ==. val uid)
     return r
+
+getNumSubmittedResources :: UserId -> YesodDB App Int
+getNumSubmittedResources user_id = fmap (\[Value n] -> n) $
+    select $
+    from $ \(u `InnerJoin` r) -> do
+    on (u^.UserId ==. r^.ResourceUserId)
+    where_ (u^.UserId ==. val user_id)
+    return countRows
+
+getNumFavoriteResources :: UserId -> YesodDB App Int
+getNumFavoriteResources user_id = fmap (\[Value n] -> n) $
+    select $
+    from $ \f -> do
+    where_ (f^.FavoriteUserId ==. val user_id)
+    return countRows
+
+getNumGrokkedResources :: UserId -> YesodDB App Int
+getNumGrokkedResources user_id = fmap (\[Value n] -> n) $
+    select $
+    from $ \g -> do
+    where_ (g^.GrokkedUserId ==. val user_id)
+    return countRows
 
 isAdministrator :: UserId -> YesodDB App Bool
 isAdministrator = fmap (maybe False userIsAdministrator) . get

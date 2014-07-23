@@ -4,6 +4,7 @@ import           Control.Applicative         ((<$>))
 import qualified Database.Persist
 import           Database.Persist.Sql        (SqlPersistT)
 import           Data.Text                   (Text)
+import           Data.Time                   (getCurrentTime)
 import           Model
 import           Network.HTTP.Client.Conduit (Manager, HasHttpManager (getHttpManager))
 import           Prelude
@@ -133,13 +134,7 @@ instance YesodAuth App where
     getAuthId creds = runDB $
         getBy (UniqueUserName $ credsIdent creds) >>= \case
             Just (Entity uid _) -> return (Just uid)
-            Nothing -> do
-                uid <- insert User
-                    { userName            = credsIdent creds
-                    , userDisplayName     = "anonymous"
-                    , userIsAdministrator = False
-                    }
-                return (Just uid)
+            Nothing -> Just <$> (liftIO getCurrentTime >>= insert . User (credsIdent creds) "anonymous" False)
 
     authPlugins _ = [dohaskellAuthBrowserId]
       where

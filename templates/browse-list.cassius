@@ -3,7 +3,7 @@
   float: left
   margin-right: 5px
   text-align: right
-  width: 30px
+  width: 40px
 
 .expand
   float: none
@@ -29,4 +29,4 @@
   line-height: 25px
 
 .res-container
-  margin-left: 40px
+  margin-left: 50px

@@ -1,15 +1,24 @@
-<div #profile>
-  $if isOwnProfile
-    <div>Login ID (hidden): <strong>#{userName user}</strong>
+<div .profile>
+  <div .info>
+    <div .display-name>#{userDisplayName user}
+    <div .res-nums>
+      <div>
+        <a href=@{UserSubmittedR user_id}>#{num_submitted} submitted
+      <div>
+        <a href=@{UserGrokkedR user_id}>#{num_grokked} grokked
+        \ <span .grokked-per-week>(#{grokked_per_week_str} per week)
+      <div>
+        <a href=@{UserFavoritedR user_id}>#{num_favorited} #{plural num_favorited "favorite"}
 
-  <div .display-name>Display name: #
-    <strong>#{userDisplayName user}
+  $if is_own_profile
+    <div .settings>
+      <div .header>Settings
+      <div>Login ID (hidden): <strong>#{userName user}</strong>
 
-  $if isOwnProfile
-    <div .display-name-form>
-      <form method=post action=@{UserR uid} enctype=#{enctype}>
+      <form method=post action=@{UserR user_id} enctype=#{enctype}>
         ^{widget}
-        <input type="submit" value="Submit">
+        <input type="submit" value="Update Display Name">
 
-    <div .req-edits>
-      <a href=@{ReqEditsHubR uid}>Requested Edits (#{numRequestedEdits})
+      <div .req-edits>
+        <a href=@{ReqEditsHubR user_id}>#{num_req_edits} requested #{plural num_req_edits "edit"}
+

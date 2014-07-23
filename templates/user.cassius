@@ -1,16 +1,21 @@
-#profile
-  font-size: 20px
-  list-style-type: none
+.header
+  font-size: 1.5em
+  font-weight: bold
+  border-bottom: 1px solid gray
+  margin-bottom: 5px
 
-#profile > *
-  line-height: 30px
+.info
+  margin-bottom: 1.5em
+
+.profile
+  font-size: 1.2em
+  line-height: 1.3em
 
 .display-name
-  display: inline-block
+  font-weight: bold
 
-.display-name-form
-  display: inline-block
-
-form .required
-  display: inline-block
+.res-nums
   margin-left: 10px
+
+.grokked-per-week
+  color: gray

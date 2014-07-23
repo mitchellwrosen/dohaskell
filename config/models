@@ -1,20 +1,23 @@
 User
-    name Text        -- User "name" (credentials used to log in, i.e. an email addr).
-    displayName Text -- Defaults to "anonymous". Not unique.
+    name            Text -- User "name" (credentials used to log in, i.e. an email addr).
+    displayName     Text -- Defaults to "anonymous". Not unique.
     isAdministrator Bool
+    created         UTCTime default=CURRENT_TIMESTAMP
     UniqueUserName name
     deriving Typeable
 
 -- Favorite relation, many-to-many between User and Resource.
 Favorite
-    userId UserId
-    resId  ResourceId
+    userId    UserId
+    resId     ResourceId
+    timestamp UTCTime default=CURRENT_TIMESTAMP -- The last time the resource was favorited.
     UniqueFavorite userId resId
 
 -- Grokked relation, many-to-many between User and Resource.
 Grokked
-    userId UserId
-    resId  ResourceId
+    userId    UserId
+    resId     ResourceId
+    timestamp UTCTime default=CURRENT_TIMESTAMP -- The last time the resource was grokked.
     UniqueGrokked userId resId
 
 Resource
