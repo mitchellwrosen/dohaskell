@@ -2,7 +2,6 @@ module View.Browse
     ( BrowseByLink(..)
     , browseBarWidget
     , resourceListWidget
-    , tagListWidget
     , typeListWidget
     ) where
 
@@ -83,16 +82,6 @@ resourceListWidget resources = do
                 <*> (S.fromList <$> fetchGrokkedResourceIdsInDB  resource_ids uid)
 
     $(widgetFile "resource-list")
-
-tagListWidget :: [Entity Tag] -> Map TagId Int -> Maybe (Map TagId Int) -> Widget
-tagListWidget tags total_counts mgrokked_counts =
-    fieldListWidget
-      TagR
-      (String "/tag/")
-      tagTag
-      (map (entityKey &&& entityVal) tags)
-      total_counts
-      mgrokked_counts
 
 typeListWidget :: Map ResourceType Int -> Maybe (Map ResourceType Int) -> Widget
 typeListWidget =

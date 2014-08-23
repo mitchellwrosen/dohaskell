@@ -5,6 +5,7 @@ import Import
 import Model.Author
 import Model.Browse
 import Model.Resource
+import Model.Tag
 import Model.User
 import Model.Utils
 import View.Browse
@@ -75,15 +76,19 @@ getBrowseTagsR = browseTagsHandler "dohaskell | browse tags"
 browseTagsHandler :: Html -> Handler Html
 browseTagsHandler title = do
     muid <- maybeAuthId
-    (tags, tagCounts, mgrokkedCounts) <- runDB $ (,,)
-        <$> getAllTags
-        <*> getTagCounts
+    (tags, year_ranges, total_counts, mgrokked_counts) <- runDB $ (,,,)
+        <$> fetchAllTagsDB
+        <*> fetchTagYearRangesDB
+        <*> fetchTagCountsDB
         <*> maybe (return Nothing) (fmap Just . fetchGrokkedCountsByTagDB) muid
 
     defaultLayout $ do
         setTitle title
         browseBarWidget BrowseByTagLink
-        tagListWidget tags tagCounts mgrokkedCounts
+        giveUrlRenderer $(hamletFile "templates/browse-tags.hamlet") >>= toWidgetBody
+        toWidget $(cassiusFile "templates/browse-list.cassius")
+        let path_piece = String "/tag/"
+         in toWidget $(juliusFile "templates/browse-list.julius")
 
 getBrowseTypesR :: Handler Html
 getBrowseTypesR = do
