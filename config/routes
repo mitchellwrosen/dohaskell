@@ -48,3 +48,5 @@
 /e/addtag/#EditAddTagId/decline       EditAddTagDeclineR        POST
 /e/remtag/#EditRemoveTagId/accept     EditRemoveTagAcceptR      POST
 /e/remtag/#EditRemoveTagId/decline    EditRemoveTagDeclineR     POST
+
+/api/r/exists ApiResourceExists POST

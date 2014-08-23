@@ -5,7 +5,7 @@ module Handler.Resource where
 import Import
 
 import           Model.Resource
-import           Model.User           (thisUserHasAuthorityOver)
+import           Model.User           (thisUserHasAuthorityOverDB)
 import           View.Resource
 
 import qualified Data.Set             as S
@@ -15,9 +15,9 @@ import           Database.Persist.Sql
 getResourceR :: ResourceId -> Handler Html
 getResourceR res_id = do
     (res, tags, authors) <- runDB $ (,,)
-        <$> get404         res_id
-        <*> getTags        res_id
-        <*> getAuthorNames res_id
+        <$> get404 res_id
+        <*> fetchResourceTagsDB res_id
+        <*> (map authorName <$> fetchResourceAuthorsDB res_id)
 
     let info_widget = resourceInfoWidget (Entity res_id res)
         edit_widget =
@@ -36,9 +36,9 @@ getResourceR res_id = do
 getEditResourceR :: ResourceId -> Handler Html
 getEditResourceR res_id = do
     (res, tags, authors) <- runDB $ (,,)
-        <$> get404         res_id
-        <*> getTags        res_id
-        <*> getAuthorNames res_id
+        <$> get404 res_id
+        <*> fetchResourceTagsDB res_id
+        <*> (map authorName <$> fetchResourceAuthorsDB res_id)
     defaultLayout $
         editResourceFormWidget
           res_id
@@ -54,16 +54,16 @@ postEditResourceR res_id = do
     ((result, _), _) <- runFormPost (editResourceForm Nothing Nothing Nothing Nothing Nothing)
     case result of
         FormSuccess (new_title, new_authors, new_published, new_type, new_tags) -> do
-            ok <- thisUserHasAuthorityOver (resourceUserId res)
+            ok <- thisUserHasAuthorityOverDB (resourceUserId res)
             if ok
                 then do
-                    runDB $ updateResource
-                                res_id
-                                new_title
-                                (map Author $ new_authors)
-                                new_published
-                                new_type
-                                (map Tag $ new_tags)
+                    runDB $ updateResourceDB
+                              res_id
+                              new_title
+                              (map Author $ new_authors)
+                              new_published
+                              new_type
+                              (map Tag $ new_tags)
                     setMessage "Resource updated."
                     redirect $ ResourceR res_id
                 -- An authenticated, unprivileged user is the same as an
@@ -78,8 +78,8 @@ postEditResourceR res_id = do
                 pendingEditField resourceType      new_type      EditType
 
                 (old_authors, old_tags) <- runDB $ (,)
-                    <$> getAuthorNames res_id
-                    <*> getTags res_id
+                    <$> (map authorName <$> fetchResourceAuthorsDB res_id)
+                    <*> fetchResourceTagsDB res_id
 
                 -- Authors are a little different than tags, because order matters. So,
                 -- we don't duplicate the fine-grained tag edits (individual add/remove),
@@ -123,10 +123,10 @@ postEditResourceR res_id = do
 
 postFavoriteResourceR,   postGrokkedResourceR   :: Handler Html
 postUnfavoriteResourceR, postUngrokkedResourceR :: Handler Html
-postFavoriteResourceR   = helper favoriteResource
-postGrokkedResourceR    = helper grokResource
-postUnfavoriteResourceR = helper unfavoriteResource
-postUngrokkedResourceR  = helper ungrokResource
+postFavoriteResourceR   = helper favoriteResourceDB
+postGrokkedResourceR    = helper grokResourceDB
+postUnfavoriteResourceR = helper unfavoriteResourceDB
+postUngrokkedResourceR  = helper ungrokResourceDB
 
 helper :: (UserId -> ResourceId -> YesodDB App ()) -> Handler Html
 helper action = do

@@ -2,28 +2,32 @@ module Handler.Browse where
 
 import Import
 
+import Model.Author
 import Model.Browse
 import Model.Resource
 import Model.User
 import Model.Utils
 import View.Browse
 
-import Data.List   (sortBy)
-import Data.Maybe  (isJust)
-import Text.Blaze  (ToMarkup)
-import Text.Hamlet (hamletFile)
+import           Data.List    (sortBy)
+import qualified Data.Map     as M
+import           Data.Maybe   (isJust)
+import           Text.Blaze   (ToMarkup)
+import           Text.Cassius (cassiusFile)
+import           Text.Julius  (juliusFile)
+import           Text.Hamlet  (hamletFile)
 
 getHomeR :: Handler Html
 getHomeR = browseTagsHandler "dohaskell: tagged Haskell learning resources"
 
 getAuthorR, getTagR :: Text -> Handler Html
-getAuthorR text = getResources (getResourcesWithAuthor text) ("dohaskell | by " <> text)
-getTagR    text = getResources (getResourcesWithTag text)    ("dohaskell | " <> text)
+getAuthorR text = getResources (fetchResourcesWithAuthorDB text) ("dohaskell | by " <> text)
+getTagR    text = getResources (fetchResourcesWithTagDB text)    ("dohaskell | " <> text)
 
 getTypeR :: Text -> Handler Html
 getTypeR text = case shortReadResourceTypePlural text of
     Nothing  -> notFound
-    Just typ -> getResources (getResourcesWithType typ) ("dohaskell | the " <> text)
+    Just typ -> getResources (fetchResourcesWithTypeDB typ) ("dohaskell | the " <> text)
 
 -- | Abstract getAuthorR, getTagR, and getTypeR. Assumes the resources grabbed from the
 -- database are unsorted.
@@ -35,26 +39,31 @@ getResources get_resources title = do
           setTitle (toHtml title)
           resourceListWidget resources
     if is_embed
-      then do
-          pc <- widgetToPageContent body
-          giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
-      else defaultLayout body
+        then do
+            pc <- widgetToPageContent body
+            giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
+        else defaultLayout body
 
 getBrowseAuthorsR :: Handler Html
 getBrowseAuthorsR = do
     muid <- maybeAuthId
-    (authors, authorCounts, mgrokkedCounts) <- runDB $ (,,)
-        <$> getAllAuthors
-        <*> getAuthorCounts
-        <*> maybe (return Nothing) (fmap Just . getGrokkedCountsByAuthor) muid
+    (authors, year_ranges, total_counts, mgrokked_counts) <- runDB $ (,,,)
+        <$> fetchAllAuthorsDB
+        <*> fetchAuthorYearRangesDB
+        <*> fetchAuthorResourceCountsDB
+        <*> maybe (return Nothing) (fmap Just . fetchGrokkedCountsByAuthorDB) muid
+
     defaultLayout $ do
         setTitle "dohaskell | browse authors"
         browseBarWidget BrowseByAuthorLink
-        authorListWidget authors authorCounts mgrokkedCounts
+        giveUrlRenderer $(hamletFile "templates/browse-authors.hamlet") >>= toWidgetBody
+        toWidget $(cassiusFile "templates/browse-list.cassius")
+        let path_piece = String "/author/"
+         in toWidget $(juliusFile "templates/browse-list.julius")
 
 getBrowseResourcesR :: Handler Html
 getBrowseResourcesR = do
-    resources <- runDB getAllResources
+    resources <- runDB fetchAllResourcesDB
     defaultLayout $ do
         setTitle "dohaskell | browse resources"
         browseBarWidget BrowseByResourceLink
@@ -69,7 +78,7 @@ browseTagsHandler title = do
     (tags, tagCounts, mgrokkedCounts) <- runDB $ (,,)
         <$> getAllTags
         <*> getTagCounts
-        <*> maybe (return Nothing) (fmap Just . getGrokkedCountsByTag) muid
+        <*> maybe (return Nothing) (fmap Just . fetchGrokkedCountsByTagDB) muid
 
     defaultLayout $ do
         setTitle title
@@ -81,7 +90,7 @@ getBrowseTypesR = do
     muid <- maybeAuthId
     (typeCounts, mgrokkedCounts) <- runDB $ (,)
         <$> getTypeCounts
-        <*> maybe (return Nothing) (fmap Just . getGrokkedCountsByType) muid
+        <*> maybe (return Nothing) (fmap Just . fetchGrokkedCountsByTypeDB) muid
 
     defaultLayout $ do
         setTitle "dohaskell | browse types"

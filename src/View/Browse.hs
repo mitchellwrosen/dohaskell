@@ -1,6 +1,5 @@
 module View.Browse
     ( BrowseByLink(..)
-    , authorListWidget
     , browseBarWidget
     , resourceListWidget
     , tagListWidget
@@ -73,15 +72,15 @@ resourceListWidget :: [Entity Resource] -> Widget
 resourceListWidget resources = do
     let resource_ids = map entityKey resources
 
-    authorsMap <- handlerToWidget . runDB $ getAuthorsIn resource_ids
+    authorsMap <- handlerToWidget $ runDB (fetchResourceAuthorsInDB resource_ids)
 
     (is_logged_in, favs, grokked) <- handlerToWidget $
         maybeAuthId >>= \case
             Nothing  -> return (False, mempty, mempty)
             Just uid -> runDB $ (,,)
                 <$> pure True
-                <*> (S.fromList <$> getFavoriteResourceIdsIn resource_ids uid)
-                <*> (S.fromList <$> getGrokkedResourceIdsIn  resource_ids uid)
+                <*> (S.fromList <$> fetchFavoriteResourceIdsInDB resource_ids uid)
+                <*> (S.fromList <$> fetchGrokkedResourceIdsInDB  resource_ids uid)
 
     $(widgetFile "resource-list")
 
@@ -92,16 +91,6 @@ tagListWidget tags total_counts mgrokked_counts =
       (String "/tag/")
       tagTag
       (map (entityKey &&& entityVal) tags)
-      total_counts
-      mgrokked_counts
-
-authorListWidget :: [Entity Author] -> Map AuthorId Int -> Maybe (Map AuthorId Int) -> Widget
-authorListWidget authors total_counts mgrokked_counts =
-    fieldListWidget
-      AuthorR
-      (String "/author/")
-      authorName
-      (map (entityKey &&& entityVal) authors)
       total_counts
       mgrokked_counts
 

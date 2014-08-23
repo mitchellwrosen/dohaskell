@@ -23,6 +23,7 @@ library
                      Import
                      Foundation
                      Handler.About
+                     Handler.Api.Resource
                      Handler.Browse
                      Handler.EditResourceRequest
                      Handler.Feed
@@ -32,6 +33,7 @@ library
                      Handler.User
                      Handler.Utils
                      Model
+                     Model.Author
                      Model.Browse
                      Model.Feed
                      Model.Feed.Internal

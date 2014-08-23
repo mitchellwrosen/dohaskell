@@ -1,22 +1,19 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 
 module Model.Resource
-    -- ( deleteResource
-    ( favoriteResource
-    , getAllResources
-    , getAuthorNames
-    , getAuthors
-    , getAuthorsIn
-    , getResourcesWithAuthor
-    , getResourcesWithTag
-    , getResourcesWithType
-    , getTags
-    , getTagEntities
-    , grokResource
-    , unfavoriteResource
-    , ungrokResource
-    , updateResource
-    , updateResourceAuthors
+    ( favoriteResourceDB
+    , fetchAllResourcesDB
+    , fetchResourceAuthorsDB
+    , fetchResourceAuthorsInDB
+    , fetchResourcesWithAuthorDB
+    , fetchResourcesWithTagDB
+    , fetchResourcesWithTypeDB
+    , fetchResourceTagsDB
+    , grokResourceDB
+    , unfavoriteResourceDB
+    , ungrokResourceDB
+    , updateResourceDB
+    , updateResourceAuthorsDB
     , module Model.Resource.Internal
     ) where
 
@@ -32,12 +29,12 @@ import           Data.Time          (getCurrentTime)
 import           Database.Esqueleto
 
 -- | Get all resources, sorted alphabetically (ignore case).
-getAllResources :: YesodDB App [Entity Resource]
-getAllResources = getAllEntities (alphabeticIgnoreCase resourceTitle)
+fetchAllResourcesDB :: YesodDB App [Entity Resource]
+fetchAllResourcesDB = getAllEntities (alphabeticIgnoreCase resourceTitle)
 
 -- | Get the Authors of a Resource.
-getAuthors :: ResourceId -> YesodDB App [Author]
-getAuthors res_id = fmap (map entityVal) $
+fetchResourceAuthorsDB :: ResourceId -> YesodDB App [Author]
+fetchResourceAuthorsDB res_id = fmap (map entityVal) $
     select $
     from $ \(a `InnerJoin` ra) -> do
     on (a^.AuthorId ==. ra^.ResAuthorAuthId)
@@ -45,12 +42,9 @@ getAuthors res_id = fmap (map entityVal) $
     orderBy [asc (ra^.ResAuthorOrd)]
     return a
 
-getAuthorNames :: ResourceId -> YesodDB App [Text]
-getAuthorNames = fmap (map authorName) . getAuthors
-
 -- | Get the Authors of a list of Resources, as a Map.
-getAuthorsIn :: [ResourceId] -> YesodDB App (Map ResourceId [Author])
-getAuthorsIn res_ids = fmap makeAuthorMap $
+fetchResourceAuthorsInDB :: [ResourceId] -> YesodDB App (Map ResourceId [Author])
+fetchResourceAuthorsInDB res_ids = fmap makeAuthorMap $
     select $
     from $ \(a `InnerJoin` ra) -> do
     on (a^.AuthorId ==. ra^.ResAuthorAuthId)
@@ -66,40 +60,37 @@ getAuthorsIn res_ids = fmap makeAuthorMap $
              -> Map ResourceId (DList Author)
         step (Value res_id, Entity _ author) = M.insertWith (<>) res_id (DL.singleton author)
 
-getResourcesWithAuthor :: Text -> YesodDB App [Entity Resource]
-getResourcesWithAuthor name = getBy404 (UniqueAuthor name) >>= getResourcesWithAuthorId . entityKey
+fetchResourcesWithAuthorDB :: Text -> YesodDB App [Entity Resource]
+fetchResourcesWithAuthorDB name = getBy404 (UniqueAuthor name) >>= fetchResourcesWithAuthorIdDB . entityKey
   where
-    getResourcesWithAuthorId :: AuthorId -> YesodDB App [Entity Resource]
-    getResourcesWithAuthorId author_id =
+    fetchResourcesWithAuthorIdDB :: AuthorId -> YesodDB App [Entity Resource]
+    fetchResourcesWithAuthorIdDB author_id =
         select $
         from $ \(r `InnerJoin` ra) -> do
         on (r^.ResourceId ==. ra^.ResAuthorResId)
         where_ (ra^.ResAuthorAuthId ==. val author_id)
         return r
 
-getResourcesWithTag :: Text -> YesodDB App [Entity Resource]
-getResourcesWithTag tag = getBy404 (UniqueTag tag) >>= getResourcesWithTagId . entityKey
+fetchResourcesWithTagDB :: Text -> YesodDB App [Entity Resource]
+fetchResourcesWithTagDB tag = getBy404 (UniqueTag tag) >>= fetchResourcesWithTagIdDB . entityKey
   where
-    getResourcesWithTagId :: TagId -> YesodDB App [Entity Resource]
-    getResourcesWithTagId tagId =
+    fetchResourcesWithTagIdDB :: TagId -> YesodDB App [Entity Resource]
+    fetchResourcesWithTagIdDB tag_id =
         select $
         from $ \(r `InnerJoin` rt) -> do
         on (r^.ResourceId ==. rt^.ResourceTagResId)
-        where_ (rt^.ResourceTagTagId ==. val tagId)
+        where_ (rt^.ResourceTagTagId ==. val tag_id)
         return r
 
-getResourcesWithType :: ResourceType -> YesodDB App [Entity Resource]
-getResourcesWithType res_type =
+fetchResourcesWithTypeDB :: ResourceType -> YesodDB App [Entity Resource]
+fetchResourcesWithTypeDB res_type =
     select $
     from $ \r -> do
     where_ (r^.ResourceType ==. val res_type)
     return r
 
-getTags :: ResourceId -> YesodDB App [Text]
-getTags = fmap (map (tagTag . entityVal)) . getTagEntities
-
-getTagEntities :: ResourceId -> YesodDB App [Entity Tag]
-getTagEntities res_id =
+fetchResourceTagsDB :: ResourceId -> YesodDB App [Text]
+fetchResourceTagsDB res_id = fmap (map (tagTag . entityVal)) $
     select $
     from $ \(t `InnerJoin` rt) -> do
     on (t^.TagId ==. rt^.ResourceTagTagId)
@@ -107,30 +98,31 @@ getTagEntities res_id =
     orderBy [asc (t^.TagTag)]
     return t
 
-favoriteResource, grokResource :: UserId -> ResourceId -> YesodDB App ()
-favoriteResource = favgrok Favorite
-grokResource     = favgrok Grokked
+favoriteResourceDB, grokResourceDB :: UserId -> ResourceId -> YesodDB App ()
+favoriteResourceDB = favgrok Favorite
+grokResourceDB     = favgrok Grokked
 
 favgrok constructor user_id res_id = liftIO getCurrentTime >>= void . insertUnique . constructor user_id res_id
 
-unfavoriteResource, ungrokResource :: UserId -> ResourceId -> YesodDB App ()
-unfavoriteResource user_id = deleteBy . UniqueFavorite user_id
-ungrokResource     user_id = deleteBy . UniqueGrokked  user_id
+unfavoriteResourceDB, ungrokResourceDB :: UserId -> ResourceId -> YesodDB App ()
+unfavoriteResourceDB user_id = deleteBy . UniqueFavorite user_id
+ungrokResourceDB     user_id = deleteBy . UniqueGrokked  user_id
 
 -- | Update a resource.
-updateResource :: ResourceId     -- ^ ID.
-               -> Text           -- ^ Title.
-               -> [Author]       -- ^ Authors.
-               -> Maybe Int      -- ^ Published.
-               -> ResourceType   -- ^ Type.
-               -> [Tag]          -- ^ Tags.
-               -> YesodDB App ()
-updateResource res_id title authors published typ tags = do
-    updateResourceTitlePublishedType
-    updateResourceTags
-    updateResourceAuthors res_id authors
+updateResourceDB
+        :: ResourceId     -- ^ ID
+        -> Text           -- ^ Title
+        -> [Author]       -- ^ Authors
+        -> Maybe Int      -- ^ Year published
+        -> ResourceType   -- ^ Type
+        -> [Tag]          -- ^ Tags
+        -> YesodDB App ()
+updateResourceDB res_id title authors published typ tags = do
+    updateTitlePublishedType
+    updateTags
+    updateResourceAuthorsDB res_id authors
   where
-    updateResourceTitlePublishedType =
+    updateTitlePublishedType =
         update $ \r -> do
         set r [ ResourceTitle     =. val title
               , ResourcePublished =. val published
@@ -138,7 +130,7 @@ updateResource res_id title authors published typ tags = do
               ]
         where_ (r^.ResourceId ==. val res_id)
 
-    updateResourceTags = do
+    updateTags = do
         deleteResourceTags
         insertTags >>= insertResourceTags
         deleteUnusedTags
@@ -161,8 +153,8 @@ updateResource res_id title authors published typ tags = do
                                       from $ \rt ->
                                       return (rt^.ResourceTagTagId)))
 
-updateResourceAuthors :: ResourceId -> [Author] -> YesodDB App ()
-updateResourceAuthors res_id authors = do
+updateResourceAuthorsDB :: ResourceId -> [Author] -> YesodDB App ()
+updateResourceAuthorsDB res_id authors = do
     deleteResAuthors
     insertAuthors >>= insertResAuthors
     deleteUnusedAuthors

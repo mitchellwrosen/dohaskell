@@ -100,9 +100,8 @@ resTagsForm = areq tagsField "Tags (comma separated)"
 resourceInfoWidget :: Entity Resource -> Widget
 resourceInfoWidget (Entity res_id res) = do
     (tags, authors, poster) <- handlerToWidget . runDB $ (,,)
-        <$> getTags res_id
-        <*> getAuthorNames res_id
-        <*> getJust (resourceUserId res)
+        <$> fetchResourceTagsDB res_id
+        <*> (map authorName <$> fetchResourceAuthorsDB res_id)
+        <*> get404 (resourceUserId res)
     posted <- prettyAgo (resourcePosted res)
     $(widgetFile "resource-info")
-

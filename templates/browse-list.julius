@@ -15,11 +15,10 @@ function collapse(elem) {
 
 function clickExpand() {
   $(this).toggleClass('exp');
-  if ($(this).hasClass('exp')) {
+  if ($(this).hasClass('exp'))
     expand(this);
-  } else {
+  else
     collapse(this);
-  }
 }
 
 $(document).ready(function() {

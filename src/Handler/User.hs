@@ -3,7 +3,7 @@ module Handler.User where
 import Import
 
 import           Handler.Utils      (denyPermissionIfDifferentUser)
-import           Model.ResourceEdit (getNumRequestedEdits)
+import           Model.ResourceEdit (fetchNumRequestedEditsDB)
 import           Model.User
 import           Model.Utils
 import           View.Browse
@@ -25,10 +25,10 @@ getUserR user_id = do
 
     is_own_profile <- maybe False (== user_id) <$> maybeAuthId
     (num_req_edits, num_submitted, num_favorited, num_grokked) <- runDB $ (,,,)
-        <$> (if is_own_profile then getNumRequestedEdits user_id else return 0) -- bogus val, not used in html
-        <*> getNumSubmittedResources user_id
-        <*> getNumFavoriteResources user_id
-        <*> getNumGrokkedResources user_id
+        <$> (if is_own_profile then fetchNumRequestedEditsDB user_id else return 0) -- bogus val, not used in html
+        <*> fetchNumSubmittedResourcesDB user_id
+        <*> fetchNumFavoriteResourcesDB  user_id
+        <*> fetchNumGrokkedResourcesDB   user_id
 
     weeks_since_user_creation :: Double <-
         (/ fromIntegral secsPerWeek) .
@@ -54,7 +54,7 @@ postUserR user_id = do
     ((result, _), _) <- runFormPost (displayNameForm Nothing)
     case result of
         FormSuccess displayName -> do
-            runDB $ updateUserDisplayName user_id displayName
+            runDB (updateUserDisplayNameDB user_id displayName)
             setMessage "Display name updated."
             redirect $ UserR user_id
         FormFailure err -> userFormFailure ("Form failure: " <> T.intercalate "," err)
@@ -66,9 +66,9 @@ postUserR user_id = do
         redirect (UserR user_id)
 
 getUserFavoritedR, getUserGrokkedR, getUserSubmittedR :: UserId -> Handler Html
-getUserFavoritedR = userFavGrokSub getFavoriteResources  ("dohaskell | favorited by " <>)
-getUserGrokkedR   = userFavGrokSub getGrokkedResources   ("dohaskell | grokked by " <>)
-getUserSubmittedR = userFavGrokSub getSubmittedResources ("dohaskell | submitted by" <>)
+getUserFavoritedR = userFavGrokSub fetchFavoriteResourcesDB  ("dohaskell | favorited by " <>)
+getUserGrokkedR   = userFavGrokSub fetchGrokkedResourcesDB   ("dohaskell | grokked by " <>)
+getUserSubmittedR = userFavGrokSub fetchSubmittedResourcesDB ("dohaskell | submitted by" <>)
 
 userFavGrokSub :: (UserId -> YesodDB App [Entity Resource]) -> (Text -> Text) -> UserId -> Handler Html
 userFavGrokSub get_resources mk_title user_id = do

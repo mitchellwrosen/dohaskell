@@ -14,24 +14,24 @@ getReqEditsHubR :: UserId -> Handler Html
 getReqEditsHubR uid = do
     denyPermissionIfDifferentUser uid
     runDB ((,,,,,)
-        <$> getEditTitles     uid
-        <*> getEditAuthors    uid
-        <*> getEditPublished  uid
-        <*> getEditTypes      uid
-        <*> getEditAddTags    uid
-        <*> getEditRemoveTags uid)
+        <$> fetchEditTitlesDB     uid
+        <*> fetchEditAuthorsDB    uid
+        <*> fetchEditPublishedDB  uid
+        <*> fetchEditTypesDB      uid
+        <*> fetchEditAddTagsDB    uid
+        <*> fetchEditRemoveTagsDB uid)
             >>= getRequestedEdits
 
 getAllEditsR :: Handler Html
 getAllEditsR = do
     denyPermissionIfNotAdmin
     runDB ((,,,,,)
-        <$> getAllEditTitles
-        <*> getAllEditAuthors
-        <*> getAllEditPublished
-        <*> getAllEditTypes
-        <*> getAllEditAddTags
-        <*> getAllEditRemoveTags)
+        <$> fetchAllEditTitlesDB
+        <*> fetchAllEditAuthorsDB
+        <*> fetchAllEditPublishedDB
+        <*> fetchAllEditTypesDB
+        <*> fetchAllEditAddTagsDB
+        <*> fetchAllEditRemoveTagsDB)
             >>= getRequestedEdits
 
 getRequestedEdits :: ( Map (Entity Resource) [Entity EditTitle]

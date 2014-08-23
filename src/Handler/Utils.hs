@@ -7,7 +7,7 @@ module Handler.Utils
 
 import Import
 
-import           Model.User (isAdministrator, userHasAuthorityOver)
+import           Model.User (isAdministratorDB, userHasAuthorityOverDB)
 
 import qualified Data.Text  as T
 import           Data.Time
@@ -28,14 +28,14 @@ denyPermissionIfDoesntHaveAuthorityOver nerd = maybeAuthId >>= \case
         runDB (get nerd) >>= \case
             Nothing -> notFound
             Just _  -> do
-                ok <- runDB $ userHasAuthorityOver bully nerd
+                ok <- runDB $ userHasAuthorityOverDB bully nerd
                 when (not ok)
                     deny
 
 denyPermissionIfNotAdmin :: Handler ()
 denyPermissionIfNotAdmin = maybeAuthId >>= \case
     Nothing  -> deny
-    Just uid -> runDB (isAdministrator uid) >>= \b -> unless b deny
+    Just uid -> runDB (isAdministratorDB uid) >>= \b -> unless b deny
 
 deny :: Handler ()
 deny = permissionDenied "You don't have permission to view this page."

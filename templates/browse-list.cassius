@@ -5,6 +5,11 @@
   text-align: right
   width: 40px
 
+.year-range
+  color: gray
+  font-size: 0.9em
+  font-style: italic
+
 .expand
   float: none
   font-size: 1.2em

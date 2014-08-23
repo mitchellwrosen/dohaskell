@@ -4,7 +4,7 @@ import Import
 
 import           Database.Persist.Class.Extra (insertBy')
 import           Handler.Utils                (denyPermissionIfDoesntHaveAuthorityOver)
-import           Model.Resource               (updateResourceAuthors)
+import           Model.Resource               (updateResourceAuthorsDB)
 
 import           Database.Esqueleto
 import qualified Database.Persist   as P
@@ -25,7 +25,7 @@ postEditTypeAcceptR eid = editRes editTypeResId sqlCode eid
 postEditAuthorsAcceptR :: EditAuthorsId -> Handler Html
 postEditAuthorsAcceptR eid = editRes editAuthorsResId sqlCode eid
   where
-    sqlCode (EditAuthors res_id author_names) = updateResourceAuthors res_id (map Author author_names)
+    sqlCode (EditAuthors res_id author_names) = updateResourceAuthorsDB res_id (map Author author_names)
 
 postEditAddTagAcceptR :: EditAddTagId -> Handler Html
 postEditAddTagAcceptR eid = editRes editAddTagResId sqlCode eid
