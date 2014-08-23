@@ -1,12 +1,12 @@
--- TODO: delete this module
 module Model.Browse
-    ( getTypeCounts
+    ( BrowseByLink(..)
+    , SortBy(..)
+    , getTypeCounts -- TODO: move this
     ) where
 
 import Import
 
 import Model.Resource
-import Model.Utils
 
 import qualified Data.Map           as M
 import           Database.Esqueleto
@@ -20,3 +20,18 @@ getTypeCounts = fmap (M.fromList . map fromValue) sel
           from $ \r -> do
           groupBy (r^.ResourceType)
           return (r^.ResourceType, countRows)
+
+data BrowseByLink
+    = BrowseByAuthorLink
+    | BrowseByResourceLink
+    | BrowseByTagLink
+    | BrowseByTypeLink
+    deriving Eq
+
+data SortBy
+    = SortByAZ
+    | SortByCountUp   -- lowest count at top
+    | SortByCountDown -- highest count at top
+    | SortByEarliest  -- earliest year at top
+    | SortByLatest    -- latest year at top
+    deriving Eq

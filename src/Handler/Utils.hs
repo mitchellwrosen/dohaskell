@@ -1,5 +1,6 @@
 module Handler.Utils
-    ( denyPermissionIfDifferentUser
+    ( SortBy(..)
+    , denyPermissionIfDifferentUser
     , denyPermissionIfDoesntHaveAuthorityOver
     , denyPermissionIfNotAdmin
     , prettyAgo
@@ -7,6 +8,7 @@ module Handler.Utils
 
 import Import
 
+import           Model.Browse
 import           Model.User (isAdministratorDB, userHasAuthorityOverDB)
 
 import qualified Data.Text  as T

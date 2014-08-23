@@ -2,14 +2,12 @@ module Model.Author where
 
 import Import
 
-import           Model.Utils
-
 import qualified Data.Map           as M
 import           Database.Esqueleto
 
--- | Get all authors, sorted alphabetically (ignore case).
+-- | Get all authors.
 fetchAllAuthorsDB :: YesodDB App [Entity Author]
-fetchAllAuthorsDB = getAllEntities (alphabeticIgnoreCase authorName)
+fetchAllAuthorsDB = selectList [] []
 
 -- | Get a map of AuthorId to the number of Resources with that Author.
 fetchAuthorResourceCountsDB :: YesodDB App (Map AuthorId Int)

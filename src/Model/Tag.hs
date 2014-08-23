@@ -2,14 +2,12 @@ module Model.Tag where
 
 import Import
 
-import           Model.Utils
-
 import qualified Data.Map           as M
 import           Database.Esqueleto
 
--- | Get all tags, sorted alphabetically (ignore case).
+-- | Get all tags.
 fetchAllTagsDB :: YesodDB App [Entity Tag]
-fetchAllTagsDB = getAllEntities (alphabeticIgnoreCase tagTag)
+fetchAllTagsDB = selectList [] []
 
 -- | Get a map of TagId to the number of Resources with that tag.
 fetchTagCountsDB :: YesodDB App (Map TagId Int)

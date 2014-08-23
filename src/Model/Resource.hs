@@ -20,17 +20,15 @@ module Model.Resource
 import Import
 import Model.Resource.Internal
 
-import           Model.Utils        (alphabeticIgnoreCase, getAllEntities)
-
 import           Data.DList         (DList)
 import qualified Data.DList         as DL
 import qualified Data.Map           as M
 import           Data.Time          (getCurrentTime)
 import           Database.Esqueleto
 
--- | Get all resources, sorted alphabetically (ignore case).
+-- | Get all resources.
 fetchAllResourcesDB :: YesodDB App [Entity Resource]
-fetchAllResourcesDB = getAllEntities (alphabeticIgnoreCase resourceTitle)
+fetchAllResourcesDB = selectList [] []
 
 -- | Get the Authors of a Resource.
 fetchResourceAuthorsDB :: ResourceId -> YesodDB App [Author]
@@ -102,6 +100,7 @@ favoriteResourceDB, grokResourceDB :: UserId -> ResourceId -> YesodDB App ()
 favoriteResourceDB = favgrok Favorite
 grokResourceDB     = favgrok Grokked
 
+-- favgrok :: PersistEntity b => (uid -> rid -> UTCTime -> entity) -> uid -> rid -> UTCTime -> entity
 favgrok constructor user_id res_id = liftIO getCurrentTime >>= void . insertUnique . constructor user_id res_id
 
 unfavoriteResourceDB, ungrokResourceDB :: UserId -> ResourceId -> YesodDB App ()

@@ -72,9 +72,11 @@ getUserSubmittedR = userFavGrokSub fetchSubmittedResourcesDB ("dohaskell | submi
 
 userFavGrokSub :: (UserId -> YesodDB App [Entity Resource]) -> (Text -> Text) -> UserId -> Handler Html
 userFavGrokSub get_resources mk_title user_id = do
-    (display_name, resources) <- runDB $ (,)
+    (display_name, unsorted_resources) <- runDB $ (,)
         <$> (userDisplayName <$> get404 user_id)
-        <*> (sortBy (alphabeticIgnoreCase resourceTitle) <$> get_resources user_id)
+        <*> get_resources user_id
+
+    let resources = sortBy (orderAlphabeticIgnoreCase resourceTitle) unsorted_resources
 
     defaultLayout $ do
       setTitle . toHtml $ mk_title display_name
