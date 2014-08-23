@@ -15,6 +15,7 @@ data ResourceType
     | ExtendedExample
     | ForumPost
     | FunctionalPearl
+    | JournalPaper
     | LectureNotes
     | MastersThesis
     | MetaResource
@@ -43,6 +44,7 @@ descResourceType ExperienceReport  = "Experience report"
 descResourceType ExtendedExample   = "Extended example/tutorial"
 descResourceType ForumPost         = "Forum post (e.g. Reddit comment)"
 descResourceType FunctionalPearl   = "Functional pearl"
+descResourceType JournalPaper      = "Journal paper"
 descResourceType LectureNotes      = "Lecture slides/notes"
 descResourceType MastersThesis     = "Master's thesis"
 descResourceType MetaResource      = "Meta-resource"
@@ -63,6 +65,7 @@ shortDescResourceType ExperienceReport  = "experience report"
 shortDescResourceType ExtendedExample   = "tutorial"
 shortDescResourceType ForumPost         = "forum post"
 shortDescResourceType FunctionalPearl   = "functional pearl"
+shortDescResourceType JournalPaper      = "journal paper"
 shortDescResourceType LectureNotes      = "lecture notes"
 shortDescResourceType MastersThesis     = "thesis"
 shortDescResourceType MetaResource      = "meta-resource"
@@ -84,12 +87,13 @@ shortDescResourceTypePlural ExperienceReport  = "experience reports"
 shortDescResourceTypePlural ExtendedExample   = "tutorials"
 shortDescResourceTypePlural ForumPost         = "forum posts"
 shortDescResourceTypePlural FunctionalPearl   = "functional pearls"
+shortDescResourceTypePlural JournalPaper      = "journal papers"
 shortDescResourceTypePlural LectureNotes      = "lecture notes"
 shortDescResourceTypePlural MastersThesis     = "theses"
 shortDescResourceTypePlural MetaResource      = "meta-resources"
 shortDescResourceTypePlural QAWebsite         = "answers"
-shortDescResourceTypePlural ResearchPaper     = "papers"
-shortDescResourceTypePlural ResearchPaperLite = "light papers"
+shortDescResourceTypePlural ResearchPaper     = "research papers"
+shortDescResourceTypePlural ResearchPaperLite = "light research papers"
 shortDescResourceTypePlural SurveyArticle     = "surveys"
 shortDescResourceTypePlural SourceCode        = "source c0dez"
 shortDescResourceTypePlural Textbook          = "textbooks"
@@ -97,22 +101,23 @@ shortDescResourceTypePlural VideoLecture      = "videos"
 
 -- | IMPORTANT: keep in sync with shortDescResourceTypePlural!
 shortReadResourceTypePlural :: Text -> Maybe ResourceType
-shortReadResourceTypePlural "blog posts"         = Just BlogPost
-shortReadResourceTypePlural "community websites" = Just CommunitySite
-shortReadResourceTypePlural "dissertations"      = Just Dissertation
-shortReadResourceTypePlural "documentations"     = Just Documentation
-shortReadResourceTypePlural "experience reports" = Just ExperienceReport
-shortReadResourceTypePlural "tutorials"          = Just ExtendedExample
-shortReadResourceTypePlural "forum posts"        = Just ForumPost
-shortReadResourceTypePlural "functional pearls"  = Just FunctionalPearl
-shortReadResourceTypePlural "lecture notes"      = Just LectureNotes
-shortReadResourceTypePlural "theses"             = Just MastersThesis
-shortReadResourceTypePlural "meta-resources"     = Just MetaResource
-shortReadResourceTypePlural "answers"            = Just QAWebsite
-shortReadResourceTypePlural "papers"             = Just ResearchPaper
-shortReadResourceTypePlural "light papers"       = Just ResearchPaperLite
-shortReadResourceTypePlural "surveys"            = Just SurveyArticle
-shortReadResourceTypePlural "source c0dez"       = Just SourceCode
-shortReadResourceTypePlural "textbooks"          = Just Textbook
-shortReadResourceTypePlural "videos"             = Just VideoLecture
-shortReadResourceTypePlural _                    = Nothing
+shortReadResourceTypePlural "blog posts"            = Just BlogPost
+shortReadResourceTypePlural "community websites"    = Just CommunitySite
+shortReadResourceTypePlural "dissertations"         = Just Dissertation
+shortReadResourceTypePlural "documentations"        = Just Documentation
+shortReadResourceTypePlural "experience reports"    = Just ExperienceReport
+shortReadResourceTypePlural "tutorials"             = Just ExtendedExample
+shortReadResourceTypePlural "forum posts"           = Just ForumPost
+shortReadResourceTypePlural "functional pearls"     = Just FunctionalPearl
+shortReadResourceTypePlural "journal papers"        = Just JournalPaper
+shortReadResourceTypePlural "lecture notes"         = Just LectureNotes
+shortReadResourceTypePlural "theses"                = Just MastersThesis
+shortReadResourceTypePlural "meta-resources"        = Just MetaResource
+shortReadResourceTypePlural "answers"               = Just QAWebsite
+shortReadResourceTypePlural "research papers"       = Just ResearchPaper
+shortReadResourceTypePlural "light research papers" = Just ResearchPaperLite
+shortReadResourceTypePlural "surveys"               = Just SurveyArticle
+shortReadResourceTypePlural "source c0dez"          = Just SourceCode
+shortReadResourceTypePlural "textbooks"             = Just Textbook
+shortReadResourceTypePlural "videos"                = Just VideoLecture
+shortReadResourceTypePlural _                       = Nothing
