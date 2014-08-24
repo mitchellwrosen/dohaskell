@@ -11,6 +11,8 @@ $forall Entity res_id res <- resources
 
     <a .res-url .res-link href=#{resourceUrl res}>
       <div .res-title>#{resourceTitle res}
+        $maybe ext <- resourceExtension res
+          <span .res-ext .res-ext-#{ext}> (#{ext})
 
       <div .res-published-type-authors>
         $maybe published <- resourcePublished res

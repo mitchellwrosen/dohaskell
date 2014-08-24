@@ -12,6 +12,7 @@ module Model.Resource
     , fetchResourceTypeCountsDB
     , fetchResourceTypeYearRangesDB
     , grokResourceDB
+    , resourceExtension
     , unfavoriteResourceDB
     , ungrokResourceDB
     , updateResourceDB
@@ -25,8 +26,18 @@ import Model.Resource.Internal
 import           Data.DList         (DList)
 import qualified Data.DList         as DL
 import qualified Data.Map           as M
+import qualified Data.Text          as T
 import           Data.Time          (getCurrentTime)
 import           Database.Esqueleto
+
+-- | Grab the "important" extension of this resource (pdf, ps, etc). for
+-- visual display (for instance, so mobile users don't download pdfs
+-- accidentally).
+resourceExtension :: Resource -> Maybe Text
+resourceExtension res = case T.breakOnEnd "." (resourceUrl res) of
+    (_, "pdf") -> Just "pdf"
+    (_, "ps")  -> Just "ps"
+    _          -> Nothing
 
 -- | Get all resources.
 fetchAllResourcesDB :: YesodDB App [Entity Resource]

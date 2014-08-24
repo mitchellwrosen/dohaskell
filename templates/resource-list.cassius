@@ -37,6 +37,17 @@
   background-repeat: no-repeat
   background-size: 14px 14px
 
+.res-ext
+  font-size: 0.9em
+  font-variant: small-caps
+  margin-left: 5px
+
+.res-ext-pdf
+  color: #A69
+
+.res-ext-ps
+  color: #B69
+
 .res-title
   display: inline-block
   font-size: 1.2em
@@ -61,6 +72,9 @@
 
 .res-url:hover .res-title
   color: black
+
+.res-url:hover .res-ext
+  color: gray
 
 .res-info
   background: url(@{StaticR img_edit_png})
