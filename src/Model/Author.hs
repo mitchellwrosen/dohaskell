@@ -36,4 +36,4 @@ fetchAuthorYearRangesDB = fmap (foldr f mempty) $
     f (Value auth_id, Value (Just (Just m)), Value (Just (Just n))) = M.insert auth_id (m, n)
     f (_,             Value Nothing,         Value Nothing)         = id
     -- How could min_ return NULL but max not, or vice versa?
-    f (_, _, _) = error "fetchAuthorYearRangeDB: incorrect assumption about return value of min_/max_"
+    f (_, _, _) = error "fetchAuthorYearRangesDB: incorrect assumption about return value of min_/max_"

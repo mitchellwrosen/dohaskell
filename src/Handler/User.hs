@@ -76,7 +76,7 @@ userFavGrokSub get_resources mk_title user_id = do
         <$> (userDisplayName <$> get404 user_id)
         <*> get_resources user_id
 
-    let resources = sortBy (orderAlphabeticIgnoreCase resourceTitle) unsorted_resources
+    let resources = sortBy (orderAlphabeticIgnoreCase (resourceTitle . entityVal)) unsorted_resources
 
     defaultLayout $ do
       setTitle . toHtml $ mk_title display_name

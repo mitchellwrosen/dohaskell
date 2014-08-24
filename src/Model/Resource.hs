@@ -9,6 +9,8 @@ module Model.Resource
     , fetchResourcesWithTagDB
     , fetchResourcesWithTypeDB
     , fetchResourceTagsDB
+    , fetchResourceTypeCountsDB
+    , fetchResourceTypeYearRangesDB
     , grokResourceDB
     , unfavoriteResourceDB
     , ungrokResourceDB
@@ -175,3 +177,32 @@ updateResourceAuthorsDB res_id authors = do
         where_ (a^.AuthorId `notIn` (subList_selectDistinct $
                                      from $ \ra ->
                                      return (ra^.ResAuthorAuthId)))
+
+-- | Get a map of ResourceType to the number of Resources with that type.
+fetchResourceTypeCountsDB :: YesodDB App (Map ResourceType Int)
+fetchResourceTypeCountsDB = fmap (M.fromList . map fromValue) $
+    select $
+    from $ \r -> do
+    groupBy (r^.ResourceType)
+    return (r^.ResourceType :: SqlExpr (Value ResourceType), countRows :: SqlExpr (Value Int))
+
+-- | Get the year range of all ResourceTypes. If none of the a ResourceType's
+-- Resources have any published year, then the ResourceType will not exist in
+-- the returned map.
+fetchResourceTypeYearRangesDB :: YesodDB App (Map ResourceType (Int, Int))
+fetchResourceTypeYearRangesDB = fmap (foldr f mempty) $
+    select $
+    from $ \r -> do
+    groupBy (r^.ResourceType)
+    return (r^.ResourceType, min_ (r^.ResourcePublished), max_ (r^.ResourcePublished))
+  where
+    f :: (Value ResourceType, Value (Maybe (Maybe Int)), Value (Maybe (Maybe Int)))
+      -> Map ResourceType (Int, Int)
+      -> Map ResourceType (Int, Int)
+    f (Value _,        Value (Just Nothing),  Value (Just Nothing))  = id
+    f (Value res_type, Value (Just (Just m)), Value Nothing)         = M.insert res_type (m, m)
+    f (Value res_type, Value Nothing,         Value (Just (Just m))) = M.insert res_type (m, m)
+    f (Value res_type, Value (Just (Just m)), Value (Just (Just n))) = M.insert res_type (m, n)
+    f (_,              Value Nothing,         Value Nothing)         = id
+    -- How could min_ return NULL but max not, or vice versa?
+    f (_, _, _) = error "fetchResourceTypeYearRangesDB: incorrect assumption about return value of min_/max_"

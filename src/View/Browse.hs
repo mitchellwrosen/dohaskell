@@ -2,9 +2,7 @@ module View.Browse
     ( BrowseByLink(..)
     , browseBarWidget
     , resourceListWidget
-    , sortAuthorBarWidget
-    , sortTagBarWidget
-    , typeListWidget
+    , sortBarWidget
     ) where
 
 import Import
@@ -63,66 +61,91 @@ browseBarWidget browse_by_link = do
         font-weight: #{boldIfEq browse_by_link BrowseByTypeLink}
     |]
 
-sortAuthorBarWidget :: SortBy -> Widget
-sortAuthorBarWidget sort_by = do
+sortBarWidget :: Text -> SortBy -> Widget
+sortBarWidget text SortByAZ = do
     Just route <- handlerToWidget getCurrentRoute
     [whamlet|
-      <div .sort-bar>sort authors by: #
+      <div .sort-bar>sort #{text} by: #
         <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
         |
-        <a .sort-link #so-count-up href=@?{(route, [("sort", "paucity")])}>paucity
-        <a .sort-link #so-count-down href=@?{(route, [("sort", "prolificity")])}>prolificity
+        <a .sort-link #so-count-down href=@?{(route, [("sort", "count-down")])}>count
+          <span .arr>&#9660;
         |
-        <a .sort-link #so-earliest href=@?{(route, [("sort", "senescence")])}>senescence
-        <a .sort-link #so-latest href=@?{(route, [("sort", "pubescence")])}>pubescence
+        <a .sort-link #so-year-down href=@?{(route, [("sort", "year-down")])}>year
+          <span .arr>&#9660;
     |]
     sortBarCSS
     toWidget [cassius|
       #so-az
-        font-weight: #{boldIfEq sort_by SortByAZ}
-
-      #so-count-up
-        font-weight: #{boldIfEq sort_by SortByCountUp}
-
-      #so-count-down
-        font-weight: #{boldIfEq sort_by SortByCountDown}
-
-      #so-earliest
-        font-weight: #{boldIfEq sort_by SortByEarliest}
-
-      #so-latest
-        font-weight: #{boldIfEq sort_by SortByLatest}
+        font-weight: bold
     |]
-
-sortTagBarWidget :: SortBy -> Widget
-sortTagBarWidget sort_by = do
+sortBarWidget text SortByCountUp = do
     Just route <- handlerToWidget getCurrentRoute
     [whamlet|
-      <div .sort-bar>sort tags by: #
+      <div .sort-bar>sort #{text} by: #
         <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
         |
-        <a .sort-link #so-count-up href=@?{(route, [("sort", "obscurity")])}>obscurity
-        <a .sort-link #so-count-down href=@?{(route, [("sort", "profusion")])}>profusion
+        <a .sort-link #so-count-down href=@?{(route, [("sort", "count-down")])}>count#
+          <span .arr>&#9650;
         |
-        <a .sort-link #so-earliest href=@?{(route, [("sort", "senescence")])}>senescence
-        <a .sort-link #so-latest href=@?{(route, [("sort", "pubescence")])}>pubescence
+        <a .sort-link #so-year-down href=@?{(route, [("sort", "year-down")])}>year
+          <span .arr>&#9660;
     |]
     sortBarCSS
     toWidget [cassius|
-      #so-az
-        font-weight: #{boldIfEq sort_by SortByAZ}
-
-      #so-count-up
-        font-weight: #{boldIfEq sort_by SortByCountUp}
-
       #so-count-down
-        font-weight: #{boldIfEq sort_by SortByCountDown}
-
-      #so-earliest
-        font-weight: #{boldIfEq sort_by SortByEarliest}
-
-      #so-latest
-        font-weight: #{boldIfEq sort_by SortByLatest}
+        font-weight: bold
+    |]
+sortBarWidget text SortByCountDown = do
+    Just route <- handlerToWidget getCurrentRoute
+    [whamlet|
+      <div .sort-bar>sort #{text} by: #
+        <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
+        |
+        <a .sort-link #so-count-up href=@?{(route, [("sort", "count-up")])}>count#
+          <span .arr>&#9660;
+        |
+        <a .sort-link #so-year-down href=@?{(route, [("sort", "year-down")])}>year
+          <span .arr>&#9660;
+    |]
+    sortBarCSS
+    toWidget [cassius|
+      #so-count-up
+        font-weight: bold
+    |]
+sortBarWidget text SortByYearUp = do
+    Just route <- handlerToWidget getCurrentRoute
+    [whamlet|
+      <div .sort-bar>sort #{text} by: #
+        <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
+        |
+        <a .sort-link #so-count-down href=@?{(route, [("sort", "count-down")])}>count#
+          <span .arr>&#9660;
+        |
+        <a .sort-link #so-year-down href=@?{(route, [("sort", "year-down")])}>year
+          <span .arr>&#9650;
+    |]
+    sortBarCSS
+    toWidget [cassius|
+      #so-year-down
+        font-weight: bold
+    |]
+sortBarWidget text SortByYearDown = do
+    Just route <- handlerToWidget getCurrentRoute
+    [whamlet|
+      <div .sort-bar>sort #{text} by: #
+        <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
+        |
+        <a .sort-link #so-count-down href=@?{(route, [("sort", "count-down")])}>count#
+          <span .arr>&#9660;
+        |
+        <a .sort-link #so-year-up href=@?{(route, [("sort", "year-up")])}>year
+          <span .arr>&#9660;
+    |]
+    sortBarCSS
+    toWidget [cassius|
+      #so-year-up
+        font-weight: bold
     |]
 
 -- | CSS that applies to all sort bars.
@@ -137,13 +160,11 @@ sortBarCSS = toWidget
         line-height: 1.1em
         margin-bottom: 4px
 
-      .sort-link
-        color: #069
-
       a.sort-link:hover
         text-decoration: none
 
-
+      .arr
+        font-size: 0.7em
     |]
 
 resourceListWidget :: [Entity Resource] -> Widget
@@ -161,23 +182,3 @@ resourceListWidget resources = do
                 <*> (S.fromList <$> fetchGrokkedResourceIdsInDB  resource_ids uid)
 
     $(widgetFile "resource-list")
-
-typeListWidget :: Map ResourceType Int -> Maybe (Map ResourceType Int) -> Widget
-typeListWidget =
-    fieldListWidget
-      TypeR
-      (String "/type/")
-      shortDescResourceTypePlural
-      (zip res_types res_types)
-  where
-    res_types = sortBy (compare `on` shortDescResourceTypePlural) [minBound..maxBound]
-
-fieldListWidget :: Ord key
-                => (Text -> Route App)  -- makes a full route to /tag/#Text, /author/#Text, or /type/#Text
-                -> Value                -- "/tag/", "/author/", "/type/" for AJAX - so don't change the route!
-                -> (val -> Text)        -- gets the text to display in each row (and also construct the route with)
-                -> [(key, val)]         -- key/val assoc list
-                -> Map key Int          -- total counts map
-                -> Maybe (Map key Int)  -- grokked counts map (Nothing if not logged in)
-                -> Widget
-fieldListWidget route path_piece text_func fields total_counts mgrokked_counts = $(widgetFile "browse-list")
