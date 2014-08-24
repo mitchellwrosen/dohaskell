@@ -1,5 +1,7 @@
 module Handler.Utils
     ( SortBy(..)
+    , addGetParam
+    , getCurrentRouteWithGetParams
     , denyPermissionIfDifferentUser
     , denyPermissionIfDoesntHaveAuthorityOver
     , denyPermissionIfNotAdmin
@@ -9,9 +11,11 @@ module Handler.Utils
 import Import
 
 import           Model.Browse
-import           Model.User (isAdministratorDB, userHasAuthorityOverDB)
+import           Model.User   (isAdministratorDB, userHasAuthorityOverDB)
 
-import qualified Data.Text  as T
+import           Data.Maybe   (fromJust)
+import qualified Data.Map     as M
+import qualified Data.Text    as T
 import           Data.Time
 
 denyPermissionIfDifferentUser :: UserId -> Handler ()
@@ -67,3 +71,14 @@ prettyAgo t = do
     secsPerWeek  = 604800   -- 60*60*24*7
     secsPerMonth = 2592000  -- 60*60*24*30
     secsPerYear  = 31536000 -- 60*60*24*365
+
+-- | Get the current route with the current GET params.
+-- Unsafe if getCurrentRoute would return Nothing.
+getCurrentRouteWithGetParams :: Handler (Route App, [(Text, Text)])
+getCurrentRouteWithGetParams = (,)
+    <$> (fromJust <$> getCurrentRoute)
+    <*> (reqGetParams <$> getRequest)
+
+-- | Add a new GET param to a list of GET params.
+addGetParam :: (Text, Text) -> [(Text, Text)] -> [(Text, Text)]
+addGetParam (k,v) = M.toList . M.insert k v . M.fromList

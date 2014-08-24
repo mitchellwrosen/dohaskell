@@ -7,7 +7,7 @@
 
 .year-range
   color: gray
-  font-size: 0.9em
+  font-size: 0.8em
   font-style: italic
 
 .expand

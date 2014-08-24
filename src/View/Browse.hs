@@ -3,6 +3,7 @@ module View.Browse
     , browseBarWidget
     , resourceListWidget
     , sortBarWidget
+    , sortResBarWidget
     ) where
 
 import Import
@@ -12,12 +13,9 @@ import Model.Browse
 import Model.Resource
 import Model.User
 
-import           Data.Aeson.Types       (Value(..))
-import           Data.Function          (on)
-import           Data.List              (sortBy)
-import qualified Data.Map               as M
-import qualified Data.Set               as S
-import qualified Data.Text              as T
+import qualified Data.Map  as M
+import qualified Data.Set  as S
+import qualified Data.Text as T
 
 boldIfEq :: Eq a => a -> a -> Text
 boldIfEq x y | x == y = "bold"
@@ -26,28 +24,17 @@ boldIfEq _ _          = "normal"
 browseBarWidget :: BrowseByLink -> Widget
 browseBarWidget browse_by_link = do
     [whamlet|
-      <div .browse-bar>browse by: #
-        <a .browse-link #br-auth href=@{BrowseAuthorsR}>author
+      <div .bar>browse by: #
+        <a .bar-link #br-auth href=@{BrowseAuthorsR}>author
         |
-        <a .browse-link #br-tag href=@{BrowseTagsR}>tag
+        <a .bar-link #br-tag href=@{BrowseTagsR}>tag
         |
-        <a .browse-link #br-type href=@{BrowseTypesR}>type
+        <a .bar-link #br-type href=@{BrowseTypesR}>type
         |
-        <a .browse-link #br-res href=@{BrowseResourcesR}>list all
+        <a .bar-link #br-res href=@{BrowseResourcesR}>list all
     |]
+    topBarCSS
     toWidget [cassius|
-      .browse-bar
-        font-size: 1.1em
-        font-variant: small-caps
-        height: 1.1em
-        line-height: 1.1em
-
-      .browse-link
-        color: #069
-
-      a.browse-link:hover
-        text-decoration: none
-
       #br-auth
         font-weight: #{boldIfEq browse_by_link BrowseByAuthorLink}
 
@@ -63,108 +50,164 @@ browseBarWidget browse_by_link = do
 
 sortBarWidget :: Text -> SortBy -> Widget
 sortBarWidget text SortByAZ = do
-    Just route <- handlerToWidget getCurrentRoute
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
     [whamlet|
-      <div .sort-bar>sort #{text} by: #
-        <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
+      <div .bar>sort #{text} by: #
+        <a .bar-link #so-az href=@?{(route, addGetParam ("sort", T.pack (show SortByAZ)) params)}>a-z
         |
-        <a .sort-link #so-count-down href=@?{(route, [("sort", "count-down")])}>count
+        <a .bar-link #so-count-down href=@?{(route, addGetParam ("sort", T.pack (show SortByCountDown)) params)}>count#
           <span .arr>&#9660;
         |
-        <a .sort-link #so-year-down href=@?{(route, [("sort", "year-down")])}>year
+        <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
     |]
-    sortBarCSS
+    topBarCSS
     toWidget [cassius|
       #so-az
         font-weight: bold
     |]
 sortBarWidget text SortByCountUp = do
-    Just route <- handlerToWidget getCurrentRoute
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
     [whamlet|
-      <div .sort-bar>sort #{text} by: #
-        <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
+      <div .bar>sort #{text} by: #
+        <a .bar-link #so-az href=@?{(route, addGetParam ("sort", T.pack (show SortByAZ)) params)}>a-z
         |
-        <a .sort-link #so-count-down href=@?{(route, [("sort", "count-down")])}>count#
+        <a .bar-link #so-count-down href=@?{(route, addGetParam ("sort", T.pack (show SortByCountDown)) params)}>count#
           <span .arr>&#9650;
         |
-        <a .sort-link #so-year-down href=@?{(route, [("sort", "year-down")])}>year
+        <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
     |]
-    sortBarCSS
+    topBarCSS
     toWidget [cassius|
       #so-count-down
         font-weight: bold
     |]
 sortBarWidget text SortByCountDown = do
-    Just route <- handlerToWidget getCurrentRoute
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
     [whamlet|
-      <div .sort-bar>sort #{text} by: #
-        <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
+      <div .bar>sort #{text} by: #
+        <a .bar-link #so-az href=@?{(route, addGetParam ("sort", T.pack (show SortByAZ)) params)}>a-z
         |
-        <a .sort-link #so-count-up href=@?{(route, [("sort", "count-up")])}>count#
+        <a .bar-link #so-count-up href=@?{(route, addGetParam ("sort", T.pack (show SortByCountUp)) params)}>count#
           <span .arr>&#9660;
         |
-        <a .sort-link #so-year-down href=@?{(route, [("sort", "year-down")])}>year
+        <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
     |]
-    sortBarCSS
+    topBarCSS
     toWidget [cassius|
       #so-count-up
         font-weight: bold
     |]
 sortBarWidget text SortByYearUp = do
-    Just route <- handlerToWidget getCurrentRoute
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
     [whamlet|
-      <div .sort-bar>sort #{text} by: #
-        <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
+      <div .bar>sort #{text} by: #
+        <a .bar-link #so-az href=@?{(route, addGetParam ("sort", T.pack (show SortByAZ)) params)}>a-z
         |
-        <a .sort-link #so-count-down href=@?{(route, [("sort", "count-down")])}>count#
+        <a .bar-link #so-count-down href=@?{(route, addGetParam ("sort", T.pack (show SortByCountDown)) params)}>count#
           <span .arr>&#9660;
         |
-        <a .sort-link #so-year-down href=@?{(route, [("sort", "year-down")])}>year
+        <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9650;
     |]
-    sortBarCSS
+    topBarCSS
     toWidget [cassius|
       #so-year-down
         font-weight: bold
     |]
 sortBarWidget text SortByYearDown = do
-    Just route <- handlerToWidget getCurrentRoute
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
     [whamlet|
-      <div .sort-bar>sort #{text} by: #
-        <a .sort-link #so-az href=@?{(route, [("sort", "a-z")])}>a-z
+      <div .bar>sort #{text} by: #
+        <a .bar-link #so-az href=@?{(route, addGetParam ("sort", T.pack (show SortByAZ)) params)}>a-z
         |
-        <a .sort-link #so-count-down href=@?{(route, [("sort", "count-down")])}>count#
+        <a .bar-link #so-count-down href=@?{(route, addGetParam ("sort", T.pack (show SortByCountDown)) params)}>count#
           <span .arr>&#9660;
         |
-        <a .sort-link #so-year-up href=@?{(route, [("sort", "year-up")])}>year
+        <a .bar-link #so-year-up href=@?{(route, addGetParam ("sort", T.pack (show SortByYearUp)) params)}>year#
           <span .arr>&#9660;
     |]
-    sortBarCSS
+    topBarCSS
     toWidget [cassius|
       #so-year-up
         font-weight: bold
     |]
 
--- | CSS that applies to all sort bars.
-sortBarCSS :: Widget
-sortBarCSS = toWidget
+sortResBarWidget :: SortBy -> Widget
+sortResBarWidget SortByYearUp = do
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
+    [whamlet|
+      <div .bar .sort-res-bar>sort resources by: #
+        <a .bar-link #so-res-az href=@?{(route, addGetParam ("sort-res", T.pack (show SortByAZ)) params)}>a-z
+        |
+        <a .bar-link #so-res-year-down href=@?{(route, addGetParam ("sort-res", T.pack (show SortByYearDown)) params)}>year#
+          <span .arr>&#9650;
+    |]
+    sortResBarCSS
+    toWidget [cassius|
+      #so-res-year-down
+        font-weight: bold
+    |]
+sortResBarWidget SortByYearDown = do
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
+    [whamlet|
+      <div .bar .sort-res-bar>sort resources by: #
+        <a .bar-link #so-res-az href=@?{(route, addGetParam ("sort-res", T.pack (show SortByAZ)) params)}>a-z
+        |
+        <a .bar-link #so-res-year-up href=@?{(route, addGetParam ("sort-res", T.pack (show SortByYearUp)) params)}>year#
+          <span .arr>&#9660;
+    |]
+    sortResBarCSS
+    toWidget [cassius|
+      #so-res-year-up
+        font-weight: bold
+    |]
+sortResBarWidget _ = do
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
+    [whamlet|
+      <div .bar .sort-res-bar>sort resources by: #
+        <a .bar-link #so-res-az href=@?{(route, addGetParam ("sort-res", T.pack (show SortByAZ)) params)}>a-z
+        |
+        <a .bar-link #so-res-year-down href=@?{(route, addGetParam ("sort-res", T.pack (show SortByYearDown)) params)}>year#
+          <span .arr>&#9660;
+    |]
+    sortResBarCSS
+    toWidget [cassius|
+      #so-res-az
+        font-weight: bold
+    |]
+
+-- | CSS that applies to browse/sort/sort resources bars.
+topBarCSS :: Widget
+topBarCSS = toWidget
     [cassius|
-      .sort-bar
-        border-bottom: 1px solid black
+      .bar
         font-size: 1.1em
         font-variant: small-caps
         height: 1.1em
         line-height: 1.1em
-        margin-bottom: 4px
 
-      a.sort-link:hover
+      .bar-link
+        color: #069
+
+      a.bar-link:hover
         text-decoration: none
 
       .arr
         font-size: 0.7em
+    |]
+
+
+-- | CSS that applies to all sort resource bars (topBarCSS + bottom margin + bottom border)
+sortResBarCSS :: Widget
+sortResBarCSS = do
+    topBarCSS
+    toWidget [cassius|
+      .sort-res-bar
+        border-bottom: 1px solid black
+        margin-bottom: 4px
     |]
 
 resourceListWidget :: [Entity Resource] -> Widget

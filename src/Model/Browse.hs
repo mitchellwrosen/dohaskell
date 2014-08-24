@@ -19,3 +19,10 @@ data SortBy
     | SortByYearUp    -- earliest year at top
     | SortByYearDown  -- latest year at top
     deriving Eq
+
+instance Show SortBy where
+    show SortByAZ        = "a-z"
+    show SortByCountUp   = "count-up"
+    show SortByCountDown = "count-down"
+    show SortByYearUp    = "year-up"
+    show SortByYearDown  = "year-down"
