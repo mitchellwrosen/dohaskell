@@ -161,11 +161,11 @@ browseTagsHandler title = do
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
     let order_func = case sort_by of
-                         SortByAZ        -> orderAlphabeticIgnoreCase (tagTag . entityVal)
-                         SortByCountUp   -> orderCountUp (tagTag . entityVal) entityKey total_counts
-                         SortByCountDown -> orderCountDown (tagTag . entityVal) entityKey total_counts
-                         SortByYearUp    -> orderYearUp (tagTag . entityVal) entityKey year_ranges
-                         SortByYearDown  -> orderYearDown (tagTag . entityVal) entityKey year_ranges
+                         SortByAZ        -> orderAlphabeticIgnoreCase (tagName . entityVal)
+                         SortByCountUp   -> orderCountUp   (tagName . entityVal) entityKey total_counts
+                         SortByCountDown -> orderCountDown (tagName . entityVal) entityKey total_counts
+                         SortByYearUp    -> orderYearUp    (tagName . entityVal) entityKey year_ranges
+                         SortByYearDown  -> orderYearDown  (tagName . entityVal) entityKey year_ranges
         tags = sortBy order_func unsorted_tags
 
     defaultLayout $ do

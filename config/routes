@@ -35,18 +35,22 @@
 /r/grokked            GrokkedResourceR        POST
 /r/ungrokked          UngrokkedResourceR      POST
 
-/admin/edits                          AllEditsR             GET
-/e/title/#EditTitleId/accept          EditTitleAcceptR          POST
-/e/title/#EditTitleId/decline         EditTitleDeclineR         POST
-/e/authors/#EditAuthorsId/accept      EditAuthorsAcceptR        POST
-/e/authors/#EditAuthorsId/decline     EditAuthorsDeclineR       POST
-/e/published/#EditPublishedId/accept  EditPublishedAcceptR      POST
-/e/published/#EditPublishedId/decline EditPublishedDeclineR     POST
-/e/type/#EditTypeId/accept            EditTypeAcceptR           POST
-/e/type/#EditTypeId/decline           EditTypeDeclineR          POST
-/e/addtag/#EditAddTagId/accept        EditAddTagAcceptR         POST
-/e/addtag/#EditAddTagId/decline       EditAddTagDeclineR        POST
-/e/remtag/#EditRemoveTagId/accept     EditRemoveTagAcceptR      POST
-/e/remtag/#EditRemoveTagId/decline    EditRemoveTagDeclineR     POST
+/admin/edits                                 AllEditsR                    GET
+/e/title/#EditTitleId/accept                 EditTitleAcceptR                 POST
+/e/title/#EditTitleId/decline                EditTitleDeclineR                POST
+/e/authors/#EditAuthorsId/accept             EditAuthorsAcceptR               POST
+/e/authors/#EditAuthorsId/decline            EditAuthorsDeclineR              POST
+/e/published/#EditPublishedId/accept         EditPublishedAcceptR             POST
+/e/published/#EditPublishedId/decline        EditPublishedDeclineR            POST
+/e/type/#EditTypeId/accept                   EditTypeAcceptR                  POST
+/e/type/#EditTypeId/decline                  EditTypeDeclineR                 POST
+/e/addtag/#EditAddTagId/accept               EditAddTagAcceptR                POST
+/e/addtag/#EditAddTagId/decline              EditAddTagDeclineR               POST
+/e/remtag/#EditRemoveTagId/accept            EditRemoveTagAcceptR             POST
+/e/remtag/#EditRemoveTagId/decline           EditRemoveTagDeclineR            POST
+/e/addcol/#EditAddCollectionId/accept        EditAddCollectionAcceptR         POST
+/e/addcol/#EditAddCollectionId/decline       EditAddCollectionDeclineR        POST
+/e/remcol/#EditRemoveCollectionId/accept     EditRemoveCollectionAcceptR      POST
+/e/remcol/#EditRemoveCollectionId/decline    EditRemoveCollectionDeclineR     POST
 
 /api/r/exists ApiResourceExists POST

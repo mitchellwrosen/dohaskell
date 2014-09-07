@@ -44,6 +44,24 @@ postEditRemoveTagAcceptR eid = editRes editRemoveTagResId sqlCode eid
                     ResourceTagTagId
                     tagId
 
+-- TODO: Share code with add/remove tag, as above.
+postEditAddCollectionAcceptR :: EditAddCollectionId -> Handler Html
+postEditAddCollectionAcceptR eid = editRes editAddCollectionResId sqlCode eid
+  where
+    sqlCode (EditAddCollection resId text) = insertBy' (Collection text) >>= void . insertUnique . ResCollection resId
+
+postEditRemoveCollectionAcceptR :: EditRemoveCollectionId -> Handler Html
+postEditRemoveCollectionAcceptR eid = editRes editRemoveCollectionResId sqlCode eid
+  where
+    sqlCode (EditRemoveCollection resId text) = do
+        getBy (UniqueCollection text) >>= \case
+            Nothing -> return ()
+            Just (Entity colId _) ->
+                deleteOneToMany
+                    (UniqueResCollection resId colId)
+                    ResCollectionColId
+                    colId
+
 -- Delete one of many entities, and delete the entity it references by its
 -- id if it happened to be the only one in the one-to-many relation.
 deleteOneToMany uniqueEntity idField idVal = do
@@ -57,19 +75,23 @@ postEditPublishedAcceptR eid = editRes editPublishedResId sqlCode eid
   where
     sqlCode (EditPublished resId published) = updateResField resId ResourcePublished published
 
-postEditTitleDeclineR     :: EditTitleId     -> Handler Html
-postEditTypeDeclineR      :: EditTypeId      -> Handler Html
-postEditAuthorsDeclineR   :: EditAuthorsId   -> Handler Html
-postEditAddTagDeclineR    :: EditAddTagId    -> Handler Html
-postEditRemoveTagDeclineR :: EditRemoveTagId -> Handler Html
-postEditPublishedDeclineR :: EditPublishedId -> Handler Html
+postEditAddCollectionDeclineR    :: EditAddCollectionId    -> Handler Html
+postEditAddTagDeclineR           :: EditAddTagId           -> Handler Html
+postEditAuthorsDeclineR          :: EditAuthorsId          -> Handler Html
+postEditPublishedDeclineR        :: EditPublishedId        -> Handler Html
+postEditRemoveTagDeclineR        :: EditRemoveTagId        -> Handler Html
+postEditRemoveCollectionDeclineR :: EditRemoveCollectionId -> Handler Html
+postEditTitleDeclineR            :: EditTitleId            -> Handler Html
+postEditTypeDeclineR             :: EditTypeId             -> Handler Html
 
-postEditTypeDeclineR      = declineEditRes editTypeResId
-postEditTitleDeclineR     = declineEditRes editTitleResId
-postEditAuthorsDeclineR   = declineEditRes editAuthorsResId
-postEditAddTagDeclineR    = declineEditRes editAddTagResId
-postEditRemoveTagDeclineR = declineEditRes editRemoveTagResId
-postEditPublishedDeclineR = declineEditRes editPublishedResId
+postEditAddCollectionDeclineR    = declineEditRes editAddCollectionResId
+postEditAddTagDeclineR           = declineEditRes editAddTagResId
+postEditAuthorsDeclineR          = declineEditRes editAuthorsResId
+postEditPublishedDeclineR        = declineEditRes editPublishedResId
+postEditRemoveCollectionDeclineR = declineEditRes editRemoveCollectionResId
+postEditRemoveTagDeclineR        = declineEditRes editRemoveTagResId
+postEditTitleDeclineR            = declineEditRes editTitleResId
+postEditTypeDeclineR             = declineEditRes editTypeResId
 
 declineEditRes :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend)
                => (val -> ResourceId)

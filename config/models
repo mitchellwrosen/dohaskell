@@ -31,15 +31,26 @@ Resource
     deriving Eq Ord
 
 Tag
-    tag Text
-    UniqueTag tag
+    name Text
+    UniqueTag name
     deriving Eq Ord
 
 -- A Resource can have one or more Tags.
+-- TODO: rename ResTag
 ResourceTag
     resId ResourceId
     tagId TagId
     UniqueResourceTag resId tagId
+
+Collection
+    name Text
+    UniqueCollection name
+
+-- A Resource can belong to zero or more Collections.
+ResCollection
+    resId ResourceId
+    colId CollectionId
+    UniqueResCollection resId colId
 
 Author
     name Text
@@ -84,6 +95,16 @@ EditRemoveTag
     resId ResourceId
     text  Text
     UniqueEditRemoveTag resId text
+
+EditAddCollection
+    resId ResourceId
+    name  Text
+    UniqueEditAddCollection resId name
+
+EditRemoveCollection
+    resId ResourceId
+    name  Text
+    UniqueEditRemoveCollection resId name
 
 -- An EditAuthors is essentially a new list of authors, to be shown to the resource
 -- owner as one big blob (he/she will have to figure out what's changed).

@@ -56,3 +56,19 @@ $else
               <form method=post>
                 <input type=submit formaction=@{EditRemoveTagAcceptR edit_id} value=Accept>
                 <input type=submit formaction=@{EditRemoveTagDeclineR edit_id} value=Decline>
+
+        $forall Entity edit_id edit <- maybe [] id (M.lookup res editAddCollections)
+          <div .edit>
+            <div .edit-body>
+              Add collection: #{editAddCollectionName edit}
+              <form method=post>
+                <input type=submit formaction=@{EditAddCollectionAcceptR edit_id} value=Accept>
+                <input type=submit formaction=@{EditAddCollectionDeclineR edit_id} value=Decline>
+
+        $forall Entity edit_id edit <- maybe [] id (M.lookup res editRemoveCollections)
+          <div .edit>
+            <div .edit-body>
+              Remove collection: #{editRemoveCollectionName edit}
+              <form method=post>
+                <input type=submit formaction=@{EditRemoveCollectionAcceptR edit_id} value=Accept>
+                <input type=submit formaction=@{EditRemoveCollectionDeclineR edit_id} value=Decline>

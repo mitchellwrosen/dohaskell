@@ -4,11 +4,18 @@
   <div .res-published-type-authors>
     $maybe published <- resourcePublished res
       <span .res-published>#{show published}
+
     <span .res-type>#{shortDescResourceType $ resourceType res}
+
     $if not (null authors)
       <span .res-authors-by> by
       <span .res-authors> #{T.intercalate ", " $ authors}
+
   <div .res-tags>
-    <span .res-tag>#{T.intercalate ", " $ tags}
+    <span .res-tag>#{T.intercalate ", " tags}
+
+  <div .res-colls>
+    <span .res-coll>#{T.intercalate "," colls}
+
   <div .res-user>Posted #{posted} by #
     <a href=@{UserR $ resourceUserId res}>#{userDisplayName poster}

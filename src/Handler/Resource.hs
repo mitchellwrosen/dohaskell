@@ -14,46 +14,51 @@ import           Database.Persist.Sql
 
 getResourceR :: ResourceId -> Handler Html
 getResourceR res_id = do
-    (res, tags, authors) <- runDB $ (,,)
+    (res@Resource{..}, authors, tags, colls) <- runDB $ (,,,)
         <$> get404 res_id
-        <*> fetchResourceTagsDB res_id
-        <*> (map authorName <$> fetchResourceAuthorsDB res_id)
+        <*> (map authorName     <$> fetchResourceAuthorsDB res_id)
+        <*> (map tagName        <$> fetchResourceTagsDB res_id)
+        <*> (map collectionName <$> fetchResourceCollectionsDB res_id)
 
     let info_widget = resourceInfoWidget (Entity res_id res)
         edit_widget =
           editResourceFormWidget
             res_id
-            (Just $ resourceTitle res)
-            (Just $ authors)
-            (Just $ resourcePublished res)
-            (Just $ resourceType res)
-            (Just $ tags)
+            (Just resourceTitle)
+            (Just authors)
+            (Just resourcePublished)
+            (Just resourceType)
+            (Just tags)
+            (Just colls)
 
     defaultLayout $ do
-        setTitle . toHtml $ "dohaskell | " <> resourceTitle res
+        setTitle . toHtml $ "dohaskell | " <> resourceTitle
         $(widgetFile "resource")
 
 getEditResourceR :: ResourceId -> Handler Html
 getEditResourceR res_id = do
-    (res, tags, authors) <- runDB $ (,,)
+    (Resource{..}, authors, tags, colls) <- runDB $ (,,,)
         <$> get404 res_id
-        <*> fetchResourceTagsDB res_id
-        <*> (map authorName <$> fetchResourceAuthorsDB res_id)
+        <*> (map authorName     <$> fetchResourceAuthorsDB res_id)
+        <*> (map tagName        <$> fetchResourceTagsDB res_id)
+        <*> (map collectionName <$> fetchResourceCollectionsDB res_id)
+
     defaultLayout $
         editResourceFormWidget
           res_id
-          (Just $ resourceTitle res)
-          (Just $ authors)
-          (Just $ resourcePublished res)
-          (Just $ resourceType res)
-          (Just $ tags)
+          (Just resourceTitle)
+          (Just authors)
+          (Just resourcePublished)
+          (Just resourceType)
+          (Just tags)
+          (Just colls)
 
 postEditResourceR :: ResourceId -> Handler Html
 postEditResourceR res_id = do
-    res <- runDB $ get404 res_id
-    ((result, _), _) <- runFormPost (editResourceForm Nothing Nothing Nothing Nothing Nothing)
+    res <- runDB (get404 res_id)
+    ((result, _), _) <- runFormPost (editResourceForm Nothing Nothing Nothing Nothing Nothing Nothing)
     case result of
-        FormSuccess (new_title, new_authors, new_published, new_type, new_tags) -> do
+        FormSuccess (new_title, new_authors, new_published, new_type, new_tags, new_colls) -> do
             ok <- thisUserHasAuthorityOverDB (resourceUserId res)
             if ok
                 then do
@@ -64,6 +69,7 @@ postEditResourceR res_id = do
                               new_published
                               new_type
                               (map Tag $ new_tags)
+                              (map Collection $ new_colls)
                     setMessage "Resource updated."
                     redirect $ ResourceR res_id
                 -- An authenticated, unprivileged user is the same as an
@@ -77,45 +83,58 @@ postEditResourceR res_id = do
                 pendingEditField resourcePublished new_published EditPublished
                 pendingEditField resourceType      new_type      EditType
 
-                (old_authors, old_tags) <- runDB $ (,)
-                    <$> (map authorName <$> fetchResourceAuthorsDB res_id)
-                    <*> fetchResourceTagsDB res_id
+                (old_authors, old_tags, old_colls) <- runDB $ (,,)
+                    <$> (map authorName     <$> fetchResourceAuthorsDB res_id)
+                    <*> (map tagName        <$> fetchResourceTagsDB res_id)
+                    <*> (map collectionName <$> fetchResourceCollectionsDB res_id)
 
-                -- Authors are a little different than tags, because order matters. So,
-                -- we don't duplicate the fine-grained tag edits (individual add/remove),
-                -- but rather, if *anything* about the authors changed, just make an edit
-                -- containing all of them.
+                -- Authors are a little different than tags/collections, because
+                -- order matters. So, -- we don't duplicate the fine-grained tag
+                -- edits (individual add/remove), but rather, if *anything*
+                -- about the authors changed, just make an edit containing all
+                -- of them.
                 when (old_authors /= new_authors) $
-                    void $ runDB $ insertUnique (EditAuthors res_id new_authors)
+                    void $ runDB (insertUnique (EditAuthors res_id new_authors))
 
-                let new_tags_set = S.fromList new_tags
-                    old_tags_set = S.fromList old_tags
-                insertEditTag new_tags_set old_tags_set EditAddTag    -- find any NEW not in OLD: pending ADD.
-                insertEditTag old_tags_set new_tags_set EditRemoveTag -- find any OLD not in NEW: pending REMOVE.
+                pendingEditRelation (S.fromList new_tags)  (S.fromList old_tags)  EditAddTag        EditRemoveTag
+                pendingEditRelation (S.fromList new_colls) (S.fromList old_colls) EditAddCollection EditRemoveCollection
 
                 setMessage "Your edit has been submitted for approval. Thanks!"
                 redirect $ ResourceR res_id
               where
                 pendingEditField :: (Eq a, PersistEntity val, PersistEntityBackend val ~ SqlBackend)
-                    => a                        -- Old field value
-                    -> a                        -- New field value
-                    -> (ResourceId -> a -> val) -- PersistEntity constructor
-                    -> Handler ()
+                                 => a                        -- Old field value
+                                 -> a                        -- New field value
+                                 -> (ResourceId -> a -> val) -- PersistEntity constructor
+                                 -> Handler ()
                 pendingEditField old_value new_value entityConstructor =
                     when (old_value /= new_value) $
                         void . runDB . insertUnique $ entityConstructor res_id new_value
 
+                pendingEditRelation :: (PersistEntity a, PersistEntityBackend a ~ SqlBackend,
+                                        PersistEntity b, PersistEntityBackend b ~ SqlBackend,
+                                        Ord field)
+                                    => Set field
+                                    -> Set field
+                                    -> (ResourceId -> field -> a)
+                                    -> (ResourceId -> field -> b)
+                                    -> Handler ()
+                pendingEditRelation new_fields old_fields edit_add edit_remove = do
+                    pendingEditRelation' new_fields old_fields edit_add    -- find any NEW not in OLD: pending ADD.
+                    pendingEditRelation' old_fields new_fields edit_remove -- find any OLD not in NEW: pending REMOVE.
+
                 -- If we find any needles NOT in the haystack, insert the needle into the database
                 -- with the supplied constructor.
-                insertEditTag :: (PersistEntity val, PersistEntityBackend val ~ SqlBackend)
-                               => Set Text
-                               -> Set Text
-                               -> (ResourceId -> Text -> val)
-                               -> Handler ()
-                insertEditTag needles haystack entityConstructor =
-                    mapM_ (\needle ->
+                pendingEditRelation' :: (Ord field, PersistEntity val, PersistEntityBackend val ~ SqlBackend)
+                                     => Set field
+                                     -> Set field
+                                     -> (ResourceId -> field -> val)
+                                     -> Handler ()
+                pendingEditRelation' needles haystack edit_constructor =
+                    forM_ needles $ \needle ->
                         unless (S.member needle haystack) $
-                            (void . runDB . insertUnique $ entityConstructor res_id needle)) needles
+                            void . runDB . insertUnique $ edit_constructor res_id needle
+
         FormFailure errs -> do
             setMessage . toHtml $ "Form error: " <> intercalate ", " errs
             redirect $ ResourceR res_id

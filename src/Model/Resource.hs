@@ -5,6 +5,7 @@ module Model.Resource
     , fetchAllResourcesDB
     , fetchResourceAuthorsDB
     , fetchResourceAuthorsInDB
+    , fetchResourceCollectionsDB
     , fetchResourcesWithAuthorDB
     , fetchResourcesWithTagDB
     , fetchResourcesWithTypeDB
@@ -100,14 +101,23 @@ fetchResourcesWithTypeDB res_type =
     where_ (r^.ResourceType ==. val res_type)
     return r
 
-fetchResourceTagsDB :: ResourceId -> YesodDB App [Text]
-fetchResourceTagsDB res_id = fmap (map (tagTag . entityVal)) $
+fetchResourceTagsDB :: ResourceId -> YesodDB App [Tag]
+fetchResourceTagsDB res_id = fmap (map entityVal) $
     select $
     from $ \(t `InnerJoin` rt) -> do
     on (t^.TagId ==. rt^.ResourceTagTagId)
     where_ (rt^.ResourceTagResId ==. val res_id)
-    orderBy [asc (t^.TagTag)]
+    orderBy [asc (t^.TagName)]
     return t
+
+fetchResourceCollectionsDB :: ResourceId -> YesodDB App [Collection]
+fetchResourceCollectionsDB res_id = fmap (map entityVal) $
+    select $
+    from $ \(c `InnerJoin` rc) -> do
+    on (c^.CollectionId ==. rc^.ResCollectionColId)
+    where_ (rc^.ResCollectionResId ==. val res_id)
+    orderBy [asc (c^.CollectionName)]
+    return c
 
 favoriteResourceDB, grokResourceDB :: UserId -> ResourceId -> YesodDB App ()
 favoriteResourceDB = favgrok Favorite
@@ -122,17 +132,19 @@ ungrokResourceDB     user_id = deleteBy . UniqueGrokked  user_id
 
 -- | Update a resource.
 updateResourceDB
-        :: ResourceId     -- ^ ID
+        :: ResourceId
         -> Text           -- ^ Title
-        -> [Author]       -- ^ Authors
+        -> [Author]
         -> Maybe Int      -- ^ Year published
-        -> ResourceType   -- ^ Type
-        -> [Tag]          -- ^ Tags
+        -> ResourceType
+        -> [Tag]
+        -> [Collection]
         -> YesodDB App ()
-updateResourceDB res_id title authors published typ tags = do
+updateResourceDB res_id title authors published typ tags colls = do
     updateTitlePublishedType
-    updateTags
     updateResourceAuthorsDB res_id authors
+    updateTags
+    updateCollections
   where
     updateTitlePublishedType =
         update $ \r -> do
@@ -142,28 +154,49 @@ updateResourceDB res_id title authors published typ tags = do
               ]
         where_ (r^.ResourceId ==. val res_id)
 
-    updateTags = do
-        deleteResourceTags
-        insertTags >>= insertResourceTags
-        deleteUnusedTags
-      where
-        deleteResourceTags =
-            delete $
-            from $ \rt ->
-            where_ (rt^.ResourceTagResId ==. val res_id)
+    updateTags        = updateEntitiesAndRelations TagId        ResourceTag   ResourceTagResId   ResourceTagTagId   tags
+    updateCollections = updateEntitiesAndRelations CollectionId ResCollection ResCollectionResId ResCollectionColId colls
 
-        insertTags :: YesodDB App [TagId]
-        insertTags = mapM (fmap (either entityKey id) . insertBy) tags
+    updateEntitiesAndRelations :: (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend,
+                                   PersistEntity relation, PersistEntityBackend relation ~ SqlBackend)
+                               => EntityField entity (Key entity)
+                               -> (ResourceId -> Key entity -> relation)
+                               -> EntityField relation ResourceId
+                               -> EntityField relation (Key entity)
+                               -> [entity]
+                               -> YesodDB App ()
+    updateEntitiesAndRelations id_field relation relation_res_field relation_id_field vals = do
+        deleteWithFkeyOnResource relation_res_field
+        insertEntitiesAndRelations relation vals
+        deleteUnusedEntities id_field relation_id_field
 
-        insertResourceTags :: [TagId] -> YesodDB App ()
-        insertResourceTags = void . insertMany . map (ResourceTag res_id)
+    deleteWithFkeyOnResource :: (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend)
+                             => EntityField entity ResourceId
+                             -> YesodDB App ()
+    deleteWithFkeyOnResource fkey =
+        delete $
+        from $ \table ->
+        where_ (table^.fkey ==. val res_id)
 
-        deleteUnusedTags =
-            delete $
-            from $ \t ->
-            where_ (t^.TagId `notIn` (subList_selectDistinct $
-                                      from $ \rt ->
-                                      return (rt^.ResourceTagTagId)))
+    insertEntitiesAndRelations :: (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend,
+                                   PersistEntity relation, PersistEntityBackend relation ~ SqlBackend)
+                               => (ResourceId -> Key entity -> relation)
+                               -> [entity]
+                               -> YesodDB App ()
+    insertEntitiesAndRelations entity vals =
+        mapM (fmap (either entityKey id) . insertBy) vals >>= void . insertMany . map (entity res_id)
+
+    deleteUnusedEntities :: (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend,
+                             PersistEntity relation, PersistEntityBackend relation ~ SqlBackend)
+                         => EntityField entity (Key entity)
+                         -> EntityField relation (Key entity)
+                         -> YesodDB App ()
+    deleteUnusedEntities id_field relation_id_field =
+        delete $
+        from $ \table ->
+        where_ (table^.id_field `notIn` (subList_selectDistinct $
+                                         from $ \relation_table ->
+                                         return (relation_table^.relation_id_field)))
 
 updateResourceAuthorsDB :: ResourceId -> [Author] -> YesodDB App ()
 updateResourceAuthorsDB res_id authors = do

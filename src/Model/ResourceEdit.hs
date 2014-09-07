@@ -1,13 +1,17 @@
 module Model.ResourceEdit
-    ( fetchAllEditAddTagsDB
+    ( fetchAllEditAddCollectionsDB
+    , fetchAllEditAddTagsDB
     , fetchAllEditAuthorsDB
     , fetchAllEditPublishedDB
+    , fetchAllEditRemoveCollectionsDB
     , fetchAllEditRemoveTagsDB
     , fetchAllEditTitlesDB
     , fetchAllEditTypesDB
+    , fetchEditAddCollectionsDB
     , fetchEditAddTagsDB
     , fetchEditAuthorsDB
     , fetchEditPublishedDB
+    , fetchEditRemoveCollectionsDB
     , fetchEditRemoveTagsDB
     , fetchEditTitlesDB
     , fetchEditTypesDB
@@ -48,44 +52,54 @@ fetchAllEditsDB resIdField = fmap makeEditMap $
 makeEditMap :: Ord k => [(k,a)] -> Map k [a]
 makeEditMap = foldr (\(k,a) -> M.insertWith (++) k [a]) M.empty
 
-fetchEditTitlesDB        :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditTitle])
-fetchEditAuthorsDB       :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditAuthors])
-fetchEditPublishedDB     :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditPublished])
-fetchEditTypesDB         :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditType])
-fetchEditAddTagsDB       :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditAddTag])
-fetchEditRemoveTagsDB    :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditRemoveTag])
+fetchEditAddCollectionsDB    :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditAddCollection])
+fetchEditAddTagsDB           :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditAddTag])
+fetchEditAuthorsDB           :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditAuthors])
+fetchEditPublishedDB         :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditPublished])
+fetchEditRemoveCollectionsDB :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditRemoveCollection])
+fetchEditRemoveTagsDB        :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditRemoveTag])
+fetchEditTitlesDB            :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditTitle])
+fetchEditTypesDB             :: UserId -> YesodDB App (Map (Entity Resource) [Entity EditType])
 
-fetchEditTitlesDB     = fetchEditDB EditTitleResId
-fetchEditAuthorsDB    = fetchEditDB EditAuthorsResId
-fetchEditPublishedDB  = fetchEditDB EditPublishedResId
-fetchEditTypesDB      = fetchEditDB EditTypeResId
-fetchEditAddTagsDB    = fetchEditDB EditAddTagResId
-fetchEditRemoveTagsDB = fetchEditDB EditRemoveTagResId
+fetchEditAddCollectionsDB    = fetchEditDB EditAddCollectionResId
+fetchEditAddTagsDB           = fetchEditDB EditAddTagResId
+fetchEditAuthorsDB           = fetchEditDB EditAuthorsResId
+fetchEditPublishedDB         = fetchEditDB EditPublishedResId
+fetchEditRemoveCollectionsDB = fetchEditDB EditRemoveCollectionResId
+fetchEditRemoveTagsDB        = fetchEditDB EditRemoveTagResId
+fetchEditTitlesDB            = fetchEditDB EditTitleResId
+fetchEditTypesDB             = fetchEditDB EditTypeResId
 
-fetchAllEditTitlesDB     :: YesodDB App (Map (Entity Resource) [Entity EditTitle])
-fetchAllEditAuthorsDB    :: YesodDB App (Map (Entity Resource) [Entity EditAuthors])
-fetchAllEditPublishedDB  :: YesodDB App (Map (Entity Resource) [Entity EditPublished])
-fetchAllEditTypesDB      :: YesodDB App (Map (Entity Resource) [Entity EditType])
-fetchAllEditAddTagsDB    :: YesodDB App (Map (Entity Resource) [Entity EditAddTag])
-fetchAllEditRemoveTagsDB :: YesodDB App (Map (Entity Resource) [Entity EditRemoveTag])
+fetchAllEditAddCollectionsDB    :: YesodDB App (Map (Entity Resource) [Entity EditAddCollection])
+fetchAllEditAddTagsDB           :: YesodDB App (Map (Entity Resource) [Entity EditAddTag])
+fetchAllEditAuthorsDB           :: YesodDB App (Map (Entity Resource) [Entity EditAuthors])
+fetchAllEditPublishedDB         :: YesodDB App (Map (Entity Resource) [Entity EditPublished])
+fetchAllEditRemoveCollectionsDB :: YesodDB App (Map (Entity Resource) [Entity EditRemoveCollection])
+fetchAllEditRemoveTagsDB        :: YesodDB App (Map (Entity Resource) [Entity EditRemoveTag])
+fetchAllEditTitlesDB            :: YesodDB App (Map (Entity Resource) [Entity EditTitle])
+fetchAllEditTypesDB             :: YesodDB App (Map (Entity Resource) [Entity EditType])
 
-fetchAllEditTitlesDB     = fetchAllEditsDB EditTitleResId
-fetchAllEditAuthorsDB    = fetchAllEditsDB EditAuthorsResId
-fetchAllEditPublishedDB  = fetchAllEditsDB EditPublishedResId
-fetchAllEditTypesDB      = fetchAllEditsDB EditTypeResId
-fetchAllEditAddTagsDB    = fetchAllEditsDB EditAddTagResId
-fetchAllEditRemoveTagsDB = fetchAllEditsDB EditRemoveTagResId
+fetchAllEditAddCollectionsDB    = fetchAllEditsDB EditAddCollectionResId
+fetchAllEditAddTagsDB           = fetchAllEditsDB EditAddTagResId
+fetchAllEditAuthorsDB           = fetchAllEditsDB EditAuthorsResId
+fetchAllEditPublishedDB         = fetchAllEditsDB EditPublishedResId
+fetchAllEditRemoveCollectionsDB = fetchAllEditsDB EditRemoveCollectionResId
+fetchAllEditRemoveTagsDB        = fetchAllEditsDB EditRemoveTagResId
+fetchAllEditTitlesDB            = fetchAllEditsDB EditTitleResId
+fetchAllEditTypesDB             = fetchAllEditsDB EditTypeResId
 
 -- TODO: Should probably select count(*) ?
 fetchNumRequestedEditsDB :: UserId -> YesodDB App Int
 fetchNumRequestedEditsDB uid = getSum . mconcat <$>
     sequence
-        [ adjust <$> fetchEditTitlesDB     uid
-        , adjust <$> fetchEditAuthorsDB    uid
-        , adjust <$> fetchEditPublishedDB  uid
-        , adjust <$> fetchEditTypesDB      uid
-        , adjust <$> fetchEditAddTagsDB    uid
-        , adjust <$> fetchEditRemoveTagsDB uid
+        [ adjust <$> fetchEditAddCollectionsDB    uid
+        , adjust <$> fetchEditAddTagsDB           uid
+        , adjust <$> fetchEditAuthorsDB           uid
+        , adjust <$> fetchEditPublishedDB         uid
+        , adjust <$> fetchEditRemoveCollectionsDB uid
+        , adjust <$> fetchEditRemoveTagsDB        uid
+        , adjust <$> fetchEditTitlesDB            uid
+        , adjust <$> fetchEditTypesDB             uid
         ]
   where
     adjust :: Map k [a] -> Sum Int

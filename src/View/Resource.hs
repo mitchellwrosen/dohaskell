@@ -16,30 +16,40 @@ import qualified Data.Text              as T
 import           Data.Time              (UTCTime, getCurrentTime)
 import           Yesod.Form.Bootstrap3  -- (renderBootstrap3)
 
+-- Crappy type synonyms, trying not to clash with models. Unexported.
+type AuthorNameText     = Text
+type CollectionNameText = Text
+type TagNameText        = Text
+type Title              = Text
+type YearPublished      = Int
+
 -- | Form for editing a resource. Notably does not include the URL.
-editResourceForm :: Maybe Text         -- default title
-                 -> Maybe [Text]       -- default authors
-                 -> Maybe (Maybe Int)  -- default published
-                 -> Maybe ResourceType -- default type
-                 -> Maybe [Text]       -- default tags
-                 -> Form (Text, [Text], Maybe Int, ResourceType, [Text])
-editResourceForm title authors published typ tags = renderDivs $ (,,,,)
-    <$> resTitleForm     title
-    <*> resAuthorsForm   authors
-    <*> resPublishedForm published
-    <*> resTypeForm      typ
-    <*> resTagsForm      tags
+editResourceForm :: Maybe Title
+                 -> Maybe [AuthorNameText]
+                 -> Maybe (Maybe YearPublished)
+                 -> Maybe ResourceType
+                 -> Maybe [TagNameText]
+                 -> Maybe [CollectionNameText]
+                 -> Form (Title, [AuthorNameText], Maybe YearPublished, ResourceType, [TagNameText], [CollectionNameText])
+editResourceForm title authors published typ tags colls = renderDivs $ (,,,,,)
+    <$> resTitleForm       title
+    <*> resAuthorsForm     authors
+    <*> resPublishedForm   published
+    <*> resTypeForm        typ
+    <*> resTagsForm        tags
+    <*> resCollectionsForm colls
 
 editResourceFormWidget :: ResourceId
-                       -> Maybe Text         -- default title
-                       -> Maybe [Text]       -- default authors
-                       -> Maybe (Maybe Int)  -- default published
-                       -> Maybe ResourceType -- default type
-                       -> Maybe [Text]       -- default tags
+                       -> Maybe Title
+                       -> Maybe [AuthorNameText]
+                       -> Maybe (Maybe YearPublished)
+                       -> Maybe ResourceType
+                       -> Maybe [TagNameText]
+                       -> Maybe [CollectionNameText]
                        -> Widget
-editResourceFormWidget res_id title authors published typ tags = do
+editResourceFormWidget res_id title authors published typ tags colls = do
     (widget, enctype) <- handlerToWidget . generateFormPost $
-        editResourceForm title authors published typ tags
+        editResourceForm title authors published typ tags colls
 
     [whamlet|
       <form method=post action=@{EditResourceR res_id} enctype=#{enctype}>
@@ -47,61 +57,70 @@ editResourceFormWidget res_id title authors published typ tags = do
         <input type="submit" value="Edit Resource">
     |]
 
--- | A single form to input a Resource, along with its Tags and Authors
--- (which are separate types, hence the giant tuple).
-resourceForm :: UserId -> Form ( Text         -- title
-                               , Text         -- url
-                               , [Text]       -- authors
-                               , Maybe Int    -- year
-                               , ResourceType -- type
-                               , [Text]       -- tags
-                               , UserId       -- poster id
-                               , UTCTime      -- timestamp
+-- | A single form to input a Resource.
+resourceForm :: UserId -> Form ( Title
+                               , Text                -- ^ URL.
+                               , [AuthorNameText]
+                               , Maybe YearPublished
+                               , ResourceType
+                               , [TagNameText]
+                               , [CollectionNameText]
+                               , UserId              -- ^ Poster.
+                               , UTCTime             -- ^ Timestamp.
                                )
-resourceForm uid = renderBootstrap3 BootstrapInlineForm $ (,,,,,,,)
-    <$> resTitleForm     Nothing
-    <*> resUrlForm       Nothing
-    <*> resAuthorsForm   Nothing
-    <*> resPublishedForm Nothing
-    <*> resTypeForm      Nothing
-    <*> resTagsForm      Nothing
+resourceForm uid = renderBootstrap3 BootstrapInlineForm $ (,,,,,,,,)
+    <$> resTitleForm       Nothing
+    <*> resUrlForm         Nothing
+    <*> resAuthorsForm     Nothing
+    <*> resPublishedForm   Nothing
+    <*> resTypeForm        Nothing
+    <*> resTagsForm        Nothing
+    <*> resCollectionsForm Nothing
     <*> pure uid
     <*> lift (liftIO getCurrentTime)
     <*  bootstrapSubmit ("Submit" :: BootstrapSubmit Text)
 
-resTitleForm :: Maybe Text -> AForm Handler Text
+resTitleForm :: Maybe Title -> AForm Handler Title
 resTitleForm = areq textField "Title"
 
 resUrlForm :: Maybe Text -> AForm Handler Text
 resUrlForm = areq urlField ("Url" {fsAttrs = [("placeholder", "http://")]})
 
-resAuthorsForm :: Maybe [Text] -> AForm Handler [Text]
-resAuthorsForm = fmap (fromMaybe []) . aopt authorsField "Author(s) (optional, comma separated)" . fmap Just
+resAuthorsForm :: Maybe [AuthorNameText] -> AForm Handler [AuthorNameText]
+resAuthorsForm = fmap (fromMaybe []) . aopt field "Author(s) (optional, comma separated)" . fmap Just
   where
-    authorsField :: Field Handler [Text]
-    authorsField = mapField nub commaSepTextField
+    field :: Field Handler [AuthorNameText]
+    field = mapField nub commaSepTextField
 
-resPublishedForm :: Maybe (Maybe Int) -> AForm Handler (Maybe Int)
+resPublishedForm :: Maybe (Maybe YearPublished) -> AForm Handler (Maybe YearPublished)
 resPublishedForm = aopt intField "Year (optional)"
 
 resTypeForm :: Maybe ResourceType -> AForm Handler ResourceType
-resTypeForm = areq typeField "Type"
+resTypeForm = areq field "Type"
   where
-    typeField :: Field Handler ResourceType
-    typeField = selectFieldList $ map (descResourceType &&& id) [minBound..maxBound]
+    field :: Field Handler ResourceType
+    field = selectFieldList $ map (descResourceType &&& id) [minBound..maxBound]
 
-resTagsForm :: Maybe [Text] -> AForm Handler [Text]
-resTagsForm = areq tagsField "Tags (comma separated)"
+resTagsForm :: Maybe [TagNameText] -> AForm Handler [TagNameText]
+resTagsForm = areq field "Tags (comma separated)"
   where
-    tagsField :: Field Handler [Text]
-    tagsField = mapField nub commaSepTextField
+    field :: Field Handler [Text]
+    field = mapField nub commaSepTextField
+
+resCollectionsForm :: Maybe [CollectionNameText] -> AForm Handler [CollectionNameText]
+resCollectionsForm = fmap (fromMaybe []) . aopt field "Collection(s) (optional, comma separated)" . fmap Just
+  where
+    field :: Field Handler [Text]
+    field = mapField nub commaSepTextField
 
 -- | Display meta-information about the resource.
 resourceInfoWidget :: Entity Resource -> Widget
 resourceInfoWidget (Entity res_id res) = do
-    (tags, authors, poster) <- handlerToWidget . runDB $ (,,)
-        <$> fetchResourceTagsDB res_id
-        <*> (map authorName <$> fetchResourceAuthorsDB res_id)
-        <*> get404 (resourceUserId res)
+    (poster, authors, tags, colls) <- handlerToWidget . runDB $ (,,,)
+        <$> get404 (resourceUserId res)
+        <*> (map authorName     <$> fetchResourceAuthorsDB res_id)
+        <*> (map tagName        <$> fetchResourceTagsDB res_id)
+        <*> (map collectionName <$> fetchResourceCollectionsDB res_id)
     posted <- prettyAgo (resourcePosted res)
+
     $(widgetFile "resource-info")
