@@ -3,6 +3,7 @@ module Model.User
     , fetchFavoriteResourceIdsDB
     , fetchFavoriteResourceIdsInDB
     , fetchGrokkedCountsByAuthorDB
+    , fetchGrokkedCountsByCollectionDB
     , fetchGrokkedCountsByTagDB
     , fetchGrokkedCountsByTypeDB
     , fetchGrokkedResourcesDB
@@ -76,35 +77,29 @@ fetchGrokkedResourceIdsInDB resourceIds userId = fmap (map unValue) $
         g^.GrokkedResId `in_` valList resourceIds
     return (g^.GrokkedResId)
 
--- | Get the number of Resources this User has grokked, grouped by Author.
-fetchGrokkedCountsByAuthorDB :: UserId -> YesodDB App (Map AuthorId Int)
-fetchGrokkedCountsByAuthorDB user_id = fmap (M.fromList . map fromValue) $
-    select $
-    from $ \(g `InnerJoin` ra) -> do
-    on (g^.GrokkedResId ==. ra^.ResAuthorResId)
-    where_ (g^.GrokkedUserId ==. val user_id)
-    groupBy (ra^.ResAuthorAuthId)
-    return (ra^.ResAuthorAuthId, countRows :: SqlExpr (Value Int))
+-- | Get the number of Resources this User has grokked, grouped by Author/Collection/Tag/Type.
+fetchGrokkedCountsByAuthorDB     :: UserId -> YesodDB App (Map AuthorId Int)
+fetchGrokkedCountsByCollectionDB :: UserId -> YesodDB App (Map CollectionId Int)
+fetchGrokkedCountsByTagDB        :: UserId -> YesodDB App (Map TagId Int)
+fetchGrokkedCountsByTypeDB       :: UserId -> YesodDB App (Map ResourceType Int)
+fetchGrokkedCountsByAuthorDB     = fetchGrokkedCountsByFieldDB ResAuthorResId     ResAuthorAuthId
+fetchGrokkedCountsByCollectionDB = fetchGrokkedCountsByFieldDB ResCollectionResId ResCollectionColId
+fetchGrokkedCountsByTagDB        = fetchGrokkedCountsByFieldDB ResourceTagResId   ResourceTagTagId
+fetchGrokkedCountsByTypeDB       = fetchGrokkedCountsByFieldDB ResourceId         ResourceType
 
--- | Get the number of Resources this User has grokked, grouped by Tag.
-fetchGrokkedCountsByTagDB :: UserId -> YesodDB App (Map TagId Int)
-fetchGrokkedCountsByTagDB user_id = fmap (M.fromList . map fromValue) $
+fetchGrokkedCountsByFieldDB :: (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend,
+                                PersistField key, Ord key)
+                            => EntityField entity ResourceId
+                            -> EntityField entity key
+                            -> UserId
+                            -> YesodDB App (Map key Int)
+fetchGrokkedCountsByFieldDB res_id_field key user_id = fmap (M.fromList . map fromValue) $
     select $
-    from $ \(g `InnerJoin` rt) -> do
-    on (g^.GrokkedResId ==. rt^.ResourceTagResId)
+    from $ \(g `InnerJoin` table) -> do
+    on (g^.GrokkedResId ==. table^.res_id_field)
     where_ (g^.GrokkedUserId ==. val user_id)
-    groupBy (rt^.ResourceTagTagId)
-    return (rt^.ResourceTagTagId, countRows :: SqlExpr (Value Int))
-
--- | Get the number of Resources this User has grokked, grouped by ResourceType.
-fetchGrokkedCountsByTypeDB :: UserId -> YesodDB App (Map ResourceType Int)
-fetchGrokkedCountsByTypeDB user_id = fmap (M.fromList . map fromValue) $
-    select $
-    from $ \(g `InnerJoin` r) -> do
-    on (g^.GrokkedResId ==. r^.ResourceId)
-    where_ (g^.GrokkedUserId ==. val user_id)
-    groupBy (r^.ResourceType)
-    return (r^.ResourceType, countRows :: SqlExpr (Value Int))
+    groupBy (table^.key)
+    return (table^.key, countRows :: SqlExpr (Value Int))
 
 fetchSubmittedResourcesDB :: UserId -> YesodDB App [Entity Resource]
 fetchSubmittedResourcesDB uid =

@@ -1,3 +1,4 @@
+-- TODO: lots of code duplication in this module
 module Handler.Browse where
 
 import Import
@@ -5,21 +6,20 @@ import Import
 import Handler.Utils
 import Model.Author
 import Model.Browse
+import Model.Collection
 import Model.Resource
 import Model.Tag
 import Model.User
 import Model.Utils
 import View.Browse
 
-import           Data.Aeson   (Value)
-import           Data.List    (sortBy)
-import qualified Data.Map     as M
-import           Data.Maybe   (isJust)
-import qualified Data.Text    as T
-import           Text.Blaze   (ToMarkup)
-import           Text.Cassius (cassiusFile)
-import           Text.Julius  (juliusFile)
-import           Text.Hamlet  (hamletFile)
+import           Data.Aeson  (Value)
+import           Data.List   (sortBy)
+import qualified Data.Map    as M
+import           Data.Maybe  (isJust)
+import qualified Data.Text   as T
+import           Text.Blaze  (ToMarkup)
+import           Text.Hamlet (hamletFile)
 
 -- | Look up GET param for sorting, default to alphabetical.
 lookupSortByParam :: Handler SortBy
@@ -74,9 +74,10 @@ vshow = String . T.pack . show
 getHomeR :: Handler Html
 getHomeR = browseTagsHandler "dohaskell: tagged Haskell learning resources"
 
-getAuthorR, getTagR :: Text -> Handler Html
-getAuthorR text = getResources (fetchResourcesWithAuthorDB text) ("dohaskell | by " <> text)
-getTagR    text = getResources (fetchResourcesWithTagDB text)    ("dohaskell | " <> text)
+getAuthorR, getCollectionR, getTagR :: Text -> Handler Html
+getAuthorR     text = getResources (fetchResourcesByAuthorDB text)     ("dohaskell | by " <> text)
+getCollectionR text = getResources (fetchResourcesInCollectionDB text) ("dohaskell | in " <> text)
+getTagR        text = getResources (fetchResourcesWithTagDB text)      ("dohaskell | " <> text)
 
 getTypeR :: Text -> Handler Html
 getTypeR text = case shortReadResourceTypePlural text of
@@ -114,24 +115,56 @@ getBrowseAuthorsR = do
 
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
-    let order_func = case sort_by of
-                         SortByAZ        -> orderAlphabeticIgnoreCase (authorName . entityVal)
-                         SortByCountUp   -> orderCountUp (authorName . entityVal) entityKey total_counts
-                         SortByCountDown -> orderCountDown (authorName . entityVal) entityKey total_counts
-                         SortByYearUp    -> orderYearUp (authorName . entityVal) entityKey year_ranges
-                         SortByYearDown  -> orderYearDown (authorName . entityVal) entityKey year_ranges
-        authors = sortBy order_func unsorted_authors
+    let order_func       = case sort_by of
+                               SortByAZ        -> orderAlphabeticIgnoreCase (authorName . entityVal)
+                               SortByCountUp   -> orderCountUp (authorName . entityVal) entityKey total_counts
+                               SortByCountDown -> orderCountDown (authorName . entityVal) entityKey total_counts
+                               SortByYearUp    -> orderYearUp (authorName . entityVal) entityKey year_ranges
+                               SortByYearDown  -> orderYearDown (authorName . entityVal) entityKey year_ranges
+        entities         = sortBy order_func unsorted_authors
+        get_maps_key     = entityKey
+        get_permalink    = AuthorR . authorName . entityVal
+        show_entity      = authorName . entityVal
+        path_piece       = String "/author/"
+        sort_res_by_text = vshow sort_res_by
 
     defaultLayout $ do
         setTitle "dohaskell | browse authors"
         browseBarWidget BrowseByAuthorLink
         sortBarWidget "authors" sort_by
         sortResBarWidget sort_res_by
-        giveUrlRenderer $(hamletFile "templates/browse-authors.hamlet") >>= toWidgetBody
-        toWidget $(cassiusFile "templates/browse-list.cassius")
-        let path_piece = String "/author/"
-            sort_res_by_text = vshow sort_res_by
-        toWidget $(juliusFile "templates/browse-list.julius")
+        $(widgetFile "browse")
+
+getBrowseCollectionsR :: Handler Html
+getBrowseCollectionsR = do
+    muid <- maybeAuthId
+    (unsorted_collections, year_ranges, total_counts, mgrokked_counts) <- runDB $ (,,,)
+        <$> fetchAllCollectionsDB
+        <*> fetchCollectionYearRangesDB
+        <*> fetchCollectionResourceCountsDB
+        <*> maybe (return Nothing) (fmap Just . fetchGrokkedCountsByCollectionDB) muid
+
+    sort_by     <- lookupSortByParam
+    sort_res_by <- lookupSortResByParam
+    let order_func       = case sort_by of
+                               SortByAZ        -> orderAlphabeticIgnoreCase (collectionName . entityVal)
+                               SortByCountUp   -> orderCountUp   (collectionName . entityVal) entityKey total_counts
+                               SortByCountDown -> orderCountDown (collectionName . entityVal) entityKey total_counts
+                               SortByYearUp    -> orderYearUp    (collectionName . entityVal) entityKey year_ranges
+                               SortByYearDown  -> orderYearDown  (collectionName . entityVal) entityKey year_ranges
+        entities         = sortBy order_func unsorted_collections
+        get_maps_key     = entityKey
+        get_permalink    = CollectionR . collectionName . entityVal
+        show_entity      = collectionName . entityVal
+        path_piece       = String "/collection/"
+        sort_res_by_text = vshow sort_res_by
+
+    defaultLayout $ do
+        setTitle "dohaskell | browse collections"
+        browseBarWidget BrowseByCollectionLink
+        sortBarWidget "collections" sort_by
+        sortResBarWidget sort_res_by
+        $(widgetFile "browse")
 
 getBrowseResourcesR :: Handler Html
 getBrowseResourcesR = do
@@ -160,24 +193,25 @@ browseTagsHandler title = do
 
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
-    let order_func = case sort_by of
-                         SortByAZ        -> orderAlphabeticIgnoreCase (tagName . entityVal)
-                         SortByCountUp   -> orderCountUp   (tagName . entityVal) entityKey total_counts
-                         SortByCountDown -> orderCountDown (tagName . entityVal) entityKey total_counts
-                         SortByYearUp    -> orderYearUp    (tagName . entityVal) entityKey year_ranges
-                         SortByYearDown  -> orderYearDown  (tagName . entityVal) entityKey year_ranges
-        tags = sortBy order_func unsorted_tags
+    let order_func       = case sort_by of
+                               SortByAZ        -> orderAlphabeticIgnoreCase (tagName . entityVal)
+                               SortByCountUp   -> orderCountUp   (tagName . entityVal) entityKey total_counts
+                               SortByCountDown -> orderCountDown (tagName . entityVal) entityKey total_counts
+                               SortByYearUp    -> orderYearUp    (tagName . entityVal) entityKey year_ranges
+                               SortByYearDown  -> orderYearDown  (tagName . entityVal) entityKey year_ranges
+        entities         = sortBy order_func unsorted_tags
+        get_maps_key     = entityKey
+        get_permalink    = TagR . tagName . entityVal
+        show_entity      = tagName . entityVal
+        path_piece       = String "/tag/"
+        sort_res_by_text = vshow sort_res_by
 
     defaultLayout $ do
         setTitle title
         browseBarWidget BrowseByTagLink
         sortBarWidget "tags" sort_by
         sortResBarWidget sort_res_by
-        giveUrlRenderer $(hamletFile "templates/browse-tags.hamlet") >>= toWidgetBody
-        toWidget $(cassiusFile "templates/browse-list.cassius")
-        let path_piece = String "/tag/"
-            sort_res_by_text = vshow sort_res_by
-        toWidget $(juliusFile "templates/browse-list.julius")
+        $(widgetFile "browse")
 
 getBrowseTypesR :: Handler Html
 getBrowseTypesR = do
@@ -189,21 +223,22 @@ getBrowseTypesR = do
 
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
-    let order_func = case sort_by of
-                         SortByAZ        -> orderAlphabeticIgnoreCase shortDescResourceTypePlural
-                         SortByCountUp   -> orderCountUp shortDescResourceTypePlural id total_counts
-                         SortByCountDown -> orderCountDown shortDescResourceTypePlural id total_counts
-                         SortByYearUp    -> orderYearUp shortDescResourceTypePlural id year_ranges
-                         SortByYearDown  -> orderYearDown shortDescResourceTypePlural id year_ranges
-        res_types = sortBy order_func [minBound..maxBound]
+    let order_func       = case sort_by of
+                               SortByAZ        -> orderAlphabeticIgnoreCase shortDescResourceTypePlural
+                               SortByCountUp   -> orderCountUp              shortDescResourceTypePlural id total_counts
+                               SortByCountDown -> orderCountDown            shortDescResourceTypePlural id total_counts
+                               SortByYearUp    -> orderYearUp               shortDescResourceTypePlural id year_ranges
+                               SortByYearDown  -> orderYearDown             shortDescResourceTypePlural id year_ranges
+        entities         = sortBy order_func [minBound..maxBound]
+        get_maps_key     = id
+        get_permalink    = TypeR . shortDescResourceTypePlural
+        show_entity      = shortDescResourceTypePlural
+        path_piece       = String "/type/"
+        sort_res_by_text = vshow sort_res_by
 
     defaultLayout $ do
         setTitle "dohaskell | browse types"
         browseBarWidget BrowseByTypeLink
         sortBarWidget "types" sort_by
         sortResBarWidget sort_res_by
-        giveUrlRenderer $(hamletFile "templates/browse-types.hamlet") >>= toWidgetBody
-        toWidget $(cassiusFile "templates/browse-list.cassius")
-        let path_piece = String "/type/"
-            sort_res_by_text = vshow sort_res_by
-        toWidget $(juliusFile "templates/browse-list.julius")
+        $(widgetFile "browse")

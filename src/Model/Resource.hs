@@ -6,7 +6,10 @@ module Model.Resource
     , fetchResourceAuthorsDB
     , fetchResourceAuthorsInDB
     , fetchResourceCollectionsDB
-    , fetchResourcesWithAuthorDB
+    , fetchResourceFieldCountsDB
+    , fetchResourceFieldYearRangesDB
+    , fetchResourcesByAuthorDB
+    , fetchResourcesInCollectionDB
     , fetchResourcesWithTagDB
     , fetchResourcesWithTypeDB
     , fetchResourceTagsDB
@@ -72,26 +75,30 @@ fetchResourceAuthorsInDB res_ids = fmap makeAuthorMap $
              -> Map ResourceId (DList Author)
         step (Value res_id, Entity _ author) = M.insertWith (<>) res_id (DL.singleton author)
 
-fetchResourcesWithAuthorDB :: Text -> YesodDB App [Entity Resource]
-fetchResourcesWithAuthorDB name = getBy404 (UniqueAuthor name) >>= fetchResourcesWithAuthorIdDB . entityKey
-  where
-    fetchResourcesWithAuthorIdDB :: AuthorId -> YesodDB App [Entity Resource]
-    fetchResourcesWithAuthorIdDB author_id =
-        select $
-        from $ \(r `InnerJoin` ra) -> do
-        on (r^.ResourceId ==. ra^.ResAuthorResId)
-        where_ (ra^.ResAuthorAuthId ==. val author_id)
-        return r
+fetchResourcesByAuthorDB :: Text -> YesodDB App [Entity Resource]
+fetchResourcesByAuthorDB = fetchResourcesWithFieldDB UniqueAuthor ResAuthorResId ResAuthorAuthId
+
+fetchResourcesInCollectionDB :: Text -> YesodDB App [Entity Resource]
+fetchResourcesInCollectionDB = fetchResourcesWithFieldDB UniqueCollection ResCollectionResId ResCollectionColId
 
 fetchResourcesWithTagDB :: Text -> YesodDB App [Entity Resource]
-fetchResourcesWithTagDB tag = getBy404 (UniqueTag tag) >>= fetchResourcesWithTagIdDB . entityKey
-  where
-    fetchResourcesWithTagIdDB :: TagId -> YesodDB App [Entity Resource]
-    fetchResourcesWithTagIdDB tag_id =
+fetchResourcesWithTagDB = fetchResourcesWithFieldDB UniqueTag ResourceTagResId ResourceTagTagId
+
+-- | Abstract fetching all Resources with a particular Text field (Author/Collection/Tag).
+fetchResourcesWithFieldDB :: (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend,
+                              PersistEntity relation, PersistEntityBackend relation ~ SqlBackend)
+                          => (Text -> Unique entity)
+                          -> EntityField relation ResourceId
+                          -> EntityField relation (Key entity)
+                          -> Text
+                          -> YesodDB App [Entity Resource]
+fetchResourcesWithFieldDB unique_entity res_id_field key_field name = getBy (unique_entity name) >>= \case
+    Nothing -> return []
+    Just (Entity key _) ->
         select $
-        from $ \(r `InnerJoin` rt) -> do
-        on (r^.ResourceId ==. rt^.ResourceTagResId)
-        where_ (rt^.ResourceTagTagId ==. val tag_id)
+        from $ \(r `InnerJoin` table) -> do
+        on (r^.ResourceId ==. table^.res_id_field)
+        where_ (table^.key_field ==. val key)
         return r
 
 fetchResourcesWithTypeDB :: ResourceType -> YesodDB App [Entity Resource]
@@ -123,7 +130,8 @@ favoriteResourceDB, grokResourceDB :: UserId -> ResourceId -> YesodDB App ()
 favoriteResourceDB = favgrok Favorite
 grokResourceDB     = favgrok Grokked
 
--- favgrok :: PersistEntity b => (uid -> rid -> UTCTime -> entity) -> uid -> rid -> UTCTime -> entity
+-- favgrok :: (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend)
+--         => (uid -> rid -> UTCTime -> entity) -> uid -> rid -> UTCTime -> entity
 favgrok constructor user_id res_id = liftIO getCurrentTime >>= void . insertUnique . constructor user_id res_id
 
 unfavoriteResourceDB, ungrokResourceDB :: UserId -> ResourceId -> YesodDB App ()
@@ -224,29 +232,46 @@ updateResourceAuthorsDB res_id authors = do
 
 -- | Get a map of ResourceType to the number of Resources with that type.
 fetchResourceTypeCountsDB :: YesodDB App (Map ResourceType Int)
-fetchResourceTypeCountsDB = fmap (M.fromList . map fromValue) $
-    select $
-    from $ \r -> do
-    groupBy (r^.ResourceType)
-    return (r^.ResourceType :: SqlExpr (Value ResourceType), countRows :: SqlExpr (Value Int))
+fetchResourceTypeCountsDB = fetchResourceFieldCountsDB ResourceType
 
--- | Get the year range of all ResourceTypes. If none of the a ResourceType's
--- Resources have any published year, then the ResourceType will not exist in
--- the returned map.
+fetchResourceFieldCountsDB :: forall entity key.
+                              (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend,
+                               PersistField key, Ord key)
+                           => EntityField entity key -> YesodDB App (Map key Int)
+fetchResourceFieldCountsDB key = fmap (M.fromList . map fromValue) sel
+  where
+    sel :: YesodDB App [(Value key, Value Int)]
+    sel = select $
+          from $ \table -> do
+          groupBy (table^.key)
+          return (table^.key, countRows)
+
 fetchResourceTypeYearRangesDB :: YesodDB App (Map ResourceType (Int, Int))
-fetchResourceTypeYearRangesDB = fmap (foldr f mempty) $
+fetchResourceTypeYearRangesDB = fmap (foldr mkYearMap mempty) $
     select $
     from $ \r -> do
     groupBy (r^.ResourceType)
     return (r^.ResourceType, min_ (r^.ResourcePublished), max_ (r^.ResourcePublished))
-  where
-    f :: (Value ResourceType, Value (Maybe (Maybe Int)), Value (Maybe (Maybe Int)))
-      -> Map ResourceType (Int, Int)
-      -> Map ResourceType (Int, Int)
-    f (Value _,        Value (Just Nothing),  Value (Just Nothing))  = id
-    f (Value res_type, Value (Just (Just m)), Value Nothing)         = M.insert res_type (m, m)
-    f (Value res_type, Value Nothing,         Value (Just (Just m))) = M.insert res_type (m, m)
-    f (Value res_type, Value (Just (Just m)), Value (Just (Just n))) = M.insert res_type (m, n)
-    f (_,              Value Nothing,         Value Nothing)         = id
-    -- How could min_ return NULL but max not, or vice versa?
-    f (_, _, _) = error "fetchResourceTypeYearRangesDB: incorrect assumption about return value of min_/max_"
+
+fetchResourceFieldYearRangesDB
+        :: (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend, PersistField field, Ord field)
+        => EntityField entity ResourceId
+        -> EntityField entity field -> YesodDB App (Map field (Int, Int))
+fetchResourceFieldYearRangesDB res_id_field field = fmap (foldr mkYearMap mempty) $
+    select $
+    from $ \(r `InnerJoin` table) -> do
+    on (r^.ResourceId ==. table^.res_id_field)
+    groupBy (table^.field)
+    return (table^.field, min_ (r^.ResourcePublished), max_ (r^.ResourcePublished))
+
+mkYearMap :: Ord v
+          => (Value v, Value (Maybe (Maybe Int)), Value (Maybe (Maybe Int)))
+          -> Map v (Int, Int)
+          -> Map v (Int, Int)
+mkYearMap (Value _, Value (Just Nothing),  Value (Just Nothing))  = id
+mkYearMap (Value v, Value (Just (Just m)), Value Nothing)         = M.insert v (m, m)
+mkYearMap (Value v, Value Nothing,         Value (Just (Just m))) = M.insert v (m, m)
+mkYearMap (Value v, Value (Just (Just m)), Value (Just (Just n))) = M.insert v (m, n)
+mkYearMap (_,       Value Nothing,         Value Nothing)         = id
+-- How could min_ return NULL but max not, or vice versa?
+mkYearMap (_, _, _) = error "fetchResourceFieldYearRangesDB: incorrect assumption about return value of min_/max_"

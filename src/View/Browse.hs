@@ -29,6 +29,8 @@ browseBarWidget browse_by_link = do
         |
         <a .bar-link #br-tag href=@{BrowseTagsR}>tag
         |
+        <a .bar-link #br-coll href=@{BrowseCollectionsR}>collection
+        |
         <a .bar-link #br-type href=@{BrowseTypesR}>type
         |
         <a .bar-link #br-res href=@{BrowseResourcesR}>list all
@@ -37,6 +39,9 @@ browseBarWidget browse_by_link = do
     toWidget [cassius|
       #br-auth
         font-weight: #{boldIfEq browse_by_link BrowseByAuthorLink}
+
+      #br-coll
+        font-weight: #{boldIfEq browse_by_link BrowseByCollectionLink}
 
       #br-res
         font-weight: #{boldIfEq browse_by_link BrowseByResourceLink}

@@ -35,6 +35,7 @@ library
                      Model
                      Model.Author
                      Model.Browse
+                     Model.Collection
                      Model.Feed
                      Model.Feed.Internal
                      Model.Resource

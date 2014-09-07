@@ -7,6 +7,7 @@ import Import
 
 data BrowseByLink
     = BrowseByAuthorLink
+    | BrowseByCollectionLink
     | BrowseByResourceLink
     | BrowseByTagLink
     | BrowseByTypeLink
