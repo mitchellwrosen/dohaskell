@@ -55,10 +55,8 @@ type Form x = Html -> MForm (HandlerT App IO) (FormResult x, Widget)
 instance Yesod App where
     approot = ApprootMaster $ appRoot . settings
 
-    -- Store session data on the client in encrypted cookies,
-    -- default session idle timeout is 120 minutes
     makeSessionBackend _ = Just <$> defaultClientSessionBackend timeoutMins keyFile
-      where timeoutMins = 120
+      where timeoutMins = 10080 -- 1 week
             keyFile     = "config/client_session_key.aes"
 
     defaultLayout innerWidget = do
