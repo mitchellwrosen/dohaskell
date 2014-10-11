@@ -224,20 +224,18 @@ resourceListWidget resources = do
 
     authorsMap <- handlerToWidget $ runDB (fetchResourceAuthorsInDB resource_ids)
 
-    (is_logged_in, favs, grokked) <- handlerToWidget $
+    (is_logged_in, favs, grokked, num_favs, num_grokked) <- handlerToWidget $
         maybeAuthId >>= \case
-            Nothing  -> return (False, mempty, mempty)
-            Just uid -> runDB $ (,,)
+            Nothing  -> return (False, mempty, mempty, mempty, mempty)
+            Just uid -> runDB $ (,,,,)
                 <$> pure True
                 <*> (S.fromList <$> fetchFavoriteResourceIdsInDB resource_ids uid)
                 <*> (S.fromList <$> fetchGrokkedResourceIdsInDB  resource_ids uid)
+                <*> fetchResourceFavoriteCountsInDB resource_ids
+                <*> fetchResourceGrokkedCountsInDB resource_ids
 
+    toWidget $(hamletFile  "templates/resource-list.hamlet")
+    toWidget $(cassiusFile "templates/resource-list.cassius")
     if is_logged_in
-        then do
-            toWidget $(hamletFile  "templates/resource-list.hamlet")
-            toWidget $(cassiusFile "templates/resource-list.cassius")
-            toWidget $(juliusFile  "templates/resource-list-logged-in.julius")
-        else do
-            toWidget $(hamletFile  "templates/resource-list.hamlet")
-            toWidget $(cassiusFile "templates/resource-list.cassius")
-            toWidget $(juliusFile  "templates/resource-list-not-logged-in.julius")
+        then toWidget $(juliusFile "templates/resource-list-logged-in.julius")
+        else toWidget $(juliusFile "templates/resource-list-not-logged-in.julius")

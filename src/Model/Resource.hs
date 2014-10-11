@@ -6,8 +6,10 @@ module Model.Resource
     , fetchResourceAuthorsDB
     , fetchResourceAuthorsInDB
     , fetchResourceCollectionsDB
+    , fetchResourceFavoriteCountsInDB
     , fetchResourceFieldCountsDB
     , fetchResourceFieldYearRangesDB
+    , fetchResourceGrokkedCountsInDB
     , fetchResourcesByAuthorDB
     , fetchResourcesInCollectionDB
     , fetchResourcesWithTagDB
@@ -275,3 +277,24 @@ mkYearMap (Value v, Value (Just (Just m)), Value (Just (Just n))) = M.insert v (
 mkYearMap (_,       Value Nothing,         Value Nothing)         = id
 -- How could min_ return NULL but max not, or vice versa?
 mkYearMap (_, _, _) = error "fetchResourceFieldYearRangesDB: incorrect assumption about return value of min_/max_"
+
+-- | Fetch the number of times a Resource (in the given list) has been favorited/grokked.
+fetchResourceFavoriteCountsInDB :: [ResourceId] -> YesodDB App (Map ResourceId Int)
+fetchResourceGrokkedCountsInDB  :: [ResourceId] -> YesodDB App (Map ResourceId Int)
+fetchResourceFavoriteCountsInDB = fetchResourceFavOrGrokkedCountsInDB FavoriteResId
+fetchResourceGrokkedCountsInDB  = fetchResourceFavOrGrokkedCountsInDB GrokkedResId
+
+fetchResourceFavOrGrokkedCountsInDB
+        :: (PersistEntity entity, PersistEntityBackend entity ~ SqlBackend)
+        => EntityField entity ResourceId
+        -> [ResourceId]
+        -> YesodDB App (Map ResourceId Int)
+fetchResourceFavOrGrokkedCountsInDB res_id_field resource_ids = fmap (foldr go mempty) $
+    select $
+    from $ \f -> do
+    where_ (f^.res_id_field `in_` valList resource_ids)
+    groupBy (f^.res_id_field)
+    return (f^.res_id_field, countRows)
+  where
+    go :: (Value ResourceId, Value Int) -> Map ResourceId Int -> Map ResourceId Int
+    go (Value res_id, Value n) = M.insert res_id n
