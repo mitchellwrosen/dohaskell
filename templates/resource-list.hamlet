@@ -1,11 +1,9 @@
 $forall Entity res_id res <- resources
   <div .res-li>
 
-    $# TODO: Show regardless?
-    $if is_logged_in
-      <div .res-fav-grok-container>
-        <div .res-fav .res-link :S.member res_id favs:.fav ##{toPathPiece res_id} title="Favorite">
-        <div .res-grok .res-link :S.member res_id grokked:.grok ##{toPathPiece res_id} title="Grok">
+    <div .res-fav-grok-container>
+      <div .res-fav .res-link :S.member res_id favs:.fav ##{toPathPiece res_id} title="Favorite">
+      <div .res-grok .res-link :S.member res_id grokked:.grok ##{toPathPiece res_id} title="Grok">
 
     <a .res-info .res-link href=@{ResourceR res_id}>
 

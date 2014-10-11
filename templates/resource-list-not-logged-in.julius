@@ -1,0 +1,4 @@
+$(document).ready(function() {
+  $('.res-fav').click(function() { alert('Please log in to favorite a resource!') });
+  $('.res-grok').click(function() { alert('Please log in to grok a resource!') });
+});

@@ -1,5 +1,5 @@
 function onPostFailure(xhr, textStatus, errorThrown) {
-  alert("Failure: " + xhr.responseText);
+  console.log("Failure: " + xhr.responseText);
 }
 
 function payload(elem) {

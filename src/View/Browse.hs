@@ -13,9 +13,12 @@ import Model.Browse
 import Model.Resource
 import Model.User
 
-import qualified Data.Map  as M
-import qualified Data.Set  as S
-import qualified Data.Text as T
+import qualified Data.Map     as M
+import qualified Data.Set     as S
+import qualified Data.Text    as T
+import           Text.Cassius (cassiusFile)
+import           Text.Julius  (juliusFile)
+import           Text.Hamlet  (hamletFile)
 
 boldIfEq :: Eq a => a -> a -> Text
 boldIfEq x y | x == y = "bold"
@@ -229,4 +232,12 @@ resourceListWidget resources = do
                 <*> (S.fromList <$> fetchFavoriteResourceIdsInDB resource_ids uid)
                 <*> (S.fromList <$> fetchGrokkedResourceIdsInDB  resource_ids uid)
 
-    $(widgetFile "resource-list")
+    if is_logged_in
+        then do
+            toWidget $(hamletFile  "templates/resource-list.hamlet")
+            toWidget $(cassiusFile "templates/resource-list.cassius")
+            toWidget $(juliusFile  "templates/resource-list-logged-in.julius")
+        else do
+            toWidget $(hamletFile  "templates/resource-list.hamlet")
+            toWidget $(cassiusFile "templates/resource-list.cassius")
+            toWidget $(juliusFile  "templates/resource-list-not-logged-in.julius")
