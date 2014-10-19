@@ -20,6 +20,7 @@ library
     hs-source-dirs: src
     exposed-modules: Application
                      Database.Persist.Class.Extra
+                     Data.Tree.Extra
                      Import
                      Foundation
                      Handler.About
@@ -121,6 +122,7 @@ library
                  , yesod-auth
                  , yesod-core
                  , yesod-form
+                 , yesod-markdown
                  , yesod-static
 
 executable         dohaskell

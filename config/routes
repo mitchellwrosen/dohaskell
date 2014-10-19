@@ -29,13 +29,13 @@
 /u/#UserId/grokked   UserGrokkedR   GET
 /u/#UserId/favs      UserFavoritedR GET
 
-/r/!#ResourceId       ResourceR           GET
-/r/#ResourceId/edit   EditResourceR       GET POST
--- /r/#ResourceId/delete DeleteResourceR         POST
-/r/favorite           FavoriteResourceR       POST
-/r/unfavorite         UnfavoriteResourceR     POST
-/r/grokked            GrokkedResourceR        POST
-/r/ungrokked          UngrokkedResourceR      POST
+/r/!#ResourceId         ResourceR           GET
+/r/#ResourceId/edit     EditResourceR       GET POST
+/r/#ResourceId/comments ResourceCommentsR   GET POST
+/r/favorite             FavoriteResourceR       POST
+/r/unfavorite           UnfavoriteResourceR     POST
+/r/grokked              GrokkedResourceR        POST
+/r/ungrokked            UngrokkedResourceR      POST
 
 /admin/edits                                 AllEditsR                    GET
 /e/title/#EditTitleId/accept                 EditTitleAcceptR                 POST

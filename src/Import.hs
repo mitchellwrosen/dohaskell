@@ -18,6 +18,7 @@ import           Data.Map                     as Import (Map)
 import           Data.Maybe                   as Import (fromMaybe)
 import           Data.Set                     as Import (Set)
 import           Data.Text                    as Import (Text)
+import           Data.Time                    as Import (UTCTime)
 
 import           Foundation                   as Import
 import           Model                        as Import

@@ -128,6 +128,13 @@ EditAuthors
     authors [Text]
     UniqueEditAuthors resId authors
 
+Comment
+    resId     ResourceId
+    parentId  CommentId  Maybe
+    userId    UserId
+    body      Markdown
+    timestamp UTCTime
+
 Feed
     type         FeedType
     title        Text
@@ -135,4 +142,4 @@ Feed
     lastModified ByteString
     etag         ByteString
     contents     ByteString
-    UniqueFeed url
+    UniqueFeed   url

@@ -4,12 +4,20 @@ module Handler.Resource where
 
 import Import
 
+import qualified Data.Tree.Extra      as Tree
 import           Model.Resource
 import           Model.User           (thisUserHasAuthorityOverDB)
 import           View.Resource
 
+import           Data.Function        (on)
+import qualified Data.List            as L
+import qualified Data.Map             as M
+import           Data.Sequence        (Seq, ViewL(..), (|>))
+import qualified Data.Sequence        as Seq
 import qualified Data.Set             as S
 import           Data.Text            (intercalate)
+import           Data.Tree            (Forest, Tree(..))
+import qualified Data.Tree            as Tree
 import           Database.Persist.Sql
 
 getResourceR :: ResourceId -> Handler Html
@@ -153,3 +161,75 @@ helper action = do
     res_id  <- Key . PersistInt64 <$> runInputPost (ireq intField "res_id")
     runDB $ action user_id res_id
     return "ok"
+
+getResourceCommentsR :: ResourceId -> Handler Html
+getResourceCommentsR res_id = do
+    (resource, comment_forest) <- runDB $ (,)
+        <$> get404 res_id
+        <*> (makeCommentForest <$> fetchResourceCommentsDB res_id)
+    defaultLayout $ do
+        setTitle . toHtml $ "dohaskell | " <> (resourceTitle resource) <> " comments"
+        $(widgetFile "resource-comments")
+  where
+    makeCommentForest :: [Entity Comment] -> Forest (Entity Comment)
+    makeCommentForest = Tree.sortForestBy orderingNewestFirst . M.elems . fst . foldl' step (mempty, mempty)
+      where
+        -- First map: map from comment id to the tree for which that id is the root comment.
+        -- Second map: map from comment id to the "breadcrumbs" of comment ids consisting of
+        --    all of its ancestors, beginning with the eldest (the root).
+        --
+        -- The second map allows us to traverse a tree until we find the correct spot to insert a
+        -- comment, and the first map allows us to begin traversing the correct tree in the first
+        -- place.
+        --
+        -- Because comment ids are monotonically increasing, and we are folding left to right, we
+        -- know at each step exactly which comment tree a comment should end up in. That is to say,
+        -- we won't come across some comment with parent id '5' and not have already inserted '5'
+        -- into some tree.
+        step :: (Map CommentId (Tree (Entity Comment)), Map CommentId (Seq CommentId))
+             -> Entity Comment
+             -> (Map CommentId (Tree (Entity Comment)), Map CommentId (Seq CommentId))
+        step (roots_map, breadcrumbs_map) comment@(Entity comment_id _) =
+            case commentParentId (entityVal comment) of
+                Nothing ->
+                    (M.insert comment_id (Tree.singleton comment)   roots_map,
+                     M.insert comment_id (Seq.singleton comment_id) breadcrumbs_map)
+
+                Just parent_id ->
+                    let breadcrumbs                 = breadcrumbs_map M.! parent_id
+                        root_id :< tail_breadcrumbs = Seq.viewl breadcrumbs
+
+                    in (M.adjust (addChild (Seq.viewl tail_breadcrumbs) comment) root_id roots_map,
+                        M.insert comment_id (breadcrumbs |> comment_id) breadcrumbs_map)
+
+        addChild :: ViewL CommentId
+                 -> Entity Comment
+                 -> Tree (Entity Comment)
+                 -> Tree (Entity Comment)
+        addChild EmptyL    comment (Node x xs) = Node x (Tree.singleton comment : xs)
+        addChild (b :< bs) comment (Node x xs) = Node x (addChild' b bs comment xs)
+
+        addChild' :: CommentId
+                  -> Seq CommentId
+                  -> Entity Comment
+                  -> Forest (Entity Comment)
+                  -> Forest (Entity Comment)
+        addChild' _ _ _ [] = error "Couldn't find forest to insert comment into."
+        addChild' b bs comment (tree@(Node (Entity root_id _) _) : trees)
+            | b == root_id = addChild (Seq.viewl bs) comment tree : trees
+            | otherwise    = tree : addChild' b bs comment trees
+
+        -- Order comment trees by newest-first, taking the root and all children of each
+        -- tree into consideration (essentially compares each tree's newest comment,
+        -- no matter how deeply nested)
+        orderingNewestFirst :: Tree (Entity Comment) -> Tree (Entity Comment) -> Ordering
+        orderingNewestFirst = flip (compare `on` (timestamp . newest))
+          where
+            newest :: Tree (Entity Comment) -> Entity Comment
+            newest = L.maximumBy (compare `on` timestamp) . Tree.flatten
+
+            timestamp :: Entity Comment -> UTCTime
+            timestamp = commentTimestamp . entityVal
+
+postResourceCommentsR :: ResourceId -> Handler Html
+postResourceCommentsR = undefined

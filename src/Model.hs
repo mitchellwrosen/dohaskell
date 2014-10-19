@@ -10,6 +10,7 @@ import Data.Typeable          (Typeable)
 import Database.Persist.Quasi
 import Prelude                (Bool, Eq, Int, Ord)
 import Yesod
+import Yesod.Markdown         (Markdown)
 
 -- You can define all of your database entities in the entities file.
 -- You can find more information on persistent and how to declare entities
