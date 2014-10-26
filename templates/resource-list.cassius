@@ -1,41 +1,29 @@
-.res-fav-grok-container
-  float: left
-  height: 100%
-  margin-right: 2px
-  position: relative
-
-.res-fav
-  background: url(@{StaticR img_star_outline_png})
-  background-position: center
-  background-repeat: no-repeat
-  background-size: 14px 14px
-  height: 16px
-  position: relative
-  top: 2px
-  width: 16px
-
-.res-fav.fav
-  background: url(@{StaticR img_star_png})
-  background-position: center
-  background-repeat: no-repeat
-  background-size: 14px 14px
-
 .res-grok
   background: url(@{StaticR img_circle_outline_png})
   background-position: center
   background-repeat: no-repeat
   background-size: 14px 14px
-  left: 2px
-  height: 16px
-  position: absolute
-  top: 18px
+  float: left
+  height: 100%
   width: 16px
+
+.res-grok:hover
+  background: url(@{StaticR img_circle_outline_png})
+  background-position: center
+  background-repeat: no-repeat
+  background-size: 16px 16px
 
 .res-grok.grok
   background: url(@{StaticR img_circle_png})
   background-position: center
   background-repeat: no-repeat
   background-size: 14px 14px
+
+.res-grok.grok:hover
+  background: url(@{StaticR img_circle_png})
+  background-position: center
+  background-repeat: no-repeat
+  background-size: 16px 16px
 
 .res-ext
   font-size: 0.9em

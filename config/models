@@ -1,3 +1,6 @@
+-- A user. Users have unique names (email addresses), which are not publicly
+-- visible. Users may change their public name at any time, and there is no
+-- uniqueness constraint.
 User
     name            Text -- User "name" (credentials used to log in, i.e. an email addr).
     displayName     Text -- Defaults to "anonymous". Not unique.
@@ -6,19 +9,21 @@ User
     UniqueUserName name
     deriving Typeable
 
--- Favorite relation, many-to-many between User and Resource.
-Favorite
-    userId    UserId
-    resId     ResourceId
-    timestamp UTCTime default=CURRENT_TIMESTAMP -- The last time the resource was favorited.
-    UniqueFavorite userId resId
+-- A list of resources, whose database entry is shared by all users who happen 
+-- to have made a list of that name. There is one built-in list ("grokked") that 
+-- users can easily add items to. All other lists (e.g. "to read" or 
+-- "favorites") are created on the fly by adding one resource to them.
+List
+    name Text
+    UniqueList name
 
--- Grokked relation, many-to-many between User and Resource.
-Grokked
+-- A single Resource in a User's List.
+ListItem
     userId    UserId
+    listId    ListId
     resId     ResourceId
-    timestamp UTCTime default=CURRENT_TIMESTAMP -- The last time the resource was grokked.
-    UniqueGrokked userId resId
+    timestamp UTCTime
+    UniqueListItem userId listId resId
 
 Resource
     title     Text

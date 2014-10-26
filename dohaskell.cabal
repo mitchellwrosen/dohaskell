@@ -39,6 +39,7 @@ library
                      Model.Collection
                      Model.Feed
                      Model.Feed.Internal
+                     Model.List
                      Model.Resource
                      Model.Resource.Internal
                      Model.ResourceEdit

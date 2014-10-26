@@ -1,17 +1,11 @@
 module Model.User
-    ( fetchFavoriteResourcesDB
-    , fetchFavoriteResourceIdsDB
-    , fetchFavoriteResourceIdsInDB
-    , fetchGrokkedCountsByAuthorDB
+    ( fetchGrokkedCountsByAuthorDB
     , fetchGrokkedCountsByCollectionDB
     , fetchGrokkedCountsByTagDB
     , fetchGrokkedCountsByTypeDB
-    , fetchGrokkedResourcesDB
-    , fetchGrokkedResourceIdsDB
     , fetchGrokkedResourceIdsInDB
-    , fetchNumFavoriteResourcesDB
-    , fetchNumGrokkedResourcesDB
     , fetchNumSubmittedResourcesDB
+    , fetchNumGrokkedResourcesDB
     , fetchSubmittedResourcesDB
     , isAdministratorDB
     , thisUserHasAuthorityOverDB
@@ -21,61 +15,11 @@ module Model.User
 
 import Import
 
+import           Model.List
 import           Model.Resource
 
 import           Database.Esqueleto
 import qualified Data.Map           as M
-
-fetchFavoriteResourcesDB, fetchGrokkedResourcesDB :: UserId -> YesodDB App [Entity Resource]
-
-fetchFavoriteResourcesDB user_id =
-    select $
-    from $ \r -> do
-    where_ (r^.ResourceId `in_` (subList_select $
-                                 from $ \f -> do
-                                 where_ (f^.FavoriteUserId ==. val user_id)
-                                 return (f^.FavoriteResId)))
-    return r
-
-fetchGrokkedResourcesDB user_id =
-    select $
-    from $ \r -> do
-    where_ (r^.ResourceId `in_` (subList_select $
-                                 from $ \g -> do
-                                 where_ (g^.GrokkedUserId ==. val user_id)
-                                 return (g^.GrokkedResId)))
-    return r
-
-fetchFavoriteResourceIdsDB, fetchGrokkedResourceIdsDB :: UserId -> YesodDB App [ResourceId]
-fetchFavoriteResourceIdsDB uid = fmap (map unValue) $
-    select $
-    from $ \f -> do
-    where_ (f^.FavoriteUserId ==. val uid)
-    return (f^.FavoriteResId)
-fetchGrokkedResourceIdsDB uid = fmap (map unValue) $
-    select $
-    from $ \g -> do
-    where_ (g^.GrokkedUserId ==. val uid)
-    return (g^.GrokkedResId)
-
-fetchFavoriteResourceIdsInDB :: [ResourceId] -> UserId -> YesodDB App [ResourceId]
-fetchGrokkedResourceIdsInDB  :: [ResourceId] -> UserId -> YesodDB App [ResourceId]
-
-fetchFavoriteResourceIdsInDB resourceIds userId = fmap (map unValue) $
-    select $
-    from $ \f -> do
-    where_ $
-        f^.FavoriteUserId ==. val userId &&.
-        f^.FavoriteResId `in_` valList resourceIds
-    return (f^.FavoriteResId)
-
-fetchGrokkedResourceIdsInDB resourceIds userId = fmap (map unValue) $
-    select $
-    from $ \g -> do
-    where_ $
-        g^.GrokkedUserId ==. val userId &&.
-        g^.GrokkedResId `in_` valList resourceIds
-    return (g^.GrokkedResId)
 
 -- | Get the number of Resources this User has grokked, grouped by Author/Collection/Tag/Type.
 fetchGrokkedCountsByAuthorDB     :: UserId -> YesodDB App (Map AuthorId Int)
@@ -93,13 +37,32 @@ fetchGrokkedCountsByFieldDB :: (PersistEntity entity, PersistEntityBackend entit
                             -> EntityField entity key
                             -> UserId
                             -> YesodDB App (Map key Int)
-fetchGrokkedCountsByFieldDB res_id_field key user_id = fmap (M.fromList . map fromValue) $
-    select $
-    from $ \(g `InnerJoin` table) -> do
-    on (g^.GrokkedResId ==. table^.res_id_field)
-    where_ (g^.GrokkedUserId ==. val user_id)
-    groupBy (table^.key)
-    return (table^.key, countRows :: SqlExpr (Value Int))
+fetchGrokkedCountsByFieldDB res_id_field key user_id =
+    fetchGrokkedListIdDB >>= \case
+        Nothing -> return mempty
+        Just grokked_list_id -> fmap (M.fromList . map fromValue) $
+            select $
+            from $ \(table `InnerJoin` li) -> do
+            on (table^.res_id_field ==. li^.ListItemResId)
+            where_ $
+                li^.ListItemListId ==. val grokked_list_id &&.
+                li^.ListItemUserId ==. val user_id
+            groupBy (table^.key)
+            return (table^.key, countRows :: SqlExpr (Value Int))
+
+-- | Given a list of Resources, return only those grokked by the given User.
+fetchGrokkedResourceIdsInDB :: UserId -> [ResourceId] -> YesodDB App [ResourceId]
+fetchGrokkedResourceIdsInDB user_id res_ids =
+    fetchGrokkedListIdDB >>= \case
+        Nothing -> return []
+        Just grokked_list_id -> fmap (map unValue) $
+            select $
+            from $ \li -> do
+            where_ $
+                li^.ListItemListId ==. val grokked_list_id &&.
+                li^.ListItemUserId ==. val user_id         &&.
+                li^.ListItemResId `in_` valList res_ids
+            return (li^.ListItemResId)
 
 fetchSubmittedResourcesDB :: UserId -> YesodDB App [Entity Resource]
 fetchSubmittedResourcesDB uid =
@@ -117,19 +80,16 @@ fetchNumSubmittedResourcesDB user_id = fmap (\[Value n] -> n) $
     where_ (u^.UserId ==. val user_id)
     return countRows
 
-fetchNumFavoriteResourcesDB :: UserId -> YesodDB App Int
-fetchNumFavoriteResourcesDB user_id = fmap (\[Value n] -> n) $
-    select $
-    from $ \f -> do
-    where_ (f^.FavoriteUserId ==. val user_id)
-    return countRows
-
 fetchNumGrokkedResourcesDB :: UserId -> YesodDB App Int
-fetchNumGrokkedResourcesDB user_id = fmap (\[Value n] -> n) $
-    select $
-    from $ \g -> do
-    where_ (g^.GrokkedUserId ==. val user_id)
-    return countRows
+fetchNumGrokkedResourcesDB user_id = fetchGrokkedListIdDB >>= \case
+    Nothing -> return 0
+    Just grokked_list_id -> fmap (\[Value n] -> n) $
+        select $
+        from $ \li -> do
+        where_ $
+            li^.ListItemListId ==. val grokked_list_id &&.
+            li^.ListItemUserId ==. val user_id
+        return countRows
 
 isAdministratorDB :: UserId -> YesodDB App Bool
 isAdministratorDB = fmap (maybe False userIsAdministrator) . get
@@ -152,8 +112,8 @@ userHasAuthorityOverDB bully nerd = do
             then True
             else (bully == nerd)
 
--- Like userHasAuthorityOverDB, but uses the current user
--- ('this' user) as the first argument.
+-- | Like userHasAuthorityOverDB, but uses the current user ('this' user) as the
+-- first argument.
 thisUserHasAuthorityOverDB :: UserId -> Handler Bool
 thisUserHasAuthorityOverDB nerd = maybeAuthId >>= \case
     Nothing    -> return False

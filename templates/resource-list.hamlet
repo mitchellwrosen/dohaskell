@@ -1,11 +1,7 @@
 $forall Entity res_id res <- resources
   <div .res-li>
 
-    <div .res-fav-grok-container>
-      <div .res-fav .res-link :S.member res_id favs:.fav ##{toPathPiece res_id} title="Favorite">
-      <div .res-num-fav>#{M.findWithDefault 0 res_id num_favs}
-      <div .res-grok .res-link :S.member res_id grokked:.grok ##{toPathPiece res_id} title="Grok">
-      <div .res-num-grok>#{M.findWithDefault 0 res_id num_grokked}
+    <div .res-grok :S.member res_id grokked:.grok ##{toPathPiece res_id} title="Grok">
 
     <a .res-info .res-link href=@{ResourceR res_id}>
 

@@ -224,15 +224,12 @@ resourceListWidget resources = do
 
     authorsMap <- handlerToWidget $ runDB (fetchResourceAuthorsInDB resource_ids)
 
-    (is_logged_in, favs, grokked, num_favs, num_grokked) <- handlerToWidget $
+    (is_logged_in, grokked) <- handlerToWidget $
         maybeAuthId >>= \case
-            Nothing  -> return (False, mempty, mempty, mempty, mempty)
-            Just uid -> runDB $ (,,,,)
+            Nothing  -> return (False, mempty)
+            Just user_id -> runDB $ (,)
                 <$> pure True
-                <*> (S.fromList <$> fetchFavoriteResourceIdsInDB resource_ids uid)
-                <*> (S.fromList <$> fetchGrokkedResourceIdsInDB  resource_ids uid)
-                <*> fetchResourceFavoriteCountsInDB resource_ids
-                <*> fetchResourceGrokkedCountsInDB resource_ids
+                <*> (S.fromList <$> fetchGrokkedResourceIdsInDB user_id resource_ids)
 
     toWidget $(hamletFile  "templates/resource-list.hamlet")
     toWidget $(cassiusFile "templates/resource-list.cassius")

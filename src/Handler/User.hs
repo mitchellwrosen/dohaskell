@@ -3,6 +3,7 @@ module Handler.User where
 import Import
 
 import           Handler.Utils      (denyPermissionIfDifferentUser)
+import           Model.List
 import           Model.ResourceEdit (fetchNumRequestedEditsDB)
 import           Model.User
 import           Model.Utils
@@ -24,10 +25,9 @@ getUserR user_id = do
     (widget, enctype) <- generateFormPost (displayNameForm . Just $ userDisplayName user)
 
     is_own_profile <- maybe False (== user_id) <$> maybeAuthId
-    (num_req_edits, num_submitted, num_favorited, num_grokked) <- runDB $ (,,,)
+    (num_req_edits, num_submitted, num_grokked) <- runDB $ (,,)
         <$> (if is_own_profile then fetchNumRequestedEditsDB user_id else return 0) -- bogus val, not used in html
         <*> fetchNumSubmittedResourcesDB user_id
-        <*> fetchNumFavoriteResourcesDB  user_id
         <*> fetchNumGrokkedResourcesDB   user_id
 
     weeks_since_user_creation :: Double <-
@@ -65,19 +65,19 @@ postUserR user_id = do
         setMessage (toHtml msg)
         redirect (UserR user_id)
 
-getUserFavoritedR, getUserGrokkedR, getUserSubmittedR :: UserId -> Handler Html
-getUserFavoritedR = userFavGrokSub fetchFavoriteResourcesDB  ("dohaskell | favorited by " <>)
-getUserGrokkedR   = userFavGrokSub fetchGrokkedResourcesDB   ("dohaskell | grokked by " <>)
-getUserSubmittedR = userFavGrokSub fetchSubmittedResourcesDB ("dohaskell | submitted by" <>)
-
-userFavGrokSub :: (UserId -> YesodDB App [Entity Resource]) -> (Text -> Text) -> UserId -> Handler Html
-userFavGrokSub get_resources mk_title user_id = do
+getUserSubmittedR :: UserId -> Handler Html
+getUserSubmittedR user_id = do
     (display_name, unsorted_resources) <- runDB $ (,)
         <$> (userDisplayName <$> get404 user_id)
-        <*> get_resources user_id
+        <*> fetchSubmittedResourcesDB user_id
 
     let resources = sortBy (orderAlphabeticIgnoreCase (resourceTitle . entityVal)) unsorted_resources
 
     defaultLayout $ do
-      setTitle . toHtml $ mk_title display_name
+      setTitle . toHtml $ "dohaskell | submitted by " <> display_name
       resourceListWidget resources
+
+getUserListR :: UserId -> Text -> Handler Html
+getUserListR user_id list_name =
+    runDB (fetchListResourcesDB user_id list_name)
+      >>= defaultLayout . resourceListWidget

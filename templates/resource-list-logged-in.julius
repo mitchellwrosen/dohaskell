@@ -2,21 +2,15 @@ function onPostFailure(xhr, textStatus, errorThrown) {
   console.log("Failure: " + xhr.responseText);
 }
 
-function payload(elem) {
-  return { res_id: $(elem).attr('id') }
-}
-
-function resourceActionOnclick(cssClass, hasClassRoute, hasntClassRoute) {
-  return function() {
-    $(this).toggleClass(cssClass);
-    if ($(this).hasClass(cssClass))
-      $.post(hasClassRoute, payload(this)).fail(onPostFailure)
-    else
-      $.post(hasntClassRoute, payload(this)).fail(onPostFailure)
-  }
-}
-
 $(document).ready(function() {
-  $('.res-fav').click(resourceActionOnclick('fav', "@{FavoriteResourceR}", "@{UnfavoriteResourceR}"));
-  $('.res-grok').click(resourceActionOnclick('grok', "@{GrokkedResourceR}", "@{UngrokkedResourceR}"));
+  $('.res-grok').click(function() {
+    $(this).toggleClass('grok');
+
+    if ($(this).hasClass('grok'))
+      $.post('/r/list/grokked/add/' + $(this).attr('id'))
+        .fail(onPostFailure)
+    else
+      $.post('/r/list/grokked/del/' + $(this).attr('id'))
+        .fail(onPostFailure)
+  });
 });

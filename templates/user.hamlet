@@ -5,10 +5,8 @@
       <div>
         <a href=@{UserSubmittedR user_id}>#{num_submitted} submitted
       <div>
-        <a href=@{UserGrokkedR user_id}>#{num_grokked} grokked
+        <a href=@{UserListR user_id "grokked"}>#{num_grokked} grokked
         \ <span .grokked-per-week>(#{grokked_per_week_str} per week)
-      <div>
-        <a href=@{UserFavoritedR user_id}>#{num_favorited} #{plural num_favorited "favorite"}
 
   $if is_own_profile
     <div .settings>

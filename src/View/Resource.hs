@@ -15,7 +15,6 @@ import           Yesod.Form.Types.Extra (commaSepTextField, mapField)
 
 import           Data.List              (nub)
 import qualified Data.Text              as T
-import           Data.Time              (getCurrentTime)
 import           Data.Tree              (Forest, Tree(..))
 import           Yesod.Form.Bootstrap3  -- (renderBootstrap3)
 

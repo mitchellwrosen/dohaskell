@@ -5,8 +5,10 @@ module Handler.Resource where
 import Import
 
 import qualified Data.Tree.Extra      as Tree
+import           Model.List
 import           Model.Resource
 import           Model.User           (thisUserHasAuthorityOverDB)
+import           View.Browse
 import           View.Resource
 
 import           Data.Function        (on)
@@ -148,18 +150,20 @@ postEditResourceR res_id = do
             redirect $ ResourceR res_id
         FormMissing -> redirect $ ResourceR res_id
 
-postFavoriteResourceR,   postGrokkedResourceR   :: Handler Html
-postUnfavoriteResourceR, postUngrokkedResourceR :: Handler Html
-postFavoriteResourceR   = helper favoriteResourceDB
-postGrokkedResourceR    = helper grokResourceDB
-postUnfavoriteResourceR = helper unfavoriteResourceDB
-postUngrokkedResourceR  = helper ungrokResourceDB
+getResourceListR :: Text -> Handler Html
+getResourceListR list_name =
+    requireAuthId
+      >>= runDB . flip fetchListResourcesDB list_name
+        >>= defaultLayout . resourceListWidget
 
-helper :: (UserId -> ResourceId -> YesodDB App ()) -> Handler Html
-helper action = do
+postResourceListAddR, postResourceListDelR :: Text -> ResourceId -> Handler Html
+postResourceListAddR = postResourceListAddDel addListItemDB
+postResourceListDelR = postResourceListAddDel deleteListItemDB
+
+postResourceListAddDel :: (UserId -> Text -> ResourceId -> YesodDB App ()) -> Text -> ResourceId -> Handler Html
+postResourceListAddDel action list_name res_id = do
     user_id <- requireAuthId
-    res_id  <- Key . PersistInt64 <$> runInputPost (ireq intField "res_id")
-    runDB $ action user_id res_id
+    runDB (action user_id list_name res_id)
     return "ok"
 
 getResourceCommentsR :: ResourceId -> Handler Html
