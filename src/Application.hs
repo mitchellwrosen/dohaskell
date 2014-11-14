@@ -9,7 +9,7 @@ import Import
 
 import           Settings
 
--- import           Control.Concurrent                   (forkIO, threadDelay)
+import           Control.Concurrent                   (forkIO, threadDelay)
 import           Control.Monad.Logger                 (LoggingT, runLoggingT)
 import           Control.Monad.Trans.Resource         (ResourceT, runResourceT)
 import           Data.Default                         (def)
@@ -26,7 +26,7 @@ import           Network.Wai.Middleware.RequestLogger ( mkRequestLogger, outputF
                                                       )
 import           Prelude                              (last)
 import           System.Directory                     (getDirectoryContents)
-import           System.Log.FastLogger                (newStdoutLoggerSet, defaultBufSize) -- , flushLogStr)
+import           System.Log.FastLogger                (newStdoutLoggerSet, defaultBufSize, flushLogStr)
 import           Yesod.Core.Types                     (loggerSet, Logger (Logger))
 import           Yesod.Default.Config
 import           Yesod.Default.Handlers
@@ -90,14 +90,14 @@ makeFoundation conf = do
     -- used less than once a second on average, you may prefer to omit this
     -- thread and use "(updater >> getter)" in place of "getter" below.  That
     -- would update the cache every time it is used, instead of every second.
-    -- let updateLoop = do
-    --         threadDelay 1000000
-    --         updater
-    --         flushLogStr loggerSet'
-    --         updateLoop
-    -- _ <- forkIO updateLoop
+    let updateLoop = do
+            threadDelay 1000000
+            updater
+            flushLogStr loggerSet'
+            updateLoop
+    _ <- forkIO updateLoop
 
-    let logger     = Yesod.Core.Types.Logger loggerSet' (updater >> getter)
+    let logger     = Yesod.Core.Types.Logger loggerSet' getter
         foundation = App conf s pool manager dbconf logger navbarWidget
 
     -- Perform database migration using our application's logging settings.
@@ -134,7 +134,7 @@ doMigration = do
             nums -> do
                 forM_ nums $ \num -> do
                     let file = toSafeMigrateFile num
-                    $(logInfo) $ "Running migration: " <> T.pack file
+                    $(logInfo) $ "Running existing migration: " <> T.pack file
                     liftIO (T.lines <$> T.readFile file) >>= mapM_ runRawStmt
                 let new_last_migration = last nums
                 updateDatabaseVersion new_last_migration
@@ -166,13 +166,14 @@ doMigration = do
     createAndRunNewMigrationFiles next_migration = do
         migrations <- addSemicolons <$> parseMigration' migrateAll
         writeMigrations migrations next_migration
-        -- True means unsafe, so if any True, return False. Only run if all are safe,
-        -- in which case we know we only made one new migration file with number
-        -- next_migration.
-        if not (any fst migrations)
-            then do
-                runMigrations next_migration (map snd migrations)
-            else error "Aborting due to unsafe migrations."
+
+        unless (null migrations) $
+            -- True means unsafe, so if any True, return False. Only run if all are safe,
+            -- in which case we know we only made one new migration file with number
+            -- next_migration.
+            if not (any fst migrations)
+                then runMigrations next_migration (map snd migrations)
+                else error "Aborting due to unsafe migrations."
       where
         addSemicolons :: CautiousMigration -> CautiousMigration
         addSemicolons = map (\(b,s) -> (b, s `T.snoc` ';'))
@@ -207,7 +208,7 @@ doMigration = do
 
         runMigrations :: Int -> [Sql] -> SqlPersistT (ResourceT (LoggingT IO)) ()
         runMigrations n stmts = do
-            $(logInfo) $ "Running migration: " <> T.pack (toSafeMigrateFile n)
+            $(logInfo) $ "Running new migration: " <> T.pack (toSafeMigrateFile n)
             updateDatabaseVersion n
             mapM_ runRawStmt stmts
 
