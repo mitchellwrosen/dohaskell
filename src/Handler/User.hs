@@ -11,7 +11,7 @@ import           View.Browse
 import           View.User
 
 import           Data.List          (sortBy)
-import           Data.Time          (NominalDiffTime, diffUTCTime, getCurrentTime)
+import           Data.Time          (NominalDiffTime)
 import qualified Data.Text          as T
 import           Text.Printf
 

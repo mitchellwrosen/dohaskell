@@ -16,6 +16,7 @@ module Model.Resource
     , fetchResourceTagsDB
     , fetchResourceTypeCountsDB
     , fetchResourceTypeYearRangesDB
+    , insertResourceCommentDB
     , resourceExtension
     , updateResourceDB
     , updateResourceAuthorsDB
@@ -289,3 +290,6 @@ fetchResourceCommentsDB res_id =
     where_ (c^.CommentResId ==. val res_id)
     orderBy [asc (c^.CommentId)]
     return c
+
+insertResourceCommentDB :: Comment -> YesodDB App ()
+insertResourceCommentDB = insert_

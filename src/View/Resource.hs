@@ -2,6 +2,7 @@ module View.Resource
     ( editResourceForm
     , editResourceFormWidget
     , resourceCommentForestWidget
+    , resourceCommentForm
     , resourceCommentTreeWidget
     , resourceForm
     , resourceInfoWidget
@@ -9,7 +10,6 @@ module View.Resource
 
 import Import
 
-import           Handler.Utils          (prettyAgo)
 import           Model.Resource
 import           Yesod.Form.Types.Extra (commaSepTextField, mapField)
 
@@ -17,6 +17,7 @@ import           Data.List              (nub)
 import qualified Data.Text              as T
 import           Data.Tree              (Forest, Tree(..))
 import           Yesod.Form.Bootstrap3  -- (renderBootstrap3)
+import           Yesod.Markdown         (Markdown, markdownField)
 
 -- Crappy type synonyms, trying not to clash with models. Unexported.
 type AuthorNameText     = Text
@@ -123,22 +124,38 @@ resourceInfoWidget (Entity res_id res) = do
         <*> (map authorName     <$> fetchResourceAuthorsDB res_id)
         <*> (map tagName        <$> fetchResourceTagsDB res_id)
         <*> (map collectionName <$> fetchResourceCollectionsDB res_id)
-    posted <- prettyAgo (resourcePosted res)
+
+    now <- liftIO getCurrentTime
+    let posted = showDiffTime now (resourcePosted res)
 
     $(widgetFile "resource-info")
 
-resourceCommentForestWidget :: Forest (Entity Comment) -> Widget
-resourceCommentForestWidget comment_forest =
+resourceCommentForestWidget :: UTCTime -> Map UserId User -> Forest (Entity Comment) -> Widget
+resourceCommentForestWidget now users_map comment_forest =
     [whamlet|
       $forall comment_tree <- comment_forest
-        ^{resourceCommentTreeWidget comment_tree}
+        ^{resourceCommentTreeWidget now users_map comment_tree}
     |]
 
-resourceCommentTreeWidget :: Tree (Entity Comment) -> Widget
-resourceCommentTreeWidget (Node (Entity _ comment) children) = do
-    children_widget <- resourceCommentForestWidget children
-    undefined
-    -- [whamlet|
-    --   <div>User #{commentUserId comment}: #{commentBody comment}
-    --     ^{children_widget}
-    -- |]
+resourceCommentTreeWidget :: UTCTime -> Map UserId User -> Tree (Entity Comment) -> Widget
+resourceCommentTreeWidget now users_map (Node (Entity comment_id Comment{..}) children) = do
+    let user = lookupErr "resourceCommentTreeWidget: commentUserId not found in users_map"
+                         commentUserId
+                         users_map
+
+    [whamlet|
+      <div .comment>
+        <div .comment-head>
+          <a .comment-user href=@{UserR commentUserId}>#{userDisplayName user}
+          <span .comment-ts>#{showDiffTime now commentTimestamp} ago
+        <div .comment-body>#{commentBody}
+        <div .comment-actions>
+          <a>reply
+
+        ^{resourceCommentForestWidget now users_map children}
+    |]
+
+resourceCommentForm :: Maybe CommentId -> FieldSettings App -> Form (Maybe CommentId, Markdown)
+resourceCommentForm mparent_id title = renderDivs $ (,)
+  <$> pure mparent_id
+  <*> areq markdownField title Nothing

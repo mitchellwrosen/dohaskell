@@ -7,7 +7,7 @@ import Import
 import qualified Data.Tree.Extra      as Tree
 import           Model.List
 import           Model.Resource
-import           Model.User           (thisUserHasAuthorityOverDB)
+import           Model.User
 import           View.Browse
 import           View.Resource
 
@@ -168,9 +168,15 @@ postResourceListAddDel action list_name res_id = do
 
 getResourceCommentsR :: ResourceId -> Handler Html
 getResourceCommentsR res_id = do
-    (resource, comment_forest) <- runDB $ (,)
-        <$> get404 res_id
-        <*> (makeCommentForest <$> fetchResourceCommentsDB res_id)
+    (resource, comment_forest, users_map) <- runDB $ do
+        resource  <- get404 res_id
+        comments  <- fetchResourceCommentsDB res_id
+        users_map <- entitiesMap <$> fetchUsersInDB (map (commentUserId . entityVal) comments)
+        return (resource, makeCommentForest comments, users_map)
+
+    (form_widget, form_enctype) <- generateFormPost (resourceCommentForm Nothing "New Comment")
+    now <- liftIO getCurrentTime
+
     defaultLayout $ do
         setTitle . toHtml $ "dohaskell | " <> (resourceTitle resource) <> " comments"
         $(widgetFile "resource-comments")
@@ -236,4 +242,16 @@ getResourceCommentsR res_id = do
             timestamp = commentTimestamp . entityVal
 
 postResourceCommentsR :: ResourceId -> Handler Html
-postResourceCommentsR = undefined
+postResourceCommentsR res_id = do
+    user_id <- requireAuthId
+    ((result, _), _) <- runFormPost (resourceCommentForm Nothing "")
+    case result of
+      FormSuccess (mparent_id, body) -> do
+        now <- liftIO getCurrentTime
+        runDB (insertResourceCommentDB (Comment res_id mparent_id user_id body now))
+        finish "Comment posted."
+      _ -> finish "Error posting comment."
+  where
+    finish msg = do
+      setMessage msg
+      redirect (ResourceCommentsR res_id)

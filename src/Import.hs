@@ -18,7 +18,7 @@ import           Data.Map                     as Import (Map)
 import           Data.Maybe                   as Import (fromMaybe)
 import           Data.Set                     as Import (Set)
 import           Data.Text                    as Import (Text)
-import           Data.Time                    as Import (UTCTime, getCurrentTime)
+import           Data.Time                    as Import (UTCTime, diffUTCTime, getCurrentTime)
 
 import           Foundation                   as Import
 import           Model                        as Import
@@ -27,6 +27,8 @@ import           Settings.Development         as Import
 import           Settings.StaticFiles         as Import
 
 import Database.Esqueleto
+
+import qualified Data.Map as M
 
 #if __GLASGOW_HASKELL__ >= 704
 import           Data.Monoid                  as Import (Monoid (mappend, mempty, mconcat), (<>))
@@ -53,3 +55,31 @@ instance (FromValue a, FromValue b) => FromValue (a, b) where
 instance (FromValue a, FromValue b, FromValue c) => FromValue (a, b, c) where
     type UnValue (a, b, c) = (UnValue a, UnValue b, UnValue c)
     fromValue (a, b, c) = (fromValue a, fromValue b, fromValue c)
+
+-- | Lookup a key in a map; if it doesn't exist, error.
+lookupErr :: Ord k => String -> k -> Map k a -> a
+lookupErr = M.findWithDefault . error
+
+showDiffTime :: UTCTime -> UTCTime -> String
+showDiffTime x y =
+  let secs_ago = round (diffUTCTime x y)
+  in if | secs_ago < secsPerHour  -> go secs_ago secsPerMinute "m"
+        | secs_ago < secsPerDay   -> go secs_ago secsPerHour   "h"
+        | secs_ago < secsPerWeek  -> go secs_ago secsPerDay    "d"
+        | secs_ago < secsPerMonth -> go secs_ago secsPerWeek   "wk"
+        | secs_ago < secsPerYear  -> go secs_ago secsPerMonth  "mo"
+        | otherwise               -> go secs_ago secsPerYear   "yr"
+  where
+    go secs_ago divisor suffix = show (secs_ago `div` divisor) ++ suffix
+
+    secsPerMinute, secsPerHour, secsPerDay, secsPerWeek, secsPerMonth, secsPerYear :: Integer
+    secsPerMinute = 60
+    secsPerHour   = 3600     -- 60*60
+    secsPerDay    = 86400    -- 60*60*24
+    secsPerWeek   = 604800   -- 60*60*24*7
+    secsPerMonth  = 2592000  -- 60*60*24*30
+    secsPerYear   = 31536000 -- 60*60*24*365
+
+-- | Create a map from id -> value, from a list of entities.
+entitiesMap :: [Entity a] -> Map (Key a) a
+entitiesMap = foldr (\(Entity k v) -> M.insert k v) mempty

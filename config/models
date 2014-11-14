@@ -47,6 +47,13 @@ ResourceTag
     tagId TagId
     UniqueResourceTag resId tagId
 
+Comment
+    resId     ResourceId
+    parentId  CommentId  Maybe
+    userId    UserId
+    body      Markdown
+    timestamp UTCTime
+
 Collection
     name Text
     UniqueCollection name
@@ -132,13 +139,6 @@ EditAuthors
     resId  ResourceId
     authors [Text]
     UniqueEditAuthors resId authors
-
-Comment
-    resId     ResourceId
-    parentId  CommentId  Maybe
-    userId    UserId
-    body      Markdown
-    timestamp UTCTime
 
 Feed
     type         FeedType

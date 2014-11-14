@@ -7,6 +7,7 @@ module Model.User
     , fetchNumSubmittedResourcesDB
     , fetchNumGrokkedResourcesDB
     , fetchSubmittedResourcesDB
+    , fetchUsersInDB
     , isAdministratorDB
     , thisUserHasAuthorityOverDB
     , updateUserDisplayNameDB
@@ -90,6 +91,14 @@ fetchNumGrokkedResourcesDB user_id = fetchGrokkedListIdDB >>= \case
             li^.ListItemListId ==. val grokked_list_id &&.
             li^.ListItemUserId ==. val user_id
         return countRows
+
+-- | Fetch all Users in the given list of ids.
+fetchUsersInDB :: [UserId] -> YesodDB App [Entity User]
+fetchUsersInDB user_ids =
+    select $
+    from $ \u -> do
+    where_ (u^.UserId `in_` valList user_ids)
+    return u
 
 isAdministratorDB :: UserId -> YesodDB App Bool
 isAdministratorDB = fmap (maybe False userIsAdministrator) . get

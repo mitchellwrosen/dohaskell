@@ -30,9 +30,9 @@
 -- to /r/list/#Text for the current User.
 /u/#UserId/list/#Text UserListR      GET
 
-/r/!#ResourceId         ResourceR           GET
-/r/!#ResourceId/edit     EditResourceR       GET POST
-/r/!#ResourceId/comments ResourceCommentsR   GET POST
+/r/!#ResourceId               ResourceR           GET
+/r/!#ResourceId/edit          EditResourceR       GET POST
+/r/!#ResourceId/comments      ResourceCommentsR   GET POST
 /r/list/#Text                 ResourceListR       GET
 /r/list/#Text/add/#ResourceId ResourceListAddR        POST
 /r/list/#Text/del/#ResourceId ResourceListDelR        POST

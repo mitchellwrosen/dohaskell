@@ -1,2 +1,8 @@
-#{resourceTitle resource} - comments
-^{resourceCommentForestWidget comment_forest}
+<div .header>#{resourceTitle resource}
+
+<div .new-comment>
+  <form method=post action=@{ResourceCommentsR res_id} enctype=#{form_enctype}>
+    ^{form_widget}
+    <button>post
+
+^{resourceCommentForestWidget now users_map comment_forest}
