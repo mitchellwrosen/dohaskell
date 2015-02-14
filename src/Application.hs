@@ -11,13 +11,14 @@ import           Settings
 
 import           Control.Concurrent                   (forkIO, threadDelay)
 import           Control.Monad.Logger                 (LoggingT, runLoggingT)
+import           Control.Monad.Reader                 (ReaderT)
 import           Control.Monad.Trans.Resource         (ResourceT, runResourceT)
 import           Data.Default                         (def)
 import           Data.List                            (sort)
 import qualified Data.Text                            as T
 import qualified Data.Text.IO                         as T
 import           Database.Persist
-import           Database.Persist.Sql
+import           Database.Persist.Sql                 hiding (LogFunc)
 import           Network.HTTP.Client.Conduit          (newManager)
 import           Network.Wai.Logger                   (clockDateCacher)
 import qualified Network.Wai.Middleware.RequestLogger as RequestLogger
@@ -31,6 +32,7 @@ import           Yesod.Core.Types                     (loggerSet, Logger (Logger
 import           Yesod.Default.Config
 import           Yesod.Default.Handlers
 import           Yesod.Default.Main
+import           Yesod.Fay
 
 -- Import all relevant handler modules here.
 -- Don't forget to add new modules to your cabal file!
@@ -38,6 +40,7 @@ import Handler.About
 import Handler.Api.Resource
 import Handler.Browse
 import Handler.EditResourceRequest
+import Handler.FayCommand
 import Handler.Feed
 import Handler.ReqEditsHub
 import Handler.Resource
@@ -98,7 +101,7 @@ makeFoundation conf = do
     _ <- forkIO updateLoop
 
     let logger     = Yesod.Core.Types.Logger loggerSet' getter
-        foundation = App conf s pool manager dbconf logger navbarWidget
+        foundation = App conf s pool manager dbconf logger navbarWidget fayCommandHandler
 
     -- Perform database migration using our application's logging settings.
     let migration = runResourceT $ do
@@ -110,10 +113,10 @@ makeFoundation conf = do
 
     return foundation
 
-runRawQuery :: (RawSql a, MonadSqlPersist m, MonadResource m) => Text -> m [a]
+runRawQuery :: (RawSql a, MonadIO m) => Text -> ReaderT SqlBackend m [a]
 runRawQuery = flip rawSql []
 
-runRawStmt :: MonadSqlPersist m => Text -> m ()
+runRawStmt :: MonadIO m => Text -> ReaderT SqlBackend m ()
 runRawStmt = flip rawExecute []
 
 doMigration :: SqlPersistT (ResourceT (LoggingT IO)) ()

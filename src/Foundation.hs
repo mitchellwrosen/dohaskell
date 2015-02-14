@@ -2,7 +2,7 @@ module Foundation where
 
 import           Control.Applicative         ((<$>))
 import qualified Database.Persist
-import           Database.Persist.Sql        (SqlPersistT)
+import           Database.Persist.Sql        (SqlBackend)
 import           Data.Text                   (Text)
 import           Data.Time                   (getCurrentTime)
 import           Model
@@ -12,10 +12,12 @@ import           Settings                    (Extra(..), widgetFile)
 import qualified Settings
 import           Settings.Development        (development)
 import           Settings.StaticFiles
+import           SharedTypes
 import           Text.Jasmine                (minifym)
 import           Text.Hamlet                 (hamletFile)
 import           Yesod
 import           Yesod.Core.Types            (Logger)
+import           Yesod.Fay
 import           Yesod.Static
 import           Yesod.Auth
 import           Yesod.Auth.BrowserId
@@ -24,13 +26,14 @@ import           Yesod.Default.Util          (addStaticContentExternal)
 
 data App = App
     -- TODO: prepend 'app'
-    { settings      :: AppConfig DefaultEnv Extra
-    , getStatic     :: Static                                                  -- ^ Settings for static file serving.
-    , connPool      :: Database.Persist.PersistConfigPool Settings.PersistConf -- ^ Database connection pool.
-    , httpManager   :: Manager
-    , persistConfig :: Settings.PersistConf
-    , appLogger     :: Logger
-    , appNavbar     :: WidgetT App IO ()
+    { settings             :: AppConfig DefaultEnv Extra
+    , getStatic            :: Static                                                  -- ^ Settings for static file serving.
+    , connPool             :: Database.Persist.PersistConfigPool Settings.PersistConf -- ^ Database connection pool.
+    , httpManager          :: Manager
+    , persistConfig        :: Settings.PersistConf
+    , appLogger            :: Logger
+    , appNavbar            :: WidgetT App IO ()
+    , appFayCommandHandler :: CommandHandler App
     }
 
 instance HasHttpManager App where
@@ -76,7 +79,7 @@ instance Yesod App where
                 ])
             addScriptRemote "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
             $(widgetFile "default-layout")
-        giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
+        withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
     -- This is done to provide an optimization for serving static files from
     -- a separate domain. Please see the staticRoot setting in Settings.hs
@@ -109,20 +112,15 @@ instance Yesod App where
 
     makeLogger = return . appLogger
 
-    -- Gave up trying to use this function because Foundation can't import
-    -- anything that imports Import (which is everything).
-    isAuthorized _ _ = return Authorized
-
-requiresAuthorization :: Handler AuthResult
-requiresAuthorization = maybeAuth >>= maybe (return AuthenticationRequired) (const $ return Authorized)
-
 -- How to run database actions.
 instance YesodPersist App where
-    type YesodPersistBackend App = SqlPersistT
+    type YesodPersistBackend App = SqlBackend
     runDB = defaultRunDB persistConfig connPool
 
 instance YesodPersistRunner App where
     getDBRunner = defaultGetDBRunner connPool
+
+instance YesodAuthPersist App
 
 instance YesodAuth App where
     type AuthId App = UserId
@@ -160,13 +158,15 @@ instance YesodAuth App where
 instance RenderMessage App FormMessage where
     renderMessage _ _ = defaultFormMessage
 
+instance YesodJquery App
+
+instance YesodFay App where
+    yesodFayCommand render val = do
+        app <- getYesod
+        appFayCommandHandler app render val
+
+    fayRoute = FaySiteR
+
 -- | Get the 'Extra' value, used to hold data from the settings.yml file.
 getExtra :: Handler Extra
 getExtra = appExtra . settings <$> getYesod
-
--- Note: previous versions of the scaffolding included a deliver function to
--- send emails. Unfortunately, there are too many different options for us to
--- give a reasonable default. Instead, the information is available on the
--- wiki:
---
--- https://github.com/yesodweb/yesod/wiki/Sending-email

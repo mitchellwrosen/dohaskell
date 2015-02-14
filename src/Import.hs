@@ -27,6 +27,7 @@ import           Settings.Development         as Import
 import           Settings.StaticFiles         as Import
 
 import Database.Esqueleto
+import Yesod.Fay
 
 import qualified Data.Map as M
 
@@ -39,6 +40,21 @@ infixr 5 <>
 (<>) :: Monoid m => m -> m -> m
 (<>) = mappend
 #endif
+
+fayFile :: FayFile
+fayFile module_name
+    | development = fayFileReload settings
+    | otherwise   = fayFileProd   settings
+  where
+    settings = YesodFaySettings
+        { yfsModuleName      = module_name
+        , yfsSeparateRuntime = Nothing
+        , yfsPostProcess     = return
+        , yfsExternal        = Nothing
+        , yfsRequireJQuery   = True
+        , yfsPackages        = ["fay-base", "fay-dom", "fay-jquery", "fay-text"]
+        , yfsTypecheckDevel  = False
+        }
 
 class FromValue a where
     type UnValue a
@@ -81,5 +97,5 @@ showDiffTime x y =
     secsPerYear   = 31536000 -- 60*60*24*365
 
 -- | Create a map from id -> value, from a list of entities.
-entitiesMap :: [Entity a] -> Map (Key a) a
+entitiesMap :: Ord (Key a) => [Entity a] -> Map (Key a) a
 entitiesMap = foldr (\(Entity k v) -> M.insert k v) mempty

@@ -17,8 +17,8 @@ import Yesod.Markdown         (Markdown)
 -- at:
 -- http://www.yesodweb.com/book/persistent/
 
-share [ mkPersist sqlOnlySettings
+share [ mkPersist sqlSettings
       , mkMigrate "migrateAll"
-      , mkDeleteCascade sqlOnlySettings
+      , mkDeleteCascade sqlSettings
       ]
     $(persistFileWith lowerCaseSettings "config/models")

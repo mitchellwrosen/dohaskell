@@ -45,7 +45,7 @@ postSubmitR = do
 
     setDuplicateUrlMessage :: Text -> ResourceId -> Handler ()
     setDuplicateUrlMessage resUrl resId = do
-        giveUrlRenderer [hamlet|
+        withUrlRenderer [hamlet|
                 URL "#{resUrl}" already exists.
                 <a href=@{ResourceR resId}>Take me there.
             |] >>= setMessage

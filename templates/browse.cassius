@@ -1,3 +1,6 @@
+.permalink
+  display: none
+
 .count
   clear: left
   float: left

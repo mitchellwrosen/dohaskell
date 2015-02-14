@@ -21,6 +21,8 @@ import qualified Data.Text   as T
 import           Text.Blaze  (ToMarkup)
 import           Text.Hamlet (hamletFile)
 
+import Text.Cassius (cassiusFile)
+
 -- | Look up GET param for sorting, default to alphabetical.
 lookupSortByParam :: Handler SortBy
 lookupSortByParam = lookupGetParam "sort" >>= \case
@@ -98,7 +100,7 @@ getResources get_resources title = do
             pc <- widgetToPageContent $ do
                 setTitle (toHtml title)
                 resourceListWidget resources
-            giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
+            withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
         else defaultLayout $ do
             setTitle (toHtml title)
             sortResBarWidget sort_res_by
@@ -115,6 +117,7 @@ getBrowseAuthorsR = do
 
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
+    get_params  <- reqGetParams <$> getRequest
     let order_func       = case sort_by of
                                SortByAZ        -> orderAlphabeticIgnoreCase (authorName . entityVal)
                                SortByCountUp   -> orderCountUp (authorName . entityVal) entityKey total_counts
@@ -133,7 +136,10 @@ getBrowseAuthorsR = do
         browseBarWidget BrowseByAuthorLink
         sortBarWidget "authors" sort_by
         sortResBarWidget sort_res_by
-        $(widgetFile "browse")
+        -- $(widgetFile "browse")
+        toWidget $(hamletFile "templates/browse.hamlet")
+        toWidget $(cassiusFile "templates/browse.cassius")
+        $(fayFile "Browse")
 
 getBrowseCollectionsR :: Handler Html
 getBrowseCollectionsR = do
@@ -146,6 +152,7 @@ getBrowseCollectionsR = do
 
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
+    get_params  <- reqGetParams <$> getRequest
     let order_func       = case sort_by of
                                SortByAZ        -> orderAlphabeticIgnoreCase (collectionName . entityVal)
                                SortByCountUp   -> orderCountUp   (collectionName . entityVal) entityKey total_counts
@@ -193,6 +200,7 @@ browseTagsHandler title = do
 
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
+    get_params  <- reqGetParams <$> getRequest
     let order_func       = case sort_by of
                                SortByAZ        -> orderAlphabeticIgnoreCase (tagName . entityVal)
                                SortByCountUp   -> orderCountUp   (tagName . entityVal) entityKey total_counts
@@ -223,6 +231,7 @@ getBrowseTypesR = do
 
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
+    get_params  <- reqGetParams <$> getRequest
     let order_func       = case sort_by of
                                SortByAZ        -> orderAlphabeticIgnoreCase shortDescResourceTypePlural
                                SortByCountUp   -> orderCountUp              shortDescResourceTypePlural id total_counts
