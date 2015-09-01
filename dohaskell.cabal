@@ -26,6 +26,7 @@ library
                      Handler.About
                      Handler.Api.Resource
                      Handler.Browse
+                     Handler.Common
                      Handler.EditResourceRequest
                      Handler.Feed
                      Handler.Resource
@@ -48,7 +49,6 @@ library
                      Model.Utils
                      Settings
                      Settings.StaticFiles
-                     Settings.Development
                      View.Browse
                      View.Feed
                      View.Navbar
@@ -58,9 +58,9 @@ library
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
-        ghc-options:   -Wall -O0
+        ghc-options:   -Wall -fwarn-tabs -O0
     else
-        ghc-options:   -Wall -O2
+        ghc-options:   -Wall -fwarn-tabs -O2
 
     extensions: CPP
                 DeriveDataTypeable
@@ -80,6 +80,7 @@ library
                 ScopedTypeVariables
                 TemplateHaskell
                 TypeFamilies
+                ViewPatterns
 
     build-depends: base >= 4 && < 5
                  , aeson
@@ -87,6 +88,7 @@ library
                  , attoparsec
                  , blaze-markup
                  , bytestring
+                 , classy-prelude-yesod
                  , conduit
                  , containers
                  , data-default
@@ -94,6 +96,7 @@ library
                  , dlist
                  , esqueleto
                  , fast-logger
+                 , file-embed
                  , feed
                  , hjsmin
                  , http-client
@@ -136,7 +139,7 @@ executable         dohaskell
                      , dohaskell
                      , yesod
 
-    ghc-options:       -threaded -O2
+    ghc-options:       -threaded -O2 -rtsopts -with-rtsopts=-N
 
 test-suite test
     type:              exitcode-stdio-1.0
@@ -146,7 +149,7 @@ test-suite test
 
     build-depends: base
                  , dohaskell
-                 , yesod-test >= 1.2 && < 1.3
+                 , yesod-test
                  , yesod-core
                  , yesod
                  , persistent

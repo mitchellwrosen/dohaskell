@@ -9,9 +9,9 @@ User
     UniqueUserName name
     deriving Typeable
 
--- A list of resources, whose database entry is shared by all users who happen 
--- to have made a list of that name. There is one built-in list ("grokked") that 
--- users can easily add items to. All other lists (e.g. "to read" or 
+-- A list of resources, whose database entry is shared by all users who happen
+-- to have made a list of that name. There is one built-in list ("grokked") that
+-- users can easily add items to. All other lists (e.g. "to read" or
 -- "favorites") are created on the fly by adding one resource to them.
 List
     name Text

@@ -10,7 +10,6 @@ import           Model.Utils
 import           View.Browse
 import           View.User
 
-import           Data.List          (sortBy)
 import           Data.Time          (NominalDiffTime, diffUTCTime, getCurrentTime)
 import qualified Data.Text          as T
 import           Text.Printf

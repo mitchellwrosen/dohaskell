@@ -17,7 +17,6 @@ import qualified Data.Map             as M
 import           Data.Sequence        (Seq, ViewL(..), (|>))
 import qualified Data.Sequence        as Seq
 import qualified Data.Set             as S
-import           Data.Text            (intercalate)
 import           Data.Tree            (Forest, Tree(..))
 import qualified Data.Tree            as Tree
 import           Database.Persist.Sql

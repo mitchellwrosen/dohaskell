@@ -6,7 +6,6 @@ import Text.ParserCombinators.ReadPrec (lift)
 import Text.ParserCombinators.ReadP    ((+++), string)
 import Text.Read                       (readPrec)
 
-import Control.Applicative             ((<$))
 import Database.Persist.TH             (derivePersistField)
 
 data FeedType

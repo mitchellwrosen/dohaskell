@@ -13,8 +13,7 @@ import Model.User
 import Model.Utils
 import View.Browse
 
-import           Data.Aeson  (Value)
-import           Data.List   (sortBy)
+import           Data.Aeson  (Value(..))
 import qualified Data.Map    as M
 import           Data.Maybe  (isJust)
 import qualified Data.Text   as T
