@@ -32,17 +32,19 @@ lookupSortByParam = lookupGetParam "sort" >>= \case
 -- | Look up GET param for sorting resources, default to alphabetical.
 lookupSortResByParam :: Handler SortBy
 lookupSortResByParam = lookupGetParam "sort-res" >>= \case
-    Just "year-up"    -> return SortByYearUp
-    Just "year-down"  -> return SortByYearDown
-    _                 -> return SortByAZ
+    Just "year-up"        -> return SortByYearUp
+    Just "year-down"      -> return SortByYearDown
+    Just "recently-added" -> return SortByRecentlyAdded
+    _                     -> return SortByAZ
 
 getResourceOrderFunc :: Handler (SortBy, Entity Resource -> Entity Resource -> Ordering)
 getResourceOrderFunc = do
     sort_res_by <- lookupSortResByParam
     return (sort_res_by, case sort_res_by of
-                             SortByYearUp   -> orderResourceYearUp
-                             SortByYearDown -> orderResourceYearDown
-                             _              -> orderAlphabeticIgnoreCase (resourceTitle . entityVal))
+                             SortByYearUp        -> orderResourceYearUp
+                             SortByYearDown      -> orderResourceYearDown
+                             SortByRecentlyAdded -> orderResourceRecentlyAdded
+                             _                   -> orderAlphabeticIgnoreCase (resourceTitle . entityVal))
   where
     orderResourceYearUp :: Entity Resource -> Entity Resource -> Ordering
     orderResourceYearUp (Entity _ x) (Entity _ y) =
@@ -64,6 +66,10 @@ getResourceOrderFunc = do
         compareLatest Nothing  (Just _) = GT -- Nothing means no year, so put it at the bottom
         compareLatest (Just _) Nothing  = LT
         compareLatest _        _        = EQ
+
+    orderResourceRecentlyAdded :: Entity Resource -> Entity Resource -> Ordering
+    orderResourceRecentlyAdded (Entity uidx _) (Entity uidy _) =
+        compare uidy uidx -- Ids as substitutes for submission dates
 
 vshow :: Show a => a -> Value
 vshow = String . T.pack . show
@@ -115,11 +121,12 @@ getBrowseAuthorsR = do
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
     let order_func       = case sort_by of
-                               SortByAZ        -> orderAlphabeticIgnoreCase (authorName . entityVal)
-                               SortByCountUp   -> orderCountUp (authorName . entityVal) entityKey total_counts
-                               SortByCountDown -> orderCountDown (authorName . entityVal) entityKey total_counts
-                               SortByYearUp    -> orderYearUp (authorName . entityVal) entityKey year_ranges
-                               SortByYearDown  -> orderYearDown (authorName . entityVal) entityKey year_ranges
+                               SortByAZ            -> orderAlphabeticIgnoreCase (authorName . entityVal)
+                               SortByCountUp       -> orderCountUp (authorName . entityVal) entityKey total_counts
+                               SortByCountDown     -> orderCountDown (authorName . entityVal) entityKey total_counts
+                               SortByYearUp        -> orderYearUp (authorName . entityVal) entityKey year_ranges
+                               SortByYearDown      -> orderYearDown (authorName . entityVal) entityKey year_ranges
+                               SortByRecentlyAdded -> orderAlphabeticIgnoreCase (authorName . entityVal)
         entities         = sortBy order_func unsorted_authors
         get_maps_key     = entityKey
         get_permalink    = AuthorR . authorName . entityVal
@@ -146,11 +153,12 @@ getBrowseCollectionsR = do
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
     let order_func       = case sort_by of
-                               SortByAZ        -> orderAlphabeticIgnoreCase (collectionName . entityVal)
-                               SortByCountUp   -> orderCountUp   (collectionName . entityVal) entityKey total_counts
-                               SortByCountDown -> orderCountDown (collectionName . entityVal) entityKey total_counts
-                               SortByYearUp    -> orderYearUp    (collectionName . entityVal) entityKey year_ranges
-                               SortByYearDown  -> orderYearDown  (collectionName . entityVal) entityKey year_ranges
+                               SortByAZ            -> orderAlphabeticIgnoreCase (collectionName . entityVal)
+                               SortByCountUp       -> orderCountUp   (collectionName . entityVal) entityKey total_counts
+                               SortByCountDown     -> orderCountDown (collectionName . entityVal) entityKey total_counts
+                               SortByYearUp        -> orderYearUp    (collectionName . entityVal) entityKey year_ranges
+                               SortByYearDown      -> orderYearDown  (collectionName . entityVal) entityKey year_ranges
+                               SortByRecentlyAdded -> orderAlphabeticIgnoreCase (collectionName . entityVal)
         entities         = sortBy order_func unsorted_collections
         get_maps_key     = entityKey
         get_permalink    = CollectionR . collectionName . entityVal
@@ -193,11 +201,12 @@ browseTagsHandler title = do
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
     let order_func       = case sort_by of
-                               SortByAZ        -> orderAlphabeticIgnoreCase (tagName . entityVal)
-                               SortByCountUp   -> orderCountUp   (tagName . entityVal) entityKey total_counts
-                               SortByCountDown -> orderCountDown (tagName . entityVal) entityKey total_counts
-                               SortByYearUp    -> orderYearUp    (tagName . entityVal) entityKey year_ranges
-                               SortByYearDown  -> orderYearDown  (tagName . entityVal) entityKey year_ranges
+                               SortByAZ            -> orderAlphabeticIgnoreCase (tagName . entityVal)
+                               SortByCountUp       -> orderCountUp   (tagName . entityVal) entityKey total_counts
+                               SortByCountDown     -> orderCountDown (tagName . entityVal) entityKey total_counts
+                               SortByYearUp        -> orderYearUp    (tagName . entityVal) entityKey year_ranges
+                               SortByYearDown      -> orderYearDown  (tagName . entityVal) entityKey year_ranges
+                               SortByRecentlyAdded -> orderAlphabeticIgnoreCase (tagName . entityVal)
         entities         = sortBy order_func unsorted_tags
         get_maps_key     = entityKey
         get_permalink    = TagR . tagName . entityVal
@@ -223,11 +232,12 @@ getBrowseTypesR = do
     sort_by     <- lookupSortByParam
     sort_res_by <- lookupSortResByParam
     let order_func       = case sort_by of
-                               SortByAZ        -> orderAlphabeticIgnoreCase shortDescResourceTypePlural
-                               SortByCountUp   -> orderCountUp              shortDescResourceTypePlural id total_counts
-                               SortByCountDown -> orderCountDown            shortDescResourceTypePlural id total_counts
-                               SortByYearUp    -> orderYearUp               shortDescResourceTypePlural id year_ranges
-                               SortByYearDown  -> orderYearDown             shortDescResourceTypePlural id year_ranges
+                               SortByAZ            -> orderAlphabeticIgnoreCase shortDescResourceTypePlural
+                               SortByCountUp       -> orderCountUp              shortDescResourceTypePlural id total_counts
+                               SortByCountDown     -> orderCountDown            shortDescResourceTypePlural id total_counts
+                               SortByYearUp        -> orderYearUp               shortDescResourceTypePlural id year_ranges
+                               SortByYearDown      -> orderYearDown             shortDescResourceTypePlural id year_ranges
+                               SortByRecentlyAdded -> orderAlphabeticIgnoreCase shortDescResourceTypePlural
         entities         = sortBy order_func [minBound..maxBound]
         get_maps_key     = id
         get_permalink    = TypeR . shortDescResourceTypePlural
