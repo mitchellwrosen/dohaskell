@@ -152,6 +152,8 @@ sortResBarWidget SortByYearUp = do
         |
         <a .bar-link #so-res-year-down href=@?{(route, addGetParam ("sort-res", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9650;
+        |
+        <a .bar-link #so-res-recently-added href=@?{(route, addGetParam ("sort-res", T.pack (show SortByRecentlyAdded)) params)}>recently added
     |]
     sortResBarCSS
     toWidget [cassius|
@@ -166,10 +168,28 @@ sortResBarWidget SortByYearDown = do
         |
         <a .bar-link #so-res-year-up href=@?{(route, addGetParam ("sort-res", T.pack (show SortByYearUp)) params)}>year#
           <span .arr>&#9660;
+        |
+        <a .bar-link #so-res-recently-added href=@?{(route, addGetParam ("sort-res", T.pack (show SortByRecentlyAdded)) params)}>recently added
     |]
     sortResBarCSS
     toWidget [cassius|
       #so-res-year-up
+        font-weight: bold
+    |]
+sortResBarWidget SortByRecentlyAdded = do
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
+    [whamlet|
+      <div .bar .sort-res-bar>sort resources by: #
+        <a .bar-link #so-res-az href=@?{(route, addGetParam ("sort-res", T.pack (show SortByAZ)) params)}>a-z
+        |
+        <a .bar-link #so-res-year-down href=@?{(route, addGetParam ("sort-res", T.pack (show SortByYearDown)) params)}>year#
+          <span .arr>&#9660;
+        |
+        <a .bar-link #so-res-recently-added href=@?{(route, addGetParam ("sort-res", T.pack (show SortByRecentlyAdded)) params)}>recently added
+    |]
+    sortResBarCSS
+    toWidget [cassius|
+      #so-res-recently-added
         font-weight: bold
     |]
 sortResBarWidget _ = do
@@ -180,6 +200,8 @@ sortResBarWidget _ = do
         |
         <a .bar-link #so-res-year-down href=@?{(route, addGetParam ("sort-res", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
+        |
+        <a .bar-link #so-res-recently-added href=@?{(route, addGetParam ("sort-res", T.pack (show SortByRecentlyAdded)) params)}>recently added
     |]
     sortResBarCSS
     toWidget [cassius|
