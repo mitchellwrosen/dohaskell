@@ -5,7 +5,6 @@ import Database.Persist.Sql        (ConnectionPool, runSqlPool)
 import Text.Hamlet                 (hamletFile)
 import Text.Jasmine                (minifym)
 import Yesod.Auth.BrowserId        (authBrowserId)
-import Yesod.Auth.Message          (AuthMessage (InvalidLogin))
 import Yesod.Default.Util          (addStaticContentExternal)
 import Yesod.Core.Types            (Logger)
 import qualified Yesod.Core.Unsafe as Unsafe
@@ -44,7 +43,7 @@ instance Yesod App where
                 ])
             addScriptRemote "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
             $(widgetFile "default-layout")
-        giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
+        withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
 
     authRoute _ = Just $ AuthR LoginR
 

@@ -9,9 +9,11 @@ module Yesod.Form.Types.Extra
 
 import Import
 
-import           Data.Attoparsec.Text  (Parser, char, many1, notChar, parseOnly, sepBy1, skipSpace)
-import qualified Data.Text             as T
+import Data.Attoparsec.Text (Parser, char, many1, notChar, parseOnly, sepBy1, skipSpace)
 
+import qualified Data.Text as T
+
+commaSepTextField :: (Monad m, RenderMessage (HandlerSite m) FormMessage) => Field m [Text]
 commaSepTextField = parsedTextField parseTexts showTexts
   where
     parseTexts :: Parser [Text]

@@ -9,7 +9,6 @@ import Import
 
 import Model.Feed.Internal
 
-import Data.ByteString (ByteString)
 import Database.Esqueleto
 
 -- | Get all feed (title, url, type) 3-tuples.

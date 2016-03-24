@@ -4,7 +4,6 @@ module Import.NoFoundation
 
 import ClassyPrelude.Yesod   as Import hiding (Feed(..), Value(..), (=.), (==.), delete, groupBy, on, update)
 import Model                 as Import
-import Prelude               as Import (String)
 import Settings              as Import
 import Settings.StaticFiles  as Import
 import Yesod.Auth            as Import

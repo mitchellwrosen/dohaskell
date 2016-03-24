@@ -7,15 +7,12 @@ import View.Feed
 
 import           Control.Concurrent        (threadDelay)
 import           Control.Concurrent.Async  (race)
-import           Control.Exception.Lifted  (catch, throwIO)
 import           Control.Lens
 import           Control.Monad.Trans.Maybe (MaybeT(..), runMaybeT)
 import qualified Data.ByteString           as BS
 import qualified Data.ByteString.Lazy      as BSL
 import qualified Data.Text                 as T
 import           Prelude                   (reads)
-import           Network.HTTP.Client       (HttpException(..))
-import           Network.HTTP.Types        (Status(..))
 import qualified Network.Wreq              as Wreq
 import qualified Text.Atom.Feed            as Atom
 import qualified Text.Atom.Feed.Import     as Atom

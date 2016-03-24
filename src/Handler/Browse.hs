@@ -15,7 +15,6 @@ import View.Browse
 
 import           Data.Aeson  (Value(..))
 import qualified Data.Map    as M
-import           Data.Maybe  (isJust)
 import qualified Data.Text   as T
 import           Text.Blaze  (ToMarkup)
 import           Text.Hamlet (hamletFile)
@@ -103,7 +102,7 @@ getResources get_resources title = do
             pc <- widgetToPageContent $ do
                 setTitle (toHtml title)
                 resourceListWidget resources
-            giveUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
+            withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
         else defaultLayout $ do
             setTitle (toHtml title)
             sortResBarWidget sort_res_by

@@ -27,7 +27,6 @@ import Model.Resource.Internal
 
 import           Model.List
 
-import           Data.DList         (DList)
 import qualified Data.DList         as DL
 import qualified Data.Map           as M
 import qualified Data.Text          as T
@@ -189,7 +188,7 @@ updateResourceDB res_id title authors published typ tags colls = do
     deleteUnusedEntities id_field relation_id_field =
         delete $
         from $ \table ->
-        where_ (table^.id_field `notIn` (subList_selectDistinct $
+        where_ (table^.id_field `notIn` (subList_select $ distinct $
                                          from $ \relation_table ->
                                          return (relation_table^.relation_id_field)))
 
@@ -213,7 +212,7 @@ updateResourceAuthorsDB res_id authors = do
     deleteUnusedAuthors =
         delete $
         from $ \a ->
-        where_ (a^.AuthorId `notIn` (subList_selectDistinct $
+        where_ (a^.AuthorId `notIn` (subList_select $ distinct $
                                      from $ \ra ->
                                      return (ra^.ResAuthorAuthId)))
 

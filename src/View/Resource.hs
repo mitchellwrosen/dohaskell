@@ -1,8 +1,6 @@
 module View.Resource
     ( editResourceForm
     , editResourceFormWidget
-    , resourceCommentForestWidget
-    , resourceCommentTreeWidget
     , resourceForm
     , resourceInfoWidget
     ) where
@@ -15,7 +13,6 @@ import           Yesod.Form.Types.Extra (commaSepTextField, mapField)
 
 import           Data.List              (nub)
 import qualified Data.Text              as T
-import           Data.Tree              (Forest, Tree(..))
 import           Yesod.Form.Bootstrap3  -- (renderBootstrap3)
 
 -- Crappy type synonyms, trying not to clash with models. Unexported.
@@ -126,19 +123,3 @@ resourceInfoWidget (Entity res_id res) = do
     posted <- prettyAgo (resourcePosted res)
 
     $(widgetFile "resource-info")
-
-resourceCommentForestWidget :: Forest (Entity Comment) -> Widget
-resourceCommentForestWidget comment_forest =
-    [whamlet|
-      $forall comment_tree <- comment_forest
-        ^{resourceCommentTreeWidget comment_tree}
-    |]
-
-resourceCommentTreeWidget :: Tree (Entity Comment) -> Widget
-resourceCommentTreeWidget (Node (Entity _ comment) children) = do
-    children_widget <- resourceCommentForestWidget children
-    undefined
-    -- [whamlet|
-    --   <div>User #{commentUserId comment}: #{commentBody comment}
-    --     ^{children_widget}
-    -- |]

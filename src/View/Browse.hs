@@ -68,6 +68,8 @@ sortBarWidget text SortByAZ = do
         |
         <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
+        |
+        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -85,6 +87,8 @@ sortBarWidget text SortByCountUp = do
         |
         <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
+        |
+        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -102,6 +106,8 @@ sortBarWidget text SortByCountDown = do
         |
         <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
+        |
+        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -119,6 +125,8 @@ sortBarWidget text SortByYearUp = do
         |
         <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9650;
+        |
+        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -136,10 +144,31 @@ sortBarWidget text SortByYearDown = do
         |
         <a .bar-link #so-year-up href=@?{(route, addGetParam ("sort", T.pack (show SortByYearUp)) params)}>year#
           <span .arr>&#9660;
+        |
+        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
       #so-year-up
+        font-weight: bold
+    |]
+sortBarWidget text SortByRecentlyAdded = do
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
+    [whamlet|
+      <div .bar>sort #{text} by: #
+        <a .bar-link #so-az href=@?{(route, addGetParam ("sort", T.pack (show SortByAZ)) params)}>a-z
+        |
+        <a .bar-link #so-count-down href=@?{(route, addGetParam ("sort", T.pack (show SortByCountDown)) params)}>count#
+          <span .arr>&#9660;
+        |
+        <a .bar-link #so-year-up href=@?{(route, addGetParam ("sort", T.pack (show SortByYearUp)) params)}>year#
+          <span .arr>&#9660;
+        |
+        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
+    |]
+    topBarCSS
+    toWidget [cassius|
+      #so-recently-added
         font-weight: bold
     |]
 
