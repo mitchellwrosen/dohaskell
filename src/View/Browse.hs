@@ -1,6 +1,8 @@
 module View.Browse
     ( BrowseByLink(..)
     , browseBarWidget
+    , pageWidget
+    , pageWidgetEmbed
     , resourceListWidget
     , sortBarWidget
     , sortResBarWidget
@@ -68,8 +70,6 @@ sortBarWidget text SortByAZ = do
         |
         <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
-        |
-        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -87,8 +87,6 @@ sortBarWidget text SortByCountUp = do
         |
         <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
-        |
-        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -106,8 +104,6 @@ sortBarWidget text SortByCountDown = do
         |
         <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9660;
-        |
-        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -125,8 +121,6 @@ sortBarWidget text SortByYearUp = do
         |
         <a .bar-link #so-year-down href=@?{(route, addGetParam ("sort", T.pack (show SortByYearDown)) params)}>year#
           <span .arr>&#9650;
-        |
-        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -144,8 +138,6 @@ sortBarWidget text SortByYearDown = do
         |
         <a .bar-link #so-year-up href=@?{(route, addGetParam ("sort", T.pack (show SortByYearUp)) params)}>year#
           <span .arr>&#9660;
-        |
-        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -163,8 +155,6 @@ sortBarWidget text SortByRecentlyAdded = do
         |
         <a .bar-link #so-year-up href=@?{(route, addGetParam ("sort", T.pack (show SortByYearUp)) params)}>year#
           <span .arr>&#9660;
-        |
-        <a .bar-link #so-recently-added href=@?{(route, addGetParam ("sort", T.pack (show SortByRecentlyAdded)) params)}>recent
     |]
     topBarCSS
     toWidget [cassius|
@@ -287,3 +277,52 @@ resourceListWidget resources = do
     if is_logged_in
         then toWidget $(juliusFile "templates/resource-list-logged-in.julius")
         else toWidget $(juliusFile "templates/resource-list-not-logged-in.julius")
+
+pageWidget :: Maybe Int64 -> Maybe Int64 -> Widget
+pageWidget mprev mnext = do
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
+    [whamlet|
+      $maybe prev <- mprev
+        <a href=@?{(route, addGetParam ("page", T.pack (show prev)) params)}>Prev
+      $maybe next <- mnext
+        <a href=@?{(route, addGetParam ("page", T.pack (show next)) params)}>Next
+    |]
+
+pageWidgetEmbed :: Maybe Int64 -> Maybe Int64 -> Widget
+pageWidgetEmbed mprev mnext = do
+    (route, params) <- handlerToWidget getCurrentRouteWithGetParams
+    case mprev of
+        Nothing -> pure ()
+        Just prev -> do
+            [whamlet|
+              $maybe _ <- mprev
+                <a .prev-page>Prev
+            |]
+            toWidget [julius|
+              $(document).ready(function() {
+                $('.prev-page').click(function() {
+                  $(this).parent().load('@?{(route, addGetParam ("page", T.pack (show prev)) params)}');
+                });
+              });
+            |]
+    case mnext of
+        Nothing -> pure ()
+        Just next -> do
+            [whamlet|
+              $maybe _ <- mnext
+                <a .next-page>Next
+            |]
+            toWidget [julius|
+              $(document).ready(function() {
+                $('.next-page').click(function() {
+                  $(this).parent().load('@?{(route, addGetParam ("page", T.pack (show next)) params)}');
+                });
+              });
+            |]
+    toWidget [cassius|
+      a.prev-page:hover
+        cursor: pointer
+
+      a.next-page:hover
+        cursor: pointer
+    |]

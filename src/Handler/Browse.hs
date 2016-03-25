@@ -36,6 +36,15 @@ lookupSortResByParam = lookupGetParam "sort-res" >>= \case
     Just "recently-added" -> return SortByRecentlyAdded
     _                     -> return SortByAZ
 
+-- | Look up GET param for page; given the page size, return page num, limit,
+-- and offset.
+lookupPageParam :: Int64 -> Handler (Int64, Int64, Int64)
+lookupPageParam page_size = do
+  page <- fromMaybe 1 . (\p -> p >>= readMay) <$> lookupGetParam "page"
+  let lim = page_size + 1
+      off = (page-1) * page_size
+  pure (page, lim, off)
+
 getResourceOrderFunc :: Handler (SortBy, Entity Resource -> Entity Resource -> Ordering)
 getResourceOrderFunc = do
     sort_res_by <- lookupSortResByParam
@@ -88,25 +97,45 @@ getTypeR text = case shortReadResourceTypePlural text of
     Nothing  -> notFound
     Just typ -> getResources (fetchResourcesWithTypeDB typ) ("dohaskell | the " <> text)
 
--- | Abstract getAuthorR, getTagR, and getTypeR. Assumes the resources grabbed from the
--- database are unsorted.
-getResources :: ToMarkup markup => YesodDB App [Entity Resource] -> markup -> Handler Html
+-- | Abstract getAuthorR, getCollectionR, getTagR, and getTypeR. Assumes the
+-- resources grabbed from the database are unsorted.
+getResources
+    :: ToMarkup markup
+    => (Int64 -> Int64 -> YesodDB App [Entity Resource])
+    -> markup
+    -> Handler Html
 getResources get_resources title = do
     (sort_res_by, order_func) <- getResourceOrderFunc
-    unsorted_resources <- runDB get_resources
-    is_embed  <- isJust <$> lookupGetParam "embed"
 
-    let resources = sortBy order_func unsorted_resources
+    let page_size = 10
+
+    (page, lim, off) <- lookupPageParam page_size
+    unsorted_resources <- runDB (get_resources lim off)
+
+    let mprev = if page > 1
+                    then Just (page-1)
+                    else Nothing
+
+        mnext = if length unsorted_resources > page_size
+                    then Just (page+1)
+                    else Nothing
+
+        resources = sortBy order_func (take page_size unsorted_resources)
+
+    is_embed <- isJust <$> lookupGetParam "embed"
+
     if is_embed
         then do
             pc <- widgetToPageContent $ do
                 setTitle (toHtml title)
                 resourceListWidget resources
+                pageWidgetEmbed mprev mnext
             withUrlRenderer $(hamletFile "templates/default-layout-wrapper.hamlet")
         else defaultLayout $ do
             setTitle (toHtml title)
             sortResBarWidget sort_res_by
             resourceListWidget resources
+            pageWidget mprev mnext
 
 getBrowseAuthorsR :: Handler Html
 getBrowseAuthorsR = do
@@ -174,16 +203,31 @@ getBrowseCollectionsR = do
 
 getBrowseResourcesR :: Handler Html
 getBrowseResourcesR = do
-    unsorted_resources <- runDB fetchAllResourcesDB
+    let page_size = 100
+
+    (page, lim, off) <- lookupPageParam page_size
+
+    unsorted_resources <- runDB (fetchAllResourcesDB lim off)
 
     (sort_res_by, order_func) <- getResourceOrderFunc
-    let resources = sortBy order_func unsorted_resources
+
+    let mprev = if page > 1
+                    then Just (page-1)
+                    else Nothing
+
+        mnext = if length unsorted_resources > page_size
+                    then Just (page+1)
+                    else Nothing
+
+        resources = sortBy order_func (take page_size unsorted_resources)
+
 
     defaultLayout $ do
         setTitle "dohaskell | browse resources"
         browseBarWidget BrowseByResourceLink
         sortResBarWidget sort_res_by
         resourceListWidget resources
+        pageWidget mprev mnext
 
 getBrowseTagsR :: Handler Html
 getBrowseTagsR = browseTagsHandler "dohaskell | browse tags"

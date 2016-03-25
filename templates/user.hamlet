@@ -6,7 +6,6 @@
         <a href=@{UserSubmittedR user_id}>#{num_submitted} submitted
       <div>
         <a href=@{UserListR user_id "grokked"}>#{num_grokked} grokked
-        \ <span .grokked-per-week>(#{grokked_per_week_str} per week)
 
   $if is_own_profile
     <div .settings>
@@ -19,4 +18,3 @@
 
       <div .req-edits>
         <a href=@{ReqEditsHubR user_id}>#{num_req_edits} requested #{plural num_req_edits "edit"}
-

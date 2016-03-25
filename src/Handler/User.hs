@@ -10,9 +10,7 @@ import           Model.Utils
 import           View.Browse
 import           View.User
 
-import           Data.Time          (NominalDiffTime, diffUTCTime)
-import qualified Data.Text          as T
-import           Text.Printf
+import qualified Data.Text as T
 
 plural :: Int -> Text -> Text
 plural 1 = id
@@ -29,23 +27,9 @@ getUserR user_id = do
         <*> fetchNumSubmittedResourcesDB user_id
         <*> fetchNumGrokkedResourcesDB   user_id
 
-    weeks_since_user_creation :: Double <-
-        (/ fromIntegral secsPerWeek) .
-          (fromIntegral :: Integer -> Double) .
-            (round :: NominalDiffTime -> Integer) .
-              flip diffUTCTime (userCreated user) <$>
-                liftIO getCurrentTime
-
-    let num_grokked_double   = fromIntegral num_grokked
-        grokked_per_week     = min num_grokked_double (num_grokked_double / weeks_since_user_creation)
-        grokked_per_week_str = printf "%.1f" grokked_per_week :: String
-
     defaultLayout $ do
         setTitle "dohaskell | profile"
         $(widgetFile "user")
-  where
-    secsPerWeek :: Integer
-    secsPerWeek = 604800   -- 60*60*24*7
 
 postUserR :: UserId -> Handler Html
 postUserR user_id = do

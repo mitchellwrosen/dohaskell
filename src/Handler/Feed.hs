@@ -12,18 +12,12 @@ import           Control.Monad.Trans.Maybe (MaybeT(..), runMaybeT)
 import qualified Data.ByteString           as BS
 import qualified Data.ByteString.Lazy      as BSL
 import qualified Data.Text                 as T
-import           Prelude                   (reads)
 import qualified Network.Wreq              as Wreq
 import qualified Text.Atom.Feed            as Atom
 import qualified Text.Atom.Feed.Import     as Atom
 import           Text.RSS.Import           (elementToRSS)
 import           Text.RSS.Syntax           (rssChannel, rssTitle)
 import qualified Text.XML.Light            as XML
-
-safeRead :: Read a => String -> Maybe a
-safeRead s = case reads s of
-    [(a,"")] -> Just a
-    _        -> Nothing
 
 feedFailure :: Html -> Handler Html
 feedFailure msg = setMessage msg >> redirect FeedsR
@@ -45,7 +39,7 @@ getFeedR = runMaybeT lookupParams >>= \case
     lookupParams = (,) <$> MaybeT lookupTypeParam <*> MaybeT lookupUrlParam
 
     lookupTypeParam :: Handler (Maybe FeedType)
-    lookupTypeParam = maybe Nothing (safeRead . T.unpack) <$> lookupGetParam "type"
+    lookupTypeParam = maybe Nothing readMay <$> lookupGetParam "type"
 
     lookupUrlParam :: Handler (Maybe Text)
     lookupUrlParam = lookupGetParam "url"

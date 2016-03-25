@@ -3,7 +3,6 @@ function expand(elem) {
 
   resourceContainer.show();
   if (!$(elem).hasClass('fetched')) {
-    uri =
     uri = #{path_piece} + encodeURIComponent($(elem).attr('id')) + '?embed&sort-res=' + #{sort_res_by_text};
     onFetch = function() { $(elem).addClass('fetched'); }
     resourceContainer.load(uri, onFetch);

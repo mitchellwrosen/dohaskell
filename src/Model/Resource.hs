@@ -42,8 +42,13 @@ resourceExtension res = case T.breakOnEnd "." (resourceUrl res) of
     _          -> Nothing
 
 -- | Get all resources.
-fetchAllResourcesDB :: YesodDB App [Entity Resource]
-fetchAllResourcesDB = selectList [] []
+fetchAllResourcesDB :: Int64 -> Int64 -> YesodDB App [Entity Resource]
+fetchAllResourcesDB lim off =
+  select $
+  from $ \r -> do
+    limit lim
+    offset off
+    return r
 
 -- | Get the Authors of a Resource.
 fetchResourceAuthorsDB :: ResourceId -> YesodDB App [Author]
@@ -73,13 +78,13 @@ fetchResourceAuthorsInDB res_ids = fmap makeAuthorMap $
              -> Map ResourceId (DList Author)
         step (Value res_id, Entity _ author) = M.insertWith (<>) res_id (DL.singleton author)
 
-fetchResourcesByAuthorDB :: Text -> YesodDB App [Entity Resource]
+fetchResourcesByAuthorDB :: Text -> Int64 -> Int64 -> YesodDB App [Entity Resource]
 fetchResourcesByAuthorDB = fetchResourcesWithFieldDB UniqueAuthor ResAuthorResId ResAuthorAuthId
 
-fetchResourcesInCollectionDB :: Text -> YesodDB App [Entity Resource]
+fetchResourcesInCollectionDB :: Text -> Int64 -> Int64 -> YesodDB App [Entity Resource]
 fetchResourcesInCollectionDB = fetchResourcesWithFieldDB UniqueCollection ResCollectionResId ResCollectionColId
 
-fetchResourcesWithTagDB :: Text -> YesodDB App [Entity Resource]
+fetchResourcesWithTagDB :: Text -> Int64 -> Int64 -> YesodDB App [Entity Resource]
 fetchResourcesWithTagDB = fetchResourcesWithFieldDB UniqueTag ResourceTagResId ResourceTagTagId
 
 -- | Abstract fetching all Resources with a particular Text field (Author/Collection/Tag).
@@ -89,21 +94,28 @@ fetchResourcesWithFieldDB :: (PersistEntity entity, PersistEntityBackend entity 
                           -> EntityField relation ResourceId
                           -> EntityField relation (Key entity)
                           -> Text
+                          -> Int64
+                          -> Int64
                           -> YesodDB App [Entity Resource]
-fetchResourcesWithFieldDB unique_entity res_id_field key_field name = getBy (unique_entity name) >>= \case
-    Nothing -> return []
-    Just (Entity key _) ->
-        select $
-        from $ \(r `InnerJoin` table) -> do
-        on (r^.ResourceId ==. table^.res_id_field)
-        where_ (table^.key_field ==. val key)
-        return r
+fetchResourcesWithFieldDB unique_entity res_id_field key_field name lim off =
+    getBy (unique_entity name) >>= \case
+        Nothing -> return []
+        Just (Entity key _) ->
+            select $
+            from $ \(r `InnerJoin` table) -> do
+            on (r^.ResourceId ==. table^.res_id_field)
+            where_ (table^.key_field ==. val key)
+            limit lim
+            offset off
+            return r
 
-fetchResourcesWithTypeDB :: ResourceType -> YesodDB App [Entity Resource]
-fetchResourcesWithTypeDB res_type =
+fetchResourcesWithTypeDB :: ResourceType -> Int64 -> Int64 -> YesodDB App [Entity Resource]
+fetchResourcesWithTypeDB res_type lim off =
     select $
     from $ \r -> do
     where_ (r^.ResourceType ==. val res_type)
+    limit lim
+    offset off
     return r
 
 fetchResourceTagsDB :: ResourceId -> YesodDB App [Tag]
