@@ -1,6 +1,6 @@
-flags: {}
+# flags: {}
 packages:
 - '.'
 extra-deps:
-- yesod-markdown-0.10.0
-resolver: lts-3.3
+- yesod-markdown-0.11.1
+resolver: lts-6.1

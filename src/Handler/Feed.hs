@@ -5,7 +5,6 @@ import Import
 import Model.Feed
 import View.Feed
 
-import           Control.Concurrent        (threadDelay)
 import           Control.Concurrent.Async  (race)
 import           Control.Lens
 import           Control.Monad.Trans.Maybe (MaybeT(..), runMaybeT)
