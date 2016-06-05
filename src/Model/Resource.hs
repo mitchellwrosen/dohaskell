@@ -42,13 +42,18 @@ resourceExtension res = case T.breakOnEnd "." (resourceUrl res) of
     _          -> Nothing
 
 -- | Get all resources.
-fetchAllResourcesDB :: Int64 -> Int64 -> YesodDB App [Entity Resource]
-fetchAllResourcesDB lim off =
+fetchAllResourcesDB
+  :: (SqlExpr (Value ResourceId) -> SqlExpr OrderBy)
+  -> Int64
+  -> Int64
+  -> YesodDB App [Entity Resource]
+fetchAllResourcesDB order lim off =
   select $
   from $ \r -> do
+    orderBy [order (r^.ResourceId)]
     limit lim
     offset off
-    return r
+    pure r
 
 -- | Get the Authors of a Resource.
 fetchResourceAuthorsDB :: ResourceId -> YesodDB App [Author]
