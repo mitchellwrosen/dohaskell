@@ -133,13 +133,6 @@ EditAuthors
     authors [Text]
     UniqueEditAuthors resId authors
 
-Comment
-    resId     ResourceId
-    parentId  CommentId  Maybe
-    userId    UserId
-    body      Markdown
-    timestamp UTCTime
-
 Feed
     type         FeedType
     title        Text

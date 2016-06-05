@@ -5,7 +5,6 @@ module Model.Resource
     , fetchResourceAuthorsDB
     , fetchResourceAuthorsInDB
     , fetchResourceCollectionsDB
-    , fetchResourceCommentsDB
     , fetchResourceFieldCountsDB
     , fetchResourceFieldYearRangesDB
     , fetchResourceGrokkedCountsInDB
@@ -295,13 +294,3 @@ fetchResourceGrokkedCountsInDB res_ids =
   where
     go :: (Value ResourceId, Value Int) -> Map ResourceId Int -> Map ResourceId Int
     go (Value res_id, Value n) = M.insert res_id n
-
--- | Fetch all comments on a Resource, ordered by ascending CommentId (because
--- comment ids are monotonically increasing).
-fetchResourceCommentsDB :: ResourceId -> YesodDB App [Entity Comment]
-fetchResourceCommentsDB res_id =
-    select $
-    from $ \c -> do
-    where_ (c^.CommentResId ==. val res_id)
-    orderBy [asc (c^.CommentId)]
-    return c
