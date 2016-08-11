@@ -1,0 +1,8078 @@
+- title: Adventures in Three Monads
+  url: http://web.mit.edu/~ezyang/Public/threemonads.pdf
+  authors:
+    - Edward Z. Yang
+  type: light research paper
+  tags:
+    - Failure monad
+    - Logic monad
+    - monads
+    - Prompt monad
+
+- title: What are free monads?
+  url: http://stackoverflow.com/questions/13352205/what-are-free-monads
+  type: Q&A website
+  tags:
+    - free monads
+    - monads
+
+- title: CIS 194
+  url: http://www.seas.upenn.edu/~cis194/lectures.html
+  authors:
+    - Brent Yorgey
+  type: lecture notes
+  tags:
+    - online course
+
+- title: Haskell and Yesod
+  url: http://www.yesodweb.com/book-1.2
+  authors:
+    - Michael Snoyman
+  type: textbook
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: CS240h
+  url: http://www.scs.stanford.edu/11au-cs240h/notes/
+  type: lecture notes
+  tags:
+    - online course
+
+- title: How to Learn Haskell
+  url: http://acm3.wustl.edu/functional/haskell.php
+  type: meta resource
+  tags:
+    - introduction
+
+- title: CS 1501 - Introduction to Haskell
+  url: http://shuklan.com/haskell/index.html
+  type: lecture notes
+  tags:
+    - online course
+
+- title: Haskell Notes and Examples
+  url: http://www.vex.net/~trebla/haskell/index.xhtml
+  authors:
+    - Albert Y. C. Lai
+  type: meta resource
+  tags:
+    - miscellaneous
+
+- title: Haskellers.com
+  url: http://www.haskellers.com/
+  authors:
+    - Michael Snoyman
+  type: community site
+  tags:
+    - job search
+
+- title: An Introduction to the Indexed Privilege Monad in Haskell, Scala, and C++
+  url: https://gist.github.com/pthariensflame/6057040
+  authors:
+    - Alexander Altman
+  type: blog post
+  tags:
+    - indexed monads
+    - monads
+    - Privilege monad
+
+- title: Developing Web Applications with Yesod
+  url: http://pbrisbin.com/posts/developing_web_applications_with_yesod/
+  type: blog post
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Brisbane Functional Programming Group
+  url: http://vimeo.com/channels/bfg/
+  type: video lecture
+  tags:
+    - miscellaneous
+
+- title: Can someone explain to me why the app function of ArrowApply makes them as powerful as monads?
+  url: http://stackoverflow.com/questions/17668452/can-someone-explain-to-me-why-the-app-function-of-arrowapply-makes-them-as-power
+  type: Q&A website
+  tags:
+    - arrows
+    - monads
+
+- title: Idioms are oblivious, arrows are meticulous, monads are promiscuous
+  url: http://homepages.inf.ed.ac.uk/wadler/papers/arrows-and-idioms/arrows-and-idioms.pdf
+  authors:
+    - Sam Lindley
+  published: 2008
+  type: light research paper
+  tags:
+    - applicative functors
+    - arrows
+    - monads
+
+- title: Many Roads to Free Monads
+  url: https://www.fpcomplete.com/user/dolio/many-roads-to-free-monads
+  authors:
+    - Dan Doel
+  type: blog post
+  tags:
+    - free algebras
+    - free monads
+
+- title: Getting Started With GHC Hacking
+  url: http://blog.codersbase.com/posts/2013-08-03-getting-started-with-ghc-hacking.html
+  type: blog post
+  tags:
+    - GHC
+
+- title: Certified Programming with Dependent Types
+  url: http://adam.chlipala.net/cpdt/
+  authors:
+    - Adam Chlipala
+  type: textbook
+  tags:
+    - Coq
+    - dependent types
+
+- title: Agda by Example: λ-calculus
+  url: http://mazzo.li/posts/Lambda.html
+  authors:
+    - Francesco Mazzoli
+  type: extended example
+  tags:
+    - Agda
+    - dependent types
+
+- title: B-trees with GADTs
+  url: http://matthew.brecknell.net/post/btree-gadt/
+  authors:
+    - Matthew Brecknell
+  type: video lecture
+  tags:
+    - B-trees
+    - data structures
+    - GADTs
+
+- title: Backtracking, Interleaving, and Terminating Monad Transformers
+  url: http://www.cs.rutgers.edu/~ccshan/logicprog/LogicT-icfp2005.pdf
+  authors:
+    - Oleg Kiselyov
+  type: light research paper
+  tags:
+    - Logic monad
+    - monad transformers
+    - monads
+
+- title: Haskell Wikibook
+  url: https://en.wikibooks.org/wiki/Haskell
+  type: textbook
+  tags:
+    - introduction
+    - miscellaneous
+
+- title: de Brujin notation as a nested datatype
+  url: http://www.cs.uwyo.edu/~jlc/courses/5000_fall_08/debruijn_as_nested_datatype.pdf
+  authors:
+    - Richard S. Bird
+  type: research paper
+  tags:
+    - De Brujin notation
+
+- title: Lists and tuples
+  url: https://en.wikibooks.org/wiki/Haskell/Lists_and_tuples
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - lists
+    - tuples
+
+- title: quechen/articles
+  url: https://github.com/quchen/articles
+  authors:
+    - David Luposchainsky
+  type: blog post
+  tags:
+    - miscellaneous
+
+- title: Recursion
+  url: https://en.wikibooks.org/wiki/Haskell/Recursion
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - recursion
+
+- title: Pattern matching
+  url: https://en.wikibooks.org/wiki/Haskell/Pattern_matching
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - pattern matching
+
+- title: Implementing a JIT Compiled Language with Haskell and LLVM
+  url: http://www.stephendiehl.com/llvm/
+  type: extended example
+  tags:
+    - compilers
+    - JIT compilers
+    - LLVM
+
+- title: Higher-order functions and Currying
+  url: https://en.wikibooks.org/wiki/Haskell/Higher-order_functions_and_Currying
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - currying
+
+- title: Inside My World (Ode to Functor and Monad)
+  url: http://blog.jle.im/entry/inside-my-world-ode-to-functor-and-monad
+  authors:
+    - Justin Le
+  published: 2014
+  type: blog post
+  tags:
+    - functors
+    - monads
+
+- title: Using GHCi effectively
+  url: https://en.wikibooks.org/wiki/Haskell/Using_GHCi_effectively
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - GHCi
+
+- title: Modules
+  url: https://en.wikibooks.org/wiki/Haskell/Modules
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - modules
+
+- title: Lazy Dynamic Programming
+  url: http://jelv.is/blog/Lazy-Dynamic-Programming/
+  type: blog post
+  tags:
+    - dynamic programming
+    - laziness
+
+- title: Indentation
+  url: https://en.wikibooks.org/wiki/Haskell/Indentation
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - layout rules
+
+- title: Classes and types
+  url: https://en.wikibooks.org/wiki/Haskell/Classes_and_types
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - type classes
+
+- title: The Functor class
+  url: https://en.wikibooks.org/wiki/Haskell/The_Functor_class
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - functors
+
+- title: Understanding monads
+  url: https://en.wikibooks.org/wiki/Haskell/Understanding_monads
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - monads
+
+- title: Elegant memoization with functional memo tries
+  url: http://conal.net/blog/posts/elegant-memoization-with-functional-memo-tries
+  authors:
+    - Conal Elliott
+  type: blog post
+  tags:
+    - data structures
+    - memoization
+
+- title: Understanding monads/Maybe
+  url: https://en.wikibooks.org/wiki/Haskell/Understanding_monads/Maybe
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - Maybe monad
+    - monads
+
+- title: Understanding monads/List
+  url: https://en.wikibooks.org/wiki/Haskell/Understanding_monads/List
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - List monad
+
+- title: Call Arity
+  url: http://www.joachim-breitner.de/publications/CallArity-TFP.pdf
+  authors:
+    - Joachim Breitner
+  type: research paper
+  tags:
+    - eta-expansion
+    - list fusion
+
+- title: Understanding monads/IO
+  url: https://en.wikibooks.org/wiki/Haskell/Understanding_monads/IO
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - I/O
+    - monads
+
+- title: Understanding monads/State
+  url: https://en.wikibooks.org/wiki/Haskell/Understanding_monads/State
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - monads
+    - State monad
+
+- title: MonadPlus
+  url: https://en.wikibooks.org/wiki/Haskell/MonadPlus
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - MonadPlus
+
+- title: Monad transformers
+  url: https://en.wikibooks.org/wiki/Haskell/Monad_transformers
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - monad transformers
+
+- title: Monoids
+  url: https://en.wikibooks.org/wiki/Haskell/Monoids
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - monoids
+
+- title: Fun with type functions
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/assoc-types/fun-with-type-funs/typefun.pdf
+  authors:
+    - Simon Peyton Jones
+  type: light research paper
+  tags:
+    - GADTs
+    - phantom types
+    - type families
+
+- title: Syntactic sugar
+  url: https://en.wikibooks.org/wiki/Haskell/Syntactic_sugar
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - syntactic sugar
+
+- title: Arrow tutorial
+  url: https://en.wikibooks.org/wiki/Haskell/Arrow_tutorial
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - arrows
+
+- title: SPJ talks at Oregon Programming Languages Summer School 2013
+  url: http://www.reddit.com/r/haskell/comments/262kbj/spj_talks_at_oregon_programming_languages_summer/chnhevt
+  authors:
+    - Simon Peyton Jones
+  type: forum post
+  tags:
+    - GADTs
+    - kinds
+    - System F
+    - type classes
+    - type families
+    - type inference
+
+- title: Performance Introduction
+  url: https://en.wikibooks.org/wiki/Haskell/Performance_Introduction
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - performance
+
+- title: Continuation passing style
+  url: https://en.wikibooks.org/wiki/Haskell/Continuation_passing_style
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - CPS
+
+- title: Zippers
+  url: https://en.wikibooks.org/wiki/Haskell/Zippers
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - zippers
+
+- title: Applicative Functors
+  url: https://en.wikibooks.org/wiki/Haskell/Applicative_Functors
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - applicative functors
+
+- title: Deriving Strength from Laziness
+  url: http://comonad.com/reader/2008/deriving-strength-from-laziness/
+  authors:
+    - Edward Kmett
+  type: blog post
+  tags:
+    - comonads
+    - costrength
+    - monads
+    - strength
+
+- title: Profunctors in Haskell
+  url: http://blog.sigfpe.com/2011/07/profunctors-in-haskell.html
+  type: blog post
+  tags:
+    - profunctors
+
+- title: Typed Tagless-Final Linear Lambda Calculus
+  url: https://www.fpcomplete.com/user/mutjida/typed-tagless-final-linear-lambda-calculus
+  authors:
+    - mutjida
+  published: 2013
+  type: extended example
+  tags:
+    - finally tagless
+    - lambda calculus
+
+- title: Beyond Church encoding: Boehm-Berarducci isomorphism of algebraic data types and polymorphic lambda-terms
+  url: http://okmij.org/ftp/tagless-final/course/Boehm-Berarducci.html
+  authors:
+    - Oleg Kiselyov
+  published: 2012
+  type: blog post
+  tags:
+    - Boehm-Berarducci encoding
+    - Church encoding
+    - encoding
+
+- title: Yet Another Monad Tutorial
+  url: https://mvanier.livejournal.com/3917.html
+  authors:
+    - Mike Vanier
+  type: blog post
+  tags:
+    - monads
+
+- title: Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire
+  url: http://eprints.eemcs.utwente.nl/7281/01/db-utwente-40501F46.pdf
+  authors:
+    - Erik Meijer
+  published: 1991
+  type: research paper
+  tags:
+    - ADTs
+    - category theory
+    - recursion schemes
+
+- title: Word numbers, Part 1: Billion approaches
+  url: http://conway.rutgers.edu/~ccshan/wiki/blog/posts/WordNumbers1/
+  authors:
+    - Chung-chieh Shan
+  published: 2008
+  type: blog post
+  tags:
+    - algorithms
+    - monoids
+    - seminearrings
+
+- title: Automated Unit Testing in Haskell
+  url: http://pbrisbin.com/posts/automated_unit_testing_in_haskell/
+  authors:
+    - Pat Brisbin
+  type: blog post
+  tags:
+    - testing
+
+- title: Domain-specific Languages and Code Synthesis Using Haskell
+  url: http://queue.acm.org/detail.cfm?id=2617811
+  authors:
+    - Andy Gill
+  type: survey article
+  tags:
+    - DSLs
+
+- title: What I Wish I Knew When Learning Haskell 2.0
+  url: http://dev.stephendiehl.com/hask/
+  type: blog post
+  tags:
+    - miscellaneous
+
+- title: Avoiding Partial Functions
+  url: http://www.haskell.org/haskellwiki/Avoiding_partial_functions
+  type: blog post
+  tags:
+    - partial functions
+
+- title: Typeclassopedia
+  url: http://www.haskell.org/haskellwiki/Typeclassopedia
+  authors:
+    - Brent Yorgey
+  published: 2009
+  type: lecture notes
+  tags:
+    - applicative functors
+    - arrows
+    - comonads
+    - Foldable
+    - functors
+    - monad transformers
+    - MonadFix
+    - monads
+    - monoids
+    - semigroups
+    - Traversable
+
+- title: Haskell/Denotational semantics
+  url: http://en.wikibooks.org/wiki/Haskell/Denotational_semantics
+  type: blog post
+  tags:
+    - denotational semantics
+
+- title: You could have re-invented fix too!
+  url: http://www.vex.net/~trebla/haskell/fix.xhtml
+  authors:
+    - Albert Y. C. Lai
+  type: blog post
+  tags:
+    - fixpoints
+
+- title: Abstraction, intuition, and the "monad tutorial fallacy"
+  url: http://byorgey.wordpress.com/2009/01/12/abstraction-intuition-and-the-monad-tutorial-fallacy/
+  authors:
+    - Brent Yorgey
+  type: blog post
+  tags:
+    - monads
+    - pedagogy
+
+- title: What a Monad is not
+  url: http://www.haskell.org/haskellwiki/What_a_Monad_is_not
+  authors:
+    - Haskell Wiki
+  type: blog post
+  tags:
+    - monads
+
+- title: Monad laws
+  url: http://www.haskell.org/haskellwiki/Monad_laws
+  type: blog post
+  tags:
+    - monads
+
+- title: Oh my laziness!
+  url: http://alpmestan.com/2013/10/02/oh-my-laziness/
+  type: blog post
+  tags:
+    - laziness
+    - WHNF
+
+- title: More Points for Lazy Evaluation
+  url: http://augustss.blogspot.hu/2011/05/more-points-for-lazy-evaluation-in.html
+  published: 2011
+  type: blog post
+  tags:
+    - laziness
+
+- title: Applicative programming with effects
+  url: http://www.soi.city.ac.uk/~ross/papers/Applicative.pdf
+  authors:
+    - Conor McBride
+  published: 2008
+  type: functional pearl
+  tags:
+    - applicative functors
+
+- title: Monad Transformers Step By Step
+  url: http://www.cs.virginia.edu/~wh5a/personal/Transformers.pdf
+  authors:
+    - Martin Grabmüller
+  published: 2006
+  type: survey article
+  tags:
+    - monad transformers
+
+- title: errors-1.0: Simplified error handling
+  url: http://www.haskellforall.com/2012/07/errors-10-simplified-error-handling.html
+  type: blog post
+  tags:
+    - error handling
+
+- title: GHCJS introduction – Concurrent Haskell in the browser
+  url: http://weblog.luite.com/wordpress/?p=14
+  authors:
+    - Luite Stegeman
+  published: 2013
+  type: extended example
+  tags:
+    - GHCJS
+
+- title: Foundations for Structured Programming with GADTs
+  url: https://personal.cis.strath.ac.uk/neil.ghani/papers/ghani-popl08.pdf
+  authors:
+    - Patricia Johann
+    - Neil Ghani
+  published: 2008
+  type: light research paper
+  tags:
+    - GADTs
+    - initial algebras
+
+- title: Model-view-controller, Haskell-style
+  url: http://www.haskellforall.com/2014/04/model-view-controller-haskell-style.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2014
+  type: blog post
+  tags:
+    - MVC
+
+- title: How the continuation monad works
+  url: http://www.haskellforall.com/2014/04/how-continuation-monad-works.html
+  authors:
+    - Gabriel Gonzalez
+  type: blog post
+  tags:
+    - CPS
+
+- title: The Operational Monad Tutorial
+  url: http://apfelmus.nfshost.com/articles/operational-monad.html
+  type: blog post
+  tags:
+    - operational
+
+- title: Applicative, bidirectional serialization combinators
+  url: http://jaspervdj.be/posts/2012-09-07-applicative-bidirectional-serialization-combinators.html
+  authors:
+    - Jasper Van der Jeugt
+  type: blog post
+  tags:
+    - applicative functors
+    - GADTs
+    - serialization
+
+- title: Functional Reactive Web Interfaces with GHCJS and sodium
+  url: http://weblog.luite.com/wordpress/?p=127
+  authors:
+    - Luite Stegeman
+  published: 2013
+  type: extended example
+  tags:
+    - FRP
+    - GHCJS
+
+- title: Comonads in Haskell
+  url: https://speakerdeck.com/dmoverton/comonads-in-haskell
+  authors:
+    - David Overton
+  published: 2014
+  type: lecture notes
+  tags:
+    - comonads
+
+- title: Comonads are objects
+  url: http://www.haskellforall.com/2013/02/you-could-have-invented-comonads.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2013
+  type: blog post
+  tags:
+    - comonads
+
+- title: You Could Have Invented Monads! (And Maybe You Already Have.)
+  url: http://blog.sigfpe.com/2006/08/you-could-have-invented-monads-and.html
+  authors:
+    - Dan Piponi
+  published: 2006
+  type: blog post
+  tags:
+    - monads
+
+- title: Cofree meets Free
+  url: http://blog.sigfpe.com/2014/05/cofree-meets-free.html
+  authors:
+    - Dan Piponi
+  type: blog post
+  tags:
+    - cofree comonads
+    - comonads
+
+- title: Monads from Comonads
+  url: http://comonad.com/reader/2011/monads-from-comonads/
+  type: blog post
+  tags:
+    - comonads
+    - monads
+
+- title: Transforming a comonad with a monad
+  url: http://blog.sigfpe.com/2008/03/transforming-comonad-with-monad.html
+  type: blog post
+  tags:
+    - comonads
+    - monads
+
+- title: Comonadic Arrays
+  url: http://blog.sigfpe.com/2008/03/comonadic-arrays.html
+  authors:
+    - Dan Piponi
+  type: blog post
+  tags:
+    - comonads
+
+- title: Cellular Automata
+  url: https://www.fpcomplete.com/user/edwardk/cellular-automata
+  authors:
+    - Edward Kmett
+  type: blog post
+  tags:
+    - comonad transformers
+    - comonads
+    - folds
+
+- title: Evaluating cellular automata is comonadic
+  url: http://blog.sigfpe.com/2006/12/evaluating-cellular-automata-is.html
+  authors:
+    - Dan Piponi
+  published: 2006
+  type: blog post
+  tags:
+    - comonads
+
+- title: Mio: A High-Performance Multicore IO Manager for GHC
+  url: http://haskell.cs.yale.edu/wp-content/uploads/2013/08/hask035-voellmy.pdf
+  authors:
+    - Andreas Voellmy
+    - Junchang Wang
+    - Paul Hudak
+    - Kazuhiko Yamamoto
+  type: research paper
+  tags:
+    - GHC
+    - I/O
+    - RTS
+
+- title: Lenses: compositional data access and manipulation.
+  url: https://skillsmatter.com/skillscasts/4251-lenses-compositional-data-access-and-manipulation
+  authors:
+    - Simon Peyton Jones
+  published: 2013
+  type: video lecture
+  tags:
+    - lenses
+
+- title: Löb and möb: strange loops in Haskell
+  url: https://github.com/quchen/articles/blob/master/loeb-moeb.md
+  type: blog post
+  tags:
+    - loeb
+    - moeb
+
+- title: What is the “Free Monad + Interpreter” pattern?
+  url: http://programmers.stackexchange.com/questions/242795/what-is-the-free-monad-interpreter-pattern
+  type: Q&A website
+  tags:
+    - free monads
+
+- title: When would I want to use a Free Monad + Interpreter pattern?
+  url: http://stackoverflow.com/questions/23766419/when-would-i-want-to-use-a-free-monad-interpreter-pattern
+  type: Q&A website
+  tags:
+    - free monads
+
+- title: free object in nLab
+  url: http://ncatlab.org/nlab/show/free+object
+  type: blog post
+  tags:
+    - category theory
+    - freeness
+
+- title: Fun with indexed monads
+  url: http://www.cl.cam.ac.uk/~dao29/ixmonad/ixmonad-fita14.pdf
+  type: lecture notes
+  tags:
+    - indexed monads
+
+- title: Map Comprehensions
+  url: http://www.timphilipwilliams.com/posts/2014-06-05-map-comprehensions.html
+  type: blog post
+  tags:
+    - heterogeneous lists
+    - indexed monads
+    - kinds
+
+- title: Comprehensive Comprehensions: Comprehensions with ‘Order by’ and ‘Group by’
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/list-comp/list-comp.pdf
+  type: light research paper
+  tags:
+    - list comprehensions
+    - TransformListComp
+
+- title: Monadic Parsing in Haskell
+  url: http://www.cs.uwyo.edu/~jlc/courses/3015/parser_pearl.pdf
+  authors:
+    - Graham Hutton
+    - Erik Meijer
+  published: 1998
+  type: journal paper
+  tags:
+    - monadic parsing
+
+- title: Monadic Parsers: Implementing a micro Parsec
+  url: http://olenhad.me/articles/monadic-parsers/
+  type: blog post
+  tags:
+    - monadic parsing
+
+- title: Yi: An Editor in Haskell for Haskell
+  url: http://publications.lib.chalmers.se/records/fulltext/local_72549.pdf
+  authors:
+    - Jean-Philippe Bernardy
+  published: 2008
+  type: light research paper
+  tags:
+    - text editors
+    - Yi
+
+- title: The Music Suite
+  url: http://music-suite.github.io/docs/ref/
+  type: extended example
+  tags:
+    - music
+
+- title: The Design of a Pretty Printing Library
+  url: http://belle.sourceforge.net/doc/hughes95design.pdf
+  type: light research paper
+  tags:
+    - pretty printing
+
+- title: Yesod, AngularJS and Fay
+  url: http://www.yesodweb.com/blog/2012/10/yesod-fay-js
+  authors:
+    - Michael Snoyman
+  type: blog post
+  tags:
+    - Fay
+    - JavaScript
+    - Yesod
+
+- title: Is the concept of an “interleaved homomorphism” a real thing?
+  url: http://stackoverflow.com/questions/24090758/is-the-concept-of-an-interleaved-homomorphism-a-real-thing
+  type: Q&A website
+  tags:
+    - category theory
+    - homomorphisms
+
+- title: Simpler conduit library based on monadic folds
+  url: http://newartisans.com/2014/06/simpler-conduit-library/
+  authors:
+    - John Wiegley
+  published: 2014
+  type: blog post
+  tags:
+    - conduit
+    - coroutines
+
+- title: Persistent entity syntax
+  url: https://github.com/yesodweb/yesod/wiki/Persistent-entity-syntax
+  type: extended example
+  tags:
+    - persistent
+    - Yesod
+
+- title: Clowns to the Left of me, Jokers to the Right
+  url: http://strictlypositive.org/CJ.pdf
+  authors:
+    - Conor McBride
+  published: 2006
+  type: functional pearl
+  tags:
+    - ADTs
+    - zippers
+
+- title: Exceptions and monad transformers
+  url: http://www.yesodweb.com/blog/2014/06/exceptions-transformers
+  authors:
+    - Michael Snoyman
+  type: blog post
+  tags:
+    - exceptions
+    - monad transformers
+
+- title: Scrap Your Boilerplate: Generic Programming in Haskell
+  url: http://expressiveprogramming.com/presentations/syb_talk.html
+  authors:
+    - Lyle Kopnicky
+  type: blog post
+  tags:
+    - generic programming
+
+- title: Scrap your boilerplate with class: extensible generic functions
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/hmap/gmap3.pdf
+  authors:
+    - Simon Peyton Jones
+  type: research paper
+  tags:
+    - generic programming
+
+- title: Scrap more boilerplate: reflection, zips, and generalised casts
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/hmap/gmap2.ps
+  authors:
+    - Simon Peyton Jones
+  type: research paper
+  tags:
+    - generic programming
+
+- title: Scrap your boilerplate: a practical approach to generic programming
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/hmap/hmap.ps
+  authors:
+    - Simon Peyton Jones
+  type: research paper
+  tags:
+    - generic programming
+
+- title: Folding Domain-Speciﬁc Languages: Deep and Shallow Embeddings
+  url: http://www.cs.ox.ac.uk/jeremy.gibbons/publications/embedding.pdf
+  authors:
+    - Jeremy Gibbons
+  published: 2014
+  type: functional pearl
+  tags:
+    - DSLs
+
+- title: Pattern Matching Without K
+  url: http://people.cs.kuleuven.be/~jesper.cockx/Without-K/Pattern-matching-without-K.pdf
+  authors:
+    - Jesper Cockx
+  type: research paper
+  tags:
+    - Agda
+    - dependent pattern matching
+    - homotopy type theory
+    - ICFP 2014
+    - K axiom
+
+- title: Safe Coercions
+  url: http://www.cis.upenn.edu/~eir/papers/2014/coercible/coercible.pdf
+  authors:
+    - Joachim Breitner
+  type: research paper
+  tags:
+    - ICFP 2014
+    - type coercion
+
+- title: Worker/Wrapper/Makes it/Faster
+  url: http://www.cs.nott.ac.uk/~gmh/faster.pdf
+  authors:
+    - Jennifer Hackett
+  type: research paper
+  tags:
+    - ICFP 2014
+    - optimization
+
+- title: Hindley-Milner elaboration in applicative style
+  url: http://gallium.inria.fr/~fpottier/publis/fpottier-elaboration.pdf
+  authors:
+    - François Pottier
+  type: functional pearl
+  tags:
+    - constraints
+    - elaboration
+    - ICFP 2014
+    - polymorphism
+    - type inference
+
+- title: Practical and Effective Higher-Order Optimizations
+  url: https://dl.dropboxusercontent.com/u/1620890/website/writings/ho-optimization.pdf
+  authors:
+    - Lars Bergstrom
+  type: research paper
+  tags:
+    - ICFP 2014
+    - optimization
+
+- title: There is no Fork: an Abstraction for Efﬁcient, Concurrent, and Concise Data Access
+  url: http://community.haskell.org/~simonmar/papers/haxl-icfp14.pdf
+  authors:
+    - Simon Marlow
+  type: research paper
+  tags:
+    - applicative functors
+    - concurrency
+    - distributed computing
+    - Haxl
+
+- title: Win bigger statistical fights with a better jackknife
+  url: http://www.serpentine.com/blog/2014/06/10/win-bigger-statistical-fights-with-a-better-jackknife/
+  authors:
+    - Bryan O'Sullivan
+  type: blog post
+  tags:
+    - jackknife resampling
+
+- title: A Little Lens Starter Tutorial
+  url: https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/a-little-lens-starter-tutorial
+  authors:
+    - Joseph Abrahamson
+  published: 2014
+  type: extended example
+  tags:
+    - lenses
+
+- title: CPS based functional references
+  url: http://twanvl.nl/blog/haskell/cps-functional-references
+  authors:
+    - Twan van Laarhoven
+  type: blog post
+  tags:
+    - lenses
+
+- title: lens / Derivation
+  url: https://github.com/ekmett/lens/wiki/Derivation
+  authors:
+    - Edward Kmett
+  type: extended example
+  tags:
+    - lenses
+
+- title: Lens infix operators
+  url: https://github.com/quchen/articles/blob/master/lens-infix-operators.md
+  authors:
+    - David Luposchainsky
+  type: extended example
+  tags:
+    - lenses
+
+- title: Duality for Haskellers
+  url: http://blog.ezyang.com/2012/10/duality-for-haskellers/
+  authors:
+    - Edward Z. Yang
+  published: 2012
+  type: blog post
+  tags:
+    - category theory
+    - duality
+
+- title: Reverse Engineering Machines with the Yoneda Lemma
+  url: http://blog.sigfpe.com/2006/11/yoneda-lemma.html
+  authors:
+    - Dan Piponi
+  published: 2006
+  type: blog post
+  tags:
+    - category theory
+    - Yoneda lemma
+
+- title: Category Theory
+  url: http://www.amazon.com/Category-Theory-Oxford-Logic-Guides/dp/0199237182
+  authors:
+    - Steve Awodey
+  type: textbook
+  tags:
+    - category theory
+
+- title: Category Theory Foundations, Lecture 1
+  url: https://www.youtube.com/watch?v=ZKmodCApZwk
+  authors:
+    - Steve Awodey
+  published: 2012
+  type: video lecture
+  tags:
+    - category theory
+
+- title: TheCatsters
+  url: https://www.youtube.com/user/TheCatsters
+  type: video lecture
+  tags:
+    - category theory
+
+- title: The problem with mtl
+  url: http://ro-che.info/articles/2014-06-11-problem-with-mtl.html
+  authors:
+    - Roman Cheplyaka
+  type: blog post
+  tags:
+    - extensible effects
+    - monad transformers
+    - mtl
+
+- title: Typed tagless-final interpretations: Lecture notes
+  url: http://okmij.org/ftp/tagless-final/course/
+  authors:
+    - Oleg Kiselyov
+  type: lecture notes
+  tags:
+    - DSLs
+    - finally tagless
+
+- title: How to Improve Code Reuse by Folding Algebras
+  url: http://www.tillmann-rendel.com/2013/05/reuse-by-folding-algebras.html
+  authors:
+    - Tillman Rendel
+  type: blog post
+  tags:
+    - algebras
+
+- title: Haskell and QML - Modeling Lists in HsQML
+  url: http://www.kdab.com/haskell-qml-modeling-lists-hsqml/
+  authors:
+    - Christopher Reichert
+  type: blog post
+  tags:
+    - GUIs
+    - QML
+    - Qt
+
+- title: HsQML StocQt - Stock Market Visualization in Haskell and Qt Quick
+  url: http://reichertbrothers.com/blog/posts/2014-06-06-hsqmlstocqt-haskell-qml-data-visualization.html
+  authors:
+    - Christopher Reichert
+  type: blog post
+  tags:
+    - GUIs
+    - QML
+    - Qt
+
+- title: Teasers In Hakyll
+  url: http://reichertbrothers.com/blog/posts/2014-04-08-hakyll-teasers.html
+  authors:
+    - Christopher Reichert
+  type: blog post
+  tags:
+    - hakyll
+
+- title: Co-Monads - Presented by David Overton
+  url: https://www.youtube.com/watch?v=TSyGryuMh-U
+  authors:
+    - David Overton
+  type: video lecture
+  tags:
+    - comonads
+
+- title: Haskell Optimization and the Game of Life
+  url: http://blog.headcrab.info/haskell-optimization-and-the-game-of-life/
+  authors:
+    - Andrew Rademacher
+  type: blog post
+  tags:
+    - game of life
+    - gloss
+    - optimization
+    - repa
+    - vector
+
+- title: Extensible Effects: An Alternative to Monad Transformers
+  url: http://www.cs.indiana.edu/~sabry/papers/exteff.pdf
+  authors:
+    - Oleg Kiselyov
+  type: research paper
+  tags:
+    - extensible effects
+
+- title: The GHC Runtime System
+  url: http://ezyang.com/jfp-ghc-rts-draft.pdf
+  authors:
+    - Edward Z. Yang
+  type: light research paper
+  tags:
+    - garbage collection
+    - GHC
+    - RTS
+
+- title: Faster Laziness Using Dynamic Pointer Tagging
+  url: http://research.microsoft.com/pubs/67969/ptr-tagging.pdf
+  authors:
+    - Simon Marlow
+  type: research paper
+  tags:
+    - garbage collection
+    - GHC
+    - performance
+    - RTS
+
+- title: Comonads, Applicative Functors, Monads and Other Principled Things - BFPG - 2014-03-25
+  url: http://vimeo.com/90738761
+  authors:
+    - Tony Morris
+  published: 2014
+  type: video lecture
+  tags:
+    - applicative functors
+    - comonads
+    - monads
+
+- title: Idris: Type safe printf
+  url: https://www.youtube.com/watch?v=fVBck2Zngjo
+  authors:
+    - Brian McKenna
+  type: video lecture
+  tags:
+    - dependent types
+    - Idris
+
+- title: Recursion Schemes: A Field Guide (Redux)
+  url: http://comonad.com/reader/2009/recursion-schemes/
+  authors:
+    - Edward Kmett
+  published: 2009
+  type: blog post
+  tags:
+    - recursion schemes
+
+- title: Grokking recursion-scheme: Part 1
+  url: http://jozefg.bitbucket.org/posts/2014-05-19-like-recursion-but-cooler.html
+  authors:
+    - Danny Gratzer
+  type: blog post
+  tags:
+    - recursion schemes
+
+- title: Database access
+  url: https://www.fpcomplete.com/school/starting-with-haskell/libraries-and-frameworks/persistent-db
+  authors:
+    - School of Haskell
+  published: 2013
+  type: extended example
+  tags:
+    - databases
+    - esqueleto
+    - persistent
+    - SQL
+
+- title: Strachey's functional pearl, forty years on
+  url: http://spivey.oriel.ox.ac.uk/mike/firstpearl.pdf
+  authors:
+    - Mike Spivey
+  type: functional pearl
+  tags:
+    - list comprehensions
+
+- title: Categories from scratch
+  url: http://science.raphael.poss.name/categories-from-scratch.html
+  authors:
+    - Raphael Poss
+  published: 2014
+  type: blog post
+  tags:
+    - category theory
+
+- title: Typed Tagged Final Interpreters
+  url: http://okmij.org/ftp/tagless-final/course/lecture.pdf
+  authors:
+    - Oleg Kiselyov
+  published: 2012
+  type: lecture notes
+  tags:
+    - ASTs
+    - deserializing
+    - DSLs
+    - expression problem
+    - finally tagless
+    - GADTs
+
+- title: Aho-Corasick Automaton
+  url: http://www.chaoxuprime.com/posts/2014-04-25-aho-corasick-in-haskell.html
+  authors:
+    - Chao Xu
+  type: blog post
+  tags:
+    - Aho-Corasick
+    - algorithms
+    - string searching
+
+- title: The KMP algorithm in Haskell
+  url: http://www.chaoxuprime.com/posts/2014-04-11-the-kmp-algorithm-in-haskell.html
+  authors:
+    - Chao Xu
+  published: 2014
+  type: blog post
+  tags:
+    - algorithms
+    - KMP
+    - string searching
+
+- title: Combinatorial Games
+  url: https://gist.github.com/mvr/8081429
+  authors:
+    - Mitchell Riley
+  type: blog post
+  tags:
+    - combinatorics
+    - game theory
+
+- title: Memoization in Haskell?
+  url: http://stackoverflow.com/a/3209189
+  authors:
+    - Edward Kmett
+  published: 2010
+  type: Q&A website
+  tags:
+    - memoization
+
+- title: Type Classes
+  url: https://www.fpcomplete.com/school/starting-with-haskell/introduction-to-haskell/5-type-classes
+  authors:
+    - Brent Yorgey
+  type: extended example
+  tags:
+    - type classes
+
+- title: Three Useful Monads
+  url: http://adit.io/posts/2013-06-10-three-useful-monads.html
+  authors:
+    - Aditya Bhargava
+  type: blog post
+  tags:
+    - monads
+    - Reader monad
+    - State monad
+    - Writer monad
+
+- title: Reader Monad Confusion
+  url: http://www.maztravel.com/haskell/readerMonad.html
+  authors:
+    - Henry Laxen
+  type: blog post
+  tags:
+    - monads
+    - Reader monad
+
+- title: A tour of the Haskell Monad functions
+  url: http://members.chello.nl/hjgtuyl/tourdemonad.html
+  authors:
+    - Henk-Jan van Tuyl
+  type: blog post
+  tags:
+    - monads
+
+- title: The Arrow Calculus
+  url: http://homepages.inf.ed.ac.uk/wadler/papers/arrows-jfp/arrows-jfp.pdf
+  authors:
+    - Sam Lindley
+  type: light research paper
+  tags:
+    - arrows
+    - lambda calculus
+    - monads
+
+- title: Monadic constraint programming
+  url: http://homepages.inf.ed.ac.uk/wadler/papers/constraints/constraints.pdf
+  authors:
+    - Tom Schrijvers
+  type: light research paper
+  tags:
+    - constraint programming
+    - monads
+
+- title: The marriage of effects and monads
+  url: http://homepages.inf.ed.ac.uk/wadler/papers/effectstocl/effectstocl.pdf
+  authors:
+    - Philip Wadler
+    - Peter Thiemann
+  published: 2000
+  type: research paper
+  tags:
+    - monads
+
+- title: Monads for functional programming
+  url: http://homepages.inf.ed.ac.uk/wadler/papers/marktoberdorf/baastad.pdf
+  authors:
+    - Philip Wadler
+  type: light research paper
+  tags:
+    - monads
+
+- title: Understanding Limits
+  url: http://bartoszmilewski.com/2014/05/08/understanding-limits-2/
+  authors:
+    - Bartosz Milewski
+  type: blog post
+  tags:
+    - equilizer
+    - limits
+    - universal constructions
+
+- title: Understanding Products and Universal Constructions
+  url: http://bartoszmilewski.com/2014/05/05/understanding-products-and-universal-constructions/
+  authors:
+    - Bartosz Milewski
+  type: blog post
+  tags:
+    - product
+    - universal constructions
+
+- title: You Can’t Make an Algebra without Breaking a Few Eggs
+  url: http://bartoszmilewski.com/2014/01/28/you-cant-make-an-algebra-without-breaking-a-few-eggs/
+  authors:
+    - Bartosz Milewski
+  published: 2014
+  type: blog post
+  tags:
+    - algebras
+    - category theory
+    - fixpoints
+    - monad algebras
+    - monads
+
+- title: Functors are Containers
+  url: http://bartoszmilewski.com/2014/01/14/functors-are-containers/
+  authors:
+    - Bartosz Milewski
+  type: blog post
+  tags:
+    - category theory
+    - functors
+    - natural transformations
+    - Yoneda lemma
+
+- title: Understanding Free Monoids and Universal Constructions
+  url: http://bartoszmilewski.com/2013/12/21/understanding-free-monoids-and-universal-constructions/
+  authors:
+    - Bartosz Milewski
+  type: blog post
+  tags:
+    - free monoids
+    - monoids
+    - universal constructions
+
+- title: Haskell Monoids and their Uses
+  url: http://blog.sigfpe.com/2009/01/haskell-monoids-and-their-uses.html
+  authors:
+    - Dan Piponi
+  published: 2009
+  type: blog post
+  tags:
+    - monoids
+
+- title: Functors, Applicative, And Monads In Pictures
+  url: http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html
+  authors:
+    - Aditya Bhargava
+  published: 2013
+  type: blog post
+  tags:
+    - applicative functors
+    - functors
+    - monads
+
+- title: Lenses In Pictures
+  url: http://adit.io/posts/2013-07-22-lenses-in-pictures.html
+  authors:
+    - Aditya Bhargava
+  published: 2013
+  type: blog post
+  tags:
+    - lenses
+
+- title: Lenses, Folds, and Traversals
+  url: https://www.youtube.com/watch?v=cefnmjtAolY
+  authors:
+    - Edward Kmett
+  published: 2012
+  type: video lecture
+  tags:
+    - lenses
+
+- title: Zippers: Making Functional "Updates" Efficient
+  url: http://scienceblogs.com/goodmath/2010/01/13/zippers-making-functional-upda/
+  authors:
+    - Mark C. Chu-Carroll
+  published: 2010
+  type: blog post
+  tags:
+    - zippers
+
+- title: Introduction to Concurrent Haskell
+  url: http://www.infoq.com/presentations/Concurrent-Haskell
+  authors:
+    - Simon Marlow
+  published: 2013
+  type: video lecture
+  tags:
+    - concurrency
+
+- title: Locks, Actors, And STM In Pictures
+  url: http://adit.io/posts/2013-05-15-Locks,-Actors,-And-STM-In-Pictures.html
+  authors:
+    - Aditya Bhargava
+  published: 2013
+  type: blog post
+  tags:
+    - concurrency
+
+- title: Beautiful Concurrency
+  url: https://www.fpcomplete.com/school/advanced-haskell/beautiful-concurrency
+  authors:
+    - Simon Peyton Jones
+  published: 2013
+  type: extended example
+  tags:
+    - concurrency
+
+- title: Cloud Haskell
+  url: http://www.haskell.org/haskellwiki/Cloud_Haskell
+  authors:
+    - Haskell Wiki
+  type: meta resource
+  tags:
+    - distributed computing
+
+- title: Lenses, Stores, and Yoneda
+  url: http://bartoszmilewski.com/2013/10/08/lenses-stores-and-yoneda/
+  authors:
+    - Bartosz Milewski
+  type: blog post
+  tags:
+    - category theory
+    - lenses
+    - Yoneda lemma
+
+- title: Understanding F-Algebras
+  url: http://bartoszmilewski.com/2013/06/10/understanding-f-algebras/
+  authors:
+    - Bartosz Milewski
+  type: blog post
+  tags:
+    - algebras
+    - catamorphisms
+    - initial algebras
+
+- title: Towards Haskell in the Cloud
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/parallel/remote.pdf
+  authors:
+    - Jeff Epstein
+  published: 2011
+  type: research paper
+  tags:
+    - distributed computing
+
+- title: GHC/Using the FFI
+  url: http://www.haskell.org/haskellwiki/GHC/Using_the_FFI
+  authors:
+    - Haskell Wiki
+  type: extended example
+  tags:
+    - FFI
+
+- title: FFI Introduction
+  url: http://www.haskell.org/haskellwiki/FFI_Introduction
+  authors:
+    - Haskell Wiki
+  type: extended example
+  tags:
+    - FFI
+
+- title: FFI complete examples
+  url: http://www.haskell.org/haskellwiki/FFI_complete_examples
+  authors:
+    - Haskell Wiki
+  type: extended example
+  tags:
+    - FFI
+
+- title: FFI cook book
+  url: http://www.haskell.org/haskellwiki/FFICookBook
+  authors:
+    - Haskell Wiki
+  type: extended example
+  tags:
+    - FFI
+
+- title: Understanding Yoneda
+  url: http://bartoszmilewski.com/2013/05/15/understanding-yoneda/
+  authors:
+    - Bartosz Milewski
+  published: 2013
+  type: blog post
+  tags:
+    - category theory
+    - functors
+    - natural transformations
+    - Yoneda lemma
+
+- title: Interfacing with C: the FFI
+  url: http://book.realworldhaskell.org/read/interfacing-with-c-the-ffi.html
+  authors:
+    - Bryan O'Sullivan
+  published: 2008
+  type: textbook
+  tags:
+    - FFI
+
+- title: Foreign Function Interface
+  url: http://www.haskell.org/onlinereport/haskell2010/haskellch8.html
+  authors:
+    - Haskell 2010 Language Report
+  published: 2010
+  type: extended example
+  tags:
+    - FFI
+
+- title: Tackling the Awkward Squad: monadic input/output, concurrency, exceptions, and foreign-language calls in Haskell
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/marktoberdorf/mark.pdf
+  authors:
+    - Simon Peyton Jones
+  published: 2010
+  type: research paper
+  tags:
+    - concurrency
+    - exceptions
+    - FFI
+    - I/O
+
+- title: GHC 7.8's -staticlib flag
+  url: http://maxs.io/ghc-78-static-lib-flag/
+  authors:
+    - Maxwell Swadling
+  published: 2014
+  type: blog post
+  tags:
+    - GHC
+    - static linking
+
+- title: Hidden features of Haskell
+  url: http://stackoverflow.com/questions/211216/hidden-features-of-haskell
+  type: Q&A website
+  tags:
+    - miscellaneous
+
+- title: Making Haskell programs faster and smaller
+  url: http://users.aber.ac.uk/afc/stricthaskell.html
+  authors:
+    - Amanda Clare
+  type: blog post
+  tags:
+    - laziness
+    - performance
+
+- title: High-Performance Haskell
+  url: http://www.slideshare.net/tibbe/highperformance-haskell
+  authors:
+    - Johan Tibell
+  published: 2010
+  type: lecture notes
+  tags:
+    - performance
+
+- title: Haskell application architecture best practices
+  url: http://www.reddit.com/r/haskell/comments/223i80/haskell_application_architecture_best_practices/
+  published: 2014
+  type: forum post
+  tags:
+    - design patterns
+
+- title: Large-scale design in Haskell?
+  url: http://stackoverflow.com/questions/3077866/large-scale-design-in-haskell
+  type: Q&A website
+  tags:
+    - design patterns
+
+- title: The functor design pattern
+  url: http://www.haskellforall.com/2012/09/the-functor-design-pattern.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - design patterns
+    - functors
+
+- title: The category design pattern
+  url: http://www.haskellforall.com/2012/08/the-category-design-pattern.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - category theory
+    - design patterns
+
+- title: Patterns in Functional Programming
+  url: http://patternsinfp.wordpress.com/
+  authors:
+    - Jeremy Gibbons
+  published: 2012
+  type: blog post
+  tags:
+    - design patterns
+
+- title: Working With HTML In Haskell
+  url: http://adit.io/posts/2012-04-14-working_with_HTML_in_haskell.html
+  authors:
+    - Aditya Bhargava
+  published: 2012
+  type: blog post
+  tags:
+    - web
+
+- title: http-conduit
+  url: http://www.yesodweb.com/book/http-conduit
+  authors:
+    - Michael Snoyman
+  type: blog post
+  tags:
+    - web
+
+- title: bos / pronk
+  url: https://github.com/bos/pronk
+  authors:
+    - Bryan O'Sullivan
+  type: blog post
+  tags:
+    - web
+
+- title: Haskell for Web Developers
+  url: http://www.stephendiehl.com/posts/haskell_web.html
+  authors:
+    - Stephen Diehl
+  type: blog post
+  tags:
+    - web
+
+- title: Comparing Haskell's Snap and Yesod web frameworks
+  url: http://stackoverflow.com/questions/5645168/comparing-haskells-snap-and-yesod-web-frameworks
+  type: Q&A website
+  tags:
+    - Snap
+    - web
+    - web frameworks
+    - Yesod
+
+- title: A Hopefully Fair and Useful Comparison of Haskell Web Frameworks
+  url: http://softwaresimply.blogspot.com/2012/04/hopefully-fair-and-useful-comparison-of.html
+  published: 2012
+  type: blog post
+  tags:
+    - Happstack
+    - Snap
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Building a File Hosting Service in Yesod
+  url: https://www.fpcomplete.com/school/advanced-haskell/building-a-file-hosting-service-in-yesod
+  authors:
+    - School of Haskell
+  published: 2013
+  type: extended example
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Haskell web programming: A Yesod tutorial
+  url: http://yannesposito.com/Scratch/en/blog/Yesod-tutorial-for-newbies/
+  authors:
+    - Yann Esposito
+  published: 2012
+  type: blog post
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Yesod: Learning Through Doing
+  url: https://www.fpcomplete.com/user/twoolie/yesod-learning-through-doing
+  authors:
+    - Thomas Woolford
+  published: 2013
+  type: extended example
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Yesod Tutorial 1. My First Web Site
+  url: https://www.fpcomplete.com/blog/2012/10/yesod-tutorial-1-my-first-web-site
+  authors:
+    - Bartosz Milewski
+  published: 2012
+  type: extended example
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Yesod Tutorial 2. Playing with Routes and Links
+  url: https://www.fpcomplete.com/blog/2012/10/yesod-tutorial-2-playing-with-routes-and-links
+  authors:
+    - Bartosz Milewski
+  published: 2012
+  type: extended example
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Yesod Routing
+  url: https://www.fpcomplete.com/user/chad/snippets/yesod-routing
+  authors:
+    - Thomas Woolford
+  published: 2013
+  type: extended example
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Web application with concurrency
+  url: https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/web-application-with-concurrency
+  authors:
+    - Nikolay Murzin
+  published: 2013
+  type: extended example
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Typesafe URLs in client-side code
+  url: https://www.fpcomplete.com/user/snoyberg/yesod/typesafe-urls-in-client-side-code
+  authors:
+    - Michael Snoyman
+  published: 2013
+  type: extended example
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Yesod 1.0 Introductory Screencast
+  url: http://vimeo.com/39646807
+  authors:
+    - Michael Snoyman
+  published: 2012
+  type: video lecture
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Snipp.IO: A pastebin made out of Haskell, Yesod, and mongodb
+  url: http://charlieharvey.org.uk/page/yesod_mongodb_snippio_pastebin_howto
+  authors:
+    - Charlie Harvey
+  published: 2013
+  type: blog post
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Non scaffolded MongoDB App
+  url: https://github.com/yesodweb/yesod/wiki/Non-scaffolded-MongoDB-App
+  published: 2013
+  type: extended example
+  tags:
+    - MongoDB
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Allowing cross-origin requests in Yesod
+  url: http://programmers.fbgamehack.com/1202975/allowing-cross-origin-requests-in-yesod
+  authors:
+    - Christian Brink
+  type: blog post
+  tags:
+    - web
+    - web frameworks
+    - Yesod
+
+- title: Getting started with Yi, the haskell editor
+  url: http://www.nobugs.org/developer/yi/index.html
+  authors:
+    - Andrew Birkett
+  published: 2008
+  type: extended example
+  tags:
+    - Yi
+
+- title: Hole-driven Haskell
+  url: http://matthew.brecknell.net/post/hole-driven-haskell/
+  authors:
+    - Matthew Brecknell
+  published: 2013
+  type: video lecture
+  tags:
+    - editing
+    - hole-driven programming
+    - type-driven programming
+
+- title: Basics of Haskell
+  url: https://www.fpcomplete.com/user/bartosz/basics-of-haskell
+  authors:
+    - Bartosz Milewski
+  type: extended example
+  tags:
+    - introduction
+
+- title: AlgoXY Elementary Algorithms
+  url: https://dl.dropboxusercontent.com/u/52705490/main-en.pdf
+  authors:
+    - Larry LIU Xinyu
+  published: 2014
+  type: textbook
+  tags:
+    - algorithms
+
+- title: Snap tutorial
+  url: https://github.com/J-Hannes/snap-tutorial
+  authors:
+    - j-hannes
+  published: 2013
+  type: extended example
+  tags:
+    - Snap
+    - web
+    - web frameworks
+
+- title: What are Snaplets?
+  url: http://snapframework.com/docs/tutorials/snaplets-tutorial
+  authors:
+    - snapframework.com
+  type: extended example
+  tags:
+    - Snap
+    - web
+    - web frameworks
+
+- title: Tutorial: Building a Sample Application with Haskell Snap, PostgreSQL, and the PostgreSQL Simple Snaplet
+  url: http://janrain.com/blog/tutorial-building-a-sample-application-with-haskell-snap-postgresql-and-the-postgresql-simple-snaplet/
+  authors:
+    - Luc Perkins
+  published: 2013
+  type: extended example
+  tags:
+    - Snap
+    - web
+    - web frameworks
+
+- title: A Haskell newbie's guide to the Snap framework
+  url: http://learnmeahaskell.blogspot.com/2011/05/few-notes-on-learning-snap-framework.html
+  authors:
+    - Lee
+  published: 2011
+  type: extended example
+  tags:
+    - Snap
+    - web
+    - web frameworks
+
+- title: A Haskell newbie's guide to Snap, Part 2
+  url: http://learnmeahaskell.blogspot.com/2011/07/haskell-newbies-guide-to-snap-part-2.html
+  authors:
+    - Lee
+  published: 2011
+  type: extended example
+  tags:
+    - Snap
+    - web
+    - web frameworks
+
+- title: reddit.com/r/snapframework
+  url: http://www.reddit.com/r/snapframework/
+  type: community site
+  tags:
+    - Snap
+    - web
+    - web frameworks
+
+- title: The Pragmatic Haskeller: Episode 1 - JSON
+  url: https://www.fpcomplete.com/user/adinapoli/the-pragmatic-haskeller/episode-1-json
+  authors:
+    - Alfredo Di Napoli
+  published: 2013
+  type: extended example
+  tags:
+    - aeson
+    - JSON
+
+- title: 24 Days of Hackage: aeson
+  url: http://ocharles.org.uk/blog/posts/2012-12-07-24-days-of-hackage-aeson.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - aeson
+    - JSON
+
+- title: 24 Days of Hackage: snap
+  url: http://ocharles.org.uk/blog/posts/2012-12-19-24-days-of-hackage-snap.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - Snap
+    - web
+    - web frameworks
+
+- title: AngularJS with Haskell
+  url: http://nurpax.github.io/posts/2013-01-13-angularjs-and-haskell.html
+  authors:
+    - Janne Hellsten
+  published: 2013
+  type: blog post
+  tags:
+    - AngularJS
+    - Snap
+    - web
+    - web frameworks
+
+- title: The Pragmatic Haskeller: Episode 2 - Snap
+  url: https://www.fpcomplete.com/user/adinapoli/the-pragmatic-haskeller/episode-2-snap
+  authors:
+    - Alfredo Di Napoli
+  published: 2013
+  type: extended example
+  tags:
+    - Snap
+    - web
+    - web frameworks
+
+- title: Building a Link Shortener with Haskell (and Snap) with Ryan Trinkle
+  url: http://vimeo.com/59109358
+  authors:
+    - Richard Minerich
+  published: 2013
+  type: video lecture
+  tags:
+    - Snap
+    - web
+    - web frameworks
+
+- title: GHCi: More Awesome Than You Thought
+  url: http://vimeo.com/68669612
+  authors:
+    - Richard Minerich
+  published: 2013
+  type: video lecture
+  tags:
+    - GHCi
+
+- title: GHCi's Debugger - Haskell from Scratch #2
+  url: https://www.youtube.com/watch?v=1OYljb_3Cdg
+  authors:
+    - Chris Forno
+  published: 2013
+  type: video lecture
+  tags:
+    - GHCi
+
+- title: GHC Core by Example, Episode 1: Hello, Core!
+  url: http://alpmestan.com/2013/06/27/ghc-core-by-example-episode-1/
+  authors:
+    - Alp Mestanogullari
+  published: 2013
+  type: blog post
+  tags:
+    - Core
+    - GHC
+
+- title: GHC Core by Example, Episode 2: Evaluation
+  url: http://alpmestan.com/2013/10/01/ghc-core-by-example-episode-2-evaluation/
+  authors:
+    - Alp Mestanogullari
+  published: 2013
+  type: blog post
+  tags:
+    - Core
+    - GHC
+
+- title: Cabal all the things!
+  url: http://vimeo.com/67171757
+  authors:
+    - Josh
+  published: 2013
+  type: video lecture
+  tags:
+    - Cabal
+
+- title: Haskell postgresql-simple examples, part 1
+  url: http://blog.begriffs.com/2013/09/haskell-postgresql-simple-examples-part.html
+  authors:
+    - Joe Nelson
+  published: 2013
+  type: blog post
+  tags:
+    - databases
+    - PostgreSQL
+
+- title: Grokking recursion-schemes: Part 2
+  url: http://jozefg.bitbucket.org/posts/2014-06-14-like-recursion-but-cooler-2.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - recursion schemes
+
+- title: SmartCheck: Redux
+  url: http://leepike.wordpress.com/2014/06/16/smartcheck-redux/
+  authors:
+    - Lee Pike
+  published: 2014
+  type: blog post
+  tags:
+    - SmartCheck
+    - testing
+
+- title: Exponentials, Currying, and Universal Constructions
+  url: http://bartoszmilewski.com/2014/06/17/exponentials-currying-and-universal-constructions/
+  authors:
+    - Bartosz Milewski
+  type: blog post
+  tags:
+    - currying
+    - exponentials
+    - universal constructions
+
+- title: Building an Async Chat Server with Conduit
+  url: https://www.fpcomplete.com/user/joehillen/building-an-async-chat-server-with-conduit
+  authors:
+    - Joe Hillenbrand
+  published: 2014
+  type: extended example
+  tags:
+    - concurrency
+    - conduit
+
+- title: How Haskell is Changing my Brain
+  url: http://vimeo.com/96639840
+  authors:
+    - Alissa Pajer
+  published: 2014
+  type: video lecture
+  tags:
+    - miscellaneous
+
+- title: Gibbs Sampling in Haskell
+  url: http://idontgetoutmuch.wordpress.com/2014/06/15/gibbs-sampling-in-haskell/
+  authors:
+    - Idontgetoutmuch
+  published: 2014
+  type: blog post
+  tags:
+    - numerical methods
+    - statistics
+
+- title: The Glorious Glasgow Haskell Compilation System User's Guide
+  url: http://www.haskell.org/ghc/docs/latest/html/users_guide/index.html
+  type: documentation
+  tags:
+    - GHC
+
+- title: hackage: QuickCheck
+  url: http://hackage.haskell.org/package/QuickCheck
+  type: documentation
+  tags:
+    - QuickCheck
+    - testing
+
+- title: some ideas for practical QuickCheck
+  url: http://koweycode.blogspot.com/2009/07/some-ideas-for-practical-quickcheck.html
+  authors:
+    - Eric Kow
+  published: 2009
+  type: blog post
+  tags:
+    - QuickCheck
+    - testing
+
+- title: Testing Monadic Programs with QuickCheck
+  url: http://www.cse.chalmers.se/~rjmh/Papers/QuickCheckST.ps
+  authors:
+    - Koen Claessen
+  published: 2002
+  type: light research paper
+  tags:
+    - QuickCheck
+    - testing
+
+- title: HLint Manual
+  url: http://community.haskell.org/~ndm/darcs/hlint/hlint.htm
+  authors:
+    - Neil Mitchell
+  type: documentation
+  tags:
+    - HLint
+
+- title: Parallel and Concurrent Programming in Haskell
+  url: http://chimera.labs.oreilly.com/books/1230000000929/index.html
+  authors:
+    - Simon Marlow
+  published: 2013
+  type: textbook
+  tags:
+    - concurrency
+    - parallelism
+
+- title: Hoopl: A Modular, Reusable Library for Dataflow Analysis and Transformation
+  url: http://research.microsoft.com/en-us/um/people/simonpj/Papers/c--/hoopl-haskell10.pdf
+  authors:
+    - Norman Ramsey
+    - João Dias
+    - Simon Peyton Jones
+  published: 2010
+  type: research paper
+  tags:
+    - compilers
+    - hoopl
+    - optimization
+
+- title: hackage: hoopl
+  url: http://hackage.haskell.org/package/hoopl
+  type: documentation
+  tags:
+    - compilers
+    - hoopl
+    - optimization
+
+- title: Hoopl: A Modular, Reusable Library for Dataflow Analysis and Transformation
+  url: http://vimeo.com/16753485
+  authors:
+    - Scott Smith
+  published: 2010
+  type: video lecture
+  tags:
+    - compilers
+    - hoopl
+    - optimization
+
+- title: A Hoopl Experience
+  url: http://nochair.net/posts/2013/02-20-a-hoopl-experience.html
+  authors:
+    - Tristan Ravitch
+  published: 2013
+  type: blog post
+  tags:
+    - compilers
+    - hoopl
+    - optimization
+
+- title: GADTs in API Design
+  url: http://nochair.net/posts/2013/04-30-gadt-api-design.html
+  authors:
+    - Tristan Ravitch
+  published: 2013
+  type: blog post
+  tags:
+    - GADTs
+
+- title: Picturing Hoopl transfer/rewrite function
+  url: http://blog.ezyang.com/2011/02/picturing-hoopl-transferrewrite-functions/
+  authors:
+    - Edward Z. Yang
+  published: 2011
+  type: blog post
+  tags:
+    - compilers
+    - hoopl
+    - optimization
+
+- title: Hoopl guided tour: Base system
+  url: http://blog.ezyang.com/2011/04/hoopl-guided-tour-base-system/
+  authors:
+    - Edward Z. Yang
+  published: 2011
+  type: blog post
+  tags:
+    - compilers
+    - hoopl
+    - optimization
+
+- title: Hoopl: Dataflow lattices
+  url: http://blog.ezyang.com/2011/04/hoopl-dataflow-lattices/
+  authors:
+    - Edward Z. Yang
+  published: 2011
+  type: blog post
+  tags:
+    - compilers
+    - hoopl
+    - optimization
+
+- title: Hoopl: Dataflow analysis
+  url: http://blog.ezyang.com/2011/04/hoopl-dataflow-analysis/
+  authors:
+    - Edward Z. Yang
+  published: 2011
+  type: blog post
+  tags:
+    - compilers
+    - hoopl
+    - optimization
+
+- title: Debugging compilers with optimization fuel
+  url: http://blog.ezyang.com/2011/06/debugging-compilers-with-optimization-fuel/
+  authors:
+    - Edward Z. Yang
+  published: 2011
+  type: blog post
+  tags:
+    - compilers
+    - debugging
+    - hoopl
+    - optimization
+
+- title: How to profile a Haskell program
+  url: http://www.haskell.org/haskellwiki/How_to_profile_a_Haskell_program
+  authors:
+    - Haskell Wiki
+  type: extended example
+  tags:
+    - profiling
+
+- title: Tools for analyzing performance of a Haskell program
+  url: http://stackoverflow.com/questions/3276240/tools-for-analyzing-performance-of-a-haskell-program
+  type: Q&A website
+  tags:
+    - profiling
+
+- title: Real World Haskell: Profiling and optimization
+  url: http://book.realworldhaskell.org/read/profiling-and-optimization.html
+  authors:
+    - Bryan O'Sullivan
+  type: textbook
+  tags:
+    - optimization
+    - profiling
+
+- title: functionaljobs.com
+  url: http://functionaljobs.com/
+  type: community site
+  tags:
+    - job search
+
+- title: Lazily Computing the Singular Function of Bold Play
+  url: http://blog.jyotirmoy.net/2014/06/lazily-computing-singular-function-of.html
+  authors:
+    - Jyotirmoy Bhattacharya
+  published: 2014
+  type: blog post
+  tags:
+    - probability
+
+- title: Almost Type Safe
+  url: http://www.thesoftwaredevelopmentlifecycle.com/an-almost-type-safe-library-for-linear-algebra/
+  authors:
+    - Matt Gallivan
+  published: 2014
+  type: blog post
+  tags:
+    - dependent types
+
+- title: Three evil ways to avoid conditional compilation
+  url: http://www.yesodweb.com/blog/2014/06/evil-conditional-compile
+  authors:
+    - Michael Snoyman
+  published: 2014
+  type: blog post
+  tags:
+    - conditional compilation
+
+- title: Reasoning about Codata
+  url: http://www.cs.ox.ac.uk/ralf.hinze/publications/CEFP09.pdf
+  authors:
+    - Ralf Hinze
+  published: 2009
+  type: lecture notes
+  tags:
+    - codata
+
+- title: Testing attoparsec parsers with hspec
+  url: http://alpmestan.com/posts/2014-06-18-testing-attoparsec-parsers-with-hspec.html
+  authors:
+    - Alp Mestanogullari
+  published: 2014
+  type: extended example
+  tags:
+    - attoparsec
+    - hspec
+    - parsing
+    - testing
+
+- title: hackage: acid-state
+  url: http://hackage.haskell.org/package/acid-state
+  type: documentation
+  tags:
+    - databases
+
+- title: The Happstack Book: Modern, Type-Safe Web Development in Haskell
+  url: http://www.happstack.com/docs/crashcourse/index.html
+  authors:
+    - Jeremy Shaw
+  type: extended example
+  tags:
+    - Happstack
+    - web
+    - web frameworks
+
+- title: Notions of Computation as Monoids
+  url: http://arxiv.org/pdf/1406.4823v1.pdf
+  authors:
+    - Exequiel Rivas
+  published: 2014
+  type: research paper
+  tags:
+    - monoids
+
+- title: What does it mean to be Reactive?
+  url: https://www.youtube.com/watch?v=sTSQlYX5DU0
+  authors:
+    - Erik Meijer
+  published: 2014
+  type: video lecture
+  tags:
+    - FRP
+
+- title: Backpack: Retroﬁtting Haskell with Interfaces
+  url: http://plv.mpi-sws.org/backpack/backpack-paper.pdf
+  authors:
+    - Scott Kilpatrick
+    - Derek Dreyer
+    - Simon Peyton Jones
+    - Simon Marlow
+  published: 2014
+  type: research paper
+  tags:
+    - Backpack
+    - modules
+
+- title: A Category for Correct-By-Construction Serializers and Deserializers
+  url: http://ocharles.org.uk/blog/posts/2014-06-10-reversible-serialization.html
+  authors:
+    - Oliver Charles
+  published: 2014
+  type: blog post
+  tags:
+    - heterogeneous lists
+    - serialization
+
+- title: Equational Reasoning
+  url: http://www.haskellforall.com/2013/12/equational-reasoning.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2013
+  type: blog post
+  tags:
+    - equational reasoning
+
+- title: HsQML - Qt Quick for Haskell
+  url: http://www.gekkou.co.uk/software/hsqml/
+  authors:
+    - Robin KAY
+  type: community site
+  tags:
+    - GUIs
+    - QML
+    - Qt
+
+- title: Catsters guide
+  url: http://byorgey.wordpress.com/catsters-guide-2/
+  authors:
+    - Brent Yorgey
+  published: 2014
+  type: blog post
+  tags:
+    - category theory
+
+- title: feuerbach/monad-classes
+  url: https://github.com/feuerbach/monad-classes
+  authors:
+    - Roman Cheplyaka
+  type: source code
+  tags:
+    - monad transformers
+    - type families
+
+- title: The Haxl Project at Facebook
+  url: http://www.infoq.com/presentations/haxl
+  authors:
+    - Simon Marlow
+  published: 2014
+  type: video lecture
+  tags:
+    - applicative functors
+    - concurrency
+    - distributed computing
+    - Haxl
+
+- title: Using Circular Programs for Higher-Order Syntax
+  url: http://www.cse.chalmers.se/~emax/documents/axelsson2013using.pdf
+  authors:
+    - Emil Axelsson
+  published: 2013
+  type: functional pearl
+  tags:
+    - DSLs
+    - higher-order syntax
+
+- title: hackage: psqueues
+  url: http://hackage.haskell.org/package/psqueues
+  authors:
+    - better.com
+  type: documentation
+  tags:
+    - caching
+    - data structures
+
+- title: 2014 ACM SIGPLAN Haskell Symposium Papers
+  url: https://github.com/yallop/haskell2014-papers
+  published: 2014
+  type: research paper
+  tags:
+    - miscellaneous
+
+- title: The Mathematics of Secret Sharing
+  url: http://jeremykun.com/2014/06/23/the-mathematics-of-secret-sharing/
+  authors:
+    - Jeremy Kun
+  published: 2014
+  type: blog post
+  tags:
+    - cryptography
+    - secret sharing
+
+- title: Feval: Parsing a functional language with Parsec
+  url: http://burz.github.io/2014/06/24/parsing.html
+  authors:
+    - Anthony Burzillo
+  published: 2014
+  type: blog post
+  tags:
+    - parsing
+
+- title: Solving the 15-Puzzle with Haskell and diagrams
+  url: http://martingalemeasure.wordpress.com/2014/06/24/solving-the-15-puzzle-with-haskell-and-diagrams-10/
+  authors:
+    - Jeffrey Rosenbluth
+  published: 2014
+  type: blog post
+  tags:
+    - algorithms
+
+- title: Tutorial: Profiling Cabal projects
+  url: http://nikita-volkov.github.io/profiling-cabal-projects/
+  authors:
+    - Nikita Volkov
+  published: 2014
+  type: blog post
+  tags:
+    - profiling
+
+- title: Data and Codata
+  url: http://blog.sigfpe.com/2007/07/data-and-codata.html
+  authors:
+    - Dan Piponi
+  published: 2007
+  type: blog post
+  tags:
+    - codata
+    - data
+
+- title: A Fast, Minimal Memory, Consistent Hash Algorithm
+  url: http://arxiv.org/pdf/1406.2294v1.pdf
+  authors:
+    - John Lamping
+  type: light research paper
+  tags:
+    - algorithms
+    - hashing
+
+- title: Streaming Huffman Compression in Haskell
+  url: http://blog.jle.im/entry/streaming-huffman-compression-in-haskell-part-1-trees
+  authors:
+    - Justin Le
+  published: 2014
+  type: extended example
+  tags:
+    - algorithms
+    - coroutines
+
+- title: Kachushi, an artificial intelligence for the game of Open Face Chinese Poker
+  url: http://scrambledeggsontoast.github.io/2014/06/26/artificial-intelligence-ofcp/
+  authors:
+    - Josh Kirklin
+  published: 2014
+  type: blog post
+  tags:
+    - algorithms
+
+- title: Dependently Typed Programming in Agda
+  url: http://www.cse.chalmers.se/~ulfn/papers/afp08/tutorial.pdf
+  authors:
+    - Ulf Norell
+  type: extended example
+  tags:
+    - Agda
+    - dependent types
+
+- title: Homotopy Type Theory: Univalent Foundations of Mathematics
+  url: http://hottheory.files.wordpress.com/2013/03/hott-online-611-ga1a258c.pdf
+  authors:
+    - The Univalent Foundations Program Institute for Advanced Study
+  published: 2013
+  type: textbook
+  tags:
+    - homotopy type theory
+    - type theory
+
+- title: Datatype-Generic Programming
+  url: http://www.cs.ox.ac.uk/jeremy.gibbons/publications/dgp.pdf
+  authors:
+    - Jeremy Gibbons
+  published: 2007
+  type: lecture notes
+  tags:
+    - generic programming
+
+- title: Giving Haskell as Promotion
+  url: http://www.seas.upenn.edu/~sweirich/papers/tldi12.pdf
+  authors:
+    - Brent Yorgey
+    - Stephanie Weirich
+    - Julien Cretin
+    - Simon Peyton Jones
+    - Dimitrios Vytiniotis
+    - José Pedro Magalhães
+  published: 2011
+  type: research paper
+  tags:
+    - kinds
+    - polymorphism
+
+- title: NixOS: A Purely Functional Linux Distribution
+  url: http://nixos.org/~eelco/pubs/nixos-jfp-final.pdf
+  authors:
+    - Eelco Dolstra
+    - Andres Löh
+    - Nicolas Pierron
+  published: 2010
+  type: research paper
+  tags:
+    - nix
+
+- title: Calkin-Wilf for Early(-ish) Haskellers
+  url: http://tel.github.io/2014/07/09/calkin_wilf_for_early-ish_haskellers/
+  authors:
+    - Joseph Abrahamson
+  published: 2014
+  type: blog post
+  tags:
+    - algorithms
+
+- title: Nix User's Guide
+  url: https://nixos.org/nix/manual/
+  authors:
+    - Eelco Dolstra
+  type: documentation
+  tags:
+    - nix
+
+- title: The Zipper
+  url: https://www.st.cs.uni-saarland.de/edu/seminare/2005/advanced-fp/docs/huet-zipper.pdf
+  authors:
+    - Gérard Huet
+  published: 1997
+  type: functional pearl
+  tags:
+    - zippers
+
+- title: Phantom type
+  url: http://www.haskell.org/haskellwiki/Phantom_type
+  authors:
+    - Haskell Wiki
+  type: extended example
+  tags:
+    - phantom types
+
+- title: Monads and Gonads
+  url: https://www.youtube.com/watch?v=dkZFtimgAcM
+  authors:
+    - Douglas Crockford
+  published: 2012
+  type: video lecture
+  tags:
+    - monads
+
+- title: Testing a Multithread Application
+  url: http://kukuruku.co/hub/haskell/haskell-testing-a-multithread-application
+  authors:
+    - Ankuzik
+  published: 2014
+  type: blog post
+  tags:
+    - concurrency
+    - testing
+
+- title: From zero to cooperative threads in 33 lines of Haskell code
+  url: http://www.haskellforall.com/2013/06/from-zero-to-cooperative-threads-in-33.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2013
+  type: blog post
+  tags:
+    - free monads
+
+- title: Why free monads matter
+  url: http://www.haskellforall.com/2012/06/you-could-have-invented-free-monads.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - free monads
+
+- title: Finally Tagless, Partially Evaluated
+  url: https://www.cs.rutgers.edu/~ccshan/tagless/jfp.pdf
+  authors:
+    - Jacques Carette
+    - Oleg Kiselyov
+    - Chung-chieh Shan
+  published: 2009
+  type: research paper
+  tags:
+    - DSLs
+    - finally tagless
+
+- title: Using Phantom Types for Extra Safety
+  url: http://blog.jakubarnold.cz/2014/07/08/using-phantom-types-for-extra-safety.html
+  authors:
+    - Jakub Arnold
+  published: 2014
+  type: blog post
+  tags:
+    - phantom types
+
+- title: Using Phantom Types in Haskell for Extra Safety - Part 2
+  url: http://blog.jakubarnold.cz/2014/07/10/using-phantom-types-in-haskell-for-extra-safety-part-2.html
+  authors:
+    - Jakub Arnold
+  published: 2014
+  type: blog post
+  tags:
+    - phantom types
+
+- title: Hasochism: The Pleasure and Pain of Dependently Typed Haskell Programming
+  url: https://personal.cis.strath.ac.uk/conor.mcbride/pub/hasochism.pdf
+  authors:
+    - Sam Lindley
+    - Conor McBride
+  published: 2013
+  type: light research paper
+  tags:
+    - dependent types
+
+- title: NFA in a Single Line of Haskell (aka. The List Monad is Awesome)
+  url: https://github.com/leonidas/codeblog/blob/master/2011/2011-12-18-haskell-nfa.md
+  authors:
+    - Sami Hangaslammi
+  published: 2011
+  type: blog post
+  tags:
+    - NFA
+
+- title: Statically Typed Vector Algebra Using Type Families
+  url: https://github.com/leonidas/codeblog/blob/master/2011/2011-12-21-static-vector-algebra.md
+  authors:
+    - Sami Hangaslammi
+  published: 2011
+  type: blog post
+  tags:
+    - type families
+
+- title: Basic Tutorial of Template Haskell
+  url: https://github.com/leonidas/codeblog/blob/master/2011/2011-12-27-template-haskell.md
+  authors:
+    - Sami Hangaslammi
+  published: 2011
+  type: blog post
+  tags:
+    - template haskell
+
+- title: Generalizing Streams into Coroutines
+  url: https://github.com/leonidas/codeblog/blob/master/2012/2012-01-08-streams-coroutines.md
+  authors:
+    - Sami Hangaslammi
+  published: 2012
+  type: blog post
+  tags:
+    - coroutines
+
+- title: Purely Functional, Declarative Game Logic Using Reactive Programming
+  url: https://github.com/leonidas/codeblog/blob/master/2012/2012-01-17-declarative-game-logic-afrp.md
+  authors:
+    - Sami Hangaslammi
+    - Leonidas Oy
+  published: 2012
+  type: blog post
+  tags:
+    - FRP
+
+- title: Concatenative, Row-Polymorphic Programming in Haskell
+  url: https://github.com/leonidas/codeblog/blob/master/2012/2012-02-17-concatenative-haskell.md
+  authors:
+    - Sami Hangaslammi
+  published: 2012
+  type: blog post
+  tags:
+    - concatenative programming
+
+- title: Concatenative Haskell Part II: Custom DSL Syntax Using QuasiQuotes
+  url: https://github.com/leonidas/codeblog/blob/master/2012/2012-02-21-concatenative-haskell-ii-dsl.md
+  authors:
+    - Sami Hangaslammi
+  published: 2012
+  type: blog post
+  tags:
+    - concatenative programming
+
+- title: Typed quote/antiquote or: Compile-time parsing
+  url: http://www.cs.ox.ac.uk/ralf.hinze/publications/Quote.pdf
+  authors:
+    - Ralf Hinze
+  published: 2011
+  type: functional pearl
+  tags:
+    - parsing
+    - template haskell
+
+- title: Observable Sharing Using Data.Reify
+  url: https://github.com/leonidas/codeblog/blob/master/2013/2013-01-14-observable-sharing.md
+  authors:
+    - Sami Hangaslammi
+  published: 2013
+  type: blog post
+  tags:
+    - observable sharing
+
+- title: Type-Safe Observable Sharing in Haskell
+  url: http://www.cs.uu.nl/wiki/pub/Afp/CourseLiterature/Gill-09-TypeSafeReification.pdf
+  authors:
+    - Andy Gill
+  published: 2009
+  type: research paper
+  tags:
+    - observable sharing
+
+- title: A Game of Type-Safe Tic-Tac-Toe
+  url: https://github.com/leonidas/codeblog/blob/master/2013/2013-02-19-typesafe-tictactoe.md
+  authors:
+    - Sami Hangaslammi
+  published: 2013
+  type: blog post
+  tags:
+    - web
+
+- title: Why Concatenative Programming Matters
+  url: http://evincarofautumn.blogspot.com/2012/02/why-concatenative-programming-matters.html
+  authors:
+    - Jon Purdy
+  published: 2012
+  type: blog post
+  tags:
+    - concatenative programming
+
+- title: Template Haskell
+  url: http://www.haskell.org/ghc/docs/latest/html/users_guide/template-haskell.html
+  authors:
+    - The GHC Team
+  type: documentation
+  tags:
+    - template haskell
+
+- title: Template Meta-programming for Haskell
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/meta-haskell/meta-haskell.pdf
+  authors:
+    - Tim Sheard
+    - Simon Peyton Jones
+  published: 2002
+  type: light research paper
+  tags:
+    - template haskell
+
+- title: hackage: template-haskell
+  url: http://hackage.haskell.org/package/template-haskell
+  type: documentation
+  tags:
+    - template haskell
+
+- title: First Stab at Template Haskell
+  url: http://www.hyperedsoftware.com/blog/entries/first-stab-th.html
+  authors:
+    - Vo Minh Thu
+  published: 2009
+  type: blog post
+  tags:
+    - template haskell
+
+- title: Type classes: confluence, coherence, global uniqueness
+  url: http://blog.ezyang.com/2014/07/type-classes-confluence-coherence-global-uniqueness/
+  authors:
+    - Edward Z. Yang
+  published: 2014
+  type: blog post
+  tags:
+    - type classes
+
+- title: Type classes: an exploration of the design space
+  url: http://ipaper.googlecode.com/git-history/243b02cb56424d9e3931361122c5aa1c4bdcbbbd/Typeclasses/type-class-explorationi.pdf
+  authors:
+    - Simon Peyton Jones
+    - Mark Jones
+    - Erik Meijer
+  published: 1997
+  type: research paper
+  tags:
+    - type classes
+
+- title: Implicit Conﬁgurations — or, Type Classes Reﬂect the Values of Types
+  url: http://www.cs.rutgers.edu/~ccshan/prepose/prepose.pdf
+  authors:
+    - Oleg Kiselyov
+    - Chung-chieh Shan
+  published: 2004
+  type: functional pearl
+  tags:
+    - existential quantification
+    - higher-rank types
+    - reflection
+    - type classes
+
+- title: Automatic Skeletons in Template Haskell
+  url: http://www.haskell.org/wikiupload/6/69/AutoSkelPPL03.pdf
+  authors:
+    - Kevin Hammond
+    - Jost Berthold
+    - Rita Loogen
+  published: 2003
+  type: light research paper
+  tags:
+    - template haskell
+
+- title: Optimising Embedded DSLs using Template Haskell
+  url: http://www.haskell.org/wikiupload/b/b5/Seefried04th-pan.pdf
+  authors:
+    - Sean Seefried
+    - Manuel Chakravarty
+    - Gabriele Keller
+  published: 2004
+  type: light research paper
+  tags:
+    - DSLs
+    - template haskell
+
+- title: A look at QuasiQuotation
+  url: http://quasimal.com/posts/2012-05-25-quasitext-and-quasiquoting.html
+  authors:
+    - Mike Ledger
+  published: 2012
+  type: blog post
+  tags:
+    - template haskell
+
+- title: Efficient and Compositional Evaluation of Untyped Expressions
+  url: http://www.cse.chalmers.se/~emax/documents/axelsson2014efficient.pdf
+  authors:
+    - Emil Axelsson
+  published: 2014
+  type: light research paper
+  tags:
+    - compilers
+
+- title: Knuth-Morris-Pratt in Haskell
+  url: http://twanvl.nl/blog/haskell/Knuth-Morris-Pratt-in-Haskell
+  authors:
+    - Twan van Laarhoven
+  published: 2007
+  type: blog post
+  tags:
+    - algorithms
+    - KMP
+    - string searching
+
+- title: Dynamic Programming in Haskell
+  url: http://sequence.complete.org/node/263
+  published: 2007
+  type: blog post
+  tags:
+    - dynamic programming
+
+- title: Mutable Algorithms in Immutable Languages, Part 1
+  url: http://tel.github.io/2014/07/12/mutable_algorithms_in_immutable_languges_part_1/
+  authors:
+    - Joseph Abrahamson
+  published: 2014
+  type: blog post
+  tags:
+    - algorithms
+    - union-find
+
+- title: Mutable Algorithms in Immutable Languages, Part 2
+  url: http://tel.github.io/2014/07/13/mutable_algorithms_in_immutable_languages_part_2/
+  authors:
+    - Joseph Abrahamson
+  published: 2014
+  type: blog post
+  tags:
+    - algorithms
+    - union-find
+
+- title: The Cabal of Cabal
+  url: http://www.vex.net/~trebla/haskell/cabal-cabal.xhtml
+  authors:
+    - Albert Y. C. Lai
+  type: blog post
+  tags:
+    - Cabal
+
+- title: Cabal User's Guide
+  url: http://www.haskell.org/cabal/users-guide/
+  type: documentation
+  tags:
+    - Cabal
+
+- title: Typeable and Data in Haskell
+  url: http://chrisdone.com/posts/data-typeable
+  authors:
+    - Chris Done
+  published: 2014
+  type: blog post
+  tags:
+    - generic programming
+
+- title: Intro to Machines & Arrows (Part 1: Stream and Auto)
+  url: http://blog.jle.im/entry/intro-to-machines-arrows-part-1-stream-and
+  authors:
+    - Justin Le
+  published: 2014
+  type: blog post
+  tags:
+    - arrows
+    - FRP
+    - machines
+
+- title: Auto as Category, Applicative & Arrow (Intro to Machines/Arrows Part 2)
+  url: http://blog.jle.im/entry/auto-as-category-applicative-arrow-intro-to-machines
+  authors:
+    - Justin Le
+  published: 2014
+  type: blog post
+  tags:
+    - arrows
+    - FRP
+
+- title: Lens Tutorial - Introduction (part 1)
+  url: http://blog.jakubarnold.cz/2014/07/14/lens-tutorial-introduction-part-1.html
+  authors:
+    - Jakub Arnold
+  published: 2014
+  type: blog post
+  tags:
+    - lenses
+
+- title: Programming in Idris: A Tutorial
+  url: http://eb.host.cs.st-andrews.ac.uk/writings/idris-tutorial.pdf
+  authors:
+    - The Idris Community
+  published: 2014
+  type: extended example
+  tags:
+    - dependent types
+    - Idris
+
+- title: The introduction to Reactive Programming you've been missing
+  url: https://gist.github.com/staltz/868e7e9bc2a7b8c1f754
+  authors:
+    - Andre Staltz
+  published: 2014
+  type: blog post
+  tags:
+    - FRP
+
+- title: A Gentle Introduction to Monad Transformers
+  url: https://github.com/kqr/gists/blob/master/articles/gentle-introduction-monad-transformers.md
+  authors:
+    - kqr
+  published: 2014
+  type: blog post
+  tags:
+    - monad transformers
+
+- title: Template Haskell for faster linear interpolation
+  url: http://www.cmears.id.au/articles/linear-interpolation.html
+  authors:
+    - Christopher Mears
+  published: 2014
+  type: blog post
+  tags:
+    - template haskell
+
+- title: Representing Applicatives
+  url: http://comonad.com/reader/2013/representing-applicatives/
+  authors:
+    - Gershom Bazerman
+  published: 2013
+  type: blog post
+  tags:
+    - applicative functors
+    - representable functors
+
+- title: Algebras of Applicatives
+  url: http://comonad.com/reader/2013/algebras-of-applicatives/
+  authors:
+    - Gershom Bazerman
+  published: 2013
+  type: blog post
+  tags:
+    - applicative functors
+    - fixpoints
+
+- title: Abstracting with Applicatives
+  url: http://comonad.com/reader/2012/abstracting-with-applicatives/
+  authors:
+    - Gershom Bazerman
+  published: 2012
+  type: blog post
+  tags:
+    - applicative functors
+
+- title: Natural Deduction, Sequent Calculus and Type Classes
+  url: http://comonad.com/reader/2012/natural-deduction-sequent-calculus-and-type-classes/
+  authors:
+    - Dan Doel
+  published: 2012
+  type: blog post
+  tags:
+    - type classes
+
+- title: The Identity monad trick
+  url: http://chrisdone.com/posts/identity-monad
+  authors:
+    - Chris Done
+  published: 2014
+  type: blog post
+  tags:
+    - Identity monad
+
+- title: The Trivial Monad
+  url: http://blog.sigfpe.com/2007/04/trivial-monad.html
+  authors:
+    - Dan Piponi
+  published: 2007
+  type: blog post
+  tags:
+    - Identity monad
+
+- title: Reloading running code in GHCi
+  url: http://chrisdone.com/posts/ghci-reload
+  authors:
+    - Chris Done
+  published: 2014
+  type: blog post
+  tags:
+    - GHCi
+
+- title: structured-haskell-mode screencast
+  url: https://www.youtube.com/watch?v=-QMBVMMmaCU&list=PLlzKKtH5TyE-R-k86na3bLSNaKflFNRZr
+  authors:
+    - Chris Done
+  published: 2014
+  type: video lecture
+  tags:
+    - Emacs
+
+- title: Mirrored Lenses
+  url: http://comonad.com/reader/2012/mirrored-lenses/
+  authors:
+    - Edward Kmett
+  published: 2012
+  type: blog post
+  tags:
+    - lenses
+
+- title: Examining Hackage: extensible-effects
+  url: http://jozefg.bitbucket.org/posts/2014-07-15-reading-extensible-effects.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - extensible effects
+
+- title: Examining Hackage: logict
+  url: http://jozefg.bitbucket.org/posts/2014-07-10-reading-logict.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - LogicT
+
+- title: The Monad called Free
+  url: http://blog.sigfpe.com/2014/04/the-monad-called-free.html
+  authors:
+    - Dan Piponi
+  published: 2014
+  type: blog post
+  tags:
+    - free monads
+
+- title: Aho-Corasick string matching algorithm in Haskell
+  url: http://swizec.com/blog/aho-corasick-string-matching-algorithm-in-haskell/swizec/5376
+  authors:
+    - Swizec Teller
+  published: 2012
+  type: blog post
+  tags:
+    - Aho-Corasick
+    - algorithms
+    - string searching
+
+- title: Diagrams Quick Start Tutorial
+  url: http://projects.haskell.org/diagrams/doc/quickstart.html
+  type: extended example
+  tags:
+    - diagrams
+
+- title: Diagrams Manual
+  url: http://projects.haskell.org/diagrams/doc/manual.html
+  type: documentation
+  tags:
+    - diagrams
+
+- title: Equational reasoning at scale
+  url: http://www.haskellforall.com/2014/07/equational-reasoning-at-scale.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2014
+  type: blog post
+  tags:
+    - equational reasoning
+    - monoids
+
+- title: A Vim + Haskell Workflow
+  url: http://www.stephendiehl.com/posts/vim_haskell.html
+  authors:
+    - Stephen Diehl
+  type: blog post
+  tags:
+    - vim
+
+- title: begriffs/haskell-vim-now
+  url: https://github.com/begriffs/haskell-vim-now
+  authors:
+    - Joe Nelson
+  type: source code
+  tags:
+    - vim
+
+- title: An Introduction to Recursion Schemes
+  url: http://patrickthomson.ghost.io/an-introduction-to-recursion-schemes/
+  authors:
+    - Patrick Thomson
+  published: 2014
+  type: blog post
+  tags:
+    - codata
+    - fixpoints
+    - recursion schemes
+
+- title: Don't fear the cat-amorphism (nor the hylomorphism)
+  url: http://fho.f12n.de/posts/2014-05-07-dont-fear-the-cat.html
+  authors:
+    - Florian Hofmann
+  published: 2014
+  type: blog post
+  tags:
+    - recursion schemes
+
+- title: Catamorphisms
+  url: https://www.fpcomplete.com/user/edwardk/recursion-schemes/catamorphisms
+  authors:
+    - Edward Kmett
+  published: 2014
+  type: blog post
+  tags:
+    - recursion schemes
+
+- title: Monad Transformers
+  url: http://vimeo.com/73648150
+  authors:
+    - Tony Morris
+  published: 2013
+  type: video lecture
+  tags:
+    - monad transformers
+
+- title: Practical Foundations for Programming Languages
+  url: http://www.cs.cmu.edu/~rwh/plbook/book.pdf
+  authors:
+    - Robert Harper
+  published: 2014
+  type: textbook
+  tags:
+    - category theory
+
+- title: Category Theory: What is the best textbook for Category theory?
+  url: http://www.quora.com/Category-Theory/What-is-the-best-textbook-for-Category-theory?share=1
+  authors:
+    - Edward Kmett
+  published: 2013
+  type: Q&A website
+  tags:
+    - category theory
+
+- title: Type Theory and Functional Programming
+  url: http://www.cs.kent.ac.uk/people/staff/sjt/TTFP/
+  authors:
+    - Simon Thompson
+  published: 1991
+  type: textbook
+  tags:
+    - category theory
+
+- title: From Adjunctions to Monads
+  url: http://www.stephendiehl.com/posts/adjunctions.html
+  authors:
+    - Stephen Diehl
+  type: blog post
+  tags:
+    - adjunctions
+    - category theory
+    - monads
+    - natural transformations
+
+- title: Monads made difficult
+  url: http://www.stephendiehl.com/posts/monads.html
+  authors:
+    - Stephen Diehl
+  published: 2013
+  type: blog post
+  tags:
+    - category theory
+    - monads
+
+- title: Week 20: Making ad-hoc polymorphism less ad hoc
+  url: http://swizec.com/blog/week-20-making-ad-hoc-polymorphism-less-ad-hoc/swizec/6564
+  authors:
+    - Swizec Teller
+  published: 2014
+  type: blog post
+  tags:
+    - polymorphism
+
+- title: How to make ad-hoc polymorphism less ad hoc
+  url: http://202.3.77.10/users/karkare/courses/2010/cs653/Papers/ad-hoc-polymorphism.pdf
+  authors:
+    - Philip Wadler
+    - Stephen Blott
+  published: 1988
+  type: research paper
+  tags:
+    - polymorphism
+    - type classes
+
+- title: Final Encodings, Part 1: A Quick Demonstration
+  url: http://creativelad.wordpress.com/2013/11/28/final-encodings-part-1-a-quick-demonstration/
+  published: 2013
+  type: blog post
+  tags:
+    - DSLs
+    - finally tagless
+
+- title: Transforming polymorphic values
+  url: http://martijn.van.steenbergen.nl/journal/2009/10/18/transforming-polymorphic-values/
+  authors:
+    - Martijn van Steenbergen
+  published: 2009
+  type: blog post
+  tags:
+    - DSLs
+
+- title: GADTs in Haskell 98
+  url: http://martijn.van.steenbergen.nl/journal/2009/11/12/gadts-in-haskell-98/
+  authors:
+    - Martijn van Steenbergen
+  published: 2009
+  type: blog post
+  tags:
+    - GADTs
+
+- title: Simple Unification-based Type Inference for GADTs
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/gadt/gadt-icfp.pdf
+  authors:
+    - Simon Peyton Jones
+    - Dimitrios Vytiniotis
+    - Stephanie Weirich
+    - Geoffrey Washburn
+  published: 2006
+  type: research paper
+  tags:
+    - GADTs
+    - type inference
+
+- title: Can a monad be a comonad?
+  url: http://stackoverflow.com/questions/16551734/can-a-monad-be-a-comonad
+  type: Q&A website
+  tags:
+    - comonads
+
+- title: Step by Step / Deep explain: The Power of (Co)Yoneda (preferably in scala) through Coroutines
+  url: http://stackoverflow.com/questions/24000465/step-by-step-deep-explain-the-power-of-coyoneda-preferably-in-scala-throu
+  type: Q&A website
+  tags:
+    - category theory
+    - Yoneda lemma
+
+- title: Lightweight Dependent-type Programming
+  url: http://okmij.org/ftp/Computation/lightweight-dependent-typing.html
+  type: lecture notes
+  tags:
+    - dependent types
+
+- title: Some interesting features of Haskell's type system
+  url: https://jeltsch.wordpress.com/2013/02/09/some-interesting-features-of-haskells-type-system/
+  authors:
+    - Wolfgang Jeltsch
+  published: 2013
+  type: blog post
+  tags:
+    - kinds
+    - type classes
+    - type families
+
+- title: The Algebra of Algebraic Data Types, Part 1
+  url: http://chris-taylor.github.io/blog/2013/02/10/the-algebra-of-algebraic-data-types/
+  authors:
+    - Chris Taylor
+  published: 2013
+  type: blog post
+  tags:
+    - ADTs
+
+- title: The Algebra of Algebraic Data Types, Part 2
+  url: http://chris-taylor.github.io/blog/2013/02/11/the-algebra-of-algebraic-data-types-part-ii/
+  authors:
+    - Chris Taylor
+  published: 2013
+  type: blog post
+  tags:
+    - ADTs
+
+- title: The Algebra of Algebraic Data Types, Part 3
+  url: http://chris-taylor.github.io/blog/2013/02/13/the-algebra-of-algebraic-data-types-part-iii/
+  authors:
+    - Chris Taylor
+  published: 2013
+  type: blog post
+  tags:
+    - ADTs
+
+- title: Kleisli arrows of outrageous fortune
+  url: https://personal.cis.strath.ac.uk/conor.mcbride/Kleisli.pdf
+  authors:
+    - Conor McBride
+  published: 2011
+  type: functional pearl
+  tags:
+    - free monads
+    - indexed monads
+    - kinds
+    - monads
+
+- title: Theorems for free!
+  url: http://ttic.uchicago.edu/~dreyer/course/papers/wadler.pdf
+  authors:
+    - Philip Wadler
+  published: 1989
+  type: research paper
+  tags:
+    - fixpoints
+    - polymorphism
+
+- title: Imperative functional programming
+  url: http://cse.iitk.ac.in/users/karkare/courses/2010/cs653/Papers/imperative.pdf
+  authors:
+    - Simon Peyton Jones
+    - Philip Wadler
+  published: 1992
+  type: research paper
+  tags:
+    - I/O
+
+- title: From Monoids to Monads
+  url: http://blog.sigfpe.com/2008/11/from-monoids-to-monads.html
+  authors:
+    - Dan Piponi
+  published: 2008
+  type: blog post
+  tags:
+    - monads
+    - monoids
+
+- title: Functional Reactive Animation
+  url: http://conal.net/papers/icfp97/icfp97.pdf
+  authors:
+    - Conal Elliott
+    - Paul Hudak
+  published: 1997
+  type: research paper
+  tags:
+    - FRP
+
+- title: Flipping arrows in coBurger King
+  url: http://blog.ezyang.com/2010/07/flipping-arrows-in-coburger-king/
+  authors:
+    - Edward Z. Yang
+  published: 2010
+  type: blog post
+  tags:
+    - category theory
+
+- title: Beautiful differentiation
+  url: http://conal.net/blog/posts/beautiful-differentiation
+  authors:
+    - Conal Elliott
+  published: 2008
+  type: blog post
+  tags:
+    - differentiation
+
+- title: Automatic Differentiation
+  url: http://blog.sigfpe.com/2005/07/automatic-differentiation.html
+  authors:
+    - Dan Piponi
+  published: 2005
+  type: blog post
+  tags:
+    - differentiation
+
+- title: Non-standard analysis, automatic differentiation, Haskell, and other stories.
+  url: http://vandreev.wordpress.com/2006/12/04/non-standard-analysis-and-automatic-differentiation/
+  authors:
+    - Vlad Andreev
+  published: 2006
+  type: blog post
+  tags:
+    - differentiation
+
+- title: Functional Differentiation of Computer Programs
+  url: https://karczmarczuk.users.greyc.fr/arpap/diffalg.pdf
+  authors:
+    - Jerzy Karczmarczuk
+  published: 2000
+  type: light research paper
+  tags:
+    - differentiation
+
+- title: Overloading Haskell numbers, part 2, Forward Automatic Differentiation
+  url: http://augustss.blogspot.com/2007/04/overloading-haskell-numbers-part-2.html
+  authors:
+    - Lennart Augustsson
+  published: 2007
+  type: blog post
+  tags:
+    - differentiation
+
+- title: Species and Functors and Types, Oh My!
+  url: http://www.cis.upenn.edu/~byorgey/papers/species-pearl.pdf
+  authors:
+    - Brent Yorgey
+  published: 2010
+  type: functional pearl
+  tags:
+    - ADTs
+
+- title: Episode 8 - Ollie Charles on 24 Days of Hackage and Nix
+  url: http://www.haskellcast.com/episode/008-ollie-charles-on-24-days-of-hackage-and-nix/
+  authors:
+    - The Haskell Cast
+  published: 2014
+  type: blog post
+  tags:
+    - nix
+
+- title: 24 Days of Hackage: Cabal
+  url: https://ocharles.org.uk/blog/posts/2012-12-01-24-days-of-hackage.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - Cabal
+
+- title: 24 Days of Hackage: digestive-functors
+  url: https://ocharles.org.uk/blog/posts/2012-12-02-digestive-functors.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - digestive-functors
+    - web
+
+- title: 24 Days of Hackage: postgresql-simple
+  url: https://ocharles.org.uk/blog/posts/2012-12-03-postgresql-simple.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - databases
+    - PostgreSQL
+
+- title: 24 Days of Hackage: errors
+  url: https://ocharles.org.uk/blog/posts/2012-12-04-errors.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - error handling
+
+- title: 24 Days of Hackage: HLint
+  url: https://ocharles.org.uk/blog/posts/2012-12-05-24-days-of-hackage-hlint.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - HLint
+
+- title: 24 Days of Hackage: containers
+  url: https://ocharles.org.uk/blog/posts/2012-12-06-containers.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - data structures
+
+- title: 24 Days of Hackage: QuickCheck
+  url: https://ocharles.org.uk/blog/posts/2012-12-08-24-days-of-hackage.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - QuickCheck
+    - testing
+
+- title: 24 Days of Hackage: lens
+  url: https://ocharles.org.uk/blog/posts/2012-12-09-24-days-of-hackage-lens.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - lenses
+
+- title: 24 Days of Hackage: parsec
+  url: https://ocharles.org.uk/blog/posts/2012-12-10-24-days-of-hackage-parsec.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - parsing
+
+- title: 24 Days of Hackage: EKG
+  url: https://ocharles.org.uk/blog/posts/2012-12-11-24-day-of-hackage-ekg.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - process monitoring
+
+- title: 24 Days of Hackage: dlist
+  url: https://ocharles.org.uk/blog/posts/2012-12-14-24-days-of-hackage-dlist.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - difference lists
+
+- title: 24 Days of Hackage: haskelldb
+  url: https://ocharles.org.uk/blog/posts/2012-12-15-24-days-of-hackage-haskelldb.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - databases
+
+- title: 24 Days of Hackage: pipes
+  url: https://ocharles.org.uk/blog/posts/2012-12-16-24-days-of-hackage-pipes.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - coroutines
+    - pipes
+
+- title: 24 Days of Hackage: optparse-applicative
+  url: https://ocharles.org.uk/blog/posts/2012-12-17-24-days-of-hackage-optparse-applicative.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - command-line arguments parsing
+
+- title: 24 Days of Hackage: criterion
+  url: https://ocharles.org.uk/blog/posts/2012-12-18-24-days-of-hackage-criterion.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - benchmarking
+    - criterion
+
+- title: 24 Days of Hackage: transformers
+  url: https://ocharles.org.uk/blog/posts/2012-12-20-24-days-of-hackage-transformers.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - monad transformers
+
+- title: 24 Days of Hackage: configurator
+  url: https://ocharles.org.uk/blog/posts/2012-12-21-24-days-of-hackage-configurator.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - configuration
+
+- title: 24 Days of Hackage: blaze-html
+  url: https://ocharles.org.uk/blog/posts/2012-12-22-24-days-of-hackage-blaze.html
+  authors:
+    - Oliver Charles
+  published: 2012
+  type: blog post
+  tags:
+    - HTML
+    - web
+
+- title: 24 Days of Hackage: linear
+  url: https://ocharles.org.uk/blog/posts/2013-12-02-24-days-of-hackage-linear.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - linear algebra
+
+- title: 24 Days of Hackage: tasty
+  url: https://ocharles.org.uk/blog/posts/2013-12-03-24-days-of-hackage-tasty.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - testing
+
+- title: 24 Days of Hackage: extensible-effects
+  url: https://ocharles.org.uk/blog/posts/2013-12-04-24-days-of-hackage-extensible-effects.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - extensible effects
+
+- title: 24 Days of Hackage: scotty
+  url: https://ocharles.org.uk/blog/posts/2013-12-05-24-days-of-hackage-scotty.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - scotty
+    - web
+    - web frameworks
+
+- title: 24 Days of Hackage: persistent & esqueleto
+  url: https://ocharles.org.uk/blog/posts/2013-12-06-24-days-of-hackage-persistent-esqueleto.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - databases
+    - esqueleto
+    - persistent
+    - SQL
+
+- title: 24 Days of Hackage: threepenny-gui
+  url: https://ocharles.org.uk/blog/posts/2013-12-07-24-days-of-hackage-threepenny-gui.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - GUIs
+
+- title: 24 Days of Hackage: data-memocombinators
+  url: https://ocharles.org.uk/blog/posts/2013-12-08-24-days-of-hackage-data-memocombinators.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - memoization
+
+- title: 24 Days of Hackage: sbv
+  url: https://ocharles.org.uk/blog/guest-posts/2013-12-09-24-days-of-hackage-sbv.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - SMT solvers
+
+- title: 24 Days of Hackage: gloss
+  url: https://ocharles.org.uk/blog/posts/2013-12-10-24-days-of-hackage-gloss.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - GUIs
+
+- title: 24 Days of Hackage: heist
+  url: https://ocharles.org.uk/blog/posts/2013-12-11-24-days-of-hackage-heist.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - HTML
+
+- title: 24 Days of Hackage: async
+  url: https://ocharles.org.uk/blog/posts/2013-12-13-24-days-of-hackage-async.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - concurrency
+
+- title: 24 Days of Hackage: acid-state
+  url: https://ocharles.org.uk/blog/posts/2013-12-14-24-days-of-hackage-acid-state.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - databases
+
+- title: 24 Days of Hackage: time
+  url: https://ocharles.org.uk/blog/posts/2013-12-15-24-days-of-hackage-time.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - time
+
+- title: 24 Days of Hackage: repa
+  url: https://ocharles.org.uk/blog/posts/2013-12-16-24-days-of-hackage-repa.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - parallelization
+    - repa
+
+- title: 24 Days of Hackage: unordered-containers
+  url: https://ocharles.org.uk/blog/posts/2013-12-17-24-days-of-hackage-unordered-containers.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - data structures
+
+- title: 24 Days of Hackage: doctest
+  url: https://ocharles.org.uk/blog/posts/2013-12-18-doctest.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - testing
+
+- title: 24 Days of Hackage: websockets
+  url: https://ocharles.org.uk/blog/posts/2013-12-19-websockets.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - web
+    - web sockets
+
+- title: 24 Days of Hackage: web-routes-boomerang
+  url: https://ocharles.org.uk/blog/posts/2013-12-20-24-days-of-hackage-web-routes-boomerang.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - web
+
+- title: 24 Days of Hackage: contravariant
+  url: https://ocharles.org.uk/blog/guest-posts/2013-12-21-24-days-of-hackage-contravariant.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - Contravariant
+
+- title: 24 Days of Hackage: profunctors
+  url: https://ocharles.org.uk/blog/guest-posts/2013-12-22-24-days-of-hackage-profunctors.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - Profunctor
+
+- title: 24 Days of Hackage: fay
+  url: https://ocharles.org.uk/blog/posts/2013-12-23-24-days-of-hackage-fay.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - Fay
+    - JavaScript
+
+- title: 24 Days of Hackage: Chart
+  url: https://ocharles.org.uk/blog/posts/2013-12-24-24-days-of-hackage-charts.html
+  authors:
+    - Oliver Charles
+  published: 2013
+  type: blog post
+  tags:
+    - charts
+
+- title: The Derivative of a Regular Type is its Type of One-Hole Contexts
+  url: http://strictlypositive.org/diff.pdf
+  authors:
+    - Conor McBride
+  published: 2001
+  type: light research paper
+  tags:
+    - ADTs
+
+- title: Type Inference, Haskell and Dependent Types
+  url: https://personal.cis.strath.ac.uk/adam.gundry/thesis/thesis-2013-12-03.pdf
+  authors:
+    - Adam Gundry
+  published: 2013
+  type: dissertation
+  tags:
+    - dependent types
+    - type inference
+
+- title: monad-control
+  url: http://www.yesodweb.com/book/monad-control
+  authors:
+    - Michael Snoyman
+  type: extended example
+  tags:
+    - error handling
+
+- title: Associated Type Synonyms
+  url: http://userpages.uni-koblenz.de/~laemmel/TheEagle/dl/ChakravartyKPJ05.pdf
+  authors:
+    - Manuel M. T. Chakravarty
+    - Gabriele Keller
+    - Simon Peyton Jones
+  published: 2005
+  type: research paper
+  tags:
+    - functional dependencies
+    - type classes
+    - type families
+    - type inference
+
+- title: Associated Types with Class
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/assoc-types/assoc.ps
+  authors:
+    - Manuel M. T. Chakravarty
+    - Gabriele Keller
+    - Simon Peyton Jones
+    - Simon Marlow
+  published: 2004
+  type: research paper
+  tags:
+    - type classes
+
+- title: Type Checking with Open Type Functions
+  url: http://www.cse.unsw.edu.au/~chak/papers/tc-tfs.pdf
+  authors:
+    - Tom Schrijvers
+    - Simon Peyton Jones
+    - Manuel Chakravarty
+    - Martin Sulzmann
+  published: 2008
+  type: research paper
+  tags:
+    - type checking
+    - type families
+
+- title: A Comparative Study of Language Support for Generic Programming
+  url: http://www.osl.iu.edu/publications/prints/2003/comparing_generic_programming03.pdf
+  authors:
+    - Ronald Garcia
+    - Jaakko Järvi
+    - Andrew Lumsdaine
+    - Jeremy Siek
+    - Jeremiah Willcock
+  published: 2007
+  type: survey article
+  tags:
+    - generic programming
+
+- title: A Framework for Point-free Program Transformations
+  url: http://www3.di.uminho.pt/~mac/Publications/frapfpt.pdf
+  authors:
+    - Alcino Cunha
+    - Jorge Sousa Pinto
+    - José Proença
+  published: 2006
+  type: research paper
+  tags:
+    - transformations
+
+- title: Type-indexed data types
+  url: http://www.cs.nott.ac.uk/~gmh/wgp01/jeuring-paper.pdf
+  authors:
+    - Ralf Hinze
+    - Johan Jeuring
+    - Andres Löh
+  published: 2002
+  type: research paper
+  tags:
+    - indexed types
+
+- title: Haskell Session Types with (Almost) No Class
+  url: http://www.eecs.harvard.edu/~tov/pubs/haskell-session-types/session08.pdf
+  authors:
+    - Riccardo Pucella
+    - Jesse A. Tov
+  published: 2008
+  type: research paper
+  tags:
+    - concurrency
+    - functional dependencies
+    - indexed monads
+    - phantom types
+    - session types
+    - type classes
+
+- title: Session Types in Haskell: Updating Message Passing for the 21st Century
+  url: http://pubs.doc.ic.ac.uk/session-types-in-haskell/session-types-in-haskell.pdf
+  authors:
+    - Matthew Sackman
+    - Susan Eisenbach
+  published: 2008
+  type: research paper
+  tags:
+    - concurrency
+    - indexed monads
+    - session types
+
+- title: An Implementation of Session Types
+  url: http://www2.informatik.uni-freiburg.de/~thiemann/papers/padl04.ps.gz
+  authors:
+    - Matthias Neubauer
+    - Peter Thiemann
+  published: 2004
+  type: light research paper
+  tags:
+    - concurrency
+    - session types
+
+- title: Formatting: a class act
+  url: http://www.cs.ox.ac.uk/ralf.hinze/publications/Format.ps.gz
+  authors:
+    - Ralf Hinze
+  published: 2003
+  type: light research paper
+  tags:
+    - functional dependencies
+
+- title: Tree Derivations
+  url: https://www.youtube.com/watch?v=ud_xnX9uixg
+  authors:
+    - Bob Grudem
+  published: 2014
+  type: video lecture
+  tags:
+    - diagrams
+
+- title: A Tutorial on Church Representation
+  url: http://jozefg.bitbucket.org/posts/2014-07-19-church-tutorial.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - Church encoding
+    - encoding
+
+- title: Church Representations
+  url: http://jozefg.bitbucket.org/posts/2014-03-06-church.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - Church encoding
+    - encoding
+
+- title: Church Representations: Part 2
+  url: http://jozefg.bitbucket.org/posts/2014-03-07-church-the-sequel.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - Church encoding
+    - encoding
+
+- title: Church Representations: Part 3
+  url: http://jozefg.bitbucket.org/posts/2014-03-10-revenge-of-churchrep.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - Church encoding
+    - encoding
+
+- title: Kan Extensions for Program Optimisation; Or: Art and Dan Explain an Old Trick
+  url: http://www.cs.ox.ac.uk/ralf.hinze/Kan.pdf
+  authors:
+    - Ralf Hinze
+  published: 2012
+  type: research paper
+  tags:
+    - Church encoding
+    - Codensity monad
+    - CPS
+    - Kan extensions
+
+- title: Building Monad Transformers - Part 1
+  url: http://blog.jakubarnold.cz/2014/07/22/building-monad-transformers-part-1.html
+  authors:
+    - Jakub Arnold
+  published: 2014
+  type: blog post
+  tags:
+    - monad transformers
+
+- title: FPH: First-class Polymorphism for Haskell
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/boxy/impredicative.pdf
+  authors:
+    - Dimitrios Vytiniotis
+    - Stephanie Weirich
+    - Simon Peyton Jones
+  published: 2008
+  type: research paper
+  tags:
+    - higher-rank types
+    - type inference
+
+- title: Boxy Types: Inference for Higher-Rank Types and Impredicativity
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/boxy/boxy-icfp.pdf
+  authors:
+    - Dimitrios Vytiniotis
+    - Stephanie Weirich
+    - Simon Peyton Jones
+  published: 2006
+  type: research paper
+  tags:
+    - higher-rank types
+    - type inference
+
+- title: Practical type inference for arbitrary-rank types
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/higher-rank/putting.pdf
+  authors:
+    - Simon Peyton Jones
+    - Dimitrios Vytiniotis
+    - Stephanie Weirich
+    - Mark Shields
+  published: 2007
+  type: research paper
+  tags:
+    - higher-rank types
+    - type inference
+
+- title: Arbitrary-rank polymorphism in (GHC) Haskell
+  url: http://www.cas.mcmaster.ca/~forressa/academic/cas743-presentation.pdf
+  authors:
+    - Stephen Forrest
+  published: 2006
+  type: lecture notes
+  tags:
+    - higher-rank types
+
+- title: Arbitrary-rank polymorphism
+  url: https://www.haskell.org/ghc/docs/latest/html/users_guide/other-type-extensions.html#universal-quantification
+  authors:
+    - The GHC Team
+  type: documentation
+  tags:
+    - higher-rank types
+
+- title: Putting Type Annotations to Work
+  url: http://ecommons.luc.edu/cgi/viewcontent.cgi?article=1057&context=cs_facpubs
+  authors:
+    - Martin Odersky
+    - Konstantin Laufer
+  published: 1996
+  type: research paper
+  tags:
+    - higher-rank types
+    - type inference
+
+- title: Explicit `forall`
+  url: https://www.fpcomplete.com/school/to-infinity-and-beyond/pick-of-the-week/guide-to-ghc-extensions/explicit-forall
+  authors:
+    - Alexander Altman
+  published: 2013
+  type: extended example
+  tags:
+    - higher-rank types
+
+- title: Polymorphism
+  url: http://en.wikibooks.org/wiki/Haskell/Polymorphism
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - higher-rank types
+
+- title: On Understanding Types, Data Abstraction, and Polymorphism
+  url: http://lucacardelli.name/Papers/OnUnderstanding.A4.pdf
+  authors:
+    - Luca Cardelli
+    - Peter Wegner
+  published: 1985
+  type: survey article
+  tags:
+    - higher-rank types
+    - lambda calculus
+    - type inference
+    - type theory
+
+- title: Lazy Functional State Threads
+  url: http://galois.squarespace.com/storage/files/downloads/publications-jl/lazy-functional-state-threads.pdf
+  authors:
+    - John Launchbury
+    - Simon Peyton Jones
+  published: 1994
+  type: research paper
+  tags:
+    - higher-rank types
+    - ST monad
+
+- title: Boxes Go Bananas: Encoding Higher-Order Abstract Syntax with Parametric Polymorphism
+  url: http://www.seas.upenn.edu/~sweirich/papers/itabox/icfp-published-version.pdf
+  authors:
+    - Geoffrey Washburn
+    - Stephanie Weirich
+  published: 2003
+  type: research paper
+  tags:
+    - higher-rank types
+    - HOAS
+
+- title: Boxes Go Bananas: Encoding Higher-Order Abstract Syntax with Parametric Polymorphism (Extended Version)
+  url: http://repository.upenn.edu/cgi/viewcontent.cgi?article=1031&context=cis_reports
+  authors:
+    - Geoffrey Washburn
+    - Stephanie Weirich
+  published: 2003
+  type: research paper
+  tags:
+    - higher-rank types
+    - HOAS
+
+- title: Rank-N types, a simple DB example
+  url: http://chrisdone.com/posts/rankntypes
+  authors:
+    - Chris Done
+  published: 2011
+  type: blog post
+  tags:
+    - higher-rank types
+
+- title: Arrow's place in the Applicative/Monad hierarchy
+  url: http://gergo.erdi.hu/blog/2014-07-12-arrow's_place_in_the_applicative_monad_hierarchy/
+  authors:
+    - Gergő Érdi
+  published: 2014
+  type: blog post
+  tags:
+    - arrows
+
+- title: Shake Before Building: Replacing Make with Haskell
+  url: http://community.haskell.org/~ndm/downloads/paper-shake_before_building-10_sep_2012.pdf
+  authors:
+    - Neil Mitchell
+  published: 2012
+  type: research paper
+  tags:
+    - build systems
+    - Shake
+
+- title: Applicative vs Monadic build systems
+  url: http://neilmitchell.blogspot.co.uk/2014/07/applicative-vs-monadic-build-systems.html
+  authors:
+    - Neil Mitchell
+  published: 2014
+  type: blog post
+  tags:
+    - build systems
+    - Shake
+
+- title: Experience Report: a Do-It-Yourself High-Assurance Compiler
+  url: http://www.cs.indiana.edu/~lepike/pubs/pike-icfp12.pdf
+  authors:
+    - Lee Pike
+    - Nis Wegmann
+    - Sebastian Niller
+    - Alwyn Goodloe
+  published: 2012
+  type: experience report
+  tags:
+    - compilers
+    - DSLs
+
+- title: Monoids: Theme and Variations
+  url: http://www.cis.upenn.edu/~byorgey/pub/monoid-pearl.pdf
+  authors:
+    - Brent Yorgey
+  published: 2012
+  type: functional pearl
+  tags:
+    - monoids
+
+- title: When Maybe is not good enough
+  url: http://spivey.oriel.ox.ac.uk/wiki/images/0/06/Maybe.pdf
+  authors:
+    - Mike Spivey
+  published: 2011
+  type: functional pearl
+  tags:
+    - parsing
+
+- title: The Hough transform
+  url: http://wwwhome.ewi.utwente.nl/~fokkinga/mmf2005d-houghtrf-JFPpre.pdf
+  authors:
+    - Maarten Fokkinga
+  published: 2011
+  type: functional pearl
+  tags:
+    - algorithms
+    - Hough transform
+
+- title: Sorted: Verifying the Problem of the Dutch National Flag in Agda
+  url: http://www.staff.science.uu.nl/~swier004/Publications/DutchNationalFlag.pdf
+  authors:
+    - Wouter Swierstra
+  published: 2011
+  type: functional pearl
+  tags:
+    - Agda
+    - algorithms
+
+- title: Functional Pearl: Every Bit Counts
+  url: http://research.microsoft.com/en-us/people/dimitris/every-bit-counts.pdf
+  authors:
+    - Dimitrios Vytiniotis
+    - Andrew Kennedy
+  published: 2010
+  type: functional pearl
+  tags:
+    - lambda calculus
+
+- title: A Play on Regular Expressions
+  url: http://sebfisch.github.io/haskell-regexp/regexp-play.pdf
+  authors:
+    - Sebastian Fischer
+    - Frank Huch
+    - Thomas Wilke
+  published: 2010
+  type: functional pearl
+  tags:
+    - regular expressions
+
+- title: Bidirectionalization for Free!
+  url: http://www.iai.uni-bonn.de/~jv/popl09-2.pdf
+  authors:
+    - Janis Voigtländer
+  published: 2009
+  type: functional pearl
+  tags:
+    - generic programming
+    - transformations
+
+- title: Enumerating the Rationals
+  url: http://www.cs.ox.ac.uk/people/jeremy.gibbons/publications/rationals.pdf
+  authors:
+    - Jeremy Gibbons
+    - David Lester
+    - Richard Bird
+  published: 2006
+  type: functional pearl
+  tags:
+    - algorithms
+
+- title: I am not a Number—I am a Free Variable
+  url: http://www.cs.ru.nl/~james/RESEARCH/haskell2004.pdf
+  authors:
+    - Conor McBride
+    - James McKinna
+  published: 2004
+  type: functional pearl
+  tags:
+    - variable binding
+
+- title: Tagless Staged Interpreters for Typed Languages
+  url: http://www.cs.rice.edu/~taha/publications/conference/icfp02.pdf
+  authors:
+    - Emir Pašalić
+    - Walid Taha
+    - Tim Sheard
+  published: 2002
+  type: research paper
+  tags:
+    - DSLs
+    - interpreters
+
+- title: Denotational design with type class morphisms (extended version)
+  url: http://conal.net/papers/type-class-morphisms/type-class-morphisms-long.pdf
+  authors:
+    - Conal Elliott
+  published: 2009
+  type: research paper
+  tags:
+    - denotational semantics
+    - type classes
+
+- title: Higher-Order Abstract Syntax
+  url: http://conal.net/papers/hoas88.pdf
+  authors:
+    - Frank Pfenning
+    - Conal Elliott
+  published: 1988
+  type: research paper
+  tags:
+    - HOAS
+
+- title: A Poor Man's Concurrency Monad
+  url: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.39.8039&rep=rep1&type=pdf
+  authors:
+    - Koen Claessen
+  published: 1999
+  type: functional pearl
+  tags:
+    - coroutines
+
+- title: Type-Safe Cast
+  url: http://www.seas.upenn.edu/~sweirich/papers/cast/cast.pdf
+  authors:
+    - Stephanie Weirich
+  published: 2004
+  type: functional pearl
+  tags:
+    - intensional type analysis
+    - polymorphism
+    - type classes
+
+- title: Beware of bracket
+  url: http://ro-che.info/articles/2014-07-30-bracket.html
+  authors:
+    - Roman Cheplyaka
+  published: 2014
+  type: blog post
+  tags:
+    - concurrency
+    - exceptions
+
+- title: Foldable and Traversable
+  url: http://blog.jakubarnold.cz/2014/07/30/foldable-and-traversable.html
+  authors:
+    - Jakub Arnold
+  published: 2014
+  type: blog post
+  tags:
+    - Foldable
+    - lenses
+    - Traversable
+
+- title: An Introduction to DataKinds and GHC.TypeLits
+  url: http://ponies.io/posts/2014-07-30-typelits.html
+  authors:
+    - Christian Marie
+  published: 2014
+  type: blog post
+  tags:
+    - kinds
+
+- title: Algebraic Data Types
+  url: http://tech.esper.com/2014/07/30/algebraic-data-types/
+  authors:
+    - Tikhon Jelvis
+  published: 2014
+  type: blog post
+  tags:
+    - ADTs
+
+- title: The Essence of the Iterator Pattern
+  url: http://www.cs.ox.ac.uk/jeremy.gibbons/publications/iterator.pdf
+  authors:
+    - Jeremy Gibbons
+    - Bruno C. d. S. Oliveira
+  published: 2006
+  type: research paper
+  tags:
+    - applicative functors
+    - Traversable
+
+- title: Debugging Haskell at assembly level by scripting lldb in Python
+  url: http://www.well-typed.com/blog/96/
+  authors:
+    - Edsko de Vries
+  published: 2014
+  type: blog post
+  tags:
+    - debugging
+
+- title: Demystifying Haskell
+  url: http://youtu.be/apBWkBDVlow
+  authors:
+    - Andrew Rademacher
+  published: 2014
+  type: video lecture
+  tags:
+    - fibonacci
+    - introduction
+
+- title: Lens Tutorial - Stab & Traversal (Part 2)
+  url: http://blog.jakubarnold.cz/2014/08/06/lens-tutorial-stab-traversal-part-2.html
+  authors:
+    - Jakub Arnold
+  published: 2014
+  type: blog post
+  tags:
+    - lenses
+
+- title: Diff Lists, Cont, Yoneda, and Free Monad Optimizations
+  url: http://reinh.com/notes/posts/2014-07-16-diff-lists%2C-cont%2C-yoneda%2C-and-free-monad-optimizations.html
+  authors:
+    - Rein Henrichs
+  published: 2014
+  type: blog post
+  tags:
+    - CPS
+
+- title: Notes on Edward Kmett on Hask
+  url: http://reinh.com/notes/posts/2014-07-19-notes-on-edward-kmett-on-hask.html
+  authors:
+    - Rein Henrichs
+  published: 2014
+  type: blog post
+  tags:
+    - category theory
+
+- title: Recommended Reading Material
+  url: http://reinh.com/notes/posts/2014-07-25-recommended-reading-material.html
+  authors:
+    - Rein Henrichs
+  published: 2014
+  type: meta resource
+  tags:
+    - miscellaneous
+
+- title: Algebraic Terraforming: Trees from Magma
+  url: https://www.fpcomplete.com/user/bss/magma-tree
+  authors:
+    - Boyd Stephen Smith Jr.
+  published: 2014
+  type: blog post
+  tags:
+    - data structures
+    - free monoids
+
+- title: Lenses from the ground up
+  url: http://taylor.fausak.me/2014/08/03/lenses-from-the-ground-up/
+  authors:
+    - Taylor Fausak
+  published: 2014
+  type: blog post
+  tags:
+    - lenses
+
+- title: From Zipper To Lens
+  url: https://www.fpcomplete.com/user/psygnisfive/from-zipper-to-lens
+  authors:
+    - Darryl McAdams
+  published: 2014
+  type: blog post
+  tags:
+    - lenses
+    - zippers
+
+- title: Some Points About Type Safety
+  url: http://tel.github.io/2014/08/08/six_points_about_type_safety/
+  authors:
+    - Joseph Abrahamson
+  published: 2014
+  type: blog post
+  tags:
+    - types
+
+- title: All you wanted to know about types but were afraid to ask
+  url: http://tel.github.io/2014/07/08/all_you_wanted_to_know_about_types_but_were_afraid_to_ask/
+  authors:
+    - Joseph Abrahamson
+  published: 2014
+  type: blog post
+  tags:
+    - types
+
+- title: The types of data
+  url: http://tel.github.io/2014/07/23/types_of_data/
+  authors:
+    - Joseph Abrahamson
+  published: 2014
+  type: blog post
+  tags:
+    - types
+
+- title: Haskell's modules system has problems with composition
+  url: http://nikita-volkov.github.io/haskells-modules-system-has-problems-with-composition/
+  authors:
+    - Nikita Volkov
+  published: 2014
+  type: blog post
+  tags:
+    - modules
+
+- title: A criterion tutorial: Learn how to write Haskell microbenchmarks.
+  url: http://www.serpentine.com/criterion/tutorial.html
+  authors:
+    - Bryan O'Sullivan
+  published: 2014
+  type: extended example
+  tags:
+    - benchmarking
+    - criterion
+
+- title: AHGTH: The Unhandled Exception Handler
+  url: http://www.steveseverance.com/2012/09/01/ahgth-the-unhandled-exception-handler/
+  authors:
+    - Steve Severance
+  published: 2012
+  type: blog post
+  tags:
+    - exceptions
+
+- title: What’s a module system good for anyway?
+  url: http://blog.ezyang.com/2014/08/whats-a-module-system-good-for-anyway/
+  authors:
+    - Edward Z. Yang
+  published: 2014
+  type: blog post
+  tags:
+    - backpack
+    - modules
+
+- title: Parsing CSS with Parsec
+  url: http://blog.jakubarnold.cz/2014/08/10/parsing-css-with-parsec.html
+  authors:
+    - Jakub Arnold
+  published: 2014
+  type: blog post
+  tags:
+    - parsec
+    - parsing
+
+- title: Applicative Functors
+  url: http://pbrisbin.com/posts/applicative_functors/
+  published: 2014
+  type: blog post
+  tags:
+    - applicative functors
+
+- title: Understanding Clojure Transducers Through Types
+  url: http://conscientiousprogrammer.com/blog/2014/08/07/understanding-cloure-transducers-through-types/
+  authors:
+    - Franklin Chen
+  published: 2014
+  type: blog post
+  tags:
+    - transducers
+
+- title: Typing Transducers (as Kleisli arrows)
+  url: http://tel.github.io/2014/08/10/typing-transducers/
+  authors:
+    - Joseph Abrahamson
+  published: 2014
+  type: blog post
+  tags:
+    - transducers
+
+- title: Transducers are monoid homomorphisms
+  url: http://oleksandrmanzyuk.wordpress.com/2014/08/09/transducers-are-monoid-homomorphisms/
+  authors:
+    - Oleksandr Manzyuk
+  published: 2014
+  type: blog post
+  tags:
+    - transducers
+
+- title: glguy / Lens Cookbook
+  url: https://gist.github.com/glguy/74960a3f1531b64a201b
+  authors:
+    - Eric Mertens
+  published: 2014
+  type: blog post
+  tags:
+    - lenses
+
+- title: The Two Dualities of Computation: Negative and Fractional Types
+  url: http://www.cs.indiana.edu/~sabry/papers/rational.pdf
+  authors:
+    - Roshan P. James
+    - Amr Sabry
+  published: 2012
+  type: research paper
+  tags:
+    - types
+
+- title: Easy Haskell Profiling
+  url: http://danielvelkov.blogspot.com/2014/08/easy-haskell-profiling.html
+  authors:
+    - Daniel Velkov
+  published: 2014
+  type: blog post
+  tags:
+    - profiling
+
+- title: Dependently Typed Programming with Singletons
+  url: http://www.cis.upenn.edu/~eir/papers/2012/singletons/paper.pdf
+  authors:
+    - Richard A. Eisenberg
+    - Stephanie Weirich
+  published: 2012
+  type: research paper
+  tags:
+    - dependent types
+    - GADTs
+    - singleton types
+
+- title: Cyclic Lists, Purely
+  url: http://perso.ens-lyon.fr/guillaume.allais/?en/main/blog/read/cyclic-list-purely
+  authors:
+    - gallais
+  published: 2014
+  type: blog post
+  tags:
+    - data structures
+    - higher-rank types
+    - phantom types
+    - recursion
+
+- title: ListT done right
+  url: http://www.haskell.org/haskellwiki/ListT_done_right
+  authors:
+    - Haskell Wiki
+  type: blog post
+  tags:
+    - ListT monad
+
+- title: Value Recursion in Monadic Computations
+  url: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.15.1543&rep=rep1&type=pdf
+  authors:
+    - Levent Erkök
+  published: 2002
+  type: dissertation
+  tags:
+    - fixpoints
+    - MonadFix
+
+- title: The recursive do-notation
+  url: http://www.haskell.org/ghc/docs/latest/html/users_guide/syntax-extns.html#recursive-do-notation
+  authors:
+    - The GHC Team
+  type: documentation
+  tags:
+    - fixpoints
+    - MonadFix
+
+- title: Monoids and Finger Trees
+  url: http://apfelmus.nfshost.com/articles/monoid-fingertree.html
+  authors:
+    - Heinrich Apfelmus
+  published: 2009
+  type: blog post
+  tags:
+    - data structures
+    - monoids
+
+- title: Finger trees: a simple general-purpose data structure
+  url: http://www.soi.city.ac.uk/~ross/papers/FingerTree.pdf
+  authors:
+    - Ralf Hinze
+    - Ross Paterson
+  published: 2006
+  type: journal paper
+  tags:
+    - data structures
+
+- title: Fast incremental regular expression matching with monoids
+  url: http://blog.sigfpe.com/2009/01/fast-incremental-regular-expression.html
+  authors:
+    - Dan Piponi
+  published: 2009
+  type: blog post
+  tags:
+    - monoids
+    - regular expressions
+
+- title: Beyond Regular Expressions: More Incremental String Matching
+  url: http://blog.sigfpe.com/2009/01/beyond-regular-expressions-more.html
+  authors:
+    - Dan Piponi
+  published: 2009
+  type: blog post
+  tags:
+    - monoids
+
+- title: Collecting unstructured information with the monoid of partial knowledge
+  url: http://byorgey.wordpress.com/2008/04/17/collecting-unstructured-information-with-the-monoid-of-partial-knowledge/
+  authors:
+    - Brent Yorgey
+  published: 2008
+  type: blog post
+  tags:
+    - monoids
+
+- title: Gaussian distributions form a monoid
+  url: http://izbicki.me/blog/gausian-distributions-are-monoids
+  published: 2012
+  type: blog post
+  tags:
+    - monoids
+
+- title: Word numbers, Part 2
+  url: http://conway.rutgers.edu/~ccshan/wiki/blog/posts/WordNumbers2/
+  authors:
+    - Chung-chieh Shan
+    - Dylan Thurston
+  published: 2008
+  type: blog post
+  tags:
+    - algorithms
+    - monoids
+
+- title: Word numbers, Part 3: Binary search
+  url: http://conway.rutgers.edu/~ccshan/wiki/blog/posts/WordNumbers3/
+  authors:
+    - Chung-chieh Shan
+    - Dylan Thurston
+  published: 2008
+  type: blog post
+  tags:
+    - algorithms
+    - monoids
+
+- title: Word numbers, Part 4: Sort the words, sum the numbers
+  url: http://conway.rutgers.edu/~ccshan/wiki/blog/posts/WordNumbers4/
+  authors:
+    - Chung-chieh Shan
+    - Dylan Thurston
+  published: 2008
+  type: blog post
+  tags:
+    - algorithms
+    - monoids
+
+- title: Category theory
+  url: http://en.wikibooks.org/wiki/Haskell/Category_theory
+  authors:
+    - Haskell Wikibook
+  type: lecture notes
+  tags:
+    - category theory
+
+- title: Arrows and Computation
+  url: https://karczmarczuk.users.greyc.fr/TEACH/Stage/ArrComp.pdf
+  authors:
+    - Ross Paterson
+  published: 2003
+  type: research paper
+  tags:
+    - arrows
+
+- title: A New Notation for Arrows
+  url: http://ipaper.googlecode.com/git-history/04245c26d47749179d6b8446e130f7e51bf79db9/Ross-Paterson/arrows-notation.pdf
+  authors:
+    - Ross Paterson
+  published: 2001
+  type: research paper
+  tags:
+    - arrows
+
+- title: Programming with Arrows
+  url: http://www.cse.chalmers.se/~rjmh/afp-arrows.pdf
+  authors:
+    - John Hughes
+  type: light research paper
+  tags:
+    - arrows
+
+- title: The Arrow Calculus
+  url: http://homepages.inf.ed.ac.uk/wadler/papers/arrows/arrows.pdf
+  authors:
+    - Sam Lindley
+    - Philip Wadler
+    - Jeremy Yallop
+  published: 2008
+  type: functional pearl
+  tags:
+    - arrows
+
+- title: Programming with effects – the story so far
+  url: http://just-bottom.blogspot.de/2010/04/programming-with-effects-story-so-far.html
+  authors:
+    - Patai Gergely
+  published: 2010
+  type: blog post
+  tags:
+    - arrows
+
+- title: What Does fmap Preserve?
+  url: http://duplode.github.io/posts/what-does-fmap-preserve.html
+  authors:
+    - Daniel Mlot
+  published: 2014
+  type: blog post
+  tags:
+    - functors
+    - natural transformations
+
+- title: Functional interactive behavior
+  url: http://conal.net/blog/posts/functional-interactive-behavior
+  authors:
+    - Conal Elliott
+  published: 2008
+  type: blog post
+  tags:
+    - FRP
+
+- title: Why classic FRP does not fit interactive behavior
+  url: http://conal.net/blog/posts/why-classic-FRP-does-not-fit-interactive-behavior
+  authors:
+    - Conal Elliott
+  published: 2008
+  type: blog post
+  tags:
+    - FRP
+
+- title: Comonads in everyday life.
+  url: http://fmapfixreturn.wordpress.com/2008/07/09/comonads-in-everyday-life/
+  published: 2008
+  type: blog post
+  tags:
+    - comonads
+
+- title: Comonadic Notions of Computation
+  url: http://www.ioc.ee/~tarmo/papers/cmcs08.pdf
+  authors:
+    - Tarmo Uustalu
+    - Varmo Vene
+  published: 2008
+  type: research paper
+  tags:
+    - comonads
+
+- title: The Dual of Substitution is Redecoration
+  url: http://www.ioc.ee/~tarmo/papers/sfp01-book.pdf
+  authors:
+    - Tarmo Uustalu
+    - Varmo Vene
+  published: 2002
+  type: research paper
+  tags:
+    - comonads
+    - monads
+
+- title: Recursive Coalgebras from Comonads
+  url: http://www.ioc.ee/~tarmo/papers/cmcs04.pdf
+  authors:
+    - Venanzio Capretta
+    - Tarmo Uustalu
+    - Varmo Vene
+  published: 2004
+  type: research paper
+  tags:
+    - comonads
+    - recursive coalgebras
+
+- title: The Essence of Dataflow Programming
+  url: http://cs.ioc.ee/~tarmo/papers/essence.pdf
+  authors:
+    - Tarmo Uustalu
+    - Varmo Vene
+  published: 2005
+  type: research paper
+  tags:
+    - comonads
+
+- title: You Could Have Defined Natural Transformations
+  url: http://blog.sigfpe.com/2008/05/you-could-have-defined-natural.html
+  authors:
+    - Dan Piponi
+  published: 2008
+  type: blog post
+  tags:
+    - natural transformations
+
+- title: Free Theorems Involving Type Constructor Classes
+  url: http://www.iai.uni-bonn.de/~jv/papers/FreeTheoremsInvolvingTypeConstructorClasses.pdf
+  authors:
+    - Janis Voigtländer
+  published: 2009
+  type: functional pearl
+  tags:
+    - polymorphism
+
+- title: Free Theorems Involving Type Constructor Classes
+  url: http://vimeo.com/6624581
+  authors:
+    - Janis Voigtländer
+  published: 2009
+  type: video lecture
+  tags:
+    - polymorphism
+
+- title: Brian Beckman: Don't fear the Monad
+  url: https://www.youtube.com/watch?v=ZhuHCtR3xq8
+  authors:
+    - Brian Beckman
+  published: 2012
+  type: video lecture
+  tags:
+    - monads
+
+- title: Codata
+  url: http://types2004.lri.fr/SLIDES/altenkirch.pdf
+  authors:
+    - Thorsten Altenkirch
+  type: lecture notes
+  tags:
+    - codata
+
+- title: Total Functional Programming
+  url: http://www.jucs.org/jucs_10_7/total_functional_programming/jucs_10_07_0751_0768_turner.pdf
+  authors:
+    - David Turner
+  published: 2004
+  type: research paper
+  tags:
+    - codata
+    - totality
+
+- title: Monads as containers
+  url: http://www.haskell.org/haskellwiki/Monads_as_Containers
+  authors:
+    - Haskell Wiki
+  type: lecture notes
+  tags:
+    - monads
+
+- title: Monads as computation
+  url: http://www.haskell.org/haskellwiki/Monads_as_computation
+  authors:
+    - Haskell Wiki
+  type: lecture notes
+  tags:
+    - monads
+
+- title: All About Monads
+  url: http://www.haskell.org/haskellwiki/All_About_Monads
+  authors:
+    - Haskell Wiki
+  type: lecture notes
+  tags:
+    - monads
+
+- title: Monads, a Field Guide
+  url: http://blog.sigfpe.com/2006/10/monads-field-guide.html
+  authors:
+    - Dan Piponi
+  published: 2006
+  type: blog post
+  tags:
+    - monads
+
+- title: What's a Monad?
+  url: http://www.thenewsh.com/~newsham/haskell/monad.html
+  authors:
+    - Tim Newsham
+  type: blog post
+  tags:
+    - monads
+
+- title: Why Do Monads Matter?
+  url: http://cdsmith.wordpress.com/2012/04/18/why-do-monads-matter/
+  authors:
+    - Chris Smith
+  published: 2012
+  type: blog post
+  tags:
+    - monads
+
+- title: How to make Data.Set a monad
+  url: http://www.randomhacks.net/2007/03/15/data-set-monad-haskell-macros/
+  authors:
+    - Eric Kidd
+  published: 2007
+  type: blog post
+  tags:
+    - monads
+
+- title: The Mother of all Monads
+  url: http://blog.sigfpe.com/2008/12/mother-of-all-monads.html
+  authors:
+    - Dan Piponi
+  published: 2008
+  type: blog post
+  tags:
+    - Cont monad
+    - monads
+
+- title: Parameterized Notions of Computation
+  url: http://bentnib.org/paramnotions-jfp.pdf
+  authors:
+    - Robert Atkey
+  published: 2008
+  type: light research paper
+  tags:
+    - monads
+    - parameterized monads
+
+- title: Parameterized Monads in Haskell
+  url: http://comonad.com/reader/2007/parameterized-monads-in-haskell/
+  authors:
+    - Edward Kmett
+  published: 2007
+  type: blog post
+  tags:
+    - parameterized monads
+
+- title: A comment on Parameterized Monads
+  url: http://computationalthoughts.blogspot.com/2009/02/comment-on-parameterized-monads.html
+  published: 2009
+  type: blog post
+  tags:
+    - parameterized monads
+
+- title: Monads and composable continuations
+  url: http://cs.au.dk/~hosc/local/LaSC-7-1-pp39-56.pdf
+  authors:
+    - Philip Wadler
+  published: 1993
+  type: light research paper
+  tags:
+    - monads
+
+- title: Haskell's Type Classes: We Can Do Better
+  url: http://degoes.net/articles/principled-typeclasses/
+  authors:
+    - John A De Goes
+  published: 2014
+  type: blog post
+  tags:
+    - type classes
+
+- title: An introduction to QuickCheck by example: Number theory and Okasaki's red-black trees
+  url: http://matt.might.net/articles/quick-quickcheck/
+  authors:
+    - Matt Might
+  published: 2014
+  type: blog post
+  tags:
+    - QuickCheck
+    - testing
+
+- title: Object-Oriented Style Overloading for Haskell
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/oo-haskell/overloading.pdf
+  authors:
+    - Mark Shields
+    - Simon Peyton Jones
+  published: 2001
+  type: research paper
+  tags:
+    - type classes
+
+- title: Optimisation with Continuations
+  url: http://neilmitchell.blogspot.com/2014/06/optimisation-with-continuations.html
+  authors:
+    - Neil Mitchell
+  published: 2014
+  type: blog post
+  tags:
+    - CPS
+    - optimization
+
+- title: Continuations and Exceptions
+  url: http://neilmitchell.blogspot.nl/2014/08/continuations-and-exceptions.html
+  authors:
+    - Neil Mitchell
+  published: 2014
+  type: blog post
+  tags:
+    - CPS
+    - exceptions
+
+- title: IAP: Speeding up conduit
+  url: https://www.fpcomplete.com/blog/2014/08/iap-speeding-up-conduit
+  authors:
+    - Michael Snoyman
+  published: 2014
+  type: blog post
+  tags:
+    - conduit
+
+- title: Reflection without Remorse: Revealing a hidden sequence to speed up monadic reflection
+  url: http://homepages.cwi.nl/~ploeg/papers/zseq.pdf
+  authors:
+    - Atze van der Ploeg
+    - Oleg Kiselyov
+  published: 2014
+  type: research paper
+  tags:
+    - monads
+    - optimization
+
+- title: Rechunk a conduit into larger chunks using combinators
+  url: http://stackoverflow.com/questions/25428065/rechunk-a-conduit-into-larger-chunks-using-combinators
+  published: 2014
+  type: Q&A website
+  tags:
+    - conduit
+
+- title: Down with the bureaucracy of syntax! Pattern matching for classical linear logic
+  url: http://homepages.inf.ed.ac.uk/wadler/papers/dual-revolutions/dual-revolutions.pdf
+  authors:
+    - Philip Wadler
+  published: 2004
+  type: research paper
+  tags:
+    - classical linear logic
+    - pattern matching
+
+- title: Call-by-Value is Dual to Call-by-Name, Reloaded
+  url: http://homepages.inf.ed.ac.uk/wadler/papers/dual-reloaded/dual-reloaded.pdf
+  authors:
+    - Philip Wadler
+  published: 2005
+  type: research paper
+  tags:
+    - evaluation strategies
+    - lambda calculus
+
+- title: Call-by-Value is Dual to Call-by-Name
+  url: http://homepages.inf.ed.ac.uk/wadler/papers/dual/dual.pdf
+  authors:
+    - Philip Wadler
+  published: 2003
+  type: research paper
+  tags:
+    - evaluation strategies
+    - lambda calculus
+
+- title: Using Emacs for Haskell development
+  url: https://github.com/serras/emacs-haskell-tutorial/blob/master/tutorial.md
+  authors:
+    - Alejandro Serrano
+  published: 2014
+  type: blog post
+  tags:
+    - Emacs
+
+- title: Categores, Types, and Structures: An Introduction to Category Theory for the Working Computer Scientist
+  url: http://www.di.ens.fr/users/longo/files/CategTypesStructures/book.pdf
+  authors:
+    - Andrea Asperti
+    - Giuseppe Longo
+  published: 1991
+  type: textbook
+  tags:
+    - category theory
+
+- title: A Tutorial Introduction to the Lambda Calculus
+  url: http://www.inf.fu-berlin.de/lehre/WS03/alpi/lambda.pdf
+  authors:
+    - Raúl Rojas
+  published: 1997
+  type: extended example
+  tags:
+    - lambda calculus
+
+- title: Introduction to Lambda Calculus
+  url: http://www.cse.chalmers.se/research/group/logic/TypesSS05/Extra/geuvers.pdf
+  authors:
+    - Henk Barendregt
+    - Erik Barendsen
+  published: 2000
+  type: textbook
+  tags:
+    - lambda calculus
+
+- title: CS522 - Programming Language Semantics: Lambda Calculus and Combinatory Logic
+  url: http://fsl.cs.illinois.edu/images/1/1d/CS522-Fall-2009-04-Lambda-Calculus-and-CL.pdf
+  authors:
+    - Grigore Roşu
+  published: 2009
+  type: lecture notes
+  tags:
+    - lambda calculus
+
+- title: Toposes, Triples, and Theories
+  url: http://www.tac.mta.ca/tac/reprints/articles/12/tr12.pdf
+  authors:
+    - Michael Barr
+    - Charles Wells
+  published: 1984
+  type: textbook
+  tags:
+    - category theory
+
+- title: Category Theory for Computing Science
+  url: http://www.math.mcgill.ca/triples/Barr-Wells-ctcs.pdf
+  authors:
+    - Michael Barr
+    - Charles Wells
+  published: 1990
+  type: textbook
+  tags:
+    - category theory
+
+- title: Fibered categories and the foundations of naive category theory
+  url: http://www.cwru.edu/artsci/phil/Benabou%20Fibered.pdf
+  authors:
+    - Jean Benabou
+  published: 1985
+  type: journal paper
+  tags:
+    - category theory
+
+- title: A Course in Universal Algebra
+  url: http://www.cs.elte.hu/~ewkiss/univ-algebra.pdf
+  authors:
+    - Stanley Burris
+    - H. P. Sankappanavar
+  published: 1981
+  type: textbook
+  tags:
+    - category theory
+
+- title: Basic Category Theory
+  url: http://www.staff.science.uu.nl/~ooste110/syllabi/catsmoeder.pdf
+  authors:
+    - Jaap van Oosten
+  published: 2002
+  type: textbook
+  tags:
+    - category theory
+
+- title: Algebra
+  url: http://www.maths.ed.ac.uk/~aar/papers/cohnalg3.pdf
+  authors:
+    - Paul M. Cohn
+  published: 1991
+  type: textbook
+  tags:
+    - category theory
+
+- title: CS522 - Programming Language Semantics: Simply Typed Lambda Calculus
+  url: http://fsl.cs.illinois.edu/images/1/1e/CS522-Fall-2009-05-Simply-Typed-Lambda-Calculus.pdf
+  authors:
+    - Grigore Roşu
+  published: 2008
+  type: lecture notes
+  tags:
+    - lambda calculus
+
+- title: CS522 - Programming Language Semantics: Cartesian Closed Categories as Models for Simply-Typed λ-Calculus
+  url: http://fsl.cs.illinois.edu/images/1/10/CS522-Spring-2013-PL-CCC.pdf
+  authors:
+    - Grigore Roşu
+  published: 2013
+  type: lecture notes
+  tags:
+    - category theory
+    - lambda calculus
+
+- title: CS422 - Programming Language Design: Type Inference
+  url: http://fsl.cs.illinois.edu/images/1/14/CS422-Spring-2010-type-inference.pdf
+  authors:
+    - Grigore Roşu
+  published: 2010
+  type: lecture notes
+  tags:
+    - type inference
+
+- title: Aspects of topoi
+  url: http://ncatlab.org/spahn/files/aspects_of_topoi.pdf
+  authors:
+    - Peter Freyd
+  published: 1972
+  type: journal paper
+  tags:
+    - category theory
+
+- title: A Categorical Manifesto
+  url: https://www.cs.ox.ac.uk/files/3395/PRG72.pdf
+  authors:
+    - Joseph A. Goguen
+  published: 1989
+  type: textbook
+  tags:
+    - category theory
+
+- title: Functional Programming with Structured Graphs
+  url: http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=6C5319270CAE3E0110E603E43795A77C?doi=10.1.1.307.3874&rep=rep1&type=pdf
+  authors:
+    - Bruno C. d. S. Oliveira
+    - William R. Cook
+  published: 2012
+  type: research paper
+  tags:
+    - graphs
+
+- title: Beyond Monads
+  url: http://blog.sigfpe.com/2009/02/beyond-monads.html
+  authors:
+    - Dan Piponi
+  published: 2009
+  type: blog post
+  tags:
+    - parameterized monads
+
+- title: An Introduction to Category Theory, Category Theory Monads, and Their Relationship to Functional Programming
+  url: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.53.6497
+  authors:
+    - Jonathan M. D. Hill
+    - Keith Clarke
+  type: survey article
+  tags:
+    - category theory
+
+- title: Monads, Zippers, and Views
+  url: http://users.ugent.be/~tschrijv/Research/papers/icfp2011.pdf
+  authors:
+    - Tom Schrijvers
+    - Bruno C. d. S. Oliveira
+  published: 2011
+  type: research paper
+  tags:
+    - monad transformers
+    - monads
+    - zippers
+
+- title: Composing Monads
+  url: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.42.2605
+  authors:
+    - Mark P. Jones
+    - Luc Duponcheel
+  published: 1993
+  type: research paper
+  tags:
+    - monads
+
+- title: Concrete example showing that monads are not closed under composition (with proof)?
+  url: http://stackoverflow.com/questions/13034229/concrete-example-showing-that-monads-are-not-closed-under-composition-with-proo?lq=1
+  authors:
+    - Andreas Hammar
+  published: 2012
+  type: Q&A website
+  tags:
+    - monads
+
+- title: Functional Programming with Overloading and Higher-Order Polymorphism
+  url: http://web.cecs.pdx.edu/~mpj/pubs/springschool95.pdf
+  authors:
+    - Mark P. Jones
+  published: 1995
+  type: survey article
+  tags:
+    - higher-rank types
+    - type classes
+
+- title: Grok Haskell Monad Transformers
+  url: http://blog.sigfpe.com/2006/05/grok-haskell-monad-transformers.html
+  authors:
+    - Dan Piponi
+  published: 2006
+  type: blog post
+  tags:
+    - monad transformers
+
+- title: Applicative functors
+  url: http://blog.ezyang.com/2012/08/applicative-functors/
+  authors:
+    - Edward Z. Yang
+  published: 2012
+  type: blog post
+  tags:
+    - applicative functors
+
+- title: Doing more with type-length vectors
+  url: http://conal.net/blog/posts/doing-more-with-length-typed-vectors
+  authors:
+    - Conal Elliott
+  published: 2011
+  type: blog post
+  tags:
+    - applicative functors
+    - length-typed vectors
+
+- title: Fixing lists
+  url: http://conal.net/blog/posts/fixing-lists
+  authors:
+    - Conal Elliott
+  published: 2011
+  type: blog post
+  tags:
+    - length-typed vectors
+
+- title: Memoizing polymorphic functions via unmemoization
+  url: http://conal.net/blog/posts/memoizing-polymorphic-functions-via-unmemoization
+  authors:
+    - Conal Elliott
+  published: 2010
+  type: blog post
+  tags:
+    - memoization
+
+- title: Memoizing Polymorphic Functions with High School Algebra and Quantifiers
+  url: http://blog.sigfpe.com/2009/11/memoizing-polymorphic-functions-with.html
+  authors:
+    - Dan Piponi
+  published: 2009
+  type: blog post
+  tags:
+    - memoization
+
+- title: Beautiful Differentiation
+  url: http://conal.net/papers/beautiful-differentiation/beautiful-differentiation.pdf
+  authors:
+    - Conal Elliott
+  published: 2009
+  type: research paper
+  tags:
+    - differentiation
+
+- title: Denotational design with type class morphisms
+  url: http://conal.net/papers/type-class-morphisms/type-class-morphisms.pdf
+  authors:
+    - Conal Elliott
+  published: 2009
+  type: research paper
+  tags:
+    - denotational semantics
+    - type classes
+
+- title: Sequences, segments, and signals
+  url: http://conal.net/blog/posts/sequences-segments-and-signals
+  authors:
+    - Conal Elliott
+  published: 2008
+  type: blog post
+  tags:
+    - FRP
+
+- title: Sequences, streams, and segments
+  url: http://conal.net/blog/posts/sequences-streams-and-segments
+  authors:
+    - Conal Elliott
+  published: 2008
+  type: blog post
+  tags:
+    - comonads
+    - FRP
+
+- title: More beautiful fold zipping
+  url: http://conal.net/blog/posts/more-beautiful-fold-zipping
+  authors:
+    - Conal Elliott
+  published: 2008
+  type: blog post
+  tags:
+    - folds
+
+- title: Another lovely example of type class morphisms
+  url: http://conal.net/blog/posts/another-lovely-example-of-type-class-morphisms
+  authors:
+    - Conal Elliott
+  published: 2008
+  type: blog post
+  tags:
+    - folds
+    - type class morphisms
+
+- title: Beautiful folding
+  url: http://squing.blogspot.com/2008/11/beautiful-folding.html
+  authors:
+    - Max Rabkin
+  published: 2008
+  type: blog post
+  tags:
+    - folds
+
+- title: Simplifying semantics with type class morphisms
+  url: http://conal.net/blog/posts/simplifying-semantics-with-type-class-morphisms
+  authors:
+    - Conal Elliott
+  published: 2008
+  type: blog post
+  tags:
+    - type class morphisms
+
+- title: Simply efficient functional reactivity
+  url: http://conal.net/papers/simply-reactive/old-tech-report-superceded.pdf
+  authors:
+    - Conal Elliott
+  published: 2008
+  type: research paper
+  tags:
+    - FRP
+
+- title: Push-Pull Functional Reactive Programming
+  url: http://conal.net/papers/push-pull-frp/push-pull-frp.pdf
+  authors:
+    - Conal Elliott
+  published: 2009
+  type: research paper
+  tags:
+    - FRP
+
+- title: Demystifying DList
+  url: http://h2.jaguarpaw.co.uk/posts/demystifying-dlist/
+  authors:
+    - Tom Ellis
+  type: blog post
+  tags:
+    - difference lists
+
+- title: Free Monads for Less (Part 1 of 3): Codensity
+  url: http://comonad.com/reader/2011/free-monads-for-less/
+  authors:
+    - Edward Kmett
+  published: 2011
+  type: blog post
+  tags:
+    - free monads
+
+- title: Free Monads for Less (Part 2 of 3): Yoneda
+  url: http://comonad.com/reader/2011/free-monads-for-less-2/
+  authors:
+    - Edward Kmett
+  published: 2011
+  type: blog post
+  tags:
+    - category theory
+    - free monads
+    - Yoneda lemma
+
+- title: Free Monads for Less (Part 3 of 3): Yielding IO
+  url: http://comonad.com/reader/2011/free-monads-for-less-3/
+  authors:
+    - Edward Kmett
+  published: 2011
+  type: blog post
+  tags:
+    - free monads
+
+- title: SmartChecking Matt Might's Red-Black Trees
+  url: http://leepike.wordpress.com/2014/08/20/smartchecking-matt-mights-red-black-trees/
+  authors:
+    - Lee Pike
+  published: 2014
+  type: blog post
+  tags:
+    - SmartCheck
+    - testing
+
+- title: Asymptotic Improvement of Computations over Free Monads
+  url: http://www.iai.uni-bonn.de/~jv/mpc08.pdf
+  authors:
+    - Janis Voigtländer
+  published: 2008
+  type: research paper
+  tags:
+    - free monads
+    - optimization
+
+- title: Motivating Category Theory for Haskellfor Non-mathematicians
+  url: https://dekudekuplex.wordpress.com/2009/01/19/motivating-learning-category-theory-for-non-mathematicians/
+  authors:
+    - Benjamin L. Russell
+  published: 2009
+  type: blog post
+  tags:
+    - category theory
+
+- title: Category Theory for Dummies
+  url: http://homepages.inf.ed.ac.uk/jcheney/presentations/ct4d1.pdf
+  authors:
+    - James Cheney
+  published: 2004
+  type: lecture notes
+  tags:
+    - category theory
+
+- title: Haskell for Mainstream Programmers - Code Reuse
+  url: http://www.haskellforall.com/2011/12/haskell-for-mainstream-programmers-code.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2011
+  type: blog post
+  tags:
+    - functors
+
+- title: Haskell for Intermediate Programmers - Algebraic Data Types
+  url: http://www.haskellforall.com/2012/01/haskell-for-mainstream-programmers.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - ADTs
+
+- title: Haskell for Java Programmers - Serialization
+  url: http://www.haskellforall.com/2012/02/haskell-for-java-programmers.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - serialization
+
+- title: Haskell for Purists - Pipe Finalization
+  url: http://www.haskellforall.com/2012/03/haskell-for-purists-pipe-finalization.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - coroutines
+    - pipes
+
+- title: GADTs
+  url: http://www.haskellforall.com/2012/06/gadts.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - category theory
+    - GADTs
+    - Yoneda lemma
+
+- title: Free monad transformers
+  url: http://www.haskellforall.com/2012/07/free-monad-transformers.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - free monads
+
+- title: Purify code using free monads
+  url: http://www.haskellforall.com/2012/07/purify-code-using-free-monads.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - free monads
+
+- title: The MonadTrans class is missing a method
+  url: http://www.haskellforall.com/2012/09/the-monadtrans-class-is-missing-method.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - monad transformers
+
+- title: Concurrency = List of Kleisli arrows
+  url: http://www.haskellforall.com/2012/09/concurrency-lists-of-kleisli-arrows.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - concurrency
+
+- title: "Hello, core!"
+  url: http://www.haskellforall.com/2012/10/hello-core.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - Core
+
+- title: Parsing chemical substructures
+  url: http://www.haskellforall.com/2012/10/parsing-chemical-substructures.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - parsing
+
+- title: The Continuation Monad
+  url: http://www.haskellforall.com/2012/12/the-continuation-monad.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - Cont monad
+    - monads
+
+- title: Introduction to Haskell IO
+  url: http://www.haskellforall.com/2013/01/introduction-to-haskell-io.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2013
+  type: blog post
+  tags:
+    - I/O
+
+- title: mmorph-1.0.0: Monad morphisms
+  url: http://www.haskellforall.com/2013/03/mmorph-100-monad-morphisms.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2012
+  type: blog post
+  tags:
+    - monad morphisms
+
+- title: Defaults
+  url: http://www.haskellforall.com/2013/04/defaults.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2013
+  type: blog post
+  tags:
+    - monoids
+
+- title: Program imperatively using Haskell lenses
+  url: http://www.haskellforall.com/2013/05/program-imperatively-using-haskell.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2013
+  type: blog post
+  tags:
+    - lenses
+
+- title: The Resource Monad
+  url: http://www.haskellforall.com/2013/06/the-resource-applicative.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2013
+  type: blog post
+  tags:
+    - monads
+    - Resource monad
+
+- title: Composable streaming folds
+  url: http://www.haskellforall.com/2013/08/composable-streaming-folds.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2013
+  type: blog post
+  tags:
+    - folds
+
+- title: Test stream programming using Haskell's `QuickCheck`
+  url: http://www.haskellforall.com/2013/11/test-stream-programming-using-haskells.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2013
+  type: blog post
+  tags:
+    - QuickCheck
+    - testing
+
+- title: Sudoku in Haskell
+  url: http://www.cs.nott.ac.uk/~gmh/sudoku.lhs
+  authors:
+    - Graham Hutton
+  published: 2014
+  type: source code
+  tags:
+    - algorithms
+
+- title: Programming in Haskell
+  url: http://bin-login.name/ftp/pub/docs/programming-in-haskell.9780521692694.33359.pdf
+  authors:
+    - Graham Hutton
+  published: 2007
+  type: textbook
+  tags:
+    - introduction
+
+- title: Introduction to Dependent Types: Haskell on Steroids
+  url: http://jozefg.bitbucket.org/posts/2014-08-25-dep-types-part-1.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - dependent types
+
+- title: Representable functors in Haskell
+  url: http://covariant.me/notes/rep-functors.html
+  authors:
+    - Daniil Frumin
+  published: 2014
+  type: blog post
+  tags:
+    - category theory
+    - representable functors
+
+- title: Terminal and initial objects 1
+  url: https://www.youtube.com/watch?v=yeQcmxM2e5I
+  authors:
+    - TheCatsters
+  published: 2008
+  type: video lecture
+  tags:
+    - category theory
+    - terminal objects
+
+- title: Terminal and initial objects 2
+  url: https://www.youtube.com/watch?v=9vhWpOVPlIE
+  authors:
+    - TheCatsters
+  published: 2008
+  type: video lecture
+  tags:
+    - category theory
+    - terminal objects
+
+- title: Terminal and initial objects 3
+  url: https://www.youtube.com/watch?v=yaPwKu5fHqI
+  authors:
+    - TheCatsters
+  published: 2008
+  type: video lecture
+  tags:
+    - category theory
+    - initial objects
+
+- title: Stream Fusion: From Lists of Streams to Nothing at All
+  url: http://metagraph.org/papers/stream_fusion.pdf
+  authors:
+    - Duncan Coutts
+    - Roman Leshchinskiy
+    - Don Stewart
+  published: 2007
+  type: research paper
+  tags:
+    - optimization
+    - stream fusion
+
+- title: representable functor
+  url: http://ncatlab.org/nlab/show/representable+functor
+  authors:
+    - nLab
+  published: 2014
+  type: lecture notes
+  tags:
+    - category theory
+    - representable functors
+
+- title: Yoneda lemma
+  url: http://ncatlab.org/nlab/show/Yoneda+lemma
+  authors:
+    - nLab
+  published: 2014
+  type: lecture notes
+  tags:
+    - category theory
+    - Yoneda lemma
+
+- title: Dealing with Asynchronous Exceptions during Resource Acquisition
+  url: http://www.well-typed.com/blog/97/
+  authors:
+    - Edsko de Vries
+    - Duncan Coutts
+  published: 2014
+  type: blog post
+  tags:
+    - concurrency
+    - exceptions
+
+- title: Haskell: Another Lens tutorial
+  url: http://unbui.lt/#!/post/haskell-another-lens-tutorial
+  authors:
+    - James Wilson
+  published: 2014
+  type: blog post
+  tags:
+    - lenses
+
+- title: The Glasgow Haskell Compiler
+  url: http://www.aosabook.org/en/ghc.html
+  authors:
+    - Simon Marlow
+    - Simon Peyton Jones
+  published: 2013
+  type: documentation
+  tags:
+    - GHC
+
+- title: Practical Machines in 60 Seconds
+  url: http://statusfailed.com/blog/2014/09/02/practical-machines-in-60-seconds.html
+  authors:
+    - Paul Wilson
+  published: 2014
+  type: blog post
+  tags:
+    - machines
+
+- title: Open type families are not modular
+  url: http://blog.ezyang.com/2014/09/open-type-families-are-not-modular/
+  authors:
+    - Edward Z. Yang
+  published: 2014
+  type: blog post
+  tags:
+    - backpack
+    - modules
+    - type families
+
+- title: ICFP 2014: Depending on Types
+  url: https://www.youtube.com/watch?v=rhWMhTjQzsU
+  authors:
+    - Stephanie Weirich
+  published: 2014
+  type: video lecture
+  tags:
+    - dependent types
+  collections:
+    - ICFP 2014
+
+- title: Working with output in idris-mode for Emacs
+  url: https://www.youtube.com/watch?v=B5PRPzWZJ60
+  authors:
+    - David Christiansen
+  published: 2014
+  type: video lecture
+  tags:
+    - Emacs
+    - Idris
+
+- title: Purely Functional Data Structures
+  url: https://www.cs.cmu.edu/~rwh/theses/okasaki.pdf
+  authors:
+    - Chris Okasaki
+  published: 1996
+  type: dissertation
+  tags:
+    - data structures
+
+- title: Conduit Overview
+  url: https://www.fpcomplete.com/user/snoyberg/library-documentation/conduit-overview
+  authors:
+    - Michael Snoyman
+  published: 2014
+  type: extended example
+  tags:
+    - conduit
+
+- title: Promoting Functions to Type Families in Haskell
+  url: http://ics.p.lodz.pl/~stolarek/_media/pl:research:eisenberg_stolarek_promotion.pdf
+  authors:
+    - Richard A. Eisenberg
+    - Jan Stolarek
+  published: 2014
+  type: research paper
+  tags:
+    - defunctionalization
+    - type families
+  collections:
+    - Haskell Symposium 2014
+
+- title: Defunctionalization for the win
+  url: http://typesandkinds.wordpress.com/2013/04/01/defunctionalization-for-the-win/
+  authors:
+    - Richard A. Eisenberg
+  published: 2013
+  type: blog post
+  tags:
+    - defunctionalization
+    - singletons
+
+- title: Promoting Functions to Type Families in Haskell
+  url: https://www.youtube.com/watch?v=J47OTYArG08
+  authors:
+    - Jan Stolarek
+  published: 2014
+  type: video lecture
+  tags:
+    - defunctionalization
+    - type families
+  collections:
+    - Haskell Symposium 2014
+
+- title: basic lens operator examples
+  url: http://intolerable.me/lens-operators-intro/
+  published: 2014
+  type: blog post
+  tags:
+    - lenses
+
+- title: Representables and Yoneda 3
+  url: https://www.youtube.com/watch?v=TLMxHB19khE
+  authors:
+    - TheCatsters
+  published: 2009
+  type: video lecture
+  tags:
+    - category theory
+    - representable functors
+    - Yoneda lemma
+
+- title: Representables and Yoneda 2
+  url: https://www.youtube.com/watch?v=eaJmUUogb6g
+  authors:
+    - TheCatsters
+  published: 2009
+  type: video lecture
+  tags:
+    - category theory
+    - representable functors
+    - Yoneda lemma
+
+- title: Representables and Yoneda 1
+  url: https://www.youtube.com/watch?v=4QgjKUzyrhM
+  authors:
+    - TheCatsters
+  published: 2009
+  type: video lecture
+  tags:
+    - category theory
+    - representable functors
+    - Yoneda lemma
+
+- title: Making a Fast Curry: Push/Enter vs. Eval/Apply for Higher-order Languages
+  url: http://community.haskell.org/~simonmar/papers/evalapplyjfp06.pdf
+  authors:
+    - Simon Marlow
+    - Simon Peyton Jones
+  published: 2004
+  type: journal paper
+  tags:
+    - evaluation
+  collections:
+    - ICFP 2004
+
+- title: Reflecting strictness in Haskell types
+  url: http://h2.jaguarpaw.co.uk/posts/strictness-in-types/
+  authors:
+    - Tom Ellis
+  published: 2014
+  type: blog post
+  tags:
+    - laziness
+
+- title: Automasymbolic Differentiation
+  url: http://jtobin.ca/blog/2014/07/06/automasymbolic-differentiation/
+  authors:
+    - Jared Tobin
+  published: 2014
+  type: blog post
+  tags:
+    - automasymbolic differentiation
+
+- title: Getting a Quick Fix on Comonads
+  url: https://www.youtube.com/watch?v=F7F-BzOB670&feature=youtu.be
+  authors:
+    - Kenneth Foner
+  published: 2014
+  type: video lecture
+  tags:
+    - comonads
+  collections:
+    - Boston Haskell Meetup
+
+- title: Utilizing Haskell at Fynder
+  url: https://www.fpcomplete.com/business/blog/utilizing-haskell-fynder/
+  authors:
+    - Natalia Muska
+    - Ben Ford
+  published: 2014
+  type: experience report
+  tags:
+    - experience report
+
+- title: Church Booleans in Haskell (and Morte!)
+  url: http://statusfailed.com/blog/2014/09/23/church-booleans-in-haskell-and-morte.html
+  authors:
+    - Paul Wilson
+  published: 2014
+  type: blog post
+  tags:
+    - Church encoding
+
+- title: Finger Trees
+  url: http://andrew.gibiansky.com/blog/haskell/finger-trees/
+  authors:
+    - Andrew Gibiansky
+  published: 2014
+  type: blog post
+  tags:
+    - data structures
+    - finger trees
+
+- title: Visualization of Haskell Performance
+  url: http://www.personal.leeds.ac.uk/~scpmw/static/thesis.pdf
+  authors:
+    - Peter Moritz Wortmann
+  published: 2014
+  type: dissertation
+  tags:
+    - optimization
+    - performance
+    - visualization
+
+- title: Writing a Game in Haskell
+  url: https://www.youtube.com/watch?v=1MNTerD8IuI
+  authors:
+    - Elise Huard
+  published: 2014
+  type: video lecture
+  tags:
+    - game programming
+  collections:
+    - Strange Loop 2014
+
+- title: Tetris in Haskell with Netwire and GLFW
+  url: http://scrambledeggsontoast.github.io/2014/09/23/tetris-netwire/
+  authors:
+    - Josh Kirklin
+  published: 2014
+  type: blog post
+  tags:
+    - FRP
+    - game programming
+
+- title: Parametricity: Money for Nothing and Theorems for Free
+  url: http://bartoszmilewski.com/2014/09/22/parametricity-money-for-nothing-and-theorems-for-free/
+  authors:
+    - Bartosz Milewski
+  published: 2014
+  type: blog post
+  tags:
+    - category theory
+    - parametricity
+
+- title: shell-conduit: Write shell scripts in Haskell with Conduit
+  url: http://chrisdone.com/posts/shell-conduit
+  authors:
+    - Chris Done
+  published: 2014
+  type: blog post
+  tags:
+    - shell scripting
+
+- title: hindent: A Haskell indenter
+  url: http://chrisdone.com/posts/hindent
+  authors:
+    - Chris Done
+  published: 2014
+  type: blog post
+  tags:
+    - code style
+
+- title: Monoids Tour
+  url: https://www.fpcomplete.com/user/mgsloan/monoids-tour
+  authors:
+    - Michael Sloan
+  published: 2014
+  type: blog post
+  tags:
+    - monoids
+
+- title: Horner's Rule
+  url: http://patternsinfp.wordpress.com/2011/05/05/horners-rule/
+  authors:
+    - Jeremy Gibbons
+  published: 2011
+  type: blog post
+  tags:
+    - algorithms
+    - maximum segment sum
+
+- title: Distributativity in Horner's Rule
+  url: http://patternsinfp.wordpress.com/2011/05/17/distributivity-in-horners-rule/
+  authors:
+    - Jeremy Gibbons
+  published: 2011
+  type: blog post
+  tags:
+    - algorithms
+    - maximum segment sum
+
+- title: Strongly Typed Publish/Subscribe over Websockets via Singleton Types
+  url: https://skillsmatter.com/skillscasts/5356-oliver-charles
+  authors:
+    - Oliver Charles
+  published: 2014
+  type: video lecture
+  tags:
+    - pubsub
+    - singletons
+    - web sockets
+  collections:
+    - Skills Matter Haskell eXchange 2014
+
+- title: Rest - Building APIs Easily
+  url: https://skillsmatter.com/skillscasts/5403-rest-building-apis-easily
+  authors:
+    - Erik Hesselink
+  published: 2014
+  type: video lecture
+  tags:
+    - REST
+  collections:
+    - Skills Matter Haskell eXchange 2014
+
+- title: Performance Measurement and Optimization in Haskell
+  url: https://skillsmatter.com/skillscasts/5466-bryan-o-sullivan
+  authors:
+    - Bryan O'Sullivan
+  published: 2014
+  type: video lecture
+  tags:
+    - optimization
+    - performance
+  collections:
+    - Skills Matter Haskell eXchange 2014
+
+- title: Categories for the Working Haskeller
+  url: https://skillsmatter.com/skillscasts/5787-categories-for-the-working-haskeller
+  authors:
+    - Jeremy Gibbons
+  published: 2014
+  type: video lecture
+  tags:
+    - category theory
+  collections:
+    - Skills Matter Haskell eXchange 2014
+
+- title: Safe, Zero-Cost Coercions in Haskell
+  url: https://skillsmatter.com/skillscasts/5296-safe-zero-cost-coercions-in-haskell
+  authors:
+    - Simon Peyton Jones
+  published: 2014
+  type: video lecture
+  tags:
+    - roles
+    - type coercion
+    - type safety
+  collections:
+    - Skills Matter Haskell eXchange 2014
+
+- title: Bake - Continuous Integration System
+  url: http://neilmitchell.blogspot.fr/2014/10/bake-continuous-integration-system.html
+  authors:
+    - Neil Mitchell
+  published: 2014
+  type: blog post
+  tags:
+    - continuous integration
+
+- title: NICTA / cplusplus-th
+  url: https://github.com/NICTA/cplusplus-th
+  authors:
+    - NICTA
+  type: source code
+  tags:
+    - FFI
+
+- title: lens over tea #1: lenses 101, traversals 101, and some implementation details
+  url: http://artyom.me/lens-over-tea-1
+  authors:
+    - Artyom Kazak
+  published: 2014
+  type: blog post
+  tags:
+    - lenses
+
+- title: Coping with change: data schema migration in Haskell
+  url: https://skillsmatter.com/skillscasts/5758-coping-with-change-data-schema-migration-in-haskell
+  authors:
+    - Chris Dornan
+    - Adam Gundry
+  published: 2014
+  type: video lecture
+  tags:
+    - database migrations
+  collections:
+    - Skills Matter Haskell eXchange 2014
+
+- title: Introduction to parsing with Haskell and Parsec
+  url: https://github.com/JakeWheat/intro_to_parsing
+  authors:
+    - Jake Wheat
+  type: extended example
+  tags:
+    - Parsec
+    - parsing
+
+- title: Haskell, Monads and Purity
+  url: http://jelv.is/blog/Haskell-Monads-and-Purity/
+  authors:
+    - Tikhon Jelvis
+  published: 2014
+  type: blog post
+  tags:
+    - monads
+    - purity
+
+- title: There is No Haskell Topology
+  url: http://immanence.org/post/there-is-no-haskell-topology/
+  authors:
+    - Ashley Yakeley
+  published: 2014
+  type: blog post
+  tags:
+    - category theory
+
+- title: Dijkstra monads
+  url: http://why-lambda.blogspot.co.uk/2014/09/dijkstra-monads.html
+  authors:
+    - James Cheney
+  published: 2014
+  type: blog post
+  tags:
+    - Dijkstra monads
+
+- title: Introduction to Low Level Haskell Optimization
+  url: https://www.youtube.com/watch?v=McFNkLPTOSY
+  authors:
+    - Dan Doel
+  published: 2014
+  type: video lecture
+  tags:
+    - optimization
+
+- title: Quasi-quoting DSLs for free
+  url: http://www.well-typed.com/blog/2014/10/quasi-quoting-dsls/
+  authors:
+    - Edsko de Vries
+  published: 2014
+  type: blog post
+  tags:
+    - DSLs
+    - quasiquotation
+    - template haskell
+
+- title: Static analysis with Applicatives
+  url: http://gergo.erdi.hu/blog/2012-12-01-static_analysis_with_applicatives/
+  authors:
+    - Gergő Érdi
+  published: 2012
+  type: blog post
+  tags:
+    - applicative functors
+
+- title: The Guts of a Spineless Machine
+  url: http://jozefg.bitbucket.org/posts/2014-10-28-stg.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - compilation
+    - STG
+
+- title: Implementing lazy functional languages on stock hardware: the Spineless Tagless G-machine
+  url: http://www.dcc.fc.up.pt/~pbv/aulas/linguagens/peytonjones92implementing.pdf
+  authors:
+    - Simon Peyton Jones
+  published: 1992
+  type: journal paper
+  tags:
+    - compilation
+    - STG
+
+- title: Type-safe transducers in Clojure. And Scala. And Haskell.
+  url: http://blog.podsnap.com/ducers2.html
+  authors:
+    - Peter Fraenkel
+  published: 2014
+  type: blog post
+  tags:
+    - transducers
+
+- title: Progress Reporting in Shake
+  url: http://neilmitchell.blogspot.co.uk/2013/12/progress-reporting-in-shake.html
+  authors:
+    - Neil Mitchell
+  published: 2013
+  type: blog post
+  tags:
+    - machines
+    - Shake
+
+- title: Category Theory Applied to Functional Programming
+  url: http://www1.eafit.edu.co/asicard/pubs/cain-screen.pdf
+  authors:
+    - Juan Pedro Villa Isaza
+  published: 2014
+  type: Master's thesis
+  tags:
+    - category theory
+
+- title: On the state of GUI programming in Haskell
+  url: http://keera.co.uk/blog/2014/05/23/state-gui-programming-haskell/
+  authors:
+    - Ivan Perez
+  published: 2014
+  type: blog post
+  tags:
+    - GUIs
+
+- title: hasql: A minimalistic general high level API for relational databases
+  url: http://hackage.haskell.org/package/hasql
+  authors:
+    - Nikita Volkov
+  type: documentation
+  tags:
+    - databases
+
+- title: Typing Haskell in Haskell
+  url: https://gist.github.com/chrisdone/0075a16b32bfd4f62b7b
+  authors:
+    - Mark P. Jones
+  published: 2000
+  type: journal paper
+  tags:
+    - type checking
+    - types
+
+- title: Nix: The Cabal Purgatory (HOWTO)
+  url: http://www.cse.chalmers.se/~bernardy/nix.html
+  authors:
+    - Jean-Philippe Bernardy
+  published: 2014
+  type: extended example
+  tags:
+    - cabal
+    - nix
+
+- title: The Haskell Preprocessor Hierarchy
+  url: http://blog.ezyang.com/2010/06/the-haskell-preprocessor-hierarchy/
+  authors:
+    - Edward Z. Yang
+  published: 2010
+  type: blog post
+  tags:
+    - FFI
+
+- title: Haskell Bindings to C from Start to Finish
+  url: http://loupgaroublond.blogspot.com/2009/06/haskell-bindings-to-c-from-start-to.html
+  authors:
+    - Yaakov Nemoy
+  published: 2009
+  type: blog post
+  tags:
+    - FFI
+
+- title: Haskell Bindings to C – c2hs
+  url: http://tommd.wordpress.com/2009/09/22/haskell-bindings-to-c-c2hs/
+  authors:
+    - Thomas DuBuisson
+  published: 2009
+  type: blog post
+  tags:
+    - FFI
+
+- title: C -> Haskell, or Yet Another Interfacing Tool (Revised Version)
+  url: http://www.cse.unsw.edu.au/~chak/papers/Cha99b.html
+  authors:
+    - Manuel M. T. Chakravarty
+  published: 1999
+  type: light research paper
+  tags:
+    - FFI
+  collections:
+    - IFL 1999
+
+- title: Parsing Expression Grammars: A Recognition-Based Syntactic Foundation
+  url: http://pdos.csail.mit.edu/~baford/packrat/popl04/peg-popl04.pdf
+  authors:
+    - Bryan Ford
+  published: 2004
+  type: research paper
+  tags:
+    - parsing
+
+- title: 24 Days of GHC Extensions: View Patterns
+  url: https://ocharles.org.uk/blog/posts/2014-12-02-view-patterns.html
+  authors:
+    - Oliver Charles
+  published: 2014
+  type: blog post
+  tags:
+    - language extensions
+    - view patterns
+  collections:
+    - 24 Days of GHC Extensions
+
+- title: Learn You an Agda and Achieve Enlightenment
+  url: http://learnyouanagda.liamoc.net/
+  authors:
+    - Liam O'Connor
+  published: 2014
+  type: textbook
+  tags:
+    - Agda
+
+- title: 24 Days of GHC Extensions: Pattern Synonyms
+  url: https://ocharles.org.uk/blog/posts/2014-12-03-pattern-synonyms.html
+  authors:
+    - Oliver Charles
+  published: 2014
+  type: blog post
+  tags:
+    - language extensions
+    - pattern synonyms
+  collections:
+    - 24 Days of GHC Extensions
+
+- title: Pain Free Unfix with Pattern Synonyms
+  url: https://mpickering.github.io/posts/2014-11-27-pain-free.html
+  authors:
+    - Matthew Pickering
+  published: 2014
+  type: blog post
+  tags:
+    - language extensions
+    - pattern synonyms
+
+- title: Pattern Synonyms for Dates and an IRC Bot
+  url: https://www.fpcomplete.com/user/icelandj/Pattern%20synonyms
+  authors:
+    - icelandj
+  published: 2014
+  type: extended example
+  tags:
+    - language extensions
+    - pattern synonyms
+
+- title: Haskell's Fixed Point Combinator
+  url: http://pwparchive.wordpress.com/2011/10/06/haskells-fixed-point-combinator/
+  authors:
+    - Sanjoy Das
+  published: 2011
+  type: blog post
+  tags:
+    - fixpoints
+
+- title: The Fixed Point Combinator
+  url: http://apfelmus.nfshost.com/blog/2010/07/02-fixed-points-video/player.html
+  authors:
+    - Heinrich Apfelmus
+  published: 2010
+  type: video lecture
+  tags:
+    - fixpoints
+
+- title: (Ab)using Compiler Plugins to Improve Embedded DSLs
+  url: http://galois.com/blog/2014/12/abusing-compiler-plugins-improve-embedded-dsls/
+  authors:
+    - Eric Seidel
+  published: 2014
+  type: blog post
+  tags:
+    - Core
+    - DSLs
+
+- title: A very general API for relational joins
+  url: http://www.haskellforall.com/2014/12/a-very-general-api-for-relational-joins.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2014
+  type: blog post
+  tags:
+    - Alternative
+    - applicative functors
+    - relational joins
+
+- title: Extensible effects: abstracting from the transformer
+  url: http://ro-che.info/articles/2014-12-06-abstracting-from-transformer
+  authors:
+    - Roman Cheplyaka
+  published: 2014
+  type: blog post
+  tags:
+    - extensible effects
+
+- title: Type-based lift
+  url: http://ro-che.info/articles/2014-07-15-type-based-lift.html
+  authors:
+    - Roman Cheplyaka
+  published: 2014
+  type: blog post
+  tags:
+    - extensible effects
+
+- title: Safety first: FFI and threading
+  url: http://blog.ezyang.com/2010/07/safety-first-ffi-and-threading/
+  authors:
+    - Edward Z. Yang
+  published: 2010
+  type: blog post
+  tags:
+    - FFI
+
+- title: Extending the Haskell Foreign Function Interface with Concurrency
+  url: http://community.haskell.org/~simonmar/papers/conc-ffi.pdf
+  authors:
+    - Simon Marlow
+    - Simon Peyton Jones
+    - Wolfgang Thaller
+  published: 2004
+  type: research paper
+  tags:
+    - concurrency
+    - FFI
+
+- title: Asynchronous Exceptions in Haskell
+  url: http://community.haskell.org/~simonmar/papers/async.pdf
+  authors:
+    - Simon Marlow
+    - Simon Peyton Jones
+    - Andrew Moran
+    - John Reppy
+  published: 2006
+  type: research paper
+  tags:
+    - asynchronous exceptions
+
+- title: Lightweight Concurrency Primitives for GHC
+  url: http://community.haskell.org/~simonmar/papers/conc-substrate.pdf
+  authors:
+    - Peng Li
+    - Simon Marlow
+    - Simon Peyton Jones
+    - Andrew Tolmach
+  published: 2007
+  type: research paper
+  tags:
+    - concurrency
+    - GHC
+
+- title: Comparing the performance of concurrent linked-list implementations in Haskell
+  url: http://community.haskell.org/~simonmar/papers/concurrent-data.pdf
+  authors:
+    - Martin Sulzmann
+    - Edmund S. L. Lam
+    - Simon Marlow
+  published: 2009
+  type: research paper
+  tags:
+    - performance
+
+- title: An Extensible Dynamically-Typed Hierarchy of Exceptions
+  url: http://community.haskell.org/~simonmar/papers/ext-exceptions.pdf
+  authors:
+    - Simon Marlow
+  published: 2006
+  type: research paper
+  tags:
+    - exceptions
+
+- title: A Lightweight Interactive Debugger for Haskell
+  url: http://community.haskell.org/~simonmar/papers/ghci-debug.pdf
+  authors:
+    - Simon Marlow
+    - José Iborra
+    - Bernard Pope
+    - Andy Gill
+  published: 2007
+  type: research paper
+  tags:
+    - debuggers
+    - GHCi
+
+- title: Haddock, A Haskell Documentation Tool
+  url: http://community.haskell.org/~simonmar/papers/haddock.pdf
+  authors:
+    - Simon Marlow
+  published: 2002
+  type: light research paper
+  tags:
+    - documentation
+
+- title: Secrets of the Glasgow Haskell Compiler inliner
+  url: http://community.haskell.org/~simonmar/papers/inline.pdf
+  authors:
+    - Simon Peyton Jones
+    - Simon Marlow
+  published: 2002
+  type: journal paper
+  tags:
+    - GHC
+    - optimization
+
+- title: Multicore Garbage Collection with Local Heaps
+  url: http://community.haskell.org/~simonmar/papers/local-gc.pdf
+  authors:
+    - Simon Marlow
+    - Simon Peyton Jones
+  published: 2011
+  type: research paper
+  tags:
+    - garbage collection
+
+- title: Lock Free Data Structures using STM in Haskell
+  url: http://community.haskell.org/~simonmar/papers/lockfreedatastructures.pdf
+  authors:
+    - Anthony Discolo
+    - Tim Harris
+    - Simon Marlow
+    - Simon Peyton Jones
+    - Satnam Singh
+  published: 2006
+  type: research paper
+  tags:
+    - concurrency
+    - STM
+
+- title: A Monad for Deterministic Parallelism
+  url: http://community.haskell.org/~simonmar/papers/monad-par.pdf
+  authors:
+    - Simon Marlow
+    - Ryan Newton
+    - Simon Peyton Jones
+  published: 2011
+  type: research paper
+  tags:
+    - monads
+    - parallelism
+
+- title: Runtime Support for Multicore Haskell
+  url: http://community.haskell.org/~simonmar/papers/multicore-ghc.pdf
+  authors:
+    - Simon Marlow
+    - Simon Peyton Jones
+    - Satnam Singh
+  published: 2009
+  type: research paper
+  tags:
+    - GHC
+    - parallelism
+
+- title: A nice, purely functional alternative to sinks and wormholes in UI programming
+  url: http://pchiusano.github.io/2014-12-10/wormhole-antipattern.html
+  authors:
+    - Paul Chiusano
+  published: 2014
+  type: blog post
+  tags:
+    - GUIs
+
+- title: An ASM Monad
+  url: http://wall.org/~lewis/2013/10/15/asm-monad.html
+  authors:
+    - quietfanatic
+  published: 2014
+  type: blog post
+  tags:
+    - assembly
+    - fixpoints
+    - MonadFix
+    - monads
+
+- title: Haskell on a Shared-Memory Multiprocessor
+  url: http://community.haskell.org/~simonmar/papers/multiproc.pdf
+  authors:
+    - Tim Harris
+    - Simon Marlow
+    - Simon Peyton Jones
+  published: 2005
+  type: research paper
+  tags:
+    - GHC
+    - parallelism
+
+- title: Non-Stop Haskell
+  url: http://community.haskell.org/~simonmar/papers/nonstop.pdf
+  authors:
+    - Andy Cheadle
+    - Tony Field
+    - Simon Marlow
+    - Simon Peyton Jones
+    - Lyndon While
+  published: 2000
+  type: research paper
+  tags:
+    - garbage collection
+    - GHC
+  collections:
+    - ICFP 2000
+
+- title: Parallel Generational-Copying Garbage Collection with a Block-Structured Heap
+  url: http://community.haskell.org/~simonmar/papers/parallel-gc.pdf
+  authors:
+    - Simon Marlow
+    - Tim Harris
+    - Roshan P. James
+    - Simon Peyton Jones
+  published: 2008
+  type: research paper
+  tags:
+    - garbage collection
+    - GHC
+
+- title: Faster laziness using dynamic pointer tagging
+  url: http://community.haskell.org/~simonmar/papers/ptr-tagging.pdf
+  authors:
+    - Simon Marlow
+    - Alexey Rodriguez Yakushev
+    - Simon Peyton Jones
+  published: 2007
+  type: research paper
+  tags:
+    - GHC
+    - laziness
+    - performance
+    - pointer tagging
+
+- title: Safe Haskell
+  url: http://community.haskell.org/~simonmar/papers/safe-haskell.pdf
+  authors:
+    - David Terei
+    - David Mazières
+    - Simon Marlow
+    - Simon Peyton Jones
+  published: 2012
+  type: research paper
+  tags:
+    - safe haskell
+
+- title: Being Lazy
+  url: https://www.youtube.com/watch?v=eSrVC4-p7aI
+  authors:
+    - Peter Marks
+  published: 2013
+  type: video lecture
+  tags:
+    - laziness
+  collections:
+    - London Haskell
+
+- title: wh5a / Algorithm-W-Step-By-Step
+  url: https://github.com/wh5a/Algorithm-W-Step-By-Step
+  authors:
+    - Wei Hu
+  published: 2010
+  type: extended example
+  tags:
+    - type inference
+
+- title: Simply Easy!: An Implementation of a Dependently Typed Lambda Calculus
+  url: http://strictlypositive.org/Easy.pdf
+  authors:
+    - Andres Löh
+    - Conor McBride
+    - Wouter Swierstra
+  published: 2007
+  type: research paper
+  tags:
+    - dependent types
+    - lambda calculus
+
+- title: Henk: a typed intermediate language
+  url: https://synrc.com/publications/cat/Lambda%20Calculus/Henk.pdf
+  authors:
+    - Simon Peyton Jones
+    - Erik Meijer
+  published: 1997
+  type: research paper
+  tags:
+    - intermediate languages
+    - types
+
+- title: Examining Hackage: folds
+  url: http://jozefg.bitbucket.org/posts/2014-12-27-folds.html
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - folds
+
+- title: Examining Hackage: operational
+  url: http://www.reddit.com/r/haskell/comments/2qe6by/examining_hackage_operational/
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - free monads
+    - operational
+
+- title: 24 Days of GHC Extensions: Static Pointers
+  url: https://ocharles.org.uk/blog/guest-posts/2014-12-23-static-pointers.html
+  authors:
+    - Mathieu Boespflug
+  published: 2014
+  type: blog post
+  tags:
+    - distributed computing
+    - static pointers
+  collections:
+    - 24 Days of GHC Extensions
+
+- title: 24 Days of GHC Extensions: Type Families
+  url: https://ocharles.org.uk/blog/posts/2014-12-12-type-families.html
+  authors:
+    - Oliver Charlies
+  published: 2014
+  type: blog post
+  tags:
+    - type families
+  collections:
+    - 24 Days of GHC Extensions
+
+- title: 24 Days of GHC Extensions: Rank N Types
+  url: https://ocharles.org.uk/blog/guest-posts/2014-12-18-rank-n-types.html
+  authors:
+    - Ertugrul Söylemez
+  published: 2014
+  type: blog post
+  tags:
+    - higher-rank types
+  collections:
+    - 24 Days of GHC Extensions
+
+- title: GHC illustrated for hardware persons
+  url: http://takenobu-hs.github.io/downloads/haskell_ghc_illustrated.pdf
+  authors:
+    - Takenobu Tani
+  published: 2014
+  type: lecture notes
+  tags:
+    - GHC
+
+- title: Type Families Make Life and Free Monads Simpler
+  url: http://aaronlevin.ca/post/106721413033/type-families-make-life-and-free-monads-simpler
+  authors:
+    - Aaron Levin
+  published: 2014
+  type: blog post
+  tags:
+    - free monads
+    - singletons
+    - type families
+
+- title: Simple SMT solver for use in an optimizing compiler
+  url: http://www.well-typed.com/blog/2014/12/simple-smt-solver/
+  authors:
+    - Edsko de Vries
+  published: 2014
+  type: blog post
+  tags:
+    - SMT solvers
+
+- title: Polyvariadic functions and keyword arguments: pattern-matching on the type of the context
+  url: http://okmij.org/ftp/Haskell/polyvariadic.html
+  authors:
+    - Oleg Kiselyov
+  published: 2009
+  type: blog post
+  tags:
+    - polyvariadic functions
+
+- title: Type error in GHC-7 but not in GHC-6.12.3
+  url: https://www.haskell.org/pipermail/glasgow-haskell-users/2010-November/019431.html
+  authors:
+    - Simon Peyton Jones
+  published: 2010
+  type: forum post
+  tags:
+    - impredictive polymorphism
+
+- title: Fun with phantom types
+  url: http://www.cs.ox.ac.uk/ralf.hinze/publications/With.pdf
+  authors:
+    - Ralf Hinze
+  published: 2003
+  type: textbook
+  tags:
+    - phantom types
+
+- title: Products and Coproducts
+  url: http://bartoszmilewski.com/2015/01/07/products-and-coproducts/
+  authors:
+    - Bartosz Milewski
+  published: 2015
+  type: blog post
+  tags:
+    - category theory
+  collections:
+    - Category Theory for Programmers by Bartosz Milewski
+
+- title: From Object Algebras to Finally Tagless Interpreters
+  url: https://oleksandrmanzyuk.wordpress.com/2014/06/18/from-object-algebras-to-finally-tagless-interpreters-2/
+  authors:
+    - Oleksandr Manzyuk
+  published: 2014
+  type: blog post
+  tags:
+    - algebras
+    - expression problem
+    - finally tagless
+
+- title: Phantom Types and Subtyping
+  url: http://www.cs.rit.edu/~mtf/research/phantom-subtyping/jfp06/jfp06.pdf
+  authors:
+    - Matthew Fluet
+    - Riccardo Pucella
+  published: 2002
+  type: journal paper
+  tags:
+    - phantom types
+
+- title: Simpler, Easier!
+  url: http://augustss.blogspot.com/2007/10/simpler-easier-in-recent-paper-simply.html
+  authors:
+    - Lennart Augustsson
+  published: 2014
+  type: blog post
+  tags:
+    - dependent types
+    - type checking
+
+- title: Malloc, free and FFI
+  url: http://blog.haskell-exists.com/yuras/posts/malloc-free-and-ffi.html
+  authors:
+    - Yuras Shumovich
+  published: 2015
+  type: blog post
+  tags:
+    - FFI
+
+- title: Refactoring with Equational Reasoning
+  url: http://neilmitchell.blogspot.com/2015/02/refactoring-with-equational-reasoning.html
+  authors:
+    - Neil Mitchell
+  published: 2015
+  type: blog post
+  tags:
+    - equational reasoning
+
+- title: Monads: From Web 2.0 to Hardware Drivers
+  url: http://www.well-typed.com/blog/105/
+  authors:
+    - Edsko de Vries
+  published: 2015
+  type: blog post
+  tags:
+    - DSLs
+    - monads
+
+- title: Typed embedding of STLC into Haskell
+  url: http://gergo.erdi.hu/blog/2015-02-05-typed_embedding_of_stlc_into_haskell/
+  authors:
+    - Gergő Érdi
+  published: 2015
+  type: blog post
+  tags:
+    - lambda calculus
+
+- title: Compose Conference - Pi-Forall: How to use and implement a dependently-typed language
+  url: https://www.youtube.com/watch?v=6klfKLBnz9k
+  authors:
+    - Stephanie Weirich
+  published: 2015
+  type: video lecture
+  tags:
+    - dependent types
+
+- title: A Brief And Partial Review Of Haskell In The Browser
+  url: http://blog.jenkster.com/2015/02/a-brief-and-partial-review-of-haskell-in-the-browser.html
+  authors:
+    - Kris Jenkins
+  published: 2015
+  type: blog post
+  tags:
+    - web
+
+- title: Functoriality
+  url: http://bartoszmilewski.com/2015/02/03/functoriality/
+  authors:
+    - Bartosz Milewski
+  published: 2015
+  type: blog post
+  tags:
+    - category theory
+    - functors
+  collections:
+    - Category Theory for Programmers by Bartosz Milewski
+
+- title: Category: The Essence of Composition
+  url: http://bartoszmilewski.com/2014/11/04/category-the-essence-of-composition/
+  authors:
+    - Bartosz Milewski
+  published: 2014
+  type: blog post
+  tags:
+    - categories
+    - category theory
+  collections:
+    - Category Theory for Programmers by Bartosz Milewski
+
+- title: Types and Functions
+  url: http://bartoszmilewski.com/2014/11/24/types-and-functions/
+  authors:
+    - Bartosz Milewski
+  published: 2014
+  type: blog post
+  tags:
+    - types
+  collections:
+    - Category Theory for Programmers by Bartosz Milewski
+
+- title: Categories Great and Small
+  url: http://bartoszmilewski.com/2014/12/05/categories-great-and-small/
+  authors:
+    - Bartosz Milewski
+  published: 2014
+  type: blog post
+  tags:
+    - categories
+    - category theory
+  collections:
+    - Category Theory for Programmers by Bartosz Milewski
+
+- title: Kleisli Categories
+  url: http://bartoszmilewski.com/2014/12/23/kleisli-categories/
+  authors:
+    - Bartosz Milewski
+  published: 2014
+  type: blog post
+  tags:
+    - category theory
+  collections:
+    - Category Theory for Programmers by Bartosz Milewski
+
+- title: Simple Algebraic Data Types
+  url: http://bartoszmilewski.com/2015/01/13/simple-algebraic-data-types/
+  authors:
+    - Bartosz Milewski
+  published: 2015
+  type: blog post
+  tags:
+    - ADTs
+    - category theory
+  collections:
+    - Category Theory for Programmers by Bartosz Milewski
+
+- title: Functors
+  url: http://bartoszmilewski.com/2015/01/20/functors/
+  authors:
+    - Bartosz Milewski
+  published: 2015
+  type: blog post
+  tags:
+    - category theory
+    - functors
+  collections:
+    - Category Theory for Programmers by Bartosz Milewski
+
+- title: Dependently Typed Functional Programming in Idris: Part 1
+  url: http://vimeo.com/117221082
+  authors:
+    - David Christiansen
+  published: 2015
+  type: video lecture
+  tags:
+    - dependent types
+    - Idris
+
+- title: Observations about -XStaticPointers
+  url: http://jozefg.bitbucket.org/posts/2015-01-27-modal-logic-in-haskell.html
+  authors:
+    - Danny Gratzer
+  published: 2015
+  type: blog post
+  tags:
+    - static pointers
+
+- title: Part I: Dependent Types in Haskell
+  url: https://www.fpcomplete.com/user/konn/prove-your-haskell-for-great-safety/dependent-types-in-haskell
+  authors:
+    - Hiromi Ishii
+  published: 2014
+  type: extended example
+  tags:
+    - dependent types
+    - GADTs
+    - singletons
+
+- title: Common Concurrency Abstractions in Haskell, IORef
+  url: http://www.kuznero.com/posts/haskell/2015-02-15-common-concurrency-abstractions-IORef-part-1.html
+  authors:
+    - Roman Kuznetsov
+  published: 2015
+  type: blog post
+  tags:
+    - concurrency
+
+- title: Cool Idea: Free Monads for Testing Redis Calls
+  url: http://michaelxavier.net/posts/2014-04-27-Cool-Idea-Free-Monads-for-Testing-Redis-Calls.html
+  authors:
+    - Michael Xavier
+  published: 2015
+  type: blog post
+  tags:
+    - free monads
+
+- title: The free theorem for fmap
+  url: https://www.fpcomplete.com/user/edwardk/snippets/fmap
+  authors:
+    - Edward Kmett
+  published: 2015
+  type: blog post
+  tags:
+    - functors
+
+- title: Writing Atom plugins in Haskell using ghcjs
+  url: http://edsko.net/2015/02/14/atom-haskell/
+  authors:
+    - Edsko de Vries
+  published: 2015
+  type: blog post
+  tags:
+    - GHCJS
+
+- title: A Functorial Query Language
+  url: https://www.youtube.com/watch?v=Q0m8baqBrk4
+  authors:
+    - Ryan Wisnesky
+  published: 2015
+  type: video lecture
+  tags:
+    - category theory
+    - databases
+  collections:
+    - Boston Haskell Meetup
+
+- title: Reflecting values to types and back
+  url: https://www.fpcomplete.com/user/thoughtpolice/using-reflection
+  authors:
+    - Austin Seipp
+  published: 2013
+  type: blog post
+  tags:
+    - reflection
+
+- title: Type Classes vs. the World
+  url: https://www.youtube.com/watch?v=hIZxTQP1ifo
+  authors:
+    - Edward Kmett
+  published: 2014
+  type: video lecture
+  tags:
+    - type classes
+  collections:
+    - Boston Haskell Meetup
+
+- title: Free Monoids in Haskell
+  url: http://comonad.com/reader/2015/free-monoids-in-haskell/
+  authors:
+    - Dan Doel
+  published: 2015
+  type: blog post
+  tags:
+    - free monoids
+
+- title: Explaining Haskell RankNTypes for All
+  url: http://sleepomeno.github.io/blog/2014/02/12/Explaining-Haskell-RankNTypes-for-all/
+  authors:
+    - Gregor Riegler
+  published: 2014
+  type: blog post
+  tags:
+    - higher-rank types
+
+- title: Faking Existentials with Rank N Types
+  url: http://www.dohaskell.com/browse/tags
+  authors:
+    - Danny Gratzer
+  published: 2014
+  type: blog post
+  tags:
+    - existential quantification
+    - higher-rank types
+
+- title: Existential vs. Universally quantified types in Haskell
+  url: http://stackoverflow.com/questions/14299638/existential-vs-universally-quantified-types-in-haskell
+  authors:
+    - C. A. McCann
+  published: 2013
+  type: Q&A website
+  tags:
+    - existential quantification
+    - universal quantification
+
+- title: The Curry–Howard isomorphism
+  url: http://en.wikibooks.org/wiki/Haskell/The_Curry%E2%80%93Howard_isomorphism
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - Curry-Howard correspondence
+
+- title: Logic and Continuations
+  url: http://jozefg.bitbucket.org/posts/2013-09-12-five-things-I-hate.html
+  authors:
+    - Danny Gratzer
+  published: 2013
+  type: blog post
+  tags:
+    - Cont monad
+    - higher-rank types
+    - logic programming
+
+- title: forall Means All!
+  url: http://jozefg.bitbucket.org/posts/2013-10-06-forall-means-all.html
+  authors:
+    - Danny Gratzer
+  published: 2013
+  type: blog post
+  tags:
+    - higher-rank types
+
+- title: Writing an LRU Cache in Haskell
+  url: http://jaspervdj.be/posts/2015-02-24-lru-cache.html
+  authors:
+    - Jasper Van der Jeugt
+  published: 2015
+  type: blog post
+  tags:
+    - data structures
+
+- title: Effectful, Recursive, Real-World Autos: Intro to Machine/Auto Part 3
+  url: http://blog.jle.im/entry/effectful-recursive-real-world-autos-intro-to-machine
+  authors:
+    - Justin Le
+  published: 2015
+  type: blog post
+  tags:
+    - arrows
+    - auto
+
+- title: IO Monad (the term) Considered Harmful
+  url: http://blog.jle.im/entry/io-monad-considered-harmful
+  authors:
+    - Justin Le
+  published: 2015
+  type: blog post
+  tags:
+    - io
+    - monads
+    - pedagogy
+
+- title: First-Class “Statements”
+  url: http://blog.jle.im/entry/first-class-statements
+  authors:
+    - Justin Le
+  published: 2014
+  type: blog post
+  tags:
+    - io
+
+- title: MonadPlus: Success/Failure Monads
+  url: http://blog.jle.im/entries/series/+monadplus-success-failure-monads
+  authors:
+    - Justin Le
+  published: 2013
+  type: extended example
+  tags:
+    - monadplus
+    - monads
+
+- title: Type Providers and Error Reflection in Idris
+  url: https://www.youtube.com/watch?v=dP2imvL92sY
+  authors:
+    - David Christiansen
+  published: 2015
+  type: video lecture
+  tags:
+    - Idris
+
+- title: Making a Blog with Yesod (1.4)
+  url: http://youtu.be/SadfV-qbVg8
+  authors:
+    - Max Tagher
+  published: 2015
+  type: video lecture
+  tags:
+    - web
+    - Yesod
+
+- title: Getting Into Netwire
+  url: http://phaazon.blogspot.fr/2015/03/getting-into-netwire.html
+  authors:
+    - Dimitri Sabadie
+  published: 2015
+  type: blog post
+  tags:
+    - FRP
+
+- title: Remote Access Made Easy and Fast with Haskell
+  url: http://www.infoq.com/presentations/remote-access-haxl
+  authors:
+    - Simon Marlowe
+  published: 2015
+  type: video lecture
+  tags:
+    - Haxl
+
+- title: Building Stuff with Shake
+  url: http://www.infoq.com/presentations/shake
+  authors:
+    - Neil Mitchell
+  published: 2015
+  type: video lecture
+  tags:
+    - Shake
+
+- title: Haskell Optimization and the Game of Life
+  url: http://blog.sharedacumen.com/haskell/2013/10/20/haskell-optimization-and-the-game-of-life/
+  authors:
+    - Andrew Rademacher
+  published: 2013
+  type: blog post
+  tags:
+    - game of life
+    - gloss
+    - optimization
+    - repa
+    - vector
+
+- title: Aeson: the tutorial
+  url: http://artyom.me/aeson
+  authors:
+    - Artyom
+  published: 2015
+  type: blog post
+  tags:
+    - aeson
+    - JSON
+
+- title: Gluing Things Together with Haskell
+  url: https://www.youtube.com/watch?v=iFZQyLMrkn4
+  authors:
+    - Neil Mitchell
+  published: 2014
+  type: video lecture
+  tags:
+    - Bake
+    - build systems
+    - continuous integration
+    - Shake
+
+- title: Composable Memory Transactions
+  url: http://research.microsoft.com/en-us/um/people/simonpj/papers/stm/stm.pdf
+  authors:
+    - Tim Harris
+    - Simon Marlow
+    - Simon Peyton Jones
+    - Maurice Herlihy
+  published: 2006
+  type: research paper
+  tags:
+    - STM
+
+- title: Representing existential data types with isomorphic simple types
+  url: http://okmij.org/ftp/Computation/Existentials.html
+  authors:
+    - Oleg Kiselyov
+  published: 2008
+  type: lecture notes
+  tags:
+    - existential quantification
+
+- title: Unique sample drawing & searches with List and StateT — “Send more money”
+  url: http://blog.jle.im/entry/unique-sample-drawing-searches-with-list-and-statet
+  authors:
+    - Justin Le
+  published: 2015
+  type: blog post
+  tags:
+    - List monad
+    - monad transformers
+    - monads
+    - State monad
+
+- title: Data types à la carte
+  url: http://www.cs.ru.nl/~W.Swierstra/Publications/DataTypesALaCarte.pdf
+  authors:
+    - Wouter Swierstra
+  published: 2008
+  type: functional pearl
+  tags:
+    - fixpoints
+    - free monads
+    - functors
+
+- title: Software Foundations
+  url: http://www.cis.upenn.edu/~bcpierce/sf/current/index.html
+  authors:
+    - Benjamin C. Pierce
+    - Chris Casinghino
+    - Marco Gaboardi
+    - Michael Greenberg
+    - Cătălin Hriţcu
+    - Vilhelm Sjöberg
+    - Brent Yorgey
+  published: 2015
+  type: textbook
+  tags:
+    - dependent types
+    - type theory
+
+- title: lens over tea #2: composition, laws, getters/actions/setters
+  url: http://artyom.me/lens-over-tea-2
+  authors:
+    - Artyom Kazak
+  published: 2015
+  type: blog post
+  tags:
+    - lenses
+
+- title: lens over tea #3: folds
+  url: http://artyom.me/lens-over-tea-3
+  authors:
+    - Artyom Kazak
+  published: 2015
+  type: blog post
+  tags:
+    - lenses
+
+- title: Free Applicative Functors
+  url: http://arxiv.org/pdf/1403.0749v3.pdf
+  authors:
+    - Paolo Capriotti
+    - Ambrus Kaposi
+  published: 2013
+  type: light research paper
+  tags:
+    - free applicative functors
+
+- title: Flavours of free applicative functors
+  url: https://ro-che.info/articles/2013-03-31-flavours-of-free-applicative-functors
+  authors:
+    - Roman Cheplyaka
+  published: 2013
+  type: blog post
+  tags:
+    - free applicative functors
+
+- title: Towards Free Applicatives
+  url: http://web.jaguarpaw.co.uk/~tom/blog/posts/2012-09-09-towards-free-applicatives.html
+  authors:
+    - Tom Ellis
+  published: 2012
+  type: blog post
+  tags:
+    - free applicative functors
+
+- title: Lexical analysis with parser combinators
+  url: https://ro-che.info/articles/2015-01-02-lexical-analysis
+  authors:
+    - Roman Cheplyaka
+  published: 2015
+  type: blog post
+  tags:
+    - applicative functors
+    - lexical analysis
+    - parsing
+
+- title: Free for DSLs, cofree for interpreters
+  url: http://dlaing.org/cofun/posts/free_and_cofree.html
+  authors:
+    - Dave Liang
+  published: 2015
+  type: blog post
+  tags:
+    - cofree comonads
+    - comonads
+    - free monads
+
+- title: Will it memoize?
+  url: http://gelisam.blogspot.ca/2015/06/will-it-memoize.html
+  authors:
+    - gelisam
+  published: 2015
+  type: blog post
+  tags:
+    - memoization
+
+- title: Reasoning about Errors in Free Monads and Their Interpreters
+  url: http://aaronlevin.ca/post/122079863187/reasoning-about-errors-in-free-monads-and-their
+  authors:
+    - Aaron Levin
+  published: 2015
+  type: blog post
+  tags:
+    - free monads
+
+- title: How Laziness Works
+  url: http://two-wrongs.com/how-laziness-works
+  published: 2015
+  type: blog post
+  tags:
+    - laziness
+
+- title: From Lenses to Yoneda Embedding
+  url: http://bartoszmilewski.com/2015/07/13/from-lenses-to-yoneda-embedding/
+  authors:
+    - Bartosz Milewski
+  published: 2015
+  type: blog post
+  tags:
+    - comonads
+    - lenses
+
+- title: The Holy Trinity
+  url: https://existentialtype.wordpress.com/2011/03/27/the-holy-trinity
+  authors:
+    - Robert Harper
+  published: 2011
+  type: blog post
+  tags:
+    - type theory
+
+- title: Zipper Comonads, Generically
+  url: http://stackoverflow.com/q/25554062/2751851
+  authors:
+    - Conor McBride
+  published: 2014
+  type: Q&A website
+  tags:
+    - zippers
+
+- title: How and why does the Haskell Cont monad work?
+  url: http://stackoverflow.com/q/3322540/2751851
+  authors:
+    - C. A. McCann
+  published: 2010
+  type: Q&A website
+  tags:
+    - Cont monad
+    - CPS
+
+- title: Understanding arrows
+  url: https://en.wikibooks.org/wiki/Haskell/Understanding_arrows
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - arrows
+
+- title: Foldable
+  url: https://en.wikibooks.org/wiki/Haskell/Foldable
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - Foldable
+
+- title: Traversable
+  url: https://en.wikibooks.org/wiki/Haskell/Traversable
+  authors:
+    - Haskell Wikibook
+  type: textbook
+  tags:
+    - Traversable
+
+- title: Letter to a Young Haskell Enthusiast
+  url: http://comonad.com/reader/2014/letter-to-a-young-haskell-enthusiast/
+  authors:
+    - Gershom Bazerman
+  published: 2014
+  type: blog post
+  tags:
+    - pedagogy
+
+- title: I love profunctors. They're so easy.
+  url: https://www.fpcomplete.com/user/liyang/profunctors
+  authors:
+    - Liyang HU
+  published: 2013
+  type: blog post
+  tags:
+    - profunctors
+
+- title: lens over tea #4: isomorphisms, some profunctors, lens families
+  url: http://artyom.me/lens-over-tea-4
+  authors:
+    - Artyom Kazak
+  published: 2015
+  type: blog post
+  tags:
+    - lenses
+
+- title: Hacking GHC's Stack for Fun and Profit
+  url: https://github.com/blitzcode/ghc-stack
+  authors:
+    - Tim C. Schröder
+  published: 2014
+  type: extended example
+  tags:
+    - debugging
+    - GHC
+
+- title: A Haskell Time Library Tutorial
+  url: http://two-wrongs.com/haskell-time-library-tutorial
+  authors:
+    - kqr
+  published: 2015
+  type: extended example
+  tags:
+    - time
+
+- title: Trace-based Just-in-time Compilation for Lazy Functional Programming Languages (PDF)
+  url: https://dl.dropboxusercontent.com/u/3265448/schilling.thesis.final.2014-01-20.pdf
+  authors:
+    - Thomas Schilling
+  published: 2014
+  type: Master's thesis
+  tags:
+    - compilers
+    - JIT compilers
+
+- title: Programming with Refinement Types:  An Introduction to LiquidHaskell
+  url: http://refinement-types.org/
+  authors:
+    - Ranjit Jhala
+    - Eric Seidel
+    - Niki Vazou
+  published: 2015
+  type: textbook
+  tags:
+    - liquidhaskell
+    - refinement types
+
+- title: Making a website with Haskell
+  url: http://adit.io/posts/2013-04-15-making-a-website-with-haskell.html
+  authors:
+    - Aditya Bhargava
+  published: 2014
+  type: extended example
+  tags:
+    - scotty
+    - web
+
+- title: Turtle.Tutorial
+  url: http://hackage.haskell.org/package/turtle-1.2.1/docs/Turtle-Tutorial.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2015
+  type: extended example
+  tags:
+    - shell scripting
+    - turtle
+
+- title: The Haskell Heap
+  url: http://blog.ezyang.com/2011/04/the-haskell-heap/
+  authors:
+    - Edward Z. Yang
+  published: 2011
+  type: blog post
+  tags:
+    - evaluation
+    - laziness
+
+- title: How I Start: Haskell
+  url: http://howistart.org/posts/haskell/1
+  authors:
+    - Chris Allen
+  published: 2014
+  type: blog post
+  tags:
+    - Cabal
+    - cabal
+
+- title: Control.Lens.Tutorial
+  url: http://hackage.haskell.org/package/lens-tutorial-1.0.0/docs/Control-Lens-Tutorial.html
+  authors:
+    - Gabriel Gonzalez
+  published: 2015
+  type: extended example
+  tags:
+    - lenses
+
+- title: MonadFix example: compiling regular expressions
+  url: https://ro-che.info/articles/2015-09-02-monadfix
+  authors:
+    - Roman Cheplyaka
+  published: 2015
+  type: blog post
+  tags:
+    - MonadFix
+
+- title: Haskell String Types
+  url: http://www.alexeyshmalko.com/2015/haskell-string-types/
+  authors:
+    - Alexey Shmalko
+  published: 2015
+  type: blog post
+  tags:
+    - Strings
+
+- title: Bloodhound
+  url: https://github.com/bitemyapp/bloodhound
+  authors:
+    - Chris Allen
+    - Michael Xavier
+  published: 2015
+  type: source code
+  tags:
+    - DSLs
+    - Elasticsearch
+    - search
+
+- title: Top tips and tools for optimising Haskell
+  url: https://blog.pusher.com/top-tips-and-tools-for-optimising-haskell/
+  authors:
+    - Will Sewell
+  published: 2015
+  type: blog post
+  tags:
+    - optimization
+    - profiling
+
+- title: Opaleye’s sugar on top
+  url: http://ren.zone/articles/opaleye-sot
+  authors:
+    - Renzo Carbonara
+  published: 2015
+  type: blog post
+  tags:
+    - databases
+
+- title: The vector package
+  url: https://github.com/commercialhaskell/haskelldocumentation/blob/master/content/vector.md
+  authors:
+    - Michael Snoyman
+  published: 2015
+  type: extended example
+  tags:
+    - PrimMonad
+    - vector
+
+- title: Settable and Non-Interfering Signal Functions for FRP
+  url: https://www.youtube.com/watch?v=zgNRM8tZguY
+  authors:
+    - Daniel Winograd-Cort
+  published: 2014
+  type: video lecture
+  tags:
+    - FRP
+  collections:
+    - ICFP 2014
+
+- title: Reliable Concurrency Without the Actor Model
+  url: https://www.youtube.com/watch?v=8OQUH8q4sMM
+  authors:
+    - Andrew Rademacher
+  published: 2015
+  type: video lecture
+  tags:
+    - concurrency
+    - STM
+  collections:
+    - concurrency
+    - STM
+
+- title: lens over tea #5: prisms
+  url: http://artyom.me/lens-over-tea-5
+  authors:
+    - Artyom Kazak
+  published: 2015
+  type: blog post
+  tags:
+    - lenses
